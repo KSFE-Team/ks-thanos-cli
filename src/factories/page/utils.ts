@@ -1,5 +1,5 @@
 import { ConnectDecorator, FormDecorator, Import, ComponentStateProps } from './types';
-import { ComponentStructure } from '../component/component';
+import { ComponentStructure } from '../component/types';
 import Debug from '../../utils/debugger';
 import { TableComponent } from '../component/tableComponent';
 import { Basic, BasicComponent } from '../component/basicComponent';

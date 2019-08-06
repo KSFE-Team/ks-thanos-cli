@@ -1,4 +1,4 @@
-import { ComponentStructure } from '../component/component';
+import { ComponentStructure } from '../component/types';
 import { BasciImport } from '../page/types';
 import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
 import { BasicComponent } from '../component/basicComponent';
