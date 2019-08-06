@@ -33,6 +33,7 @@ async function getPage(pageName) {
                                     api: '/api/user/delete',
                                     method: 'post',
                                     type: 'confirm',
+                                    title: '确认删除',
                                     trigger: {
                                         name: 'button',
                                         source: 'antd',

@@ -1,6 +1,8 @@
 import path from 'path';
 import { writeFile } from '../../utils/file';
 import { Page } from '../page/page';
+import { formatFile } from '../../utils/format';
+
 export async function createModel(
     options: {
         page: Page;
@@ -63,4 +65,6 @@ export default {
 `;
 
     writeFile(modelPath, modelContent);
+
+    formatFile(modelPath);
 }

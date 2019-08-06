@@ -5,6 +5,7 @@
   "main": "output/src/index.js",
   "bin": "output/bin/index.js",
   "dependencies": {
+    "@types/eslint": "^4.16.6",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "debug": "^4.1.1",

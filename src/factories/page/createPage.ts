@@ -2,6 +2,7 @@ import { Page } from './page';
 import { writeFile } from '../../utils/file';
 import path from 'path';
 import Debug from '../../utils/debugger';
+import { formatFile } from '../../utils/format';
 
 const debug = Debug(__filename);
 
@@ -26,7 +27,11 @@ export function createPage(
         pageInstance.addComponents(components);
     }
 
+    // 输出文件
     writeFile(pagePath, pageInstance.toCode());
+
+    // eslint格式化文件
+    formatFile(pagePath);
 
     return pageInstance;
 }

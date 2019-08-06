@@ -7,6 +7,7 @@ const page_1 = require("./page");
 const file_1 = require("../../utils/file");
 const path_1 = __importDefault(require("path"));
 const debugger_1 = __importDefault(require("../../utils/debugger"));
+const format_1 = require("../../utils/format");
 const debug = debugger_1.default(__filename);
 function createPage(options) {
     const { pageName, pageConfig, projectPath } = options;
@@ -20,6 +21,7 @@ function createPage(options) {
         pageInstance.addComponents(components);
     }
     file_1.writeFile(pagePath, pageInstance.toCode());
+    format_1.formatFile(pagePath);
     return pageInstance;
 }
 exports.createPage = createPage;

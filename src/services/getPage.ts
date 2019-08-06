@@ -31,6 +31,7 @@ export async function getPage(pageName: string) {
                                     api: '/api/user/delete', // 接口地址
                                     method: 'post', // 请求方式 默认 'get'
                                     type: 'confirm', // confirm | modal | request | link
+                                    title: '确认删除',
                                     trigger: {
                                         name: 'button',
                                         source: 'antd',
