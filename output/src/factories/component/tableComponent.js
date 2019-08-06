@@ -1,40 +1,33 @@
-import { BasicComponent } from './basicComponent';
-import Debug from '../../utils/debugger';
-import { ActionStructure, Action } from '../action/action';
-import { BasciImport } from '../page/types';
-
-const debug = Debug(__filename);
-
-interface TableColumnConfig {
-    title: string;
-    dataIndex: string;
-    actions?: ActionStructure[];
-}
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const basicComponent_1 = require("./basicComponent");
+const debugger_1 = __importDefault(require("../../utils/debugger"));
+const action_1 = require("../action/action");
+const debug = debugger_1.default(__filename);
 class TableColumn {
-    actions: Action[] = [];
-    config: TableColumnConfig;
-    constructor(config: TableColumnConfig) {
+    constructor(config) {
+        this.actions = [];
         const { actions, ...other } = config;
         this.config = other;
         if (actions) {
             actions.forEach((action) => {
-                const actionInstance = new Action(action);
+                const actionInstance = new action_1.Action(action);
                 this.actions.push(actionInstance);
             });
         }
     }
-
     getImports() {
-        let imports: BasciImport[] = [];
+        let imports = [];
         this.actions.forEach((action) => {
             imports = imports.concat(action.getImports());
         });
         return imports;
     }
-
     toCode() {
-        let codes: string[] = [];
+        let codes = [];
         Object.entries(this.config).forEach((keyValue) => {
             const [key, value] = keyValue;
             codes.push(`${key}: '${value}'`);
@@ -54,11 +47,11 @@ class TableColumn {
         }`;
     }
 }
-
-export class TableComponent extends BasicComponent {
-
-    columns: TableColumn[] = [];
-
+class TableComponent extends basicComponent_1.BasicComponent {
+    constructor() {
+        super(...arguments);
+        this.columns = [];
+    }
     getImports() {
         let imports = super.getImports();
         this.columns.forEach((column) => {
@@ -66,32 +59,31 @@ export class TableComponent extends BasicComponent {
         });
         return imports;
     }
-
-    addProps(key: string, value: any) {
-        let finalValue: string;
+    addProps(key, value) {
+        let finalValue;
         if (key === 'columns') {
-            const columnsData = value as TableColumnConfig[];
+            const columnsData = value;
             this.columns = columnsData.map((columnData) => new TableColumn(columnData));
             const columnsCode = this.columns.map((column) => column.toCode());
             finalValue = `[
                 ${columnsCode.join(',\n')}
             ]`;
-        } else {
+        }
+        else {
             finalValue = `'${value}'`;
         }
         super.addProps(key, finalValue);
     }
-
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
             const propValue = this.props[propKey];
             debug(`propKey: ${propKey}`);
             debug(`propValue: ${propValue}`);
-            propsCode.push(
-                `${propKey}={${propValue}}`
-            );
+            propsCode.push(`${propKey}={${propValue}}`);
         }
         return `<${this.className} ${propsCode.join(' ')}/>`;
     }
 }
+exports.TableComponent = TableComponent;
+//# sourceMappingURL=tableComponent.js.map

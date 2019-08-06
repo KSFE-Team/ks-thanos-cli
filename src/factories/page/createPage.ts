@@ -1,7 +1,9 @@
 import { Page } from './page';
 import { writeFile } from '../../utils/file';
 import path from 'path';
-import { ComponentInjection } from '../component/component';
+import Debug from '../../utils/debugger';
+
+const debug = Debug(__filename);
 
 export function createPage(
     options: {
@@ -11,21 +13,17 @@ export function createPage(
     }
 ) {
     const { pageName, pageConfig, projectPath } = options;
+
+    debug(`pageName: ${pageName}`);
+    debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
+    debug(`projectPath: ${projectPath}`);
+
     const pagePath = path.join(projectPath, 'pages', pageName, 'index.js');
     const pageInstance = new Page(pageName);
 
     const { components = [] } = pageConfig;
     if (components.length) {
-        components.forEach((component: any) => {
-            pageInstance.addImports({
-                name: component.name,
-                source: component.source,
-                defaultImport: component.default
-            });
-            pageInstance.addComponents([
-                new ComponentInjection(component)
-            ]);
-        });
+        pageInstance.addComponents(components);
     }
 
     writeFile(pagePath, pageInstance.toCode());

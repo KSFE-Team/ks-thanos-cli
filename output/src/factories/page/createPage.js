@@ -6,23 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const page_1 = require("./page");
 const file_1 = require("../../utils/file");
 const path_1 = __importDefault(require("path"));
-const component_1 = require("../component/component");
+const debugger_1 = __importDefault(require("../../utils/debugger"));
+const debug = debugger_1.default(__filename);
 function createPage(options) {
     const { pageName, pageConfig, projectPath } = options;
+    debug(`pageName: ${pageName}`);
+    debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
+    debug(`projectPath: ${projectPath}`);
     const pagePath = path_1.default.join(projectPath, 'pages', pageName, 'index.js');
     const pageInstance = new page_1.Page(pageName);
     const { components = [] } = pageConfig;
     if (components.length) {
-        components.forEach((component) => {
-            pageInstance.addImports({
-                name: component.name,
-                source: component.source,
-                defaultImport: component.default
-            });
-            pageInstance.addComponents([
-                new component_1.ComponentInjection(component)
-            ]);
-        });
+        pageInstance.addComponents(components);
     }
     file_1.writeFile(pagePath, pageInstance.toCode());
     return pageInstance;

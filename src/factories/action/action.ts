@@ -1,5 +1,5 @@
-import { ComponentStructure, ComponentInjection } from '../component/component';
-import { Import } from '../page/types';
+import { ComponentStructure } from '../component/component';
+import { BasciImport } from '../page/types';
 import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
 import { BasicComponent } from '../component/basicComponent';
 import { LinkComponent, LinkComponentStructure } from '../component/linkComponent';
@@ -17,48 +17,49 @@ export class Action {
 
     name: string
     type: actionType
-    dialog?: ComponentInjection
+    dialog?: BasicComponent
     trigger: BasicComponent
 
     constructor(config: ActionStructure) {
-        const { name, type, dialog, trigger } = config;
+        const { name, type, trigger } = config;
         this.name = name;
         this.type = type;
+        this.trigger = new ConfirmComponent({
+            ...trigger as ConfirmComponentStructure,
+            buttonText: name
+        });
         switch (type) {
-            case 'confirm':
-                this.trigger = new ConfirmComponent(trigger as ConfirmComponentStructure);
-                break;
             case 'modal':
                 break;
             case 'request':
                 break;
             case 'link':
-                this.trigger = new LinkComponent(trigger as LinkComponentStructure);
+                this.trigger = new LinkComponent({
+                    ...trigger as LinkComponentStructure,
+                    text: name
+                });
                 break;
         }
+        this.trigger.init();
     }
 
-    getImports(): Import[] {
-        const componentImports: Import[] = [];
+    getImports(): BasciImport[] {
+        let componentImports: BasciImport[] = [];
         if (this.dialog) {
-            componentImports.concat(this.dialog.getImports());
+            componentImports = componentImports.concat(this.dialog.getImports());
         }
-        componentImports.concat(this.trigger.getImports());
+        componentImports = componentImports.concat(this.trigger.getImports());
         return componentImports;
     }
 
     toCode() {
-        return `
-(text) => {
-    return (
-        <div>
-            ${this.trigger.toCode()}        
-        </div>
-        ${this.dialog ? `<div>
-            ${this.dialog.toCode()}
-        </div>` : ''}
-    );
-}
-`;
+        return `<div>
+                    <div>
+                        ${this.trigger.toCode()}        
+                    </div>
+                    ${this.dialog ? `<div>
+                        ${this.dialog.toCode()}
+                    </div>` : ''}
+                </div>`;
     }
 }

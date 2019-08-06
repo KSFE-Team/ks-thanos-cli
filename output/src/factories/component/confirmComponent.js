@@ -1,27 +1,18 @@
-import { BasicComponent, ComponentStructure } from './basicComponent';
-
-export interface ConfirmComponentStructure extends ComponentStructure {
-    buttonText: string;
-    title: string;
-    okText: string;
-    cancelText: string;
-}
-
-export class ConfirmComponent extends BasicComponent implements ConfirmComponentStructure {
-
-    buttonText: string = ''
-    title: string =  ''
-    okText: string = ''
-    cancelText: string = ''
-
-    constructor(config: ConfirmComponentStructure) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const basicComponent_1 = require("./basicComponent");
+class ConfirmComponent extends basicComponent_1.BasicComponent {
+    constructor(config) {
         super(config);
+        this.buttonText = '';
+        this.title = '';
+        this.okText = '';
+        this.cancelText = '';
         this.buttonText = config.buttonText;
         this.title = config.title;
         this.okText = config.okText || '确定';
         this.cancelText = config.cancelText || '取消';
     }
-
     getImports() {
         const imports = super.getImports();
         imports.push({
@@ -31,7 +22,6 @@ export class ConfirmComponent extends BasicComponent implements ConfirmComponent
         });
         return imports;
     }
-
     toCode() {
         return `<${this.className} onClick={() => {
                 Modal.confirm({
@@ -42,3 +32,5 @@ export class ConfirmComponent extends BasicComponent implements ConfirmComponent
             }}>${this.buttonText}</${this.className}>`;
     }
 }
+exports.ConfirmComponent = ConfirmComponent;
+//# sourceMappingURL=confirmComponent.js.map
