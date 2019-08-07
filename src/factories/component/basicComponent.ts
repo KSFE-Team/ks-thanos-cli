@@ -46,11 +46,11 @@ export abstract class BasicComponent extends Basic {
     init() {
         const { props = {} } = this.config;
         for (let propKey in props) {
-            this.addProps(propKey, props[propKey]);
+            this.addProp(propKey, props[propKey]);
         }
     }
 
-    addProps(key: string, value: any) {
+    addProp(key: string, value: any) {
         debug(`add props: ${key}, ${JSON.stringify(value)}`);
         this.props[key] = value;
     }

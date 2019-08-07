@@ -4,12 +4,13 @@ const confirmComponent_1 = require("../component/confirmComponent");
 const linkComponent_1 = require("../component/linkComponent");
 class Action {
     constructor(config) {
-        const { name, type, trigger } = config;
+        const { title, name, type, trigger } = config;
         this.name = name;
         this.type = type;
         this.trigger = new confirmComponent_1.ConfirmComponent({
             ...trigger,
-            buttonText: name
+            buttonText: name,
+            title
         });
         switch (type) {
             case 'modal':

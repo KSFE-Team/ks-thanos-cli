@@ -76,7 +76,7 @@ function getStateCode(stateProps) {
     }).join('\n');
 }
 exports.getStateCode = getStateCode;
-function addComponent(instance, component) {
+function addComponent(instance, component, handler) {
     let componentInstance;
     switch (component.name) {
         case component_1.COMPONENT_TYPES.TABLE:
@@ -85,10 +85,13 @@ function addComponent(instance, component) {
             instance.addComponent(componentInstance);
             break;
     }
-    if (component.components) {
-        component.components.forEach((component) => {
-            addComponent(componentInstance, component);
-        });
+    if (componentInstance) {
+        handler(component, componentInstance);
+        if (component.components) {
+            component.components.forEach((component) => {
+                addComponent(componentInstance, component, handler);
+            });
+        }
     }
 }
 exports.addComponent = addComponent;

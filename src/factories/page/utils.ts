@@ -76,8 +76,12 @@ export function getStateCode(stateProps: ComponentStateProps[]) {
     }).join('\n');
 }
 
-export function addComponent(instance: Basic, component: ComponentStructure) {
-    let componentInstance: BasicComponent;
+export function addComponent(
+    instance: Basic,
+    component: ComponentStructure,
+    handler: (component: ComponentStructure, componentInstance: BasicComponent) => void
+) {
+    let componentInstance: BasicComponent | undefined;
     switch (component.name) {
         case COMPONENT_TYPES.TABLE:
             componentInstance = new TableComponent(component);
@@ -85,9 +89,12 @@ export function addComponent(instance: Basic, component: ComponentStructure) {
             instance.addComponent(componentInstance);
             break;
     }
-    if (component.components) {
-        component.components.forEach((component) => {
-            addComponent(componentInstance, component);
-        });
+    if (componentInstance) {
+        handler(component, componentInstance);
+        if (component.components) {
+            component.components.forEach((component) => {
+                addComponent(componentInstance as BasicComponent, component, handler);
+            });
+        }
     }
 }

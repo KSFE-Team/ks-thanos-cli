@@ -36,7 +36,7 @@ export default {
     effects: {
         async load${pageClassName}List(payload, getState) {
             try {
-                const searchForm = getState().search${pageClassName}Form;
+                const searchForm = getState().${pageName}.search${pageClassName}Form;
 
                 let postData = {
                     size: searchForm.limit,

@@ -8,6 +8,7 @@ type actionType = 'modal' | 'confirm' | 'request' | 'link';
 
 export interface ActionStructure {
     name: string;
+    title: string;
     type: actionType;
     dialog: ComponentStructure;
     trigger: ComponentStructure;
@@ -21,12 +22,13 @@ export class Action {
     trigger: BasicComponent
 
     constructor(config: ActionStructure) {
-        const { name, type, trigger } = config;
+        const { title, name, type, trigger } = config;
         this.name = name;
         this.type = type;
         this.trigger = new ConfirmComponent({
             ...trigger as ConfirmComponentStructure,
-            buttonText: name
+            buttonText: name,
+            title
         });
         switch (type) {
             case 'modal':

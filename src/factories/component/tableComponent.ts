@@ -58,6 +58,11 @@ class TableColumn {
 export class TableComponent extends BasicComponent {
 
     columns: TableColumn[] = [];
+    props: {
+        [name: string]: any;
+    } = {
+        rowKey: 'id'
+    }
 
     getImports() {
         let imports = super.getImports();
@@ -67,7 +72,7 @@ export class TableComponent extends BasicComponent {
         return imports;
     }
 
-    addProps(key: string, value: any) {
+    addProp(key: string, value: any) {
         let finalValue: string;
         if (key === 'columns') {
             const columnsData = value as TableColumnConfig[];
@@ -77,9 +82,9 @@ export class TableComponent extends BasicComponent {
                 ${columnsCode.join(',\n')}
             ]`;
         } else {
-            finalValue = `'${value}'`;
+            finalValue = `${value}`;
         }
-        super.addProps(key, finalValue);
+        super.addProp(key, finalValue);
     }
 
     toCode() {
@@ -92,6 +97,8 @@ export class TableComponent extends BasicComponent {
                 `${propKey}={${propValue}}`
             );
         }
-        return `<${this.className} ${propsCode.join(' ')}/>`;
+        return `<${this.className}
+            ${propsCode.join('\n')}
+        />`;
     }
 }

@@ -28,10 +28,10 @@ class BasicComponent extends Basic {
     init() {
         const { props = {} } = this.config;
         for (let propKey in props) {
-            this.addProps(propKey, props[propKey]);
+            this.addProp(propKey, props[propKey]);
         }
     }
-    addProps(key, value) {
+    addProp(key, value) {
         debug(`add props: ${key}, ${JSON.stringify(value)}`);
         this.props[key] = value;
     }

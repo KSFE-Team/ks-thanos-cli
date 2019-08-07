@@ -51,6 +51,9 @@ class TableComponent extends basicComponent_1.BasicComponent {
     constructor() {
         super(...arguments);
         this.columns = [];
+        this.props = {
+            rowKey: 'id'
+        };
     }
     getImports() {
         let imports = super.getImports();
@@ -59,7 +62,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
         });
         return imports;
     }
-    addProps(key, value) {
+    addProp(key, value) {
         let finalValue;
         if (key === 'columns') {
             const columnsData = value;
@@ -70,9 +73,9 @@ class TableComponent extends basicComponent_1.BasicComponent {
             ]`;
         }
         else {
-            finalValue = `'${value}'`;
+            finalValue = `${value}`;
         }
-        super.addProps(key, finalValue);
+        super.addProp(key, finalValue);
     }
     toCode() {
         const propsCode = [];
@@ -82,7 +85,9 @@ class TableComponent extends basicComponent_1.BasicComponent {
             debug(`propValue: ${propValue}`);
             propsCode.push(`${propKey}={${propValue}}`);
         }
-        return `<${this.className} ${propsCode.join(' ')}/>`;
+        return `<${this.className}
+            ${propsCode.join('\n')}
+        />`;
     }
 }
 exports.TableComponent = TableComponent;
