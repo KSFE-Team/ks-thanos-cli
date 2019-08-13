@@ -1,28 +1,17 @@
-import { upperFirst } from '../../utils/upperFirst';
-import { BasciImport } from '../page/types';
-import Debug from '../../utils/debugger';
+import { upperFirst } from '../../../utils/upperFirst';
+import { BasciImport } from '../../page/types';
+import Debug from '../../../utils/debugger';
+import Page from '../../page/page';
+import { Basic, ComponentStructure } from '../types';
 
 const debug = Debug(__filename);
 
 type componentSourceType = 'antd' | 'ks-cms-ui';
 
-export interface ComponentStructure {
-    name: string; // 组件名称
-    source: componentSourceType; // 组件来源
-    default: boolean; // 是否默认导出
-    components: ComponentStructure[]; // 子组件
-    props?: {
-        [name: string]: any;
-    }; // 组件需要注入的父属性
-}
-
-export abstract class Basic {
-    abstract addComponent(component: BasicComponent): void;
-    abstract toCode(): string
-}
-
 export abstract class BasicComponent extends Basic {
     name = ''
+    componentName = ''
+    componentUpperName = ''
     source: componentSourceType = 'antd'
     default = false
     components: BasicComponent[] = []
@@ -30,17 +19,29 @@ export abstract class BasicComponent extends Basic {
         [name: string]: any;
     } = {}
     className = ''
-    config: ComponentStructure;
+    config: ComponentStructure
 
-    constructor(config: ComponentStructure) {
+    page: Page
+
+    constructor(
+        page: Page,
+        config: ComponentStructure,
+    ) {
         super();
-        const { name, source, default: defaultImport } = config;
+        
+        this.page = page;
+
+        const { name, componentName, source, default: defaultImport } = config;
 
         this.config = config;
         this.name = name;
         this.className = upperFirst(name);
+        this.componentName = componentName;
+        this.componentUpperName = upperFirst(componentName);
         this.source = source;
         this.default = defaultImport;
+
+        debug(`Component Create -> name: ${this.name}, className: ${this.className}, componentName: ${this.componentName}, componentUpperName: ${this.componentUpperName}, source: ${this.source}, default: ${this.default}`);
     }
 
     init() {
@@ -48,6 +49,11 @@ export abstract class BasicComponent extends Basic {
         for (let propKey in props) {
             this.addProp(propKey, props[propKey]);
         }
+        this.initProps && this.initProps();
+        this.initEffects && this.initEffects();
+        this.initPageMethods && this.initPageMethods();
+        this.initPageLifecycle && this.initPageLifecycle();
+        this.initPageDecorators && this.initPageDecorators();
     }
 
     addProp(key: string, value: any) {

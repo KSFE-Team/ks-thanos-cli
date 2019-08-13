@@ -1,4 +1,6 @@
-import { BasicComponent, ComponentStructure } from './basicComponent';
+import { BasicComponent } from './basicComponent';
+import Page from '../page/page';
+import { ComponentStructure } from './types';
 
 export interface ConfirmComponentStructure extends ComponentStructure {
     buttonText: string;
@@ -14,8 +16,8 @@ export class ConfirmComponent extends BasicComponent implements ConfirmComponent
     okText: string = ''
     cancelText: string = ''
 
-    constructor(config: ConfirmComponentStructure) {
-        super(config);
+    constructor(page: Page, config: ConfirmComponentStructure) {
+        super(page, config);
         this.buttonText = config.buttonText;
         this.title = config.title;
         this.okText = config.okText || '确定';
@@ -33,12 +35,13 @@ export class ConfirmComponent extends BasicComponent implements ConfirmComponent
     }
 
     toCode() {
-        return `<${this.className} onClick={() => {
-                Modal.confirm({
-                    title: ${this.title},
-                    okText: ${this.okText},
-                    cancelText: ${this.cancelText}
-                });
-            }}>${this.buttonText}</${this.className}>`;
+        return `<${this.className}
+                    onClick={() => {
+                        Modal.confirm({
+                            title: ${this.title},
+                            okText: ${this.okText},
+                            cancelText: ${this.cancelText}
+                        });
+                }}>${this.buttonText}</${this.className}>`;
     }
 }

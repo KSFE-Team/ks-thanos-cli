@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const basicComponent_1 = require("./basicComponent");
 class RequestComponent extends basicComponent_1.BasicComponent {
-    constructor(config) {
-        super(config);
+    constructor(page, config) {
+        super(page, config);
         this.api = '';
         this.method = '';
         this.text = '';

@@ -1,9 +1,10 @@
 import { ConnectDecorator, FormDecorator, Import, ComponentStateProps } from './types';
-import { ComponentStructure } from '../component/types';
+import { ComponentStructure, Basic, TableComponentStructure } from '../component/types';
 import Debug from '../../utils/debugger';
 import { TableComponent } from '../component/tableComponent';
-import { Basic, BasicComponent } from '../component/basicComponent';
+import { BasicComponent } from '../component/basicComponent';
 import { COMPONENT_TYPES } from '../../utils/constants/component';
+import Page from './page';
 
 const debug = Debug(__filename);
 
@@ -12,9 +13,12 @@ export function getDecoratorsCode(formName: string, pageName: string, decorators
     return decorators.map((decorator) => {
         switch (decorator.name) {
             case 'connect':
-                const { inputProps } = decorator;
+                const { inputProps, outputProps } = decorator;
                 const inputPropsCode = inputProps.join(', ');
-                return `@connect(({ ${inputPropsCode} }) => ({ ${inputPropsCode} }))`;
+                const outputPropsCode = outputProps.join(',\n');
+                return `@connect(({ ${inputPropsCode} }) => ({ 
+                    ${outputPropsCode}
+                 }))`;
             case 'Form.create':
                 const { formItems = [] } = decorator;
                 if (formItems.length) {
@@ -77,23 +81,24 @@ export function getStateCode(stateProps: ComponentStateProps[]) {
 }
 
 export function addComponent(
+    page: Page,
     instance: Basic,
     component: ComponentStructure,
-    handler: (component: ComponentStructure, componentInstance: BasicComponent) => void
+    handler?: (component: ComponentStructure, componentInstance: BasicComponent) => void
 ) {
     let componentInstance: BasicComponent | undefined;
     switch (component.name) {
         case COMPONENT_TYPES.TABLE:
-            componentInstance = new TableComponent(component);
+            componentInstance = new TableComponent(page, component as TableComponentStructure);
             componentInstance.init();
             instance.addComponent(componentInstance);
             break;
     }
     if (componentInstance) {
-        handler(component, componentInstance);
+        handler && handler(component, componentInstance);
         if (component.components) {
             component.components.forEach((component) => {
-                addComponent(componentInstance as BasicComponent, component, handler);
+                addComponent(page, componentInstance as BasicComponent, component, handler);
             });
         }
     }

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const basicComponent_1 = require("./basicComponent");
 class LinkComponent extends basicComponent_1.BasicComponent {
-    constructor(config) {
-        super(config);
+    constructor(page, config) {
+        super(page, config);
         this.href = '';
         this.text = '';
         this.href = config.href;

@@ -4,6 +4,7 @@ export async function getPage(pageName: string) {
         components: [ // 页面组件
             {
                 name: 'KSTable', // 组件名称
+                componentName: 'homeTable',
                 source: 'ks-cms-ui', // 组件来源
                 default: false, // 是否默认导出
                 dependencies: [ // 数据依赖
@@ -34,6 +35,7 @@ export async function getPage(pageName: string) {
                                     title: '确认删除',
                                     trigger: {
                                         name: 'button',
+                                        componentName: 'tableConfirm',
                                         source: 'antd',
                                         default: false,
                                         components: [],
@@ -43,8 +45,17 @@ export async function getPage(pageName: string) {
                             ]
                         }
                     ],
-                }
-            }
+                },
+                searchForm: [
+                    {
+                        label: '用户姓名', // 搜索表单标题
+                        name: 'Input', // 组件名称
+                        source: 'antd', // 组件来源
+                        default: 'false', // 是否默认导出
+                        key: 'userName', // 表单绑定Key
+                    },
+                ]
+            },
         ],
     };
 }

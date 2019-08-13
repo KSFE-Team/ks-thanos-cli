@@ -8,59 +8,8 @@ const file_1 = require("../../utils/file");
 const format_1 = require("../../utils/format");
 async function createModel(options) {
     const { page, projectPath } = options;
-    const { name: pageName, className: pageClassName } = page;
     const modelPath = path_1.default.join(projectPath, 'pages', page.name, 'model.js');
-    const modelContent = `
-import { message } from 'antd';
-import { stringify } from 'qs';
-import request from 'Src/utils/request';
-import { API } from 'Src/api/api';
-
-export const STATE = {
-    ${pageName}List: [], // 裂变任务列表数据
-    search${pageClassName}Form: {
-        page: 1,
-        total: 0,
-        limit: 10,
-    },
-};
-
-export default {
-    namespace: '${pageName}',
-
-    state: { ...STATE },
-
-    effects: {
-        async load${pageClassName}List(payload, getState) {
-            try {
-                const searchForm = getState().${pageName}.search${pageClassName}Form;
-
-                let postData = {
-                    size: searchForm.limit,
-                    page: searchForm.page,
-                };
-
-                const response = await call(request, \`\${API.${pageName}.query}?\${stringify(postData)}\`)
-
-                if (response && response.code === 200) {
-                    actions.${pageName}.setReducer({
-                        ${pageName}List: response.data.content,
-                        search${pageClassName}Form: {
-                            ...searchForm,
-                            page: response.data.pageNumber,
-                            total: response.data.totalElements
-                        }
-                    });
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }
-
-}
-`;
-    file_1.writeFile(modelPath, modelContent);
+    file_1.writeFile(modelPath, page.model.toCode());
     format_1.formatFile(modelPath);
 }
 exports.createModel = createModel;

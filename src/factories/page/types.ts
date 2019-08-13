@@ -18,6 +18,8 @@ export interface Decorator {
 export interface ConnectDecorator extends Decorator {
     name: 'connect';
     inputProps: string[];
+    process: string[];
+    outputProps: string[];
 }
 
 export interface FormDecorator extends Decorator {

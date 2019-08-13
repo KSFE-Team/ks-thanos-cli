@@ -1,16 +1,20 @@
 import { ConnectDecorator, Import, ComponentStateProps, BasciImport } from './types';
 import Debug from '../../utils/debugger';
 import { upperFirst, lowerFirst } from '../../utils/upperFirst';
-import { ComponentStructure, BasicComponent, Basic } from '../component/basicComponent';
+import { BasicComponent } from '../component/basicComponent';
 import { getImportsCode, getDecoratorsCode, getComponentsCode, getStateCode, addComponent } from './utils';
+import Model from '../model/model';
+import { Basic, ComponentStructure } from '../component/types';
 
 const debug = Debug(__filename);
 
-export class Page extends Basic {
+export default class Page extends Basic {
 
     public name: string = '';
     public pageName: string = '';
     public className: string = '';
+
+    public model: Model;
 
     private imports: Import = {
         'react': [{
@@ -33,12 +37,18 @@ export class Page extends Basic {
     private components: BasicComponent[] = [];
     private stateProps: ComponentStateProps[] = [];
     private methods: string[] = [];
+    private didMountStep: string[] = [];
 
     constructor(name: string) {
         super();
         this.name = name;
         this.pageName = lowerFirst(name);
         this.className = upperFirst(name);
+
+        this.model = new Model({
+            initialState: {},
+            namespace: this.pageName
+        });
     }
 
     public addImport(basicImport: BasciImport) {
@@ -71,44 +81,7 @@ export class Page extends Basic {
     public addComponents(components: ComponentStructure[] = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            addComponent(this, component, (newComponent, newComponentInstance) => {
-                if (newComponent.name === 'KSTable') {
-                    const decorator: ConnectDecorator = {
-                        name: 'connect',
-                        inputProps: [
-                            this.name,
-                            `${this.name}ListLoading`
-                        ]
-                    };
-                    debug(`add decorators: ${JSON.stringify(decorator)}`);
-                    this.addDecorator(decorator);
-                    newComponentInstance.addProp('dataSource', `this.props.${this.pageName}.${this.pageName}List`);
-                    newComponentInstance.addProp('loading', `this.props.${this.pageName}.${this.pageName}ListLoading`);
-                    newComponentInstance.addProp('pagination', `{
-                        current: this.props.${this.pageName}.search${this.className}Form.page,
-                        pageSize: this.props.${this.pageName}.search${this.className}Form.limit,
-                        total: this.props.${this.pageName}.search${this.className}Form.total,
-                        onChange: this.onPageChange
-                    }`);
-                    this.addMethod(`
-                        loadList() {
-                            actions.${this.pageName}.load${this.className}List();
-                        }
-                    `);
-                    this.addMethod(`
-                        onPageChange(page, pageSize) {
-                            actions.${this.pageName}.setReducers({
-                                search${this.className}Form: {
-                                    ...this.props.${this.pageName}.search${this.className}Form,
-                                    page,
-                                    limit: pageSize
-                                }
-                            });
-                            this.load${this.className}List();
-                        }
-                    `);
-                }
-            });
+            addComponent(this, this, component);
         });
     }
 
@@ -120,12 +93,17 @@ export class Page extends Basic {
         this.methods.push(methodCode);
     }
 
+    public addDidMountStep(stepCode: string) {
+        this.didMountStep.push(stepCode);
+    }
+
     public toCode() {
         const importsCode = getImportsCode(this.imports);
         const decoratorCode = getDecoratorsCode(this.name + 'Form', this.name, this.decorators);
         const componentsCode = getComponentsCode(this.components);
         const statePropsCode = getStateCode(this.stateProps);
         const methodsCode = this.methods.join('\n');
+        const didMountStepCode = this.didMountStep.join('\n');
 
         return `
 ${importsCode}
@@ -138,11 +116,7 @@ export default class ${this.className} extends React.Component {
     }
     ${methodsCode}
     componentDidMount() {
-        // 初始化redux
-        actions.${this.pageName}.setReducer({
-            ...STATE
-        });
-        this.load${this.className}List();
+        ${didMountStepCode}
     }
 
     render() {

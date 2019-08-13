@@ -1,4 +1,6 @@
-import { BasicComponent, ComponentStructure } from './basicComponent';
+import { BasicComponent } from './basicComponent';
+import Page from '../page/page';
+import { ComponentStructure } from './types';
 
 export interface LinkComponentStructure extends ComponentStructure {
     href: string;
@@ -10,8 +12,8 @@ export class LinkComponent extends BasicComponent implements LinkComponentStruct
     href = ''
     text = ''
 
-    constructor(config: LinkComponentStructure) {
-        super(config);
+    constructor(page: Page, config: LinkComponentStructure) {
+        super(page, config);
         this.href = config.href;
         this.text = config.text;
     }

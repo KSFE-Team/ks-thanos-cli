@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const basicComponent_1 = require("./basicComponent");
 class ConfirmComponent extends basicComponent_1.BasicComponent {
-    constructor(config) {
-        super(config);
+    constructor(page, config) {
+        super(page, config);
         this.buttonText = '';
         this.title = '';
         this.okText = '';
@@ -23,13 +23,14 @@ class ConfirmComponent extends basicComponent_1.BasicComponent {
         return imports;
     }
     toCode() {
-        return `<${this.className} onClick={() => {
-                Modal.confirm({
-                    title: ${this.title},
-                    okText: ${this.okText},
-                    cancelText: ${this.cancelText}
-                });
-            }}>${this.buttonText}</${this.className}>`;
+        return `<${this.className}
+                    onClick={() => {
+                        Modal.confirm({
+                            title: ${this.title},
+                            okText: ${this.okText},
+                            cancelText: ${this.cancelText}
+                        });
+                }}>${this.buttonText}</${this.className}>`;
     }
 }
 exports.ConfirmComponent = ConfirmComponent;

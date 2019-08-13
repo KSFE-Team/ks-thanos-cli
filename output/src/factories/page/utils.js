@@ -12,9 +12,12 @@ function getDecoratorsCode(formName, pageName, decorators) {
     return decorators.map((decorator) => {
         switch (decorator.name) {
             case 'connect':
-                const { inputProps } = decorator;
+                const { inputProps, outputProps } = decorator;
                 const inputPropsCode = inputProps.join(', ');
-                return `@connect(({ ${inputPropsCode} }) => ({ ${inputPropsCode} }))`;
+                const outputPropsCode = outputProps.join(',\n');
+                return `@connect(({ ${inputPropsCode} }) => ({ 
+                    ${outputPropsCode}
+                 }))`;
             case 'Form.create':
                 const { formItems = [] } = decorator;
                 if (formItems.length) {
@@ -76,20 +79,20 @@ function getStateCode(stateProps) {
     }).join('\n');
 }
 exports.getStateCode = getStateCode;
-function addComponent(instance, component, handler) {
+function addComponent(page, instance, component, handler) {
     let componentInstance;
     switch (component.name) {
         case component_1.COMPONENT_TYPES.TABLE:
-            componentInstance = new tableComponent_1.TableComponent(component);
+            componentInstance = new tableComponent_1.TableComponent(page, component);
             componentInstance.init();
             instance.addComponent(componentInstance);
             break;
     }
     if (componentInstance) {
-        handler(component, componentInstance);
+        handler && handler(component, componentInstance);
         if (component.components) {
             component.components.forEach((component) => {
-                addComponent(componentInstance, component, handler);
+                addComponent(page, componentInstance, component, handler);
             });
         }
     }

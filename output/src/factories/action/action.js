@@ -3,14 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const confirmComponent_1 = require("../component/confirmComponent");
 const linkComponent_1 = require("../component/linkComponent");
 class Action {
-    constructor(config) {
+    constructor(page, config) {
         const { title, name, type, trigger } = config;
         this.name = name;
         this.type = type;
-        this.trigger = new confirmComponent_1.ConfirmComponent({
+        this.trigger = new confirmComponent_1.ConfirmComponent(page, {
             ...trigger,
             buttonText: name,
-            title
+            title,
+            componentName: 
         });
         switch (type) {
             case 'modal':
@@ -18,7 +19,7 @@ class Action {
             case 'request':
                 break;
             case 'link':
-                this.trigger = new linkComponent_1.LinkComponent({
+                this.trigger = new linkComponent_1.LinkComponent(page, {
                     ...trigger,
                     text: name
                 });

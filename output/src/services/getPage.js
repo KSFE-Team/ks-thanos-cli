@@ -6,6 +6,7 @@ async function getPage(pageName) {
         components: [
             {
                 name: 'KSTable',
+                componentName: 'homeTable',
                 source: 'ks-cms-ui',
                 default: false,
                 dependencies: [
@@ -36,6 +37,7 @@ async function getPage(pageName) {
                                     title: '确认删除',
                                     trigger: {
                                         name: 'button',
+                                        componentName: 'tableConfirm',
                                         source: 'antd',
                                         default: false,
                                         components: [],
@@ -45,8 +47,17 @@ async function getPage(pageName) {
                             ]
                         }
                     ],
-                }
-            }
+                },
+                searchForm: [
+                    {
+                        label: '用户姓名',
+                        name: 'Input',
+                        source: 'antd',
+                        default: 'false',
+                        key: 'userName',
+                    },
+                ]
+            },
         ],
     };
 }

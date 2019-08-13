@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const page_1 = require("./page");
+const page_1 = __importDefault(require("./page"));
 const file_1 = require("../../utils/file");
 const path_1 = __importDefault(require("path"));
 const debugger_1 = __importDefault(require("../../utils/debugger"));
@@ -15,7 +15,7 @@ function createPage(options) {
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
     debug(`projectPath: ${projectPath}`);
     const pagePath = path_1.default.join(projectPath, 'pages', pageName, 'index.js');
-    const pageInstance = new page_1.Page(pageName);
+    const pageInstance = new page_1.default(pageName);
     const { components = [] } = pageConfig;
     if (components.length) {
         pageInstance.addComponents(components);

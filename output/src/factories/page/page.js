@@ -5,10 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const debugger_1 = __importDefault(require("../../utils/debugger"));
 const upperFirst_1 = require("../../utils/upperFirst");
-const basicComponent_1 = require("../component/basicComponent");
 const utils_1 = require("./utils");
+const model_1 = __importDefault(require("../model/model"));
+const types_1 = require("../component/types");
 const debug = debugger_1.default(__filename);
-class Page extends basicComponent_1.Basic {
+class Page extends types_1.Basic {
     constructor(name) {
         super();
         this.name = '';
@@ -35,9 +36,14 @@ class Page extends basicComponent_1.Basic {
         this.components = [];
         this.stateProps = [];
         this.methods = [];
+        this.didMountStep = [];
         this.name = name;
         this.pageName = upperFirst_1.lowerFirst(name);
         this.className = upperFirst_1.upperFirst(name);
+        this.model = new model_1.default({
+            initialState: {},
+            namespace: this.pageName
+        });
     }
     addImport(basicImport) {
         const { source } = basicImport;
@@ -67,44 +73,7 @@ class Page extends basicComponent_1.Basic {
     addComponents(components = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            utils_1.addComponent(this, component, (newComponent, newComponentInstance) => {
-                if (newComponent.name === 'KSTable') {
-                    const decorator = {
-                        name: 'connect',
-                        inputProps: [
-                            this.name,
-                            `${this.name}ListLoading`
-                        ]
-                    };
-                    debug(`add decorators: ${JSON.stringify(decorator)}`);
-                    this.addDecorator(decorator);
-                    newComponentInstance.addProp('dataSource', `this.props.${this.pageName}.${this.pageName}List`);
-                    newComponentInstance.addProp('loading', `this.props.${this.pageName}.${this.pageName}ListLoading`);
-                    newComponentInstance.addProp('pagination', `{
-                        current: this.props.${this.pageName}.search${this.className}Form.page,
-                        pageSize: this.props.${this.pageName}.search${this.className}Form.limit,
-                        total: this.props.${this.pageName}.search${this.className}Form.total,
-                        onChange: this.onPageChange
-                    }`);
-                    this.addMethod(`
-                        loadList() {
-                            actions.${this.pageName}.load${this.className}List();
-                        }
-                    `);
-                    this.addMethod(`
-                        onPageChange(page, pageSize) {
-                            actions.${this.pageName}.setReducers({
-                                search${this.className}Form: {
-                                    ...this.props.${this.pageName}.search${this.className}Form,
-                                    page,
-                                    limit: pageSize
-                                }
-                            });
-                            this.load${this.className}List();
-                        }
-                    `);
-                }
-            });
+            utils_1.addComponent(this, this, component);
         });
     }
     addState(stateProps) {
@@ -113,12 +82,16 @@ class Page extends basicComponent_1.Basic {
     addMethod(methodCode) {
         this.methods.push(methodCode);
     }
+    addDidMountStep(stepCode) {
+        this.didMountStep.push(stepCode);
+    }
     toCode() {
         const importsCode = utils_1.getImportsCode(this.imports);
         const decoratorCode = utils_1.getDecoratorsCode(this.name + 'Form', this.name, this.decorators);
         const componentsCode = utils_1.getComponentsCode(this.components);
         const statePropsCode = utils_1.getStateCode(this.stateProps);
         const methodsCode = this.methods.join('\n');
+        const didMountStepCode = this.didMountStep.join('\n');
         return `
 ${importsCode}
 
@@ -130,11 +103,7 @@ export default class ${this.className} extends React.Component {
     }
     ${methodsCode}
     componentDidMount() {
-        // 初始化redux
-        actions.${this.pageName}.setReducer({
-            ...STATE
-        });
-        this.load${this.className}List();
+        ${didMountStepCode}
     }
 
     render() {
@@ -148,5 +117,5 @@ export default class ${this.className} extends React.Component {
 `;
     }
 }
-exports.Page = Page;
+exports.default = Page;
 //# sourceMappingURL=page.js.map

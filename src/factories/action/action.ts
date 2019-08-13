@@ -3,6 +3,7 @@ import { BasciImport } from '../page/types';
 import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
 import { BasicComponent } from '../component/basicComponent';
 import { LinkComponent, LinkComponentStructure } from '../component/linkComponent';
+import Page from '../page/page';
 
 type actionType = 'modal' | 'confirm' | 'request' | 'link';
 
@@ -21,14 +22,15 @@ export class Action {
     dialog?: BasicComponent
     trigger: BasicComponent
 
-    constructor(config: ActionStructure) {
+    constructor(page: Page, config: ActionStructure) {
         const { title, name, type, trigger } = config;
         this.name = name;
         this.type = type;
-        this.trigger = new ConfirmComponent({
+        this.trigger = new ConfirmComponent(page, {
             ...trigger as ConfirmComponentStructure,
             buttonText: name,
-            title
+            title,
+            componentName: 
         });
         switch (type) {
             case 'modal':
@@ -36,7 +38,7 @@ export class Action {
             case 'request':
                 break;
             case 'link':
-                this.trigger = new LinkComponent({
+                this.trigger = new LinkComponent(page, {
                     ...trigger as LinkComponentStructure,
                     text: name
                 });

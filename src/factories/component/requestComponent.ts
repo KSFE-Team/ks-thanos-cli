@@ -1,4 +1,6 @@
-import { BasicComponent, ComponentStructure } from './basicComponent';
+import { BasicComponent } from './basicComponent';
+import Page from '../page/page';
+import { ComponentStructure } from './types';
 
 export interface RequestComponentStructure extends ComponentStructure {
     api: string;
@@ -12,8 +14,8 @@ export class RequestComponent extends BasicComponent implements RequestComponent
     method = ''
     text = ''
 
-    constructor(config: RequestComponentStructure) {
-        super(config);
+    constructor(page: Page, config: RequestComponentStructure) {
+        super(page, config);
         this.api = config.api;
         this.method = config.method || 'get';
         this.text = config.text;
