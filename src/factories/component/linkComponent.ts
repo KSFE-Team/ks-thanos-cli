@@ -1,8 +1,8 @@
 import { BasicComponent } from './basicComponent';
 import Page from '../page/page';
-import { ComponentStructure } from './types';
+import { ComponentConfig } from './types';
 
-export interface LinkComponentStructure extends ComponentStructure {
+export interface LinkComponentStructure extends ComponentConfig {
     href: string;
     text: string;
 }

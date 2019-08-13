@@ -7,48 +7,6 @@ const debugger_1 = __importDefault(require("../../utils/debugger"));
 const tableComponent_1 = require("../component/tableComponent");
 const component_1 = require("../../utils/constants/component");
 const debug = debugger_1.default(__filename);
-function getDecoratorsCode(formName, pageName, decorators) {
-    debug(`decorators: ${JSON.stringify(decorators)}`);
-    return decorators.map((decorator) => {
-        switch (decorator.name) {
-            case 'connect':
-                const { inputProps, outputProps } = decorator;
-                const inputPropsCode = inputProps.join(', ');
-                const outputPropsCode = outputProps.join(',\n');
-                return `@connect(({ ${inputPropsCode} }) => ({ 
-                    ${outputPropsCode}
-                 }))`;
-            case 'Form.create':
-                const { formItems = [] } = decorator;
-                if (formItems.length) {
-                    let mapPropsToFieldsCode = '';
-                    mapPropsToFieldsCode = formItems.map((formItem) => {
-                        return `${formItem}: Form.createFormField({
-                            ...props.${pageName}.${formName}.${formItem},
-                            value: props.${pageName}.${formName}.${formItem} && props.${pageName}.${formName}.${formItem}.value
-                        }),`;
-                    }).join('\n');
-                    return `@Form.create({
-                        mapPropsToFields() {
-                            return {
-                                ${mapPropsToFieldsCode}
-                            };
-                        },
-                        onFieldsChange(props, fields) {
-                            actions.${pageName}.setReducers({
-                                ${formName}: {
-                                    ...props.${pageName}.${formName},
-                                    ...fields
-                                }
-                            });
-                        }
-                    })`;
-                }
-                return `@Form.create()`;
-        }
-    }).join('\n');
-}
-exports.getDecoratorsCode = getDecoratorsCode;
 function getImportsCode(imports) {
     const codes = [];
     for (let source in imports) {

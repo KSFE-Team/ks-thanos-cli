@@ -2,7 +2,7 @@ import { upperFirst } from '../../../utils/upperFirst';
 import { BasciImport } from '../../page/types';
 import Debug from '../../../utils/debugger';
 import Page from '../../page/page';
-import { Basic, ComponentStructure } from '../types';
+import { Basic, ComponentConfig } from '../types';
 
 const debug = Debug(__filename);
 
@@ -19,13 +19,13 @@ export abstract class BasicComponent extends Basic {
         [name: string]: any;
     } = {}
     className = ''
-    config: ComponentStructure
+    config: ComponentConfig
 
     page: Page
 
     constructor(
         page: Page,
-        config: ComponentStructure,
+        config: ComponentConfig,
     ) {
         super();
         

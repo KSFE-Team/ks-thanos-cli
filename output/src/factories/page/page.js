@@ -87,9 +87,9 @@ class Page extends types_1.Basic {
     }
     toCode() {
         const importsCode = utils_1.getImportsCode(this.imports);
-        const decoratorCode = utils_1.getDecoratorsCode(this.name + 'Form', this.name, this.decorators);
         const componentsCode = utils_1.getComponentsCode(this.components);
         const statePropsCode = utils_1.getStateCode(this.stateProps);
+        const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
         return `

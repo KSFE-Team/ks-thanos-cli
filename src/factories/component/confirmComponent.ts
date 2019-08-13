@@ -1,8 +1,8 @@
 import { BasicComponent } from './basicComponent';
 import Page from '../page/page';
-import { ComponentStructure } from './types';
+import { ComponentConfig } from './types';
 
-export interface ConfirmComponentStructure extends ComponentStructure {
+export interface ConfirmComponentStructure extends ComponentConfig {
     buttonText: string;
     title: string;
     okText: string;

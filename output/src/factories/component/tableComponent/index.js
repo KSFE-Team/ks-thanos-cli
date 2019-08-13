@@ -7,6 +7,8 @@ const basicComponent_1 = require("../basicComponent");
 const debugger_1 = __importDefault(require("../../../utils/debugger"));
 const tableColumn_1 = require("./tableColumn");
 const request_1 = require("../../request");
+const connect_1 = require("../../decorator/connect");
+const searchForm_1 = require("./searchForm");
 const debug = debugger_1.default(__filename);
 class TableComponent extends basicComponent_1.BasicComponent {
     constructor(page, config) {
@@ -15,6 +17,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
         this.props = {
             rowKey: 'id'
         };
+        this.stateName = '';
         this.dataDependencies = [];
         this.dataDependencies = config.dependencies.map((item) => {
             const dataDependence = new request_1.DataDependence(item);
@@ -23,29 +26,40 @@ class TableComponent extends basicComponent_1.BasicComponent {
             }
             return dataDependence;
         });
+        this.stateName = this.componentName;
+        if (config.searchForm) {
+            this.searchForm = new searchForm_1.SearchFormComponent(page, {
+                name: 'Form',
+                source: 'antd',
+                componentName: `${config.componentName}From`,
+                components: [],
+                default: false,
+                formItems: config.searchForm
+            }, this);
+            this.searchForm.init();
+        }
     }
     initProps() {
         const { pageName } = this.page;
-        const tableStateName = this.componentName;
-        this.addProp('dataSource', `this.props.${pageName}.${tableStateName}.list`);
-        this.addProp('loading', `this.props.${pageName}.${tableStateName}.loading`);
+        this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
+        this.addProp('loading', `this.props.${pageName}.${this.stateName}.loading`);
         this.addProp('pagination', `{
-            current: this.props.${pageName}.${tableStateName}.page,
-            pageSize: this.props.${pageName}.${tableStateName}.limit,
-            total: this.props.${pageName}.${tableStateName}.total,
+            current: this.props.${pageName}.${this.stateName}.page,
+            pageSize: this.props.${pageName}.${this.stateName}.limit,
+            total: this.props.${pageName}.${this.stateName}.total,
             onChange: this.onPageChange
         }`);
     }
     initEffects() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
+        const stateName = this.componentName;
         const loadEffectName = `load${className}List`;
         const { pageName } = this.page;
         const queryApi = this.listDependence ? this.listDependence.api : '';
         this.page.model.addEffect(`
             async ${loadEffectName}(payload, getState) {
                 try {
-                    const tableState = getState().${pageName}.${tableStateName};
+                    const tableState = getState().${pageName}.${stateName};
 
                     let postData = {
                         size: tableState.limit,
@@ -56,7 +70,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
 
                     if (response && response.code === 200) {
                         actions.${pageName}.setReducer({
-                            ${tableStateName}: {
+                            ${stateName}: {
                                 ...tableState,
                                 list: response.data.content,
                                 page: response.data.pageNumber,
@@ -72,7 +86,6 @@ class TableComponent extends basicComponent_1.BasicComponent {
     }
     initPageMethods() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
         const loadEffectName = `load${className}List`;
         const { pageName } = this.page;
         this.page.addMethod(`
@@ -83,8 +96,8 @@ class TableComponent extends basicComponent_1.BasicComponent {
         this.page.addMethod(`
             onPageChange(page, pageSize) {
                 actions.${pageName}.setReducers({
-                    ${tableStateName}: {
-                        ...this.props.${pageName}.${tableStateName},
+                    ${this.stateName}: {
+                        ...this.props.${pageName}.${this.stateName},
                         page,
                         limit: pageSize
                     }
@@ -100,11 +113,12 @@ class TableComponent extends basicComponent_1.BasicComponent {
     }
     initPageDecorators() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
         const { pageName } = this.page;
         const loadEffectName = `load${className}List`;
-        const decorator = {
+        const decoratorConfig = {
             name: 'connect',
+            stateName: this.stateName,
+            pageName: this.page.pageName,
             inputProps: [
                 pageName,
                 'loading'
@@ -112,10 +126,11 @@ class TableComponent extends basicComponent_1.BasicComponent {
             process: [],
             outputProps: [
                 pageName,
-                `${tableStateName}ListLoading: loading.effects['${pageName}/${loadEffectName}']`
+                `${this.stateName}ListLoading: loading.effects['${pageName}/${loadEffectName}']`
             ]
         };
-        debug(`add decorators: ${JSON.stringify(decorator)}`);
+        debug(`add decorators: ${JSON.stringify(decoratorConfig)}`);
+        const decorator = new connect_1.ConnectDecorator(decoratorConfig);
         this.page.addDecorator(decorator);
     }
     getImports() {
@@ -148,9 +163,12 @@ class TableComponent extends basicComponent_1.BasicComponent {
             debug(`propValue: ${propValue}`);
             propsCode.push(`${propKey}={${propValue}}`);
         }
-        return `<${this.className}
-            ${propsCode.join('\n')}
-        />`;
+        return `<Fragment>
+            ${this.searchForm && this.searchForm.toCode()}
+            <${this.className}
+                ${propsCode.join('\n')}
+            />
+        </Fragment>`;
     }
 }
 exports.TableComponent = TableComponent;

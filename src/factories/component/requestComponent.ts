@@ -1,8 +1,8 @@
 import { BasicComponent } from './basicComponent';
 import Page from '../page/page';
-import { ComponentStructure } from './types';
+import { ComponentConfig } from './types';
 
-export interface RequestComponentStructure extends ComponentStructure {
+export interface RequestComponentStructure extends ComponentConfig {
     api: string;
     method: string;
     text: string;

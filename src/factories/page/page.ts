@@ -1,10 +1,12 @@
-import { ConnectDecorator, Import, ComponentStateProps, BasciImport } from './types';
+import { Import, ComponentStateProps, BasciImport } from './types';
 import Debug from '../../utils/debugger';
 import { upperFirst, lowerFirst } from '../../utils/upperFirst';
 import { BasicComponent } from '../component/basicComponent';
-import { getImportsCode, getDecoratorsCode, getComponentsCode, getStateCode, addComponent } from './utils';
+import { getImportsCode, getComponentsCode, getStateCode, addComponent } from './utils';
 import Model from '../model/model';
-import { Basic, ComponentStructure } from '../component/types';
+import { Basic, ComponentConfig } from '../component/types';
+import { ConnectDecorator } from '../decorator/connect';
+import { FormDecorator } from '../decorator/form';
 
 const debug = Debug(__filename);
 
@@ -33,7 +35,7 @@ export default class Page extends Basic {
             defaultImport: false
         }]
     };
-    private decorators: ConnectDecorator[] = [];
+    private decorators: (ConnectDecorator | FormDecorator)[] = [];
     private components: BasicComponent[] = [];
     private stateProps: ComponentStateProps[] = [];
     private methods: string[] = [];
@@ -65,7 +67,7 @@ export default class Page extends Basic {
         }
     }
 
-    public addDecorator(decorator: ConnectDecorator) {
+    public addDecorator(decorator: ConnectDecorator | FormDecorator) {
         this.decorators.push(decorator);
     }
 
@@ -78,7 +80,7 @@ export default class Page extends Basic {
         this.components.push(component);
     }
 
-    public addComponents(components: ComponentStructure[] = []) {
+    public addComponents(components: ComponentConfig[] = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
             addComponent(this, this, component);
@@ -99,9 +101,9 @@ export default class Page extends Basic {
 
     public toCode() {
         const importsCode = getImportsCode(this.imports);
-        const decoratorCode = getDecoratorsCode(this.name + 'Form', this.name, this.decorators);
         const componentsCode = getComponentsCode(this.components);
         const statePropsCode = getStateCode(this.stateProps);
+        const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
 

@@ -11,22 +11,6 @@ export interface BasciImport {
     defaultImport: boolean;
 }
 
-export interface Decorator {
-    name: 'connect' | 'Form.create';
-}
-
-export interface ConnectDecorator extends Decorator {
-    name: 'connect';
-    inputProps: string[];
-    process: string[];
-    outputProps: string[];
-}
-
-export interface FormDecorator extends Decorator {
-    name: 'Form.create';
-    formItems: string[];
-}
-
 export interface ComponentStateProps {
     name: string;
     value: any;

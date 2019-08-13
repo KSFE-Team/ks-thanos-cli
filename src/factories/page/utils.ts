@@ -1,5 +1,5 @@
-import { ConnectDecorator, FormDecorator, Import, ComponentStateProps } from './types';
-import { ComponentStructure, Basic, TableComponentStructure } from '../component/types';
+import { Import, ComponentStateProps } from './types';
+import { ComponentConfig, Basic, TableComponentConfig } from '../component/types';
 import Debug from '../../utils/debugger';
 import { TableComponent } from '../component/tableComponent';
 import { BasicComponent } from '../component/basicComponent';
@@ -7,48 +7,6 @@ import { COMPONENT_TYPES } from '../../utils/constants/component';
 import Page from './page';
 
 const debug = Debug(__filename);
-
-export function getDecoratorsCode(formName: string, pageName: string, decorators: (ConnectDecorator | FormDecorator)[]) {
-    debug(`decorators: ${JSON.stringify(decorators)}`);
-    return decorators.map((decorator) => {
-        switch (decorator.name) {
-            case 'connect':
-                const { inputProps, outputProps } = decorator;
-                const inputPropsCode = inputProps.join(', ');
-                const outputPropsCode = outputProps.join(',\n');
-                return `@connect(({ ${inputPropsCode} }) => ({ 
-                    ${outputPropsCode}
-                 }))`;
-            case 'Form.create':
-                const { formItems = [] } = decorator;
-                if (formItems.length) {
-                    let mapPropsToFieldsCode = '';
-                    mapPropsToFieldsCode = formItems.map((formItem) => {
-                        return `${formItem}: Form.createFormField({
-                            ...props.${pageName}.${formName}.${formItem},
-                            value: props.${pageName}.${formName}.${formItem} && props.${pageName}.${formName}.${formItem}.value
-                        }),`;
-                    }).join('\n');
-                    return `@Form.create({
-                        mapPropsToFields() {
-                            return {
-                                ${mapPropsToFieldsCode}
-                            };
-                        },
-                        onFieldsChange(props, fields) {
-                            actions.${pageName}.setReducers({
-                                ${formName}: {
-                                    ...props.${pageName}.${formName},
-                                    ...fields
-                                }
-                            });
-                        }
-                    })`;
-                }
-                return `@Form.create()`;
-        }
-    }).join('\n');
-}
 
 export function getImportsCode(imports: Import) {
     const codes: string[] = [];
@@ -83,13 +41,13 @@ export function getStateCode(stateProps: ComponentStateProps[]) {
 export function addComponent(
     page: Page,
     instance: Basic,
-    component: ComponentStructure,
-    handler?: (component: ComponentStructure, componentInstance: BasicComponent) => void
+    component: ComponentConfig,
+    handler?: (component: ComponentConfig, componentInstance: BasicComponent) => void
 ) {
     let componentInstance: BasicComponent | undefined;
     switch (component.name) {
         case COMPONENT_TYPES.TABLE:
-            componentInstance = new TableComponent(page, component as TableComponentStructure);
+            componentInstance = new TableComponent(page, component as TableComponentConfig);
             componentInstance.init();
             instance.addComponent(componentInstance);
             break;

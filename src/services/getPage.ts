@@ -51,9 +51,9 @@ export async function getPage(pageName: string) {
                         label: '用户姓名', // 搜索表单标题
                         name: 'Input', // 组件名称
                         source: 'antd', // 组件来源
-                        default: 'false', // 是否默认导出
+                        default: false, // 是否默认导出
                         key: 'userName', // 表单绑定Key
-                    },
+                    }
                 ]
             },
         ],

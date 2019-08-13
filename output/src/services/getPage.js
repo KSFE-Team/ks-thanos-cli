@@ -53,9 +53,9 @@ async function getPage(pageName) {
                         label: '用户姓名',
                         name: 'Input',
                         source: 'antd',
-                        default: 'false',
+                        default: false,
                         key: 'userName',
-                    },
+                    }
                 ]
             },
         ],

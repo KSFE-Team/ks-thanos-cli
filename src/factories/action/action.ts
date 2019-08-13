@@ -1,4 +1,4 @@
-import { ComponentStructure } from '../component/types';
+import { ComponentConfig } from '../component/types';
 import { BasciImport } from '../page/types';
 import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
 import { BasicComponent } from '../component/basicComponent';
@@ -11,8 +11,8 @@ export interface ActionStructure {
     name: string;
     title: string;
     type: actionType;
-    dialog: ComponentStructure;
-    trigger: ComponentStructure;
+    dialog: ComponentConfig;
+    trigger: ComponentConfig;
 }
 
 export class Action {
@@ -30,7 +30,7 @@ export class Action {
             ...trigger as ConfirmComponentStructure,
             buttonText: name,
             title,
-            componentName: 
+            componentName: `${page.pageName}Confrim`
         });
         switch (type) {
             case 'modal':

@@ -39,17 +39,30 @@ export abstract class Basic {
     abstract toCode(): string;
 }
 
-export interface ComponentStructure {
+export interface ComponentConfig {
     name: string; // 组件标签名称
     componentName: string; // 组件id名称
     source: componentSourceType; // 组件来源
     default: boolean; // 是否默认导出
-    components: ComponentStructure[]; // 子组件
+    components: ComponentConfig[]; // 子组件
     props?: {
         [name: string]: any;
     }; // 组件需要注入的父属性
 }
 
-export interface TableComponentStructure extends ComponentStructure {
+export interface TableComponentConfig extends ComponentConfig {
     dependencies: DataDependenceStructure[];
+    searchForm?: FormItemConfig[];
+}
+
+export interface FormComponentConfig extends ComponentConfig {
+    formItems: FormItemConfig[];
+}
+
+export interface FormItemConfig {
+    label: string; // 搜索表单标题
+    name: string; // 组件名称
+    source: string; // 组件来源
+    default: false; // 是否默认导出
+    key: string; // 表单绑定Key
 }

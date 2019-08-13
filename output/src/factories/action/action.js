@@ -11,7 +11,7 @@ class Action {
             ...trigger,
             buttonText: name,
             title,
-            componentName: 
+            componentName: `${page.pageName}Confrim`
         });
         switch (type) {
             case 'modal':

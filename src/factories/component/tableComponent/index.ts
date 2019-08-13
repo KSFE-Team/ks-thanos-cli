@@ -1,10 +1,12 @@
 import { BasicComponent } from '../basicComponent';
 import Debug from '../../../utils/debugger';
 import { TableColumn, TableColumnConfig } from './tableColumn';
-import { ConnectDecorator } from '../../page/types';
 import Page from '../../page/page';
-import { TableComponentStructure } from '../types';
+import { TableComponentConfig } from '../types';
 import { DataDependence } from '../../request';
+import { ConnectDecoratorConfig } from '../../decorator/types';
+import { ConnectDecorator } from '../../decorator/connect';
+import { SearchFormComponent } from './searchForm';
 
 const debug = Debug(__filename);
 
@@ -17,10 +19,14 @@ export class TableComponent extends BasicComponent {
         rowKey: 'id'
     }
 
+    searchForm: SearchFormComponent | undefined
+
+    stateName: string = ''
+
     dataDependencies: DataDependence[] = []
     listDependence: DataDependence | undefined
 
-    constructor(page: Page, config: TableComponentStructure) {
+    constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
         this.dataDependencies = config.dependencies.map((item) => {
             const dataDependence = new DataDependence(item);
@@ -29,32 +35,43 @@ export class TableComponent extends BasicComponent {
             }
             return dataDependence;
         });
+        this.stateName = this.componentName;
+        if (config.searchForm) {
+            this.searchForm = new SearchFormComponent(page, {
+                name: 'Form',
+                source: 'antd',
+                componentName: `${config.componentName}From`,
+                components: [],
+                default: false,
+                formItems: config.searchForm
+            }, this);
+            this.searchForm.init();
+        }
     }
 
     initProps() {
         const { pageName } = this.page;
-        const tableStateName = this.componentName;
 
-        this.addProp('dataSource', `this.props.${pageName}.${tableStateName}.list`);
-        this.addProp('loading', `this.props.${pageName}.${tableStateName}.loading`);
+        this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
+        this.addProp('loading', `this.props.${pageName}.${this.stateName}.loading`);
         this.addProp('pagination', `{
-            current: this.props.${pageName}.${tableStateName}.page,
-            pageSize: this.props.${pageName}.${tableStateName}.limit,
-            total: this.props.${pageName}.${tableStateName}.total,
+            current: this.props.${pageName}.${this.stateName}.page,
+            pageSize: this.props.${pageName}.${this.stateName}.limit,
+            total: this.props.${pageName}.${this.stateName}.total,
             onChange: this.onPageChange
         }`);
     }
 
     initEffects() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
+        const stateName = this.componentName;
         const loadEffectName = `load${className}List`;
         const { pageName } = this.page;
         const queryApi = this.listDependence ? this.listDependence.api : '';
         this.page.model.addEffect(`
             async ${loadEffectName}(payload, getState) {
                 try {
-                    const tableState = getState().${pageName}.${tableStateName};
+                    const tableState = getState().${pageName}.${stateName};
 
                     let postData = {
                         size: tableState.limit,
@@ -65,7 +82,7 @@ export class TableComponent extends BasicComponent {
 
                     if (response && response.code === 200) {
                         actions.${pageName}.setReducer({
-                            ${tableStateName}: {
+                            ${stateName}: {
                                 ...tableState,
                                 list: response.data.content,
                                 page: response.data.pageNumber,
@@ -82,7 +99,6 @@ export class TableComponent extends BasicComponent {
 
     initPageMethods() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
         const loadEffectName = `load${className}List`;
         const { pageName } = this.page;
 
@@ -94,8 +110,8 @@ export class TableComponent extends BasicComponent {
         this.page.addMethod(`
             onPageChange(page, pageSize) {
                 actions.${pageName}.setReducers({
-                    ${tableStateName}: {
-                        ...this.props.${pageName}.${tableStateName},
+                    ${this.stateName}: {
+                        ...this.props.${pageName}.${this.stateName},
                         page,
                         limit: pageSize
                     }
@@ -113,12 +129,13 @@ export class TableComponent extends BasicComponent {
 
     initPageDecorators() {
         const className = this.componentUpperName;
-        const tableStateName = this.componentName;
         const { pageName } = this.page;
         const loadEffectName = `load${className}List`;
 
-        const decorator: ConnectDecorator = {
+        const decoratorConfig: ConnectDecoratorConfig = {
             name: 'connect',
+            stateName: this.stateName,
+            pageName: this.page.pageName,
             inputProps: [
                 pageName,
                 'loading'
@@ -127,13 +144,15 @@ export class TableComponent extends BasicComponent {
             ],
             outputProps: [
                 pageName,
-                `${tableStateName}ListLoading: loading.effects['${pageName}/${loadEffectName}']`
+                `${this.stateName}ListLoading: loading.effects['${pageName}/${loadEffectName}']`
             ]
         };
-        debug(`add decorators: ${JSON.stringify(decorator)}`);
+        debug(`add decorators: ${JSON.stringify(decoratorConfig)}`);
+
+        const decorator = new ConnectDecorator(decoratorConfig);
         this.page.addDecorator(decorator);
     }
-    
+
     getImports() {
         let imports = super.getImports();
         this.columns.forEach((column) => {
@@ -167,8 +186,11 @@ export class TableComponent extends BasicComponent {
                 `${propKey}={${propValue}}`
             );
         }
-        return `<${this.className}
-            ${propsCode.join('\n')}
-        />`;
+        return `<Fragment>
+            ${this.searchForm && this.searchForm.toCode()}
+            <${this.className}
+                ${propsCode.join('\n')}
+            />
+        </Fragment>`;
     }
 }
