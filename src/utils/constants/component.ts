@@ -1,6 +1,8 @@
 export enum COMPONENT_TYPES {
-    TABLE = 'KSTable',
+    TABLE = 'Table',
     CONFIRM = 'confirm',
     REQUEST = 'request',
-    LINK = 'link'
+    LINK = 'link',
+    FORM = 'Form',
+    INPUT = 'Input'
 }

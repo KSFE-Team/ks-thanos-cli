@@ -1,5 +1,5 @@
 import { Action, ActionStructure } from '../../action/action';
-import Page from '../../page/page';
+import Page from '../../page';
 import { BasciImport } from '../../page/types';
 
 export interface TableColumnConfig {

@@ -1,7 +1,6 @@
-import { upperFirst } from '../../../utils/upperFirst';
 import { BasciImport } from '../../page/types';
 import Debug from '../../../utils/debugger';
-import Page from '../../page/page';
+import Page from '../../page';
 import { Basic, ComponentConfig } from '../types';
 
 const debug = Debug(__filename);
@@ -11,14 +10,14 @@ type componentSourceType = 'antd' | 'ks-cms-ui';
 export abstract class BasicComponent extends Basic {
     name = ''
     componentName = ''
-    componentUpperName = ''
+    stateName = ''
+    upperStateName = ''
     source: componentSourceType = 'antd'
     default = false
     components: BasicComponent[] = []
     props: {
         [name: string]: any;
     } = {}
-    className = ''
     config: ComponentConfig
 
     page: Page
@@ -31,17 +30,15 @@ export abstract class BasicComponent extends Basic {
         
         this.page = page;
 
-        const { name, componentName, source, default: defaultImport } = config;
+        const { componentName, stateName, source, default: defaultImport } = config;
 
         this.config = config;
-        this.name = name;
-        this.className = upperFirst(name);
         this.componentName = componentName;
-        this.componentUpperName = upperFirst(componentName);
+        this.stateName = stateName;
         this.source = source;
         this.default = defaultImport;
 
-        debug(`Component Create -> name: ${this.name}, className: ${this.className}, componentName: ${this.componentName}, componentUpperName: ${this.componentUpperName}, source: ${this.source}, default: ${this.default}`);
+        debug(`Component Create -> componentName: ${this.componentName}, stateName: ${this.stateName}, source: ${this.source}, default: ${this.default}`);
     }
 
     init() {
@@ -50,6 +47,7 @@ export abstract class BasicComponent extends Basic {
             this.addProp(propKey, props[propKey]);
         }
         this.initProps && this.initProps();
+        this.initPageState && this.initPageState();
         this.initEffects && this.initEffects();
         this.initPageMethods && this.initPageMethods();
         this.initPageLifecycle && this.initPageLifecycle();
@@ -64,7 +62,7 @@ export abstract class BasicComponent extends Basic {
     getImports(): BasciImport[] {
         let componentImports: BasciImport[] = [{
             source: this.source,
-            name: this.className,
+            name: this.componentName,
             defaultImport: this.default
         }];
         for (let component of this.components) {

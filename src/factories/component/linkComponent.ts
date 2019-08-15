@@ -1,5 +1,5 @@
 import { BasicComponent } from './basicComponent';
-import Page from '../page/page';
+import Page from '../page';
 import { ComponentConfig } from './types';
 
 export interface LinkComponentStructure extends ComponentConfig {

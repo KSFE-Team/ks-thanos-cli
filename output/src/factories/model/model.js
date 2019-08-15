@@ -2,24 +2,38 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Model {
     constructor(config) {
-        this.effects = [];
+        this.effects = {};
         this.namespace = '';
         this.initialState = {};
         this.namespace = config.namespace;
         this.initialState = config.initialState;
     }
-    addEffect(effectCode) {
-        this.effects.push(effectCode);
+    addInitialState(stateName, key, value) {
+        const state = this.initialState[stateName] || {};
+        state[key] = value;
+        this.initialState[stateName] = state;
+    }
+    addEffect(effect) {
+        this.effects[effect.name] = effect;
+    }
+    getEffect(effectName) {
+        return this.effects[effectName];
     }
     getStateCode() {
         let stateCode = [];
         for (let stateKey in this.initialState) {
-            stateCode.push(`${stateKey}: ${this.initialState[stateKey]}`);
+            const innerStateCode = Object.entries(this.initialState[stateKey]).map((stateObject) => {
+                const [key, value] = stateObject;
+                return `${key}: ${value}`;
+            }).join(',\n');
+            stateCode.push(`${stateKey}: {
+                ${innerStateCode}
+            }`);
         }
         return stateCode.join(',\n');
     }
     getEffectsCode() {
-        return this.effects.join(',\n');
+        return Object.values(this.effects).map((effect) => effect.code).join(',\n');
     }
     toCode() {
         const stateCode = this.getStateCode();
@@ -28,7 +42,6 @@ class Model {
 import { message } from 'antd';
 import { stringify } from 'qs';
 import request from 'Src/utils/request';
-import { API } from 'Src/api/api';
 
 export const STATE = {
     ${stateCode}

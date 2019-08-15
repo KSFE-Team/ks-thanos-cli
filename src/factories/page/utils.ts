@@ -1,10 +1,12 @@
-import { Import, ComponentStateProps } from './types';
-import { ComponentConfig, Basic, TableComponentConfig } from '../component/types';
+import { Import } from './types';
+import { ComponentConfig, Basic, TableComponentConfig, FormComponentConfig, FormItemConfig } from '../component/types';
 import Debug from '../../utils/debugger';
 import { TableComponent } from '../component/tableComponent';
 import { BasicComponent } from '../component/basicComponent';
 import { COMPONENT_TYPES } from '../../utils/constants/component';
-import Page from './page';
+import { FormComponent } from '../component/formComponent';
+import Page from './index';
+import { FormItem } from '../component/formComponent/formItem';
 
 const debug = Debug(__filename);
 
@@ -30,14 +32,6 @@ export function getComponentsCode(components: BasicComponent[]) {
     }).join('\n');
 }
 
-export function getStateCode(stateProps: ComponentStateProps[]) {
-    return stateProps.map(({ name, value }) => {
-        const valueStr = JSON.stringify(value);
-        debug(`state ${name}: ${valueStr}`);
-        return `${name}: ${valueStr}`;
-    }).join('\n');
-}
-
 export function addComponent(
     page: Page,
     instance: Basic,
@@ -45,12 +39,18 @@ export function addComponent(
     handler?: (component: ComponentConfig, componentInstance: BasicComponent) => void
 ) {
     let componentInstance: BasicComponent | undefined;
-    switch (component.name) {
+    switch (component.componentName) {
         case COMPONENT_TYPES.TABLE:
             componentInstance = new TableComponent(page, component as TableComponentConfig);
-            componentInstance.init();
             instance.addComponent(componentInstance);
             break;
+        case COMPONENT_TYPES.FORM:
+            componentInstance = new FormComponent(page, component as FormComponentConfig);
+            instance.addComponent(componentInstance);
+            break;
+        case COMPONENT_TYPES.INPUT:
+            componentInstance = new FormItem(page, component as FormItemConfig);
+            instance.addComponent(componentInstance);
     }
     if (componentInstance) {
         handler && handler(component, componentInstance);
@@ -59,5 +59,6 @@ export function addComponent(
                 addComponent(page, componentInstance as BasicComponent, component, handler);
             });
         }
+        componentInstance.init();
     }
 }

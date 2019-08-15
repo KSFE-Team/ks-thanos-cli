@@ -1,8 +1,8 @@
-import { Import, ComponentStateProps, BasciImport } from './types';
+import { Import, BasciImport } from './types';
 import Debug from '../../utils/debugger';
 import { upperFirst, lowerFirst } from '../../utils/upperFirst';
 import { BasicComponent } from '../component/basicComponent';
-import { getImportsCode, getComponentsCode, getStateCode, addComponent } from './utils';
+import { getImportsCode, getComponentsCode, addComponent } from './utils';
 import Model from '../model/model';
 import { Basic, ComponentConfig } from '../component/types';
 import { ConnectDecorator } from '../decorator/connect';
@@ -29,15 +29,10 @@ export default class Page extends Basic {
         }, {
             name: 'actions',
             defaultImport: false
-        }],
-        './models': [{
-            name: 'STATE',
-            defaultImport: false
         }]
     };
     private decorators: (ConnectDecorator | FormDecorator)[] = [];
     private components: BasicComponent[] = [];
-    private stateProps: ComponentStateProps[] = [];
     private methods: string[] = [];
     private didMountStep: string[] = [];
 
@@ -87,10 +82,6 @@ export default class Page extends Basic {
         });
     }
 
-    public addState(stateProps: ComponentStateProps[]) {
-        this.stateProps = this.stateProps.concat(stateProps);
-    }
-
     public addMethod(methodCode: string) {
         this.methods.push(methodCode);
     }
@@ -102,7 +93,6 @@ export default class Page extends Basic {
     public toCode() {
         const importsCode = getImportsCode(this.imports);
         const componentsCode = getComponentsCode(this.components);
-        const statePropsCode = getStateCode(this.stateProps);
         const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
@@ -112,10 +102,6 @@ ${importsCode}
 
 ${decoratorCode}
 export default class ${this.className} extends React.Component {
-
-    state = {
-        ${statePropsCode}
-    }
     ${methodsCode}
     componentDidMount() {
         ${didMountStepCode}

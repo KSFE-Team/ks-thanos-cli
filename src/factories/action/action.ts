@@ -3,7 +3,7 @@ import { BasciImport } from '../page/types';
 import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
 import { BasicComponent } from '../component/basicComponent';
 import { LinkComponent, LinkComponentStructure } from '../component/linkComponent';
-import Page from '../page/page';
+import Page from '../page';
 
 type actionType = 'modal' | 'confirm' | 'request' | 'link';
 

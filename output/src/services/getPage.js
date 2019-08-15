@@ -2,63 +2,62 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 async function getPage(pageName) {
     return {
-        name: pageName,
-        components: [
+        'components': [
             {
-                name: 'KSTable',
-                componentName: 'homeTable',
-                source: 'ks-cms-ui',
-                default: false,
-                dependencies: [
+                'components': [
                     {
-                        type: 'fetch',
-                        api: '/api/user/list',
-                        responseType: 'list',
+                        'stateName': 'user',
+                        'componentName': 'Input',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'username',
+                        'label': '姓名',
+                        'id': 'zpv0n0220aj',
+                        'parentId': 'soyu2flizbl',
+                        'configVisible': false,
+                        'props': {
+                            'placeholder': '姓名'
+                        }
                     }
                 ],
-                props: {
-                    columns: [
-                        {
-                            title: '系统名称',
-                            dataIndex: 'systemName',
-                        },
-                        {
-                            title: '电话',
-                            dataIndex: 'mobile'
-                        },
-                        {
-                            title: '操作',
-                            actions: [
-                                {
-                                    name: '删除',
-                                    api: '/api/user/delete',
-                                    method: 'post',
-                                    type: 'confirm',
-                                    title: '确认删除',
-                                    trigger: {
-                                        name: 'button',
-                                        componentName: 'tableConfirm',
-                                        source: 'antd',
-                                        default: false,
-                                        components: [],
-                                        props: {}
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                },
-                searchForm: [
-                    {
-                        label: '用户姓名',
-                        name: 'Input',
-                        source: 'antd',
-                        default: false,
-                        key: 'userName',
+                activeEvent: {
+                    eventType: 'api',
+                    'dependencies': {
+                        'type': 'fetch',
+                        'responseType': 'list',
+                        'api': '/user/query',
+                        'method': 'GET'
                     }
-                ]
+                },
+                'stateName': 'user',
+                'componentName': 'Form',
+                'source': 'antd',
+                'default': false
             },
-        ],
+            {
+                'stateName': 'user',
+                'componentName': 'Table',
+                'source': 'antd',
+                'default': false,
+                'props': {
+                    'columns': [
+                        {
+                            'title': '姓名',
+                            'dataIndex': 'username'
+                        }
+                    ]
+                },
+                'dependencies': {
+                    'type': 'fetch',
+                    'responseType': 'list',
+                    'api': '/user/query',
+                    'method': 'GET'
+                },
+                'components': [],
+                'id': 'soyu2flizbl',
+                'configVisible': false
+            }
+        ]
     };
 }
 exports.getPage = getPage;

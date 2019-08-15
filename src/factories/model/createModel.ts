@@ -1,6 +1,6 @@
 import path from 'path';
 import { writeFile } from '../../utils/file';
-import Page from '../page/page';
+import Page from '../page';
 import { formatFile } from '../../utils/format';
 
 export async function createModel(

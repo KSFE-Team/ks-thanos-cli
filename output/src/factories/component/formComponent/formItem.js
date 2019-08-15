@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const upperFirst_1 = require("../../../utils/upperFirst");
-class FormItem {
-    constructor(config) {
+const index_1 = require("../basicComponent/index");
+class FormItem extends index_1.BasicComponent {
+    constructor(page, config) {
+        super(page, config);
         this.props = [];
-        this.className = upperFirst_1.upperFirst(config.name);
         this.config = config;
         this.addProps(`placeholder="请输入${this.config.label}内容"`);
         this.addProps(`allowClear`);
+    }
+    initPageState() {
+        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
     addProps(propCode) {
         this.props.push(propCode);
@@ -17,7 +20,7 @@ class FormItem {
         return `<FormItem>
         {
             this.props.form.getFieldDecorator('${this.config.label}')(
-                <${this.className}
+                <${this.componentName}
                     ${propsCode}
                 />
             )

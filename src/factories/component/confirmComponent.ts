@@ -1,5 +1,5 @@
 import { BasicComponent } from './basicComponent';
-import Page from '../page/page';
+import Page from '../page';
 import { ComponentConfig } from './types';
 
 export interface ConfirmComponentStructure extends ComponentConfig {
@@ -35,13 +35,13 @@ export class ConfirmComponent extends BasicComponent implements ConfirmComponent
     }
 
     toCode() {
-        return `<${this.className}
+        return `<${this.componentName}
                     onClick={() => {
                         Modal.confirm({
                             title: ${this.title},
                             okText: ${this.okText},
                             cancelText: ${this.cancelText}
                         });
-                }}>${this.buttonText}</${this.className}>`;
+                }}>${this.buttonText}</${this.componentName}>`;
     }
 }

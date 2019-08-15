@@ -1,5 +1,9 @@
+import { Effect } from './effect';
+
 interface InitialState {
-    [name: string]: string;
+    [stateName: string]: {
+        [name: string]: string;
+    };
 }
 
 export interface ModelConfig {
@@ -9,7 +13,9 @@ export interface ModelConfig {
 
 export default class Model {
 
-    effects: string[] = []
+    effects: {
+        [effectName: string]: Effect;
+    } = {}
     namespace: string = ''
     initialState: InitialState = {}
 
@@ -18,20 +24,36 @@ export default class Model {
         this.initialState = config.initialState;
     }
 
-    addEffect(effectCode: string) {
-        this.effects.push(effectCode);
+    addInitialState(stateName: string, key: string, value: string) {
+        const state = this.initialState[stateName] || {};
+        state[key] = value;
+        this.initialState[stateName] = state;
+    }
+
+    addEffect(effect: Effect) {
+        this.effects[effect.name] = effect;
+    }
+
+    getEffect(effectName: string) {
+        return this.effects[effectName];
     }
 
     getStateCode() {
         let stateCode = [];
         for (let stateKey in this.initialState) {
-            stateCode.push(`${stateKey}: ${this.initialState[stateKey]}`);
+            const innerStateCode =  Object.entries(this.initialState[stateKey]).map((stateObject) => {
+                const [key, value] = stateObject;
+                return `${key}: ${value}`;
+            }).join(',\n');
+            stateCode.push(`${stateKey}: {
+                ${innerStateCode}
+            }`);
         }
         return stateCode.join(',\n');
     }
 
     getEffectsCode() {
-        return this.effects.join(',\n');
+        return Object.values(this.effects).map((effect) => effect.code).join(',\n');
     }
 
     toCode() {
@@ -41,7 +63,6 @@ export default class Model {
 import { message } from 'antd';
 import { stringify } from 'qs';
 import request from 'Src/utils/request';
-import { API } from 'Src/api/api';
 
 export const STATE = {
     ${stateCode}

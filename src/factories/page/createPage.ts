@@ -1,4 +1,4 @@
-import Page from './page';
+import Page from '.';
 import { writeFile } from '../../utils/file';
 import path from 'path';
 import Debug from '../../utils/debugger';

@@ -10,8 +10,3 @@ export interface BasciImport {
     source: string;
     defaultImport: boolean;
 }
-
-export interface ComponentStateProps {
-    name: string;
-    value: any;
-}

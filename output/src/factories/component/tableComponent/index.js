@@ -8,7 +8,6 @@ const debugger_1 = __importDefault(require("../../../utils/debugger"));
 const tableColumn_1 = require("./tableColumn");
 const request_1 = require("../../request");
 const connect_1 = require("../../decorator/connect");
-const searchForm_1 = require("./searchForm");
 const debug = debugger_1.default(__filename);
 class TableComponent extends basicComponent_1.BasicComponent {
     constructor(page, config) {
@@ -17,32 +16,12 @@ class TableComponent extends basicComponent_1.BasicComponent {
         this.props = {
             rowKey: 'id'
         };
-        this.stateName = '';
-        this.dataDependencies = [];
-        this.dataDependencies = config.dependencies.map((item) => {
-            const dataDependence = new request_1.DataDependence(item);
-            if (item.responseType === 'list') {
-                this.listDependence = dataDependence;
-            }
-            return dataDependence;
-        });
-        this.stateName = this.componentName;
-        if (config.searchForm) {
-            this.searchForm = new searchForm_1.SearchFormComponent(page, {
-                name: 'Form',
-                source: 'antd',
-                componentName: `${config.componentName}From`,
-                components: [],
-                default: false,
-                formItems: config.searchForm
-            }, this);
-            this.searchForm.init();
-        }
+        this.dataDependencies = new request_1.DataDependence(this.stateName, page.model, config.dependencies);
     }
     initProps() {
         const { pageName } = this.page;
         this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
-        this.addProp('loading', `this.props.${pageName}.${this.stateName}.loading`);
+        this.addProp('loading', `this.props.${pageName}.${this.stateName}ListLoading`);
         this.addProp('pagination', `{
             current: this.props.${pageName}.${this.stateName}.page,
             pageSize: this.props.${pageName}.${this.stateName}.limit,
@@ -51,46 +30,24 @@ class TableComponent extends basicComponent_1.BasicComponent {
         }`);
     }
     initEffects() {
-        const className = this.componentUpperName;
-        const stateName = this.componentName;
-        const loadEffectName = `load${className}List`;
-        const { pageName } = this.page;
-        const queryApi = this.listDependence ? this.listDependence.api : '';
-        this.page.model.addEffect(`
-            async ${loadEffectName}(payload, getState) {
-                try {
-                    const tableState = getState().${pageName}.${stateName};
-
-                    let postData = {
-                        size: tableState.limit,
-                        page: tableState.page,
-                    };
-
-                    const response = await call(request, \`${queryApi}?\${stringify(postData)}\`)
-
-                    if (response && response.code === 200) {
-                        actions.${pageName}.setReducer({
-                            ${stateName}: {
-                                ...tableState,
-                                list: response.data.content,
-                                page: response.data.pageNumber,
-                                total: response.data.totalElements
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        `);
+        const pageModel = this.page.model;
+        if (!pageModel.getEffect(this.dataDependencies.effect.name)) {
+            pageModel.addEffect(this.dataDependencies.effect);
+        }
+    }
+    initPageState() {
+        const pageModel = this.page.model;
+        pageModel.addInitialState(this.stateName, 'list', '[]');
+        pageModel.addInitialState(this.stateName, 'page', '1');
+        pageModel.addInitialState(this.stateName, 'limit', '10');
+        pageModel.addInitialState(this.stateName, 'total', '0');
     }
     initPageMethods() {
-        const className = this.componentUpperName;
-        const loadEffectName = `load${className}List`;
+        const dataDependenciesEffect = this.dataDependencies.effect;
         const { pageName } = this.page;
         this.page.addMethod(`
-            ${loadEffectName}() {
-                actions.${pageName}.${loadEffectName}();
+            ${dataDependenciesEffect.name}() {
+                actions.${pageName}.${dataDependenciesEffect.name}();
             }
         `);
         this.page.addMethod(`
@@ -102,19 +59,15 @@ class TableComponent extends basicComponent_1.BasicComponent {
                         limit: pageSize
                     }
                 });
-                this.${loadEffectName}();
+                this.${dataDependenciesEffect.name}();
             }
         `);
     }
     initPageLifecycle() {
-        const className = this.componentUpperName;
-        const loadEffectName = `load${className}List`;
-        this.page.addDidMountStep(`this.${loadEffectName}t();`);
+        this.page.addDidMountStep(`this.${this.dataDependencies.effect.name}();`);
     }
     initPageDecorators() {
-        const className = this.componentUpperName;
         const { pageName } = this.page;
-        const loadEffectName = `load${className}List`;
         const decoratorConfig = {
             name: 'connect',
             stateName: this.stateName,
@@ -126,7 +79,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
             process: [],
             outputProps: [
                 pageName,
-                `${this.stateName}ListLoading: loading.effects['${pageName}/${loadEffectName}']`
+                `${this.stateName}ListLoading: loading.effects['${pageName}/${this.dataDependencies.effect.name}']`
             ]
         };
         debug(`add decorators: ${JSON.stringify(decoratorConfig)}`);
@@ -164,8 +117,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
             propsCode.push(`${propKey}={${propValue}}`);
         }
         return `<Fragment>
-            ${this.searchForm && this.searchForm.toCode()}
-            <${this.className}
+            <${this.componentName}
                 ${propsCode.join('\n')}
             />
         </Fragment>`;

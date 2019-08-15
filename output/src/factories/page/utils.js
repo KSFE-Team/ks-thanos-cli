@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debugger_1 = __importDefault(require("../../utils/debugger"));
 const tableComponent_1 = require("../component/tableComponent");
 const component_1 = require("../../utils/constants/component");
+const formComponent_1 = require("../component/formComponent");
+const formItem_1 = require("../component/formComponent/formItem");
 const debug = debugger_1.default(__filename);
 function getImportsCode(imports) {
     const codes = [];
@@ -29,22 +31,20 @@ function getComponentsCode(components) {
     }).join('\n');
 }
 exports.getComponentsCode = getComponentsCode;
-function getStateCode(stateProps) {
-    return stateProps.map(({ name, value }) => {
-        const valueStr = JSON.stringify(value);
-        debug(`state ${name}: ${valueStr}`);
-        return `${name}: ${valueStr}`;
-    }).join('\n');
-}
-exports.getStateCode = getStateCode;
 function addComponent(page, instance, component, handler) {
     let componentInstance;
-    switch (component.name) {
+    switch (component.componentName) {
         case component_1.COMPONENT_TYPES.TABLE:
             componentInstance = new tableComponent_1.TableComponent(page, component);
-            componentInstance.init();
             instance.addComponent(componentInstance);
             break;
+        case component_1.COMPONENT_TYPES.FORM:
+            componentInstance = new formComponent_1.FormComponent(page, component);
+            instance.addComponent(componentInstance);
+            break;
+        case component_1.COMPONENT_TYPES.INPUT:
+            componentInstance = new formItem_1.FormItem(page, component);
+            instance.addComponent(componentInstance);
     }
     if (componentInstance) {
         handler && handler(component, componentInstance);
@@ -53,6 +53,7 @@ function addComponent(page, instance, component, handler) {
                 addComponent(page, componentInstance, component, handler);
             });
         }
+        componentInstance.init();
     }
 }
 exports.addComponent = addComponent;

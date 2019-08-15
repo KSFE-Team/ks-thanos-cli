@@ -23,14 +23,14 @@ class ConfirmComponent extends basicComponent_1.BasicComponent {
         return imports;
     }
     toCode() {
-        return `<${this.className}
+        return `<${this.componentName}
                     onClick={() => {
                         Modal.confirm({
                             title: ${this.title},
                             okText: ${this.okText},
                             cancelText: ${this.cancelText}
                         });
-                }}>${this.buttonText}</${this.className}>`;
+                }}>${this.buttonText}</${this.componentName}>`;
     }
 }
 exports.ConfirmComponent = ConfirmComponent;

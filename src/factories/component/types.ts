@@ -3,6 +3,12 @@ import { DataDependenceStructure } from '../request';
 type componentSourceType = 'antd' | 'ks-cms-ui';
 
 export abstract class Basic {
+
+    /**
+     * 初始化页面状态
+     */
+    initPageState?(): void;
+
     /**
      * 初始化属性
      */
@@ -40,8 +46,8 @@ export abstract class Basic {
 }
 
 export interface ComponentConfig {
-    name: string; // 组件标签名称
-    componentName: string; // 组件id名称
+    componentName: string; // 组件名称
+    stateName: string; // 组件使用state名称
     source: componentSourceType; // 组件来源
     default: boolean; // 是否默认导出
     components: ComponentConfig[]; // 子组件
@@ -51,18 +57,18 @@ export interface ComponentConfig {
 }
 
 export interface TableComponentConfig extends ComponentConfig {
-    dependencies: DataDependenceStructure[];
-    searchForm?: FormItemConfig[];
+    dependencies: DataDependenceStructure;
 }
 
 export interface FormComponentConfig extends ComponentConfig {
-    formItems: FormItemConfig[];
+    components: FormItemConfig[];
+    activeEvent: {
+        eventType: string;
+        dependencies: DataDependenceStructure;        
+    };
 }
 
-export interface FormItemConfig {
+export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
-    name: string; // 组件名称
-    source: string; // 组件来源
-    default: false; // 是否默认导出
     key: string; // 表单绑定Key
 }
