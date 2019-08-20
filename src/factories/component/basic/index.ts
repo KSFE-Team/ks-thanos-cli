@@ -109,11 +109,11 @@ export abstract class Component extends BaseElement implements ComponentConfig {
      * 获取组件所需导入的依赖
      */
     getImports(): Import[] {
-        let componentImports: Import[] = [{
+        let componentImports: Import[] = this.source ? [{
             source: this.source,
             name: this.componentName,
             defaultImport: this.default
-        }];
+        }] : [];
         for (let component of this.components) {
             componentImports = componentImports.concat(component.getImports());
         }
