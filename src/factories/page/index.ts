@@ -48,7 +48,7 @@ export default class Page extends BaseElement {
     public addComponents(components: ComponentConfig[] = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            addComponent(this, this, component);
+            addComponent(this, component);
         });
     }
 

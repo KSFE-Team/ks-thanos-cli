@@ -6,29 +6,37 @@ import { Form, FormComponentConfig } from '../factories/component/form';
 import { Input } from '../factories/component/input';
 import { FormItemConfig } from 'Src/factories/component/form/formItem';
 
+/**
+ * 
+ */
 export function addComponent(
-    page: Page,
-    instance: Component | Page,
+    target: Component | Page,
     component: ComponentConfig,
 ) {
-    let componentInstance: Component | undefined;
+    let page: Page,
+        componentInstance: Component | undefined;
+    if (target instanceof Page) {
+        page = target;
+    } else {
+        page = target.page;
+    }
     switch (component.componentName) {
         case COMPONENT_TYPES.TABLE:
             componentInstance = new Table(page, component as TableComponentConfig);
-            instance.addComponent(componentInstance);
+            target.addComponent(componentInstance);
             break;
         case COMPONENT_TYPES.FORM:
             componentInstance = new Form(page, component as FormComponentConfig);
-            instance.addComponent(componentInstance);
+            target.addComponent(componentInstance);
             break;
         case COMPONENT_TYPES.INPUT:
             componentInstance = new Input(page, component as FormItemConfig);
-            instance.addComponent(componentInstance);
+            target.addComponent(componentInstance);
     }
     if (componentInstance) {
         if (component.components) {
             component.components.forEach((component) => {
-                addComponent(page, componentInstance as Component, component);
+                addComponent(componentInstance as Component, component);
             });
         }
         componentInstance.init();
