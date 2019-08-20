@@ -1,5 +1,5 @@
 import { ConnectDecoratorConfig } from './types';
-import { BaseElement } from 'Src/factories/component/baseElement';
+import { BaseElement } from 'Src/factories/baseElement';
 
 export class ConnectDecorator extends BaseElement {
     config: ConnectDecoratorConfig

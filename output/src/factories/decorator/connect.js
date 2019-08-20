@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 class ConnectDecorator extends baseElement_1.BaseElement {
     constructor(config) {
         super();

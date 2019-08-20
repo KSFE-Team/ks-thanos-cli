@@ -1,6 +1,6 @@
 import Model from '../index';
 import { upperFirst } from 'Src/utils/string';
-import { BaseElement } from 'Src/factories/component/baseElement';
+import { BaseElement } from 'Src/factories/baseElement';
 
 export interface EffectConfig {
     type: 'fetch' | 'dict'; // 数据来源类型

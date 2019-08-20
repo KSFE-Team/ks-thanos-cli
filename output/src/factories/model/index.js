@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const getImportsCode_1 = require("Src/utils/getImportsCode");
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 class Model extends baseElement_1.BaseElement {
     constructor(config) {
         super();

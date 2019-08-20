@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const string_1 = require("Src/utils/string");
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 const PREFIX_NAME_MAP = {
     'GET': 'load',
     'POST': 'set'

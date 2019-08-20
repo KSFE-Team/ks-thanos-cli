@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const action_1 = require("../../action/action");
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 class TableColumn extends baseElement_1.BaseElement {
     constructor(page, config) {
         super();

@@ -1,7 +1,7 @@
 import { Import } from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
-import { BaseElement } from '../baseElement/index';
+import { BaseElement } from '../../baseElement/index';
 
 const debug = Debug(__filename);
 

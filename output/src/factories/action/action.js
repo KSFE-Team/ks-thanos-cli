@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const confirm_1 = require("../component/confirm");
 const link_1 = require("../component/link");
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 const index_1 = require("../component/request/index");
 class Action extends baseElement_1.BaseElement {
     constructor(page, config) {

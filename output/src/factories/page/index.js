@@ -8,7 +8,7 @@ const string_1 = require("Src/utils/string");
 const model_1 = __importDefault(require("../model"));
 const addComponent_1 = require("Src/utils/addComponent");
 const getImportsCode_1 = require("Src/utils/getImportsCode");
-const baseElement_1 = require("Src/factories/component/baseElement");
+const baseElement_1 = require("Src/factories/baseElement");
 const debug = debugger_1.default(__filename);
 class Page extends baseElement_1.BaseElement {
     constructor(name, components = []) {

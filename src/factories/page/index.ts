@@ -7,7 +7,7 @@ import { ConnectDecorator } from '../decorator/connect';
 import { FormDecorator } from '../decorator/form';
 import { addComponent } from 'Src/utils/addComponent';
 import { getImportsCode } from 'Src/utils/getImportsCode';
-import { BaseElement } from 'Src/factories/component/baseElement';
+import { BaseElement } from 'Src/factories/baseElement';
 
 const debug = Debug(__filename);
 

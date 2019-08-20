@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const debugger_1 = __importDefault(require("Src/utils/debugger"));
-const index_1 = require("../baseElement/index");
+const index_1 = require("../../baseElement/index");
 const debug = debugger_1.default(__filename);
 class Component extends index_1.BaseElement {
     constructor(page, config) {

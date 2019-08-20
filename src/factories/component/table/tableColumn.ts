@@ -1,7 +1,7 @@
 import { Action, ActionConfig } from '../../action/action';
 import Page from 'Src/factories/page';
 import { Import } from 'Src/factories/page/types';
-import { BaseElement } from 'Src/factories/component/baseElement';
+import { BaseElement } from 'Src/factories/baseElement';
 
 export interface TableColumnConfig {
     title: string;
