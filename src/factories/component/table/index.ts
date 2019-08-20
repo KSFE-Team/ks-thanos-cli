@@ -9,19 +9,19 @@ import { EffectConfig } from 'Src/factories/model/effect';
 
 const debug = Debug(__filename);
 
+/**
+ * table组件配置
+ */
 export interface TableComponentConfig extends ComponentConfig {
-    dependencies: EffectConfig;
+    dependencies: EffectConfig; // 数据依赖配置
 }
 
+/**
+ * table组件
+ */
 export class Table extends Component {
 
-    columns: TableColumn[] = []
-    props: {
-        [name: string]: any;
-    } = {
-        rowKey: `'id'`
-    }
-
+    columns: TableColumn[] = [] // table中的column属性
     effect: ListEffect
 
     constructor(page: Page, config: TableComponentConfig) {
@@ -31,7 +31,7 @@ export class Table extends Component {
 
     initProps() {
         const { pageName } = this.page;
-
+        this.addProp('rowKey', `'id'`);
         this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
         this.addProp('loading', `this.props.${pageName}.${this.stateName}ListLoading`);
         this.addProp('pagination', `{
@@ -110,6 +110,8 @@ export class Table extends Component {
 
     getImports() {
         let imports = super.getImports();
+
+        // 获取 column 中的依赖
         this.columns.forEach((column) => {
             imports = imports.concat(column.getImports());
         });

@@ -6,18 +6,23 @@ import Page from 'Src/factories/page';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
 
+/**
+ * 表单组件配置
+ */
 export interface FormComponentConfig extends ComponentConfig {
-    components: FormItemConfig[];
-    activeEvent: {
-        eventType: string;
-        dependencies: EffectConfig;        
+    components: FormItemConfig[]; // 子组件
+    activeEvent: { // 触发事件
+        eventType: string; // 事件类型
+        dependencies: EffectConfig; // 数据依赖     
     };
 }
 
+/**
+ * 表单组件
+ */
 export class Form extends Component {
 
-    config: FormComponentConfig
-    effect: ListEffect | undefined
+    config: FormComponentConfig // 组件配置
 
     constructor(page: Page, config: FormComponentConfig) {
         super(page, config);

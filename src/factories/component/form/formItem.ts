@@ -1,14 +1,20 @@
 import { Component, ComponentConfig } from '../basic/index';
 import Page from 'Src/factories/page';
 
+/**
+ * FormItem组件配置
+ */
 export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
 }
 
+/**
+ * FormItem类型组件的基类
+ */
 export class FormItem extends Component {
 
-    config: FormItemConfig
+    config: FormItemConfig // 组件配置
 
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);

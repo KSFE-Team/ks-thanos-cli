@@ -19,7 +19,7 @@ export function addComponent(
 
     const TargetComponentClass = COMPONENT_TYPES_MAP[config.componentName];
     if (TargetComponentClass) {
-        componentInstance = (new TargetComponentClass(page, config)) as Component;
+        componentInstance = new TargetComponentClass(page, config);
         target.addComponent(componentInstance);
     }
 

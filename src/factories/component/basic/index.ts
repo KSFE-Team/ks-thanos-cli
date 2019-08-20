@@ -2,6 +2,7 @@ import { Import } from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
 import { BaseElement } from '../../baseElement/index';
+import { Effect } from 'Src/factories/model/effect';
 
 const debug = Debug(__filename);
 
@@ -17,25 +18,26 @@ export interface ComponentConfig {
 }
 
 export abstract class Component extends BaseElement implements ComponentConfig {
-    componentName = ''
-    stateName = ''
-    upperStateName = ''
-    source = 'antd'
-    default = false
-    components: Component[] = []
-    props: {
+    componentName = '' // 组件名称
+    stateName = '' // 组件所使用的状态名称
+    upperStateName = '' // 组件所使用的状态名称（首字母大写）
+    source = 'antd' // 组件导入来源
+    default = false // 组件是否默认导入
+    components: Component[] = [] // 子组件
+    props: { // 组件props
         [name: string]: any;
     } = {}
-    config: ComponentConfig
+    config: ComponentConfig // 组件配置
 
-    page: Page
+    page: Page // 组件所属页面
+    effect: Effect | undefined // 组件所用的effect
 
     constructor(
-        page: Page,
-        config: ComponentConfig,
+        page: Page, // 页面
+        config: ComponentConfig, // 组件配置
     ) {
         super();
-        
+
         this.page = page;
 
         const { componentName, stateName, source, default: defaultImport } = config;
@@ -79,6 +81,9 @@ export abstract class Component extends BaseElement implements ComponentConfig {
      */
     initPageDecorators?(): void;
 
+    /**
+     * 组件初始化
+     */
     init() {
         const { props = {} } = this.config;
         for (let propKey in props) {
@@ -92,11 +97,17 @@ export abstract class Component extends BaseElement implements ComponentConfig {
         this.initPageDecorators && this.initPageDecorators();
     }
 
+    /**
+     * 添加组件prop
+     */
     addProp(key: string, value: any) {
         debug(`add props: ${key}, ${JSON.stringify(value)}`);
         this.props[key] = `${value}`;
     }
 
+    /**
+     * 获取组件所需导入的依赖
+     */
     getImports(): Import[] {
         let componentImports: Import[] = [{
             source: this.source,
@@ -109,6 +120,9 @@ export abstract class Component extends BaseElement implements ComponentConfig {
         return componentImports;
     }
 
+    /**
+     * 添加子组件
+     */
     addComponent(component: Component) {
         this.components.push(component);
     }

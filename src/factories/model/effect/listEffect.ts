@@ -1,4 +1,4 @@
-import { Effect } from "./index";
+import { Effect } from './index';
 
 export class ListEffect extends Effect {
     getImports() {

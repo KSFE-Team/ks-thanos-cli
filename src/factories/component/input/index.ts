@@ -1,6 +1,9 @@
 import Page from 'Src/factories/page';
 import { FormItem, FormItemConfig } from '../form/formItem';
 
+/**
+ * Input组件
+ */
 export class Input extends FormItem {
 
     config: FormItemConfig
