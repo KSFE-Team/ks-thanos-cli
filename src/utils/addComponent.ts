@@ -1,17 +1,13 @@
 import Page from '../factories/page/index';
 import { Component, ComponentConfig } from '../factories/component/basic';
-import { COMPONENT_TYPES } from './constants/component';
-import { Table, TableComponentConfig } from '../factories/component/table';
-import { Form, FormComponentConfig } from '../factories/component/form';
-import { Input } from '../factories/component/input';
-import { FormItemConfig } from 'Src/factories/component/form/formItem';
+import { COMPONENT_TYPES_MAP } from './constants/component';
 
 /**
- * 
+ * 根据配置为目标组件/页面添加子组件
  */
 export function addComponent(
-    target: Component | Page,
-    component: ComponentConfig,
+    target: Component | Page, // 目标组件/页面
+    config: ComponentConfig, // 组件配置
 ) {
     let page: Page,
         componentInstance: Component | undefined;
@@ -20,23 +16,17 @@ export function addComponent(
     } else {
         page = target.page;
     }
-    switch (component.componentName) {
-        case COMPONENT_TYPES.TABLE:
-            componentInstance = new Table(page, component as TableComponentConfig);
-            target.addComponent(componentInstance);
-            break;
-        case COMPONENT_TYPES.FORM:
-            componentInstance = new Form(page, component as FormComponentConfig);
-            target.addComponent(componentInstance);
-            break;
-        case COMPONENT_TYPES.INPUT:
-            componentInstance = new Input(page, component as FormItemConfig);
-            target.addComponent(componentInstance);
+
+    const TargetComponentClass = COMPONENT_TYPES_MAP[config.componentName];
+    if (TargetComponentClass) {
+        componentInstance = (new TargetComponentClass(page, config)) as Component;
+        target.addComponent(componentInstance);
     }
+
     if (componentInstance) {
-        if (component.components) {
-            component.components.forEach((component) => {
-                addComponent(componentInstance as Component, component);
+        if (config.components) {
+            config.components.forEach((itemConfig) => {
+                addComponent(componentInstance as Component, itemConfig);
             });
         }
         componentInstance.init();
