@@ -1,9 +1,21 @@
 import { ConnectDecoratorConfig } from './types';
+import { BaseElement } from 'Src/factories/component/baseElement';
 
-export class ConnectDecorator {
+export class ConnectDecorator extends BaseElement {
     config: ConnectDecoratorConfig
     constructor(config: ConnectDecoratorConfig) {
+        super();
         this.config = config;
+    }
+
+    getImports() {
+        return [
+            {
+                name: 'connect',
+                source: 'kredux',
+                defaultImport: false
+            }
+        ];
     }
 
     toCode() {

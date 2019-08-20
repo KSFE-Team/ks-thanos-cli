@@ -14,7 +14,13 @@
         "rootDir": "./",
         "noUnusedLocals": true,
         "allowJs": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "Src/*": [
+                "./src/*"
+            ]
+        }
     },
     "exclude": [
         "node_modules"

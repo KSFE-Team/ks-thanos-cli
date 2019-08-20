@@ -1,7 +1,7 @@
 import path from 'path';
-import { writeFile } from '../../utils/file';
+import { writeFile } from 'Src/utils/file';
 import Page from '../page';
-import { formatFile } from '../../utils/format';
+import { formatFile } from 'Src/utils/format';
 
 export async function createModel(
     options: {

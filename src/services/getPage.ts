@@ -1,59 +1,64 @@
 export async function getPage(pageName: string) {
-    return {
+    return { 
         'components': [
-            {
+            { 
                 'components': [
-                    {
-                        'stateName': 'user',
+                    { 
+                        'stateName': 'table', 
                         'componentName': 'Input',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'username',
-                        'label': '姓名',
-                        'id': 'zpv0n0220aj',
-                        'parentId': 'soyu2flizbl',
+                        'source': 'antd', 
+                        'default': false, 
+                        'key': 'name', 
+                        'label': '名字',
+                        'id': '5ivoubchgjx',
+                        'parentId': 'm7c9g9zy3uc', 
                         'configVisible': false,
                         'props': {
-                            'placeholder': '姓名'
-                        }
+                            'placeholder': '名字'
+                        } 
                     }
                 ],
-                activeEvent: {
-                    eventType: 'api',
-                    'dependencies': {
+                'stateName': 'table',
+                'activeEvent': { 
+                    'eventType': 'api',
+                    'dependencies': { 
                         'type': 'fetch',
                         'responseType': 'list',
-                        'api': '/user/query',
-                        'method': 'GET'
-                    }
-                },
-                'stateName': 'user',
-                'componentName': 'Form',
-                'source': 'antd',
-                'default': false
-            },
-            {
-                'stateName': 'user',
-                'componentName': 'Table',
-                'source': 'antd',
-                'default': false,
-                'props': {
+                        'api': '/api/ser', 
+                        'method': 'GET' 
+                    } 
+                }, 
+                'componentName': 'Form', 
+                'source': 'antd', 
+                'default': false 
+            }, 
+            { 
+                'stateName': 'table', 
+                'componentName': 'Table', 
+                'source': 'antd', 
+                'default': false, 
+                'props': { 
                     'columns': [
-                        {
-                            'title': '姓名',
-                            'dataIndex': 'username'
+                        { 
+                            'title': '示例', 
+                            'dataIndex': 'example' 
+                        }, 
+                        { 
+                            'title': '名字',
+                            'dataIndex': 'name'
                         }
-                    ]
-                },
-                'dependencies': {
-                    'type': 'fetch',
+                    ] 
+                }, 
+                'dependencies': { 
+                    'type': 'fetch', 
                     'responseType': 'list',
-                    'api': '/user/query',
+                    'api': '/api/ser',
                     'method': 'GET'
                 }, 
                 'components': [], 
-                'id': 'soyu2flizbl', 
-                'configVisible': false
-            }]
+                'id': 'm7c9g9zy3uc', 
+                'configVisible': false 
+            }
+        ] 
     };
 }

@@ -1,13 +1,14 @@
-import { ComponentConfig } from '../component/types';
-import { BasciImport } from '../page/types';
-import { ConfirmComponent, ConfirmComponentStructure } from '../component/confirmComponent';
-import { BasicComponent } from '../component/basicComponent';
-import { LinkComponent, LinkComponentStructure } from '../component/linkComponent';
+import { Import } from '../page/types';
+import { ConfirmComponent, ConfirmComponentConfig } from '../component/confirm';
+import { Component, ComponentConfig } from '../component/basic';
+import { LinkComponent, LinkComponentConfig } from '../component/link';
 import Page from '../page';
+import { BaseElement } from 'Src/factories/component/baseElement';
+import { RequestComponent, RequestComponentConfig } from '../component/request/index';
 
 type actionType = 'modal' | 'confirm' | 'request' | 'link';
 
-export interface ActionStructure {
+export interface ActionConfig {
     name: string;
     title: string;
     type: actionType;
@@ -15,19 +16,20 @@ export interface ActionStructure {
     trigger: ComponentConfig;
 }
 
-export class Action {
+export class Action extends BaseElement {
 
     name: string
     type: actionType
-    dialog?: BasicComponent
-    trigger: BasicComponent
+    trigger: Component
+    dialog?: Component
 
-    constructor(page: Page, config: ActionStructure) {
+    constructor(page: Page, config: ActionConfig) {
+        super();
         const { title, name, type, trigger } = config;
         this.name = name;
         this.type = type;
         this.trigger = new ConfirmComponent(page, {
-            ...trigger as ConfirmComponentStructure,
+            ...trigger as ConfirmComponentConfig,
             buttonText: name,
             title,
             componentName: `${page.pageName}Confrim`
@@ -36,10 +38,14 @@ export class Action {
             case 'modal':
                 break;
             case 'request':
+                this.trigger = new RequestComponent(page, {
+                    ...trigger as RequestComponentConfig,
+                    text: name
+                });
                 break;
             case 'link':
                 this.trigger = new LinkComponent(page, {
-                    ...trigger as LinkComponentStructure,
+                    ...trigger as LinkComponentConfig,
                     text: name
                 });
                 break;
@@ -47,8 +53,8 @@ export class Action {
         this.trigger.init();
     }
 
-    getImports(): BasciImport[] {
-        let componentImports: BasciImport[] = [];
+    getImports(): Import[] {
+        let componentImports: Import[] = [];
         if (this.dialog) {
             componentImports = componentImports.concat(this.dialog.getImports());
         }

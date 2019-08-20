@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const basicComponent_1 = require("./basicComponent");
-class RequestComponent extends basicComponent_1.BasicComponent {
+const basic_1 = require("./basic");
+class RequestComponent extends basic_1.Component {
     constructor(page, config) {
         super(page, config);
         this.api = '';

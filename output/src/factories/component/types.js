@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Basic {
+class BaseElement {
 }
-exports.Basic = Basic;
+exports.BaseElement = BaseElement;
 //# sourceMappingURL=types.js.map

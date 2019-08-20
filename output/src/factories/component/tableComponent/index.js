@@ -14,7 +14,7 @@ class TableComponent extends basicComponent_1.BasicComponent {
         super(page, config);
         this.columns = [];
         this.props = {
-            rowKey: 'id'
+            rowKey: `'id'`
         };
         this.dataDependencies = new request_1.DataDependence(this.stateName, page.model, config.dependencies);
     }
@@ -116,11 +116,11 @@ class TableComponent extends basicComponent_1.BasicComponent {
             debug(`propValue: ${propValue}`);
             propsCode.push(`${propKey}={${propValue}}`);
         }
-        return `<Fragment>
+        return `<React.Fragment>
             <${this.componentName}
                 ${propsCode.join('\n')}
             />
-        </Fragment>`;
+        </React.Fragment>`;
     }
 }
 exports.TableComponent = TableComponent;

@@ -3,72 +3,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const debugger_1 = __importDefault(require("../../utils/debugger"));
-const upperFirst_1 = require("../../utils/upperFirst");
-const utils_1 = require("./utils");
-const model_1 = __importDefault(require("../model/model"));
-const types_1 = require("../component/types");
+const debugger_1 = __importDefault(require("Src/utils/debugger"));
+const string_1 = require("Src/utils/string");
+const model_1 = __importDefault(require("../model"));
+const addComponent_1 = require("Src/utils/addComponent");
+const getImportsCode_1 = require("Src/utils/getImportsCode");
+const baseElement_1 = require("Src/factories/component/baseElement");
 const debug = debugger_1.default(__filename);
-class Page extends types_1.Basic {
-    constructor(name) {
+class Page extends baseElement_1.BaseElement {
+    constructor(name, components = []) {
         super();
         this.name = '';
         this.pageName = '';
         this.className = '';
-        this.imports = {
-            'react': [{
-                    name: 'React',
-                    defaultImport: true
-                }],
-            'kredux': [{
-                    name: 'connect',
-                    defaultImport: false
-                }, {
-                    name: 'actions',
-                    defaultImport: false
-                }]
-        };
         this.decorators = [];
         this.components = [];
         this.methods = [];
         this.didMountStep = [];
         this.name = name;
-        this.pageName = upperFirst_1.lowerFirst(name);
-        this.className = upperFirst_1.upperFirst(name);
+        this.pageName = string_1.lowerFirst(name);
+        this.className = string_1.upperFirst(name);
         this.model = new model_1.default({
             initialState: {},
             namespace: this.pageName
         });
-    }
-    addImport(basicImport) {
-        const { source } = basicImport;
-        const existedImport = this.imports[source];
-        const importModule = {
-            name: basicImport.name,
-            defaultImport: basicImport.defaultImport
-        };
-        if (existedImport) {
-            existedImport.push(importModule);
-        }
-        else {
-            this.imports[source] = [importModule];
-        }
+        this.addComponents(components);
     }
     addDecorator(decorator) {
         this.decorators.push(decorator);
     }
     addComponent(component) {
-        const imports = component.getImports();
-        imports.forEach((importItem) => {
-            this.addImport(importItem);
-            debug(`currentPage imports: ${JSON.stringify(this.imports)}`);
-        });
         this.components.push(component);
     }
     addComponents(components = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            utils_1.addComponent(this, this, component);
+            addComponent_1.addComponent(this, this, component);
         });
     }
     addMethod(methodCode) {
@@ -77,9 +47,19 @@ class Page extends types_1.Basic {
     addDidMountStep(stepCode) {
         this.didMountStep.push(stepCode);
     }
+    getImports() {
+        let imports = [];
+        this.components.forEach((component) => {
+            imports = imports.concat(component.getImports());
+        });
+        this.decorators.forEach((decorator) => {
+            imports = imports.concat(decorator.getImports());
+        });
+        return imports;
+    }
     toCode() {
-        const importsCode = utils_1.getImportsCode(this.imports);
-        const componentsCode = utils_1.getComponentsCode(this.components);
+        const importsCode = getImportsCode_1.getImportsCode(this.getImports());
+        const componentsCode = this.components.map((item) => item.toCode()).join('\n');
         const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
@@ -95,9 +75,9 @@ export default class ${this.className} extends React.Component {
 
     render() {
         return (
-            <Fragment>
+            <React.Fragment>
                 ${componentsCode}
-            </Fragment>
+            </React.Fragment>
         );
     }
 }

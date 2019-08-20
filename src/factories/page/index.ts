@@ -1,16 +1,17 @@
-import { Import, BasciImport } from './types';
-import Debug from '../../utils/debugger';
-import { upperFirst, lowerFirst } from '../../utils/upperFirst';
-import { BasicComponent } from '../component/basicComponent';
-import { getImportsCode, getComponentsCode, addComponent } from './utils';
-import Model from '../model/model';
-import { Basic, ComponentConfig } from '../component/types';
+import { Import } from './types';
+import Debug from 'Src/utils/debugger';
+import { upperFirst, lowerFirst } from 'Src/utils/string';
+import { Component, ComponentConfig } from '../component/basic';
+import Model from '../model';
 import { ConnectDecorator } from '../decorator/connect';
 import { FormDecorator } from '../decorator/form';
+import { addComponent } from 'Src/utils/addComponent';
+import { getImportsCode } from 'Src/utils/getImportsCode';
+import { BaseElement } from 'Src/factories/component/baseElement';
 
 const debug = Debug(__filename);
 
-export default class Page extends Basic {
+export default class Page extends BaseElement {
 
     public name: string = '';
     public pageName: string = '';
@@ -18,25 +19,12 @@ export default class Page extends Basic {
 
     public model: Model;
 
-    private imports: Import = {
-        'react': [{
-            name: 'React',
-            defaultImport: true
-        }],
-        'kredux': [{
-            name: 'connect',
-            defaultImport: false
-        }, {
-            name: 'actions',
-            defaultImport: false
-        }]
-    };
     private decorators: (ConnectDecorator | FormDecorator)[] = [];
-    private components: BasicComponent[] = [];
+    private components: Component[] = [];
     private methods: string[] = [];
     private didMountStep: string[] = [];
 
-    constructor(name: string) {
+    constructor(name: string, components: ComponentConfig[] = []) {
         super();
         this.name = name;
         this.pageName = lowerFirst(name);
@@ -46,32 +34,14 @@ export default class Page extends Basic {
             initialState: {},
             namespace: this.pageName
         });
-    }
-
-    public addImport(basicImport: BasciImport) {
-        const { source } = basicImport;
-        const existedImport = this.imports[source];
-        const importModule = {
-            name: basicImport.name,
-            defaultImport: basicImport.defaultImport
-        };
-        if (existedImport) {
-            existedImport.push(importModule);
-        } else {
-            this.imports[source] = [importModule];
-        }
+        this.addComponents(components);
     }
 
     public addDecorator(decorator: ConnectDecorator | FormDecorator) {
         this.decorators.push(decorator);
     }
 
-    public addComponent(component: BasicComponent) {
-        const imports = component.getImports();
-        imports.forEach((importItem) => {
-            this.addImport(importItem);
-            debug(`currentPage imports: ${JSON.stringify(this.imports)}`);
-        });
+    public addComponent(component: Component) {
         this.components.push(component);
     }
 
@@ -90,9 +60,20 @@ export default class Page extends Basic {
         this.didMountStep.push(stepCode);
     }
 
+    getImports() {
+        let imports: Import[] = [];
+        this.components.forEach((component) => {
+            imports = imports.concat(component.getImports());
+        });
+        this.decorators.forEach((decorator) => {
+            imports = imports.concat(decorator.getImports());
+        });
+        return imports;
+    }
+
     public toCode() {
-        const importsCode = getImportsCode(this.imports);
-        const componentsCode = getComponentsCode(this.components);
+        const importsCode = getImportsCode(this.getImports());
+        const componentsCode = this.components.map((item) => item.toCode()).join('\n');
         const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
@@ -109,9 +90,9 @@ export default class ${this.className} extends React.Component {
 
     render() {
         return (
-            <Fragment>
+            <React.Fragment>
                 ${componentsCode}
-            </Fragment>
+            </React.Fragment>
         );
     }
 }

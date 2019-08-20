@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class FormDecorator {
+const baseElement_1 = require("Src/factories/component/baseElement");
+class FormDecorator extends baseElement_1.BaseElement {
     constructor(config) {
+        super();
         this.config = config;
     }
     getMapPropsToFieldsCode() {
@@ -20,6 +22,15 @@ class FormDecorator {
                     ...fields
                 }
             });`;
+    }
+    getImports() {
+        return [
+            {
+                name: 'Form',
+                source: 'antd',
+                defaultImport: false
+            }
+        ];
     }
     toCode() {
         const mapPropsToFieldsCode = this.getMapPropsToFieldsCode();

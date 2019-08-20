@@ -1,10 +1,12 @@
 import { FormDecoratorConfig } from './types';
+import { BaseElement } from 'Src/factories/component/baseElement';
 
-export class FormDecorator {
+export class FormDecorator extends BaseElement {
 
     config: FormDecoratorConfig
 
     constructor(config: FormDecoratorConfig) {
+        super();
         this.config = config;
     }
 
@@ -25,6 +27,16 @@ export class FormDecorator {
                     ...fields
                 }
             });`;
+    }
+
+    getImports() {
+        return [
+            {
+                name: 'Form',
+                source: 'antd',
+                defaultImport: false
+            }
+        ];
     }
 
     toCode() {

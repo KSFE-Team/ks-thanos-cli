@@ -27,7 +27,7 @@ class DataDependence {
                         page: state.page,
                     };
 
-                    const response = await call(request, \`${this.api}?\${stringify(postData)}\`)
+                    const response = await request(\`${this.api}?\${stringify(postData)}\`);
 
                     if (response && response.code === 200) {
                         actions.${model.namespace}.setReducer({

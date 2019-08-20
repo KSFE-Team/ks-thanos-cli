@@ -1,8 +1,9 @@
 import Page from '.';
-import { writeFile } from '../../utils/file';
+import { writeFile } from 'Src/utils/file';
 import path from 'path';
-import Debug from '../../utils/debugger';
-import { formatFile } from '../../utils/format';
+import Debug from 'Src/utils/debugger';
+import { formatFile } from 'Src/utils/format';
+import { upperFirst } from 'Src/utils/string';
 
 const debug = Debug(__filename);
 
@@ -19,13 +20,9 @@ export function createPage(
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
     debug(`projectPath: ${projectPath}`);
 
-    const pagePath = path.join(projectPath, 'pages', pageName, 'index.js');
-    const pageInstance = new Page(pageName);
-
+    const pagePath = path.join(projectPath, 'pages', upperFirst(pageName), 'index.js');
     const { components = [] } = pageConfig;
-    if (components.length) {
-        pageInstance.addComponents(components);
-    }
+    const pageInstance = new Page(pageName, components);
 
     // 输出文件
     writeFile(pagePath, pageInstance.toCode());

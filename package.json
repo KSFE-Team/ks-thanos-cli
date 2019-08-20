@@ -31,6 +31,7 @@
     "eslint-plugin-node": "^7.0.0",
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
+    "module-alias": "^2.2.1",
     "typescript": "^3.5.2"
   },
   "scripts": {
@@ -46,5 +47,8 @@
   "bugs": {
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
-  "homepage": "https://github.com/KSFE-Team/ks-thanos-cli#readme"
+  "homepage": "https://github.com/KSFE-Team/ks-thanos-cli#readme",
+  "_moduleAliases": {
+    "Src": "output/src"
+  }
 }

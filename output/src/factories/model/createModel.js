@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const file_1 = require("../../utils/file");
-const format_1 = require("../../utils/format");
+const file_1 = require("Src/utils/file");
+const format_1 = require("Src/utils/format");
 async function createModel(options) {
     const { page, projectPath } = options;
     const modelPath = path_1.default.join(projectPath, 'pages', page.name, 'model.js');
