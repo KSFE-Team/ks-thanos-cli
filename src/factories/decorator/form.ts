@@ -1,5 +1,5 @@
 import { FormDecoratorConfig } from './types';
-import { BasicElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/basicElement';
 
 export class FormDecorator extends BasicElement {
 

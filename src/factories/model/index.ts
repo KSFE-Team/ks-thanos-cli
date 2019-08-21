@@ -1,7 +1,7 @@
 import { Effect } from './effect';
 import { getImportsCode } from 'Src/utils/getImportsCode';
 import { Import } from 'Src/factories/page/types';
-import { BasicElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/basicElement';
 
 interface InitialState {
     [stateName: string]: {

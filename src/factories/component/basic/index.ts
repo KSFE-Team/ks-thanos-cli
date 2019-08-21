@@ -2,7 +2,7 @@ import { Import } from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
 import { Effect } from 'Src/factories/model/effect';
-import { BasicContainer } from 'Src/factories/baseElement';
+import { BasicContainer } from 'Src/factories/basicElement';
 
 const debug = Debug(__filename);
 

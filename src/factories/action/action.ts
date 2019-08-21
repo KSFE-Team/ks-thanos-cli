@@ -3,7 +3,7 @@ import { ConfirmComponent, ConfirmComponentConfig } from '../component/confirm';
 import { Component, ComponentConfig } from '../component/basic';
 import { LinkComponent, LinkComponentConfig } from '../component/link';
 import Page from '../page';
-import { BasicElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/basicElement';
 import { RequestComponent, RequestComponentConfig } from '../component/request/index';
 
 type actionType = 'modal' | 'confirm' | 'request' | 'link';
