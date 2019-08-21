@@ -1,7 +1,7 @@
 import { Action, ActionConfig } from '../../action/action';
 import Page from 'Src/factories/page';
 import { Import } from 'Src/factories/page/types';
-import { BasicElement } from 'Src/factories/baseElement';
+import { BasicContainer } from 'Src/factories/baseElement';
 
 export interface TableColumnConfig {
     title: string;
@@ -9,7 +9,7 @@ export interface TableColumnConfig {
     actions?: ActionConfig[];
 }
 
-export class TableColumn extends BasicElement {
+export class TableColumn extends BasicContainer {
     actions: Action[] = [];
     config: TableColumnConfig;
     constructor(page: Page, config: TableColumnConfig) {

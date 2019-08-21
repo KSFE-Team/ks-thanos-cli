@@ -7,11 +7,11 @@ import { ConnectDecorator } from '../decorator/connect';
 import { FormDecorator } from '../decorator/form';
 import { addComponent } from 'Src/utils/addComponent';
 import { getImportsCode } from 'Src/utils/getImportsCode';
-import { BasicElement } from 'Src/factories/baseElement';
+import { BasicContainer } from 'Src/factories/baseElement';
 
 const debug = Debug(__filename);
 
-export default class Page extends BasicElement {
+export default class Page extends BasicContainer {
 
     public name: string = '';
     public pageName: string = '';

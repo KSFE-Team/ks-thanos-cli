@@ -1,8 +1,8 @@
 import { Import } from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
-import { BasicElement } from '../../baseElement/index';
 import { Effect } from 'Src/factories/model/effect';
+import { BasicContainer } from 'Src/factories/baseElement';
 
 const debug = Debug(__filename);
 
@@ -17,7 +17,7 @@ export interface ComponentConfig {
     }; // 组件需要注入的父属性
 }
 
-export abstract class Component extends BasicElement implements ComponentConfig {
+export abstract class Component extends BasicContainer implements ComponentConfig {
     componentName = '' // 组件名称
     stateName = '' // 组件所使用的状态名称
     upperStateName = '' // 组件所使用的状态名称（首字母大写）
