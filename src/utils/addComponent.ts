@@ -1,12 +1,13 @@
 import Page from '../factories/page/index';
 import { Component, ComponentConfig } from '../factories/component/basic';
 import { COMPONENT_TYPES_MAP } from './constants/component';
+import { TableColumn } from '../factories/component/table/tableColumn';
 
 /**
  * 根据配置为目标组件/页面添加子组件
  */
 export function addComponent(
-    target: Component | Page, // 目标组件/页面
+    target: Component | Page | TableColumn, // 目标组件/页面
     config: ComponentConfig, // 组件配置
 ) {
     let page: Page,

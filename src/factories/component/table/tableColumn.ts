@@ -1,35 +1,42 @@
-import { Action, ActionConfig } from '../../action/action';
 import Page from 'Src/factories/page';
-import { Import } from 'Src/factories/page/types';
 import { BasicContainer } from 'Src/factories/basicElement';
+import { addComponent } from 'Src/utils/addComponent';
+import { Component, ComponentConfig } from 'Src/factories/component/basic';
 
 export interface TableColumnConfig {
     title: string;
     dataIndex: string;
-    actions?: ActionConfig[];
+    component?: ComponentConfig;
 }
 
-export class TableColumn extends BasicContainer {
-    actions: Action[] = [];
-    config: TableColumnConfig;
+export class TableColumn extends BasicContainer implements TableColumnConfig {
+    page: Page
+    config: TableColumnConfig
+    title: string
+    dataIndex: string
+    component: Component | undefined
+
     constructor(page: Page, config: TableColumnConfig) {
         super();
-        const { actions, ...other } = config;
-        this.config = other;
-        if (actions) {
-            actions.forEach((action) => {
-                const actionInstance = new Action(page, action);
-                this.actions.push(actionInstance);
-            });
+        this.page = page;
+        this.config = config;
+        this.title = config.title;
+        this.dataIndex = config.dataIndex;
+
+        if (config.component) {
+            addComponent(this, config.component);
         }
     }
 
+    addComponent(component: Component) {
+        this.component = component;
+    }
+
     getImports() {
-        let imports: Import[] = [];
-        this.actions.forEach((action) => {
-            imports = imports.concat(action.getImports());
-        });
-        return imports;
+        if (this.component) {
+            return this.component.getImports();
+        }
+        return [];
     }
 
     toCode() {
@@ -38,12 +45,11 @@ export class TableColumn extends BasicContainer {
             const [key, value] = keyValue;
             codes.push(`${key}: '${value}'`);
         });
-        if (this.actions.length) {
-            const actionCodes = this.actions.map((action) => action.toCode());
+        if (this.component) {
             codes.push(`render: (text) => {
                 return (
                     <div>
-                        ${actionCodes}
+                        ${this.component.toCode()}
                     </div>
                 );
             }`);
