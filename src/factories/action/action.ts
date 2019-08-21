@@ -3,7 +3,7 @@ import { ConfirmComponent, ConfirmComponentConfig } from '../component/confirm';
 import { Component, ComponentConfig } from '../component/basic';
 import { LinkComponent, LinkComponentConfig } from '../component/link';
 import Page from '../page';
-import { BaseElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/baseElement';
 import { RequestComponent, RequestComponentConfig } from '../component/request/index';
 
 type actionType = 'modal' | 'confirm' | 'request' | 'link';
@@ -16,7 +16,7 @@ export interface ActionConfig {
     trigger: ComponentConfig;
 }
 
-export class Action extends BaseElement {
+export class Action extends BasicElement {
 
     name: string
     type: actionType

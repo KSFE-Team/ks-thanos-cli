@@ -1,6 +1,6 @@
 import Model from '../index';
 import { upperFirst } from 'Src/utils/string';
-import { BaseElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/baseElement';
 
 export interface EffectConfig {
     type: 'fetch' | 'dict'; // 数据来源类型
@@ -23,7 +23,7 @@ const SUFFIX_NAME_MAP: MAP = {
 };
 
 
-export abstract class Effect extends BaseElement {
+export abstract class Effect extends BasicElement {
 
     name: string
     stateName: string

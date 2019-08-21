@@ -1,7 +1,7 @@
 import { ConnectDecoratorConfig } from './types';
-import { BaseElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/baseElement';
 
-export class ConnectDecorator extends BaseElement {
+export class ConnectDecorator extends BasicElement {
     config: ConnectDecoratorConfig
     constructor(config: ConnectDecoratorConfig) {
         super();

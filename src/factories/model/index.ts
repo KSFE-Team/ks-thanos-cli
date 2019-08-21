@@ -1,7 +1,7 @@
 import { Effect } from './effect';
 import { getImportsCode } from 'Src/utils/getImportsCode';
 import { Import } from 'Src/factories/page/types';
-import { BaseElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/baseElement';
 
 interface InitialState {
     [stateName: string]: {
@@ -14,7 +14,7 @@ export interface ModelConfig {
     initialState: InitialState;
 }
 
-export default class Model extends BaseElement {
+export default class Model extends BasicElement {
 
     effects: {
         [effectName: string]: Effect;

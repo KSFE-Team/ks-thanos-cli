@@ -1,7 +1,7 @@
 import { FormDecoratorConfig } from './types';
-import { BaseElement } from 'Src/factories/baseElement';
+import { BasicElement } from 'Src/factories/baseElement';
 
-export class FormDecorator extends BaseElement {
+export class FormDecorator extends BasicElement {
 
     config: FormDecoratorConfig
 

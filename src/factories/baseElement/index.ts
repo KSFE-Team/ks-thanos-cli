@@ -1,6 +1,6 @@
 import { Import } from 'Src/factories/page/types';
 
-export abstract class BaseElement {
+export abstract class BasicElement {
     /**
      * 生成代码
      */
