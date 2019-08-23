@@ -1,7 +1,7 @@
 import Page from 'Src/factories/page';
 import { BasicContainer } from 'Src/factories/basicElement';
-import { addComponent } from 'Src/utils/addComponent';
 import { Component, ComponentConfig } from 'Src/factories/component/basic';
+import { ComponentManager } from '../manager';
 
 export interface TableColumnConfig {
     title: string;
@@ -24,7 +24,7 @@ export class TableColumn extends BasicContainer implements TableColumnConfig {
         this.dataIndex = config.dataIndex;
 
         if (config.component) {
-            addComponent(this, config.component);
+            ComponentManager.add(this, config.component);
         }
     }
 

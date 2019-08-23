@@ -5,9 +5,9 @@ import { Component, ComponentConfig } from '../component/basic';
 import Model from '../model';
 import { ConnectDecorator } from '../decorator/connect';
 import { FormDecorator } from '../decorator/form';
-import { addComponent } from 'Src/utils/addComponent';
 import { getImportsCode } from 'Src/utils/getImportsCode';
 import { BasicContainer } from 'Src/factories/basicElement';
+import { ComponentManager } from '../component/manager';
 
 const debug = Debug(__filename);
 
@@ -48,7 +48,7 @@ export default class Page extends BasicContainer {
     public addComponents(components: ComponentConfig[] = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            addComponent(this, component);
+            ComponentManager.add(this, component);
         });
     }
 
