@@ -13,20 +13,21 @@ const debug = Debug(__filename);
 
 export default class Page extends BasicContainer {
 
-    public name: string = '';
-    public pageName: string = '';
-    public className: string = '';
+    public pageName: string = ''; // 页面名称
+    public className: string = ''; // 页面类名称
 
-    public model: Model;
+    public model: Model; // 页面关联的model
 
-    private decorators: (ConnectDecorator | FormDecorator)[] = [];
-    private components: Component[] = [];
-    private methods: string[] = [];
-    private didMountStep: string[] = [];
+    private decorators: (ConnectDecorator | FormDecorator)[] = []; // 页面所使用的 decorator
+    private components: Component[] = []; // 页面中的子组件
+    private methods: string[] = []; // 页面方法
+    private didMountStep: string[] = []; // componentDidMount 中的步骤
 
-    constructor(name: string, components: ComponentConfig[] = []) {
+    constructor(
+        name: string, // 页面名
+        components: ComponentConfig[] = [] // 页面中的组件配置
+    ) {
         super();
-        this.name = name;
         this.pageName = lowerFirst(name);
         this.className = upperFirst(name);
 
@@ -34,32 +35,50 @@ export default class Page extends BasicContainer {
             initialState: {},
             namespace: this.pageName
         });
-        this.addComponents(components);
+        this.init(components);
     }
 
+    /**
+     * 页面初始化
+     */
+    public init(config: ComponentConfig[] = []) {
+        config.forEach((componentConfig) => {
+            debug(`add component: ${JSON.stringify(componentConfig)}`);
+            ComponentManager.add(this, componentConfig);
+        });
+    }
+
+    /**
+     * 添加 decorator
+     */
     public addDecorator(decorator: ConnectDecorator | FormDecorator) {
         this.decorators.push(decorator);
     }
 
+    /**
+     * 添加组件
+     */
     public addComponent(component: Component) {
         this.components.push(component);
     }
 
-    public addComponents(components: ComponentConfig[] = []) {
-        components.forEach((component) => {
-            debug(`add component: ${JSON.stringify(component)}`);
-            ComponentManager.add(this, component);
-        });
-    }
-
+    /**
+     * 添加方法
+     */
     public addMethod(methodCode: string) {
         this.methods.push(methodCode);
     }
 
+    /**
+     * 添加 componentDidMount 步骤
+     */
     public addDidMountStep(stepCode: string) {
         this.didMountStep.push(stepCode);
     }
 
+    /**
+     * 获取 import
+     */
     getImports() {
         let imports: Import[] = [];
         this.components.forEach((component) => {
@@ -71,6 +90,9 @@ export default class Page extends BasicContainer {
         return imports;
     }
 
+    /**
+     * 生成代码
+     */
     public toCode() {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');

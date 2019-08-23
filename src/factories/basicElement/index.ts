@@ -13,5 +13,10 @@ export abstract class BasicElement {
 }
 
 export abstract class BasicContainer extends BasicElement {
-    abstract addComponent(component: ComponentConfig): void
+    /**
+     * 添加组件
+     */
+    abstract addComponent(
+        component: ComponentConfig // 组件配置
+    ): void
 }
