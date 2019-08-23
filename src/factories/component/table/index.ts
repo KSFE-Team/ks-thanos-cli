@@ -6,6 +6,7 @@ import { ConnectDecoratorConfig } from 'Src/factories/decorator/types';
 import { ConnectDecorator } from 'Src/factories/decorator/connect';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
+import { EffectManager } from 'Src/factories/model/effect/manager';
 
 const debug = Debug(__filename);
 
@@ -26,7 +27,7 @@ export class Table extends Component {
 
     constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
-        this.effect = new ListEffect(this.stateName, page.model, config.dependencies);
+        this.effect = EffectManager.create(this.stateName, page.model, config.dependencies);
     }
 
     initProps() {

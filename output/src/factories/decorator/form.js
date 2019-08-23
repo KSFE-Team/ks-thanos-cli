@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const baseElement_1 = require("Src/factories/baseElement");
-class FormDecorator extends baseElement_1.BaseElement {
+const basicElement_1 = require("Src/factories/basicElement");
+class FormDecorator extends basicElement_1.BasicElement {
     constructor(config) {
         super();
         this.config = config;

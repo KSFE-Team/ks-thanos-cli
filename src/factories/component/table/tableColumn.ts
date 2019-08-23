@@ -41,12 +41,18 @@ export class TableColumn extends BasicContainer implements TableColumnConfig {
 
     toCode() {
         let codes: string[] = [];
-        Object.entries(this.config).forEach((keyValue) => {
+        const { component, ...otherConfig } = this.config;
+        Object.entries(otherConfig).forEach((keyValue) => {
             const [key, value] = keyValue;
             codes.push(`${key}: '${value}'`);
         });
         if (this.component) {
-            codes.push(`render: (text) => {
+            let recordCode = '';
+            if (this.component.effect) {
+                const effectParams = this.component.effect.params;
+                recordCode = effectParams.filter((param) => !param.defaultValue).map((param) => param.name).join(',\n');
+            }
+            codes.push(`render: (text, ${recordCode ? `{ ${recordCode} }` : 'record'}) => {
                 return (
                     <div>
                         ${this.component.toCode()}

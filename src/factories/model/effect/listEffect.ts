@@ -7,11 +7,6 @@ export class ListEffect extends Effect {
                 name: 'request',
                 source: 'Src/utils/request',
                 defaultImport: true
-            },
-            {
-                name: 'stringify',
-                source: 'qs',
-                defaultImport: false
             }
         ];
         return imports;
@@ -29,7 +24,10 @@ async ${this.name}(payload, getState) {
             page: state.page,
         };
 
-        const response = await request(\`${this.config.api}?\${stringify(postData)}\`);
+        const response = await request('${this.config.api}', { 
+            method: ${this.method},
+            data: postData
+        });
 
         if (response && response.code === 200) {
             actions.${namespace}.setReducer({

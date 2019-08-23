@@ -46,6 +46,15 @@ export async function getPage(pageName: string) {
                         { 
                             'title': '名字',
                             'dataIndex': 'name'
+                        },
+                        {
+                            title: '操作',
+                            component: {
+                                componentName: 'a', // 组件名称
+                                text: '跳转',
+                                type: 'link',
+                                href: 'http://www.baidu.com',
+                            }
                         }
                     ] 
                 }, 

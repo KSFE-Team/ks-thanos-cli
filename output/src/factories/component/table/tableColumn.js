@@ -1,39 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const action_1 = require("../../action/action");
-const baseElement_1 = require("Src/factories/baseElement");
-class TableColumn extends baseElement_1.BaseElement {
+const basicElement_1 = require("Src/factories/basicElement");
+const addComponent_1 = require("Src/utils/addComponent");
+class TableColumn extends basicElement_1.BasicContainer {
     constructor(page, config) {
         super();
-        this.actions = [];
-        const { actions, ...other } = config;
-        this.config = other;
-        if (actions) {
-            actions.forEach((action) => {
-                const actionInstance = new action_1.Action(page, action);
-                this.actions.push(actionInstance);
-            });
+        this.page = page;
+        this.config = config;
+        this.title = config.title;
+        this.dataIndex = config.dataIndex;
+        if (config.component) {
+            addComponent_1.addComponent(this, config.component);
         }
     }
+    addComponent(component) {
+        this.component = component;
+    }
     getImports() {
-        let imports = [];
-        this.actions.forEach((action) => {
-            imports = imports.concat(action.getImports());
-        });
-        return imports;
+        if (this.component) {
+            return this.component.getImports();
+        }
+        return [];
     }
     toCode() {
         let codes = [];
-        Object.entries(this.config).forEach((keyValue) => {
+        const { component, ...otherConfig } = this.config;
+        Object.entries(otherConfig).forEach((keyValue) => {
             const [key, value] = keyValue;
             codes.push(`${key}: '${value}'`);
         });
-        if (this.actions.length) {
-            const actionCodes = this.actions.map((action) => action.toCode());
-            codes.push(`render: (text) => {
+        if (this.component) {
+            let recordCode = '';
+            if (this.component.effect) {
+                const effectParams = this.component.effect.params;
+                recordCode = effectParams.filter((param) => !param.defaultValue).map((param) => param.name).join(',\n');
+            }
+            codes.push(`render: (text, ${recordCode ? `{ ${recordCode} }` : 'record'}) => {
                 return (
                     <div>
-                        ${actionCodes}
+                        ${this.component.toCode()}
                     </div>
                 );
             }`);

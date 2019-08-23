@@ -7,19 +7,17 @@ const basic_1 = require("../basic");
 const debugger_1 = __importDefault(require("Src/utils/debugger"));
 const tableColumn_1 = require("./tableColumn");
 const connect_1 = require("Src/factories/decorator/connect");
-const listEffect_1 = require("Src/factories/model/effect/listEffect");
+const manager_1 = require("Src/factories/model/effect/manager");
 const debug = debugger_1.default(__filename);
 class Table extends basic_1.Component {
     constructor(page, config) {
         super(page, config);
         this.columns = [];
-        this.props = {
-            rowKey: `'id'`
-        };
-        this.effect = new listEffect_1.ListEffect(this.stateName, page.model, config.dependencies);
+        this.effect = manager_1.EffectManager.create(this.stateName, page.model, config.dependencies);
     }
     initProps() {
         const { pageName } = this.page;
+        this.addProp('rowKey', `'id'`);
         this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
         this.addProp('loading', `this.props.${pageName}.${this.stateName}ListLoading`);
         this.addProp('pagination', `{

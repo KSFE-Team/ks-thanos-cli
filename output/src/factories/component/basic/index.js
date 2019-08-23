@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const debugger_1 = __importDefault(require("Src/utils/debugger"));
-const index_1 = require("../../baseElement/index");
+const basicElement_1 = require("Src/factories/basicElement");
 const debug = debugger_1.default(__filename);
-class Component extends index_1.BaseElement {
+class Component extends basicElement_1.BasicContainer {
     constructor(page, config) {
         super();
         this.componentName = '';
@@ -42,11 +42,11 @@ class Component extends index_1.BaseElement {
         this.props[key] = `${value}`;
     }
     getImports() {
-        let componentImports = [{
+        let componentImports = this.source ? [{
                 source: this.source,
                 name: this.componentName,
                 defaultImport: this.default
-            }];
+            }] : [];
         for (let component of this.components) {
             componentImports = componentImports.concat(component.getImports());
         }

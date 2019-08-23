@@ -8,9 +8,9 @@ const string_1 = require("Src/utils/string");
 const model_1 = __importDefault(require("../model"));
 const addComponent_1 = require("Src/utils/addComponent");
 const getImportsCode_1 = require("Src/utils/getImportsCode");
-const baseElement_1 = require("Src/factories/baseElement");
+const basicElement_1 = require("Src/factories/basicElement");
 const debug = debugger_1.default(__filename);
-class Page extends baseElement_1.BaseElement {
+class Page extends basicElement_1.BasicContainer {
     constructor(name, components = []) {
         super();
         this.name = '';
@@ -38,7 +38,7 @@ class Page extends baseElement_1.BaseElement {
     addComponents(components = []) {
         components.forEach((component) => {
             debug(`add component: ${JSON.stringify(component)}`);
-            addComponent_1.addComponent(this, this, component);
+            addComponent_1.addComponent(this, component);
         });
     }
     addMethod(methodCode) {

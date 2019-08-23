@@ -48,6 +48,15 @@ async function getPage(pageName) {
                         {
                             'title': '名字',
                             'dataIndex': 'name'
+                        },
+                        {
+                            title: '操作',
+                            component: {
+                                componentName: 'a',
+                                text: '跳转',
+                                type: 'link',
+                                href: 'http://www.baidu.com',
+                            }
                         }
                     ]
                 },

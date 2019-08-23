@@ -1,28 +1,27 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __importDefault(require("../factories/page/index"));
 const component_1 = require("./constants/component");
-const table_1 = require("../factories/component/table");
-const form_1 = require("../factories/component/form");
-const input_1 = require("../factories/component/input");
-function addComponent(page, instance, component) {
-    let componentInstance;
-    switch (component.componentName) {
-        case component_1.COMPONENT_TYPES.TABLE:
-            componentInstance = new table_1.Table(page, component);
-            instance.addComponent(componentInstance);
-            break;
-        case component_1.COMPONENT_TYPES.FORM:
-            componentInstance = new form_1.Form(page, component);
-            instance.addComponent(componentInstance);
-            break;
-        case component_1.COMPONENT_TYPES.INPUT:
-            componentInstance = new input_1.Input(page, component);
-            instance.addComponent(componentInstance);
+function addComponent(target, config) {
+    let page, componentInstance;
+    if (target instanceof index_1.default) {
+        page = target;
+    }
+    else {
+        page = target.page;
+    }
+    const TargetComponentClass = component_1.COMPONENT_TYPES_MAP[config.componentName];
+    if (TargetComponentClass) {
+        componentInstance = new TargetComponentClass(page, config);
+        target.addComponent(componentInstance);
     }
     if (componentInstance) {
-        if (component.components) {
-            component.components.forEach((component) => {
-                addComponent(page, componentInstance, component);
+        if (config.components) {
+            config.components.forEach((itemConfig) => {
+                addComponent(componentInstance, itemConfig);
             });
         }
         componentInstance.init();

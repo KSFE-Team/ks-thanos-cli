@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Element {
+const basic_1 = require("Src/factories/component/basic");
+class BasicComponent extends basic_1.Component {
+    toCode() {
+        return '';
+    }
 }
-exports.Element = Element;
-class Decorator extends Element {
-}
-exports.Decorator = Decorator;
+exports.BasicComponent = BasicComponent;
 //# sourceMappingURL=basic.js.map
