@@ -7,11 +7,14 @@ import { upperFirst } from 'Src/utils/string';
 
 const debug = Debug(__filename);
 
+/**
+ * 创建页面
+ */
 export function createPage(
     options: {
-        pageName: string;
-        pageConfig: any;
-        projectPath: string;
+        pageName: string; // 页面名称
+        pageConfig: any; // 页面配置
+        projectPath: string; // 项目地址
     }
 ) {
     const { pageName, pageConfig, projectPath } = options;

@@ -30,9 +30,9 @@ const SUFFIX_NAME_MAP: MAP = {
 
 export abstract class Effect extends BasicElement {
 
-    name: string
-    stateName: string
-    model: Model
+    name: string // effect的名称
+    stateName: string // effect所关联的state名称
+    model: Model // effect所在的model对象
     type: string // 数据来源类型
     api: string // 接口地址
     actionType: string // CRUD类型

@@ -23,10 +23,12 @@ export default class Page extends BasicContainer {
     private methods: string[] = []; // 页面方法
     private didMountStep: string[] = []; // componentDidMount 中的步骤
 
-    constructor(
-        name: string, // 页面名
-        components: ComponentConfig[] = [] // 页面中的组件配置
-    ) {
+    /**
+     * 构造函数
+     * @param name 页面名
+     * @param components 页面中的配置
+     */
+    constructor(name: string, components: ComponentConfig[] = []) {
         super();
         this.pageName = lowerFirst(name);
         this.className = upperFirst(name);
@@ -40,6 +42,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 页面初始化
+     * @param config 页面配置
      */
     public init(config: ComponentConfig[] = []) {
         config.forEach((componentConfig) => {
@@ -50,6 +53,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 添加 decorator
+     * @param decorator decorator对象
      */
     public addDecorator(decorator: ConnectDecorator | FormDecorator) {
         this.decorators.push(decorator);
@@ -57,6 +61,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 添加组件
+     * @param component 组件对象
      */
     public addComponent(component: Component) {
         this.components.push(component);
@@ -64,6 +69,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 添加方法
+     * @param methodCode 方法代码
      */
     public addMethod(methodCode: string) {
         this.methods.push(methodCode);
@@ -71,6 +77,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 添加 componentDidMount 步骤
+     * @param stepCode 步骤代码
      */
     public addDidMountStep(stepCode: string) {
         this.didMountStep.push(stepCode);
@@ -78,6 +85,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 获取 import
+     * @returns 需要import的模块
      */
     getImports() {
         let imports: Import[] = [];
@@ -92,6 +100,7 @@ export default class Page extends BasicContainer {
 
     /**
      * 生成代码
+     * @returns 代码
      */
     public toCode() {
         const importsCode = getImportsCode(this.getImports());
