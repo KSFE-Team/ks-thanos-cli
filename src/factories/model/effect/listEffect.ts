@@ -7,6 +7,11 @@ export class ListEffect extends Effect {
                 name: 'request',
                 source: 'Src/utils/request',
                 defaultImport: true
+            },
+            {
+                name: 'message',
+                source: 'antd',
+                defaultImport: true
             }
         ];
         return imports;
@@ -38,6 +43,8 @@ async ${this.name}(payload, getState) {
                     total: response.data.totalElements
                 }
             });
+        } else {
+            message.error(response.message);
         }
     } catch (error) {
         console.error(error);

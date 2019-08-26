@@ -88,7 +88,13 @@ export default class Page extends BasicContainer {
      * @returns 需要import的模块
      */
     getImports() {
-        let imports: Import[] = [];
+        let imports: Import[] = [
+            {
+                name: 'React',
+                source: 'react',
+                defaultImport: true
+            }
+        ];
         this.components.forEach((component) => {
             imports = imports.concat(component.getImports());
         });
