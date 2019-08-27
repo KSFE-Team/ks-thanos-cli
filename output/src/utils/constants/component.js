@@ -4,11 +4,13 @@ const index_1 = require("Src/factories/component/table/index");
 const form_1 = require("Src/factories/component/form");
 const input_1 = require("Src/factories/component/input");
 const clickableComponent_1 = require("Src/factories/component/clickableComponent");
+const textarea_1 = require("Src/factories/component/textarea");
 exports.COMPONENT_TYPES_MAP = {
     Table: index_1.Table,
     Form: form_1.Form,
     Input: input_1.Input,
     a: clickableComponent_1.ClickableComponent,
-    Button: clickableComponent_1.ClickableComponent
+    Button: clickableComponent_1.ClickableComponent,
+    TextArea: textarea_1.Textarea
 };
 //# sourceMappingURL=component.js.map
