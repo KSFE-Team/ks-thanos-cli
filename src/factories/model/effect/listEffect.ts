@@ -35,7 +35,7 @@ async ${this.name}(payload, getState) {
         });
 
         if (response && response.code === 200) {
-            actions.${namespace}.setReducer({
+            actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
                     list: response.data.content,
