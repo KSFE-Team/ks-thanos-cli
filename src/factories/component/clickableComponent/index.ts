@@ -1,8 +1,8 @@
 import { Component } from '../basic/index';
 import { ComponentConfig } from 'Src/factories/component/basic';
 import Page from 'Src/factories/page';
-import { EffectConfig, Effect } from 'Src/factories/model/effect';
-import { EffectManager } from '../../model/effect/manager';
+import { EffectConfig } from 'Src/factories/model/effect';
+import { EffectManager } from 'Src/factories/model/effect/manager';
 
 type ClickableType = 'link' | 'request' | 'confirm';
 
