@@ -23,7 +23,7 @@ export interface TableComponentConfig extends ComponentConfig {
 export class Table extends Component {
 
     columns: TableColumn[] = [] // table中的column属性
-    effect: ListEffect
+    effect: ListEffect // table所使用的列表effect
 
     constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
