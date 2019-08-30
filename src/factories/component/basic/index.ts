@@ -1,13 +1,14 @@
-import { Import } from 'Src/factories/page/types';
+import {Import} from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
-import { Effect } from 'Src/factories/model/effect';
-import { BasicContainer } from 'Src/factories/basicElement';
+import {Effect} from 'Src/factories/model/effect';
+import {BasicContainer} from 'Src/factories/basicElement';
 
 const debug = Debug(__filename);
 
 export interface ComponentConfig {
     componentName: string; // 组件名称
+    parentComponentName: string; // 父组件名称
     stateName: string; // 组件使用state名称
     source: string; // 组件来源
     default: boolean; // 是否默认导出
@@ -18,32 +19,33 @@ export interface ComponentConfig {
 }
 
 export abstract class Component extends BasicContainer implements ComponentConfig {
-    componentName = '' // 组件名称
-    stateName = '' // 组件所使用的状态名称
-    upperStateName = '' // 组件所使用的状态名称（首字母大写）
-    source = 'antd' // 组件导入来源
-    default = false // 组件是否默认导入
-    components: Component[] = [] // 子组件
+    componentName = ''; // 组件名称
+    parentComponentName = ''; // 父组件名称
+    stateName = ''; // 组件所使用的状态名称
+    upperStateName = ''; // 组件所使用的状态名称（首字母大写）
+    source = 'antd'; // 组件导入来源
+    default = false; // 组件是否默认导入
+    components: Component[] = []; // 子组件
     props: { // 组件props
         [name: string]: any;
-    } = {}
-    config: ComponentConfig // 组件配置
+    } = {};
+    config: ComponentConfig;// 组件配置
 
-    page: Page // 组件所属页面
-    effect: Effect | undefined // 组件所用的effect
+    page: Page; // 组件所属页面
+    effect: Effect | undefined; // 组件所用的effect
 
-    constructor(
-        page: Page, // 页面
-        config: ComponentConfig, // 组件配置
+    constructor(page: Page, // 页面
+                config: ComponentConfig, // 组件配置
     ) {
         super();
 
         this.page = page;
 
-        const { componentName, stateName, source, default: defaultImport } = config;
+        const {componentName, stateName, source, default: defaultImport, parentComponentName} = config;
 
         this.config = config;
         this.componentName = componentName;
+        this.parentComponentName = parentComponentName;
         this.stateName = stateName;
         this.source = source;
         this.default = defaultImport;
@@ -85,7 +87,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
      * 组件初始化
      */
     init() {
-        const { props = {} } = this.config;
+        const {props = {}} = this.config;
         for (let propKey in props) {
             this.addProp(propKey, props[propKey]);
         }
@@ -111,7 +113,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     getImports(): Import[] {
         let componentImports: Import[] = this.source ? [{
             source: this.source,
-            name: this.componentName,
+            name: this.parentComponentName || this.componentName,
             defaultImport: this.default
         }] : [];
         for (let component of this.components) {

@@ -1,73 +1,64 @@
 export async function getPage(pageName: string) {
-    return { 
+    return {
         'components': [
-            { 
+            {
                 'components': [
-                    { 
-                        'stateName': 'table', 
+                    {
+                        'stateName': 'table',
                         'componentName': 'Input',
-                        'source': 'antd', 
-                        'default': false, 
-                        'key': 'name', 
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'name1',
                         'label': '名字',
                         'id': '5ivoubchgjx',
-                        'parentId': 'm7c9g9zy3uc', 
-                        'configVisible': false,
+                        'parentId': 'm7c9g9zy3uc',
                         'props': {
                             'placeholder': '名字'
-                        } 
+                        }
+                    },
+                    {
+                        'stateName': 'table',
+                        'componentName': 'Input',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'name2',
+                        'label': '名字',
+                        'id': '5ivoubchgjx',
+                        'parentId': 'm7c9g9zy3uc',
+                        'props': {
+                            'placeholder': '名字'
+                        }
+                    },
+                    {
+                        "stateName": "dateObj",
+                        "componentName": "RangePicker",
+                        "source": "antd",
+                        "default": false,
+                        "key": "createTime",
+                        "label": "创建时间",
+                        "parentComponentName": "DatePicker",
+                        "props": {
+                            "format": "YYYY-MM-DD HH:mm:ss",
+                            "showTime": {"format": "HH:mm"},
+                            "placeholder": ["开始时间", "截止时间"]
+                        },
+                        "id": "shwh0urbw4c"
                     }
                 ],
-                'stateName': 'table',
-                'activeEvent': { 
+                'stateName': 'table1111',
+                'activeEvent': {
                     'eventType': 'api',
-                    'dependencies': { 
+                    'dependencies': {
                         'type': 'fetch',
                         'responseType': 'list',
-                        'api': '/api/ser', 
-                        'method': 'GET' 
-                    } 
-                }, 
-                'componentName': 'Form', 
-                'source': 'antd', 
-                'default': false 
-            }, 
-            { 
-                'stateName': 'table', 
-                'componentName': 'Table', 
-                'source': 'antd', 
-                'default': false, 
-                'props': { 
-                    'columns': [
-                        { 
-                            'title': '示例', 
-                            'dataIndex': 'example' 
-                        }, 
-                        { 
-                            'title': '名字',
-                            'dataIndex': 'name'
-                        },
-                        {
-                            title: '操作',
-                            component: {
-                                componentName: 'a', // 组件名称
-                                text: '跳转',
-                                type: 'link',
-                                href: 'http://www.baidu.com',
-                            }
-                        }
-                    ] 
-                }, 
-                'dependencies': { 
-                    'type': 'fetch', 
-                    'responseType': 'list',
-                    'api': '/api/ser',
-                    'method': 'GET'
-                }, 
-                'components': [], 
-                'id': 'm7c9g9zy3uc', 
-                'configVisible': false 
+                        'api': '/api/ser',
+                        'method': 'GET'
+                    }
+                },
+                'componentName': 'Form',
+                'source': 'antd',
+                'default': false
             }
-        ] 
+        ]
     };
 }

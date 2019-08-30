@@ -3,6 +3,7 @@ import { Form } from 'Src/factories/component/form';
 import { Input } from 'Src/factories/component/input';
 import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
+import { RangePicker } from 'Src/factories/component/rangePicker';
 
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
@@ -11,5 +12,6 @@ export const COMPONENT_TYPES_MAP: {
     Form: Form, // 表单组件
     Input: Input, // input组件
     a: ClickableComponent,
-    Button: ClickableComponent
+    Button: ClickableComponent,
+    RangePicker: RangePicker,
 };
