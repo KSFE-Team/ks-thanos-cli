@@ -43,6 +43,20 @@ export async function getPage(pageName: string) {
                             "placeholder": ["开始时间", "截止时间"]
                         },
                         "id": "shwh0urbw4c"
+                    },
+                    {
+                        "stateName": "datePic",
+                        "componentName": "DatePicker",
+                        "source": "antd",
+                        "default": false,
+                        "key": "publishTime",
+                        "label": "发布时间",
+                        "props": {
+                            "format": "YYYY-MM-DD HH:mm:ss",
+                            "showTime": {"format": "HH:mm"},
+                            "placeholder": "发布时间"
+                        },
+                        "id": "dfcsa5db2ee"
                     }
                 ],
                 'stateName': 'table1111',

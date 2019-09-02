@@ -4,6 +4,7 @@ import { Input } from 'Src/factories/component/input';
 import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
 import { RangePicker } from 'Src/factories/component/rangePicker';
+import { DatePicker } from 'Src/factories/component/datePicker';
 
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
@@ -14,4 +15,5 @@ export const COMPONENT_TYPES_MAP: {
     a: ClickableComponent,
     Button: ClickableComponent,
     RangePicker: RangePicker,
+    DatePicker: DatePicker
 };
