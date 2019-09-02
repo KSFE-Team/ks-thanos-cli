@@ -25,7 +25,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     default = false // 组件是否默认导入
     components: Component[] = [] // 子组件
     props: { // 组件props
-        [name: string]: any;
+        [name: string]: string | boolean;
     } = {}
     config: ComponentConfig // 组件配置
 
@@ -102,7 +102,15 @@ export abstract class Component extends BasicContainer implements ComponentConfi
      */
     addProp(key: string, value: any) {
         debug(`add props: ${key}, ${JSON.stringify(value)}`);
-        this.props[key] = `${value}`;
+        // this.props[key] = `${value}`;
+        // console.log('value<><><><><><><><>');
+        // console.log(typeof value);
+        // console.log(value);
+        if (typeof value === 'boolean') {
+            this.props[key] = value;
+        } else {
+            this.props[key] = `${value}`;
+        }
     }
 
     /**

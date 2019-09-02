@@ -5,6 +5,7 @@ import { DeleteEffect } from './deleteEffect';
 
 export class EffectManager {
     static create(stateName: string, model: Model, config: EffectConfig): Effect {
+        console.log(stateName, model, config);
         switch (config.actionType) {
             case 'delete':
                 return new DeleteEffect(stateName, model, config);
