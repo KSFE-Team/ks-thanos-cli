@@ -5,6 +5,7 @@ import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
 import { Select } from 'Src/factories/component/select';
 import { RangePicker } from 'Src/factories/component/rangePicker';
+import { Textarea } from 'Src/factories/component/textarea';
 
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
@@ -16,4 +17,5 @@ export const COMPONENT_TYPES_MAP: {
     Button: ClickableComponent,
     Select: Select,
     RangePicker: RangePicker,
+    Textarea: Textarea, // 文本框组件
 };

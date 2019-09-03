@@ -60,7 +60,36 @@ export async function getPage(pageName: string) {
                         'props': {
                             'placeholder': '名字'
                         }
-                    }
+                    },
+                    {
+                        'stateName': 'dateObj',
+                        'componentName': 'RangePicker',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'createTime',
+                        'label': '创建时间',
+                        'parentComponentName': 'DatePicker',
+                        'props': {
+                            'format': 'YYYY-MM-DD HH:mm:ss',
+                            'showTime': {'format': 'HH:mm'},
+                            'placeholder': ['开始时间', '截止时间']
+                        },
+                        'id': 'shwh0urbw4c'
+                    },
+                    {
+                        'stateName': 'dateObj',
+                        'componentName': 'Textarea',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'createTime',
+                        'label': '创建时间',
+                        'parentComponentName': 'DatePicker',
+                        'props': {
+                            'placeholder': '天气晚来秋。',
+                            'rows': 3,
+                        },
+                        'id': 'shwh0urbw4c'
+                    },
                 ],
                 'stateName': 'table',
                 'activeEvent': {
