@@ -3,15 +3,14 @@ import { FormItemConfig } from '../form/formItem';
 import { Component } from 'Src/factories/component/basic';
 
 /**
- * Input组件
+ * Textarea组件
  */
-export class Input extends Component {
+export class Textarea extends Component {
 
     config: FormItemConfig
-
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
-        this.componentName = 'Input';
+        this.componentName = 'Textarea';
         this.config = config;
     }
 
@@ -30,7 +29,7 @@ export class Input extends Component {
         return `<Form.Item>
         {
             this.props.form.getFieldDecorator('${this.config.key}')(
-                <Input
+                <Input.TextArea
                     ${propsCode}
                 />
             )

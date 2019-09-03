@@ -3,9 +3,10 @@ import { Form } from 'Src/factories/component/form';
 import { Input } from 'Src/factories/component/input';
 import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
+import { Select } from 'Src/factories/component/select';
+import { RangePicker } from 'Src/factories/component/rangePicker';
+import { Textarea } from 'Src/factories/component/textarea';
 import { Radio } from 'Src/factories/component/radio';
-
-
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
 } = {
@@ -14,5 +15,8 @@ export const COMPONENT_TYPES_MAP: {
     Input: Input, // input组件
     a: ClickableComponent,
     Button: ClickableComponent,
-    Radio:Radio
+    Select: Select,
+    RangePicker: RangePicker,
+    Textarea: Textarea, // 文本框组件
+    Radio
 };

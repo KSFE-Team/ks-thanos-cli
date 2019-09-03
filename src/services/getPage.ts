@@ -1,49 +1,122 @@
 export async function getPage(pageName: string) {
-    return { 
+    return {
         'components': [
-            { 
+            {
+                'stateName': 'orderState',
+                'componentName': 'Select',
+                'source': 'antd',
+                'default': false,
+                'props': {
+                    disabled: false,
+                    placeholder: 'placeholder',
+                    showSearch: true,
+                    allowClear: true
+                },
+                'defaultValue': '订单',
+                label: 'firstLabel',
+                options: [
+                    {
+                        props: {
+                            disabled: false,
+                            key: '1',
+                            title: 'title1',
+                            value: '任小超太酷',
+                            className: 'child-option'
+                        },
+                        lable: '第一个内容',
+                    },
+                    {
+                        props: {
+                            disabled: false,
+                            key: '2',
+                            title: 'title2',
+                            value: '任小超太帅',
+                            className: 'child-option-second'
+                        },
+                        lable: '第二个内容',
+                    }
+                ],
+                // optGroup: OptGroupData[];
+                'dependencies': {
+                    'type': 'fetch',
+                    'responseType': 'list',
+                    'api': '/api/ser',
+                    'method': 'GET'
+                },
+                'components': [],
+            },
+            {
                 'components': [
-                    { 
-                        'stateName': 'table', 
+                    {
+                        'stateName': 'table',
                         'componentName': 'Input',
-                        'source': 'antd', 
-                        'default': false, 
-                        'key': 'name', 
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'name',
                         'label': '名字',
                         'id': '5ivoubchgjx',
-                        'parentId': 'm7c9g9zy3uc', 
+                        'parentId': 'm7c9g9zy3uc',
                         'configVisible': false,
                         'props': {
                             'placeholder': '名字'
-                        } 
-                    }
+                        }
+                    },
+                    {
+                        'stateName': 'dateObj',
+                        'componentName': 'RangePicker',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'createTime',
+                        'label': '创建时间',
+                        'parentComponentName': 'DatePicker',
+                        'props': {
+                            'format': 'YYYY-MM-DD HH:mm:ss',
+                            'showTime': {'format': 'HH:mm'},
+                            'placeholder': ['开始时间', '截止时间']
+                        },
+                        'id': 'shwh0urbw4c'
+                    },
+                    {
+                        'stateName': 'dateObj',
+                        'componentName': 'Textarea',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'createTime',
+                        'label': '创建时间',
+                        'parentComponentName': 'DatePicker',
+                        'props': {
+                            'placeholder': '天气晚来秋。',
+                            'rows': 3,
+                        },
+                        'id': 'shwh0urbw4c'
+                    },
                 ],
                 'stateName': 'table',
-                'activeEvent': { 
+                'activeEvent': {
                     'eventType': 'api',
-                    'dependencies': { 
+                    'dependencies': {
                         'type': 'fetch',
                         'responseType': 'list',
-                        'api': '/api/ser', 
-                        'method': 'GET' 
-                    } 
-                }, 
-                'componentName': 'Form', 
-                'source': 'antd', 
-                'default': false 
-            }, 
-            { 
-                'stateName': 'table', 
-                'componentName': 'Table', 
-                'source': 'antd', 
-                'default': false, 
-                'props': { 
+                        'api': '/api/ser',
+                        'method': 'GET'
+                    }
+                },
+                'componentName': 'Form',
+                'source': 'antd',
+                'default': false
+            },
+            {
+                'stateName': 'table',
+                'componentName': 'Table',
+                'source': 'antd',
+                'default': false,
+                'props': {
                     'columns': [
-                        { 
-                            'title': '示例', 
-                            'dataIndex': 'example' 
-                        }, 
-                        { 
+                        {
+                            'title': '示例',
+                            'dataIndex': 'example'
+                        },
+                        {
                             'title': '名字',
                             'dataIndex': 'name'
                         },
@@ -56,18 +129,18 @@ export async function getPage(pageName: string) {
                                 href: 'http://www.baidu.com',
                             }
                         }
-                    ] 
-                }, 
-                'dependencies': { 
-                    'type': 'fetch', 
+                    ]
+                },
+                'dependencies': {
+                    'type': 'fetch',
                     'responseType': 'list',
                     'api': '/api/ser',
                     'method': 'GET'
-                }, 
-                'components': [], 
-                'id': 'm7c9g9zy3uc', 
-                'configVisible': false 
+                },
+                'components': [],
+                'id': 'm7c9g9zy3uc',
+                'configVisible': false
             }
-        ] 
+        ]
     };
 }
