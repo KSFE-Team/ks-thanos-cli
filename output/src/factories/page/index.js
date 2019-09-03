@@ -6,40 +6,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debugger_1 = __importDefault(require("Src/utils/debugger"));
 const string_1 = require("Src/utils/string");
 const model_1 = __importDefault(require("../model"));
-const addComponent_1 = require("Src/utils/addComponent");
 const getImportsCode_1 = require("Src/utils/getImportsCode");
 const basicElement_1 = require("Src/factories/basicElement");
+const manager_1 = require("../component/manager");
 const debug = debugger_1.default(__filename);
 class Page extends basicElement_1.BasicContainer {
     constructor(name, components = []) {
         super();
-        this.name = '';
         this.pageName = '';
         this.className = '';
         this.decorators = [];
         this.components = [];
         this.methods = [];
         this.didMountStep = [];
-        this.name = name;
         this.pageName = string_1.lowerFirst(name);
         this.className = string_1.upperFirst(name);
         this.model = new model_1.default({
             initialState: {},
             namespace: this.pageName
         });
-        this.addComponents(components);
+        this.init(components);
+    }
+    init(config = []) {
+        config.forEach((componentConfig) => {
+            debug(`add component: ${JSON.stringify(componentConfig)}`);
+            manager_1.ComponentManager.add(this, componentConfig);
+        });
     }
     addDecorator(decorator) {
         this.decorators.push(decorator);
     }
     addComponent(component) {
         this.components.push(component);
-    }
-    addComponents(components = []) {
-        components.forEach((component) => {
-            debug(`add component: ${JSON.stringify(component)}`);
-            addComponent_1.addComponent(this, component);
-        });
     }
     addMethod(methodCode) {
         this.methods.push(methodCode);
@@ -48,7 +46,13 @@ class Page extends basicElement_1.BasicContainer {
         this.didMountStep.push(stepCode);
     }
     getImports() {
-        let imports = [];
+        let imports = [
+            {
+                name: 'React',
+                source: 'react',
+                defaultImport: true
+            }
+        ];
         this.components.forEach((component) => {
             imports = imports.concat(component.getImports());
         });

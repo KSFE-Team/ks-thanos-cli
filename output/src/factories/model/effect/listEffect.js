@@ -8,6 +8,11 @@ class ListEffect extends index_1.Effect {
                 name: 'request',
                 source: 'Src/utils/request',
                 defaultImport: true
+            },
+            {
+                name: 'message',
+                source: 'antd',
+                defaultImport: true
             }
         ];
         return imports;
@@ -30,7 +35,7 @@ async ${this.name}(payload, getState) {
         });
 
         if (response && response.code === 200) {
-            actions.${namespace}.setReducer({
+            actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
                     list: response.data.content,
@@ -38,6 +43,8 @@ async ${this.name}(payload, getState) {
                     total: response.data.totalElements
                 }
             });
+        } else {
+            message.error(response.message);
         }
     } catch (error) {
         console.error(error);

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const basicElement_1 = require("Src/factories/basicElement");
-const addComponent_1 = require("Src/utils/addComponent");
+const manager_1 = require("../manager");
 class TableColumn extends basicElement_1.BasicContainer {
     constructor(page, config) {
         super();
@@ -10,7 +10,7 @@ class TableColumn extends basicElement_1.BasicContainer {
         this.title = config.title;
         this.dataIndex = config.dataIndex;
         if (config.component) {
-            addComponent_1.addComponent(this, config.component);
+            manager_1.ComponentManager.add(this, config.component);
         }
     }
     addComponent(component) {
