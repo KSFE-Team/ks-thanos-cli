@@ -9,7 +9,7 @@ export interface FormItemConfig extends ComponentConfig {
     key: string; // 表单绑定Key
     props: {
         [name: string]: any;
-    }
+    };
 }
 
 /**
