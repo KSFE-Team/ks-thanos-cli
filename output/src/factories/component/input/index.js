@@ -18,7 +18,7 @@ class Input extends basic_1.Component {
         }
         return `<Form.Item>
         {
-            this.props.form.getFieldDecorator('${this.config.label}')(
+            this.props.form.getFieldDecorator('${this.config.key}')(
                 <Input
                     ${propsCode}
                 />

@@ -1,26 +1,16 @@
-import { Component, ComponentConfig } from '../basic/index';
 import Page from 'Src/factories/page';
+import { FormItemConfig } from '../form/formItem';
+import { Component } from 'Src/factories/component/basic';
 
 /**
- * FormItem组件配置
+ * Textarea组件
  */
-export interface FormItemConfig extends ComponentConfig {
-    label: string; // 搜索表单标题
-    key: string; // 表单绑定Key
-    props: {
-        [name: string]: any;
-    };
-}
+export class Textarea extends Component {
 
-/**
- * FormItem类型组件的基类
- */
-export class FormItem extends Component {
-
-    config: FormItemConfig // 组件配置
-
+    config: FormItemConfig
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
+        this.componentName = 'Textarea';
         this.config = config;
     }
 
@@ -38,8 +28,8 @@ export class FormItem extends Component {
         }
         return `<Form.Item>
         {
-            this.props.form.getFieldDecorator('${this.config.label}')(
-                <${this.componentName}
+            this.props.form.getFieldDecorator('${this.config.key}')(
+                <Input.TextArea
                     ${propsCode}
                 />
             )
