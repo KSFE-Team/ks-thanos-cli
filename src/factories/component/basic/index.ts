@@ -114,7 +114,6 @@ export abstract class Component extends BasicContainer implements ComponentConfi
             this.props[key] = `${value}`;
         }
     }
-
     /**
      * 获取组件所需导入的依赖
      */

@@ -64,6 +64,7 @@ class Page extends basicElement_1.BasicContainer {
     toCode() {
         const importsCode = getImportsCode_1.getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
+        console.log(JSON.stringify(this.decorators));
         const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
