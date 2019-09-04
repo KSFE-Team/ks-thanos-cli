@@ -10,7 +10,7 @@ export interface FormItemConfig extends ComponentConfig {
     isRequired:boolean;
     props: {
         [name: string]: any;
-    }
+    };
 }
 
 /**

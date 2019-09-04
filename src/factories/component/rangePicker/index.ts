@@ -42,15 +42,15 @@ export class RangePicker extends Component {
                 case 'showTime':
                     return `${item}={${JSON.stringify(value)}}`;
                 case 'format':
-                    return `${item}='${value}'`
+                    return `${item}='${value}'`;
             }
         });
         return `<Form.Item label='${this.config.label}'>
     {
         this.props.form.getFieldDecorator('${this.config.key}')(
-            <DatePicker.RangePicker ${propsCode.join(' ').replace(/\"/g, "'")}/>
+            <DatePicker.RangePicker ${propsCode.join(' ').replace(/\"/g, '\'')}/>
         )
     }
 </Form.Item>`;
     }
-}
+} 
