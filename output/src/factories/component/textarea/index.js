@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const basic_1 = require("Src/factories/component/basic");
-class Input extends basic_1.Component {
+class Textarea extends basic_1.Component {
     constructor(page, config) {
         super(page, config);
-        this.componentName = 'Input';
+        this.componentName = 'Textarea';
         this.config = config;
     }
     initPageState() {
@@ -18,8 +18,8 @@ class Input extends basic_1.Component {
         }
         return `<Form.Item>
         {
-            this.props.form.getFieldDecorator('${this.config.label}')(
-                <Input
+            this.props.form.getFieldDecorator('${this.config.key}')(
+                <Input.TextArea
                     ${propsCode}
                 />
             )
@@ -27,5 +27,5 @@ class Input extends basic_1.Component {
     </Form.Item>`;
     }
 }
-exports.Input = Input;
+exports.Textarea = Textarea;
 //# sourceMappingURL=index.js.map

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../basic/index");
-const manager_1 = require("../../model/effect/manager");
+const manager_1 = require("Src/factories/model/effect/manager");
 class ClickableComponent extends index_1.Component {
     constructor(page, config) {
         super(page, config);
