@@ -116,6 +116,7 @@ export async function getPage(pageName: string) {
                             'label':'状态',
                             'defaultValue':1
                         },
+<<<<<<< HEAD
                         'source': "antd",
                         'stateName': "dateObj"
                     },
@@ -150,6 +151,33 @@ export async function getPage(pageName: string) {
                             'precision': 0,
                             'step': 1,
                         }
+=======
+                        "id": "shwh0urbw4c"
+                    },
+                    {
+                        "stateName": "datePic",
+                        "componentName": "DatePicker",
+                        "source": "antd",
+                        "default": false,
+                        "key": "publishTime",
+                        "label": "发布时间",
+                        "props": {
+                            "format": "YYYY-MM-DD HH:mm:ss",
+                            "showTime": {"format": "HH:mm"},
+                            "placeholder": "发布时间"
+                        },
+                        "id": "dfcsa5db2ee"
+                    }
+                ],
+                'stateName': 'table1111',
+                'activeEvent': {
+                    'eventType': 'api',
+                    'dependencies': {
+                        'type': 'fetch',
+                        'responseType': 'list',
+                        'api': '/api/ser',
+                        'method': 'GET'
+>>>>>>> feature_datePicker
                     }
                 ]
             },
