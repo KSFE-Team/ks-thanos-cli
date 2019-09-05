@@ -111,7 +111,6 @@ export default class Page extends BasicContainer {
     public toCode() {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
-        console.log(JSON.stringify(this.decorators));
         const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');

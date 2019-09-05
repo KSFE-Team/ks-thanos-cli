@@ -1,25 +1,16 @@
-import Page from 'Src/factories/page';
-import { FormItemConfig } from '../form/formItem';
-import { Component } from 'Src/factories/component/basic';
-
-/**
- * Input组件
- */
-export class RangePicker extends Component {
-
-    config: FormItemConfig;
-
-    constructor(page: Page, config: FormItemConfig) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const basic_1 = require("Src/factories/component/basic");
+class RangePicker extends basic_1.Component {
+    constructor(page, config) {
         super(page, config);
         this.componentName = 'RangePicker';
         this.parentComponentName = 'DatePicker';
         this.config = config;
     }
-
     initPageState() {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
-
     getImports() {
         let imports = super.getImports();
         imports = imports.concat([
@@ -31,14 +22,13 @@ export class RangePicker extends Component {
         ]);
         return imports;
     }
-
     toCode() {
-        const propsKeyArr: string[] = this.config.props && Object.keys(this.config.props);
+        const propsKeyArr = this.config.props && Object.keys(this.config.props);
         const propsCode = propsKeyArr.map((item) => {
-            let value: any = this.config.props[item];
+            let value = this.config.props[item];
             switch (item) {
                 case 'placeholder':
-                    return `${item}={[${value.map((e: any)=> `'${e}'`).join(',')}]}`;
+                    return `${item}={[${value.map((e) => `'${e}'`).join(',')}]}`;
                 case 'showTime':
                     return `${item}={${JSON.stringify(value)}}`;
                 case 'format':
@@ -53,4 +43,6 @@ export class RangePicker extends Component {
     }
 </Form.Item>`;
     }
-} 
+}
+exports.RangePicker = RangePicker;
+//# sourceMappingURL=index.js.map

@@ -1,27 +1,17 @@
-import { Component, ComponentConfig } from '../basic/index';
 import Page from 'Src/factories/page';
+import { FormItemConfig } from '../form/formItem';
+import { Component } from 'Src/factories/component/basic';
 
 /**
- * FormItem组件配置
+ * InputNumber组件
  */
-export interface FormItemConfig extends ComponentConfig {
-    label: string; // 搜索表单标题
-    key: string; // 表单绑定Key
-    isRequired:boolean;
-    props: {
-        [name: string]: any;
-    };
-}
+export class InputNumber extends Component {
 
-/**
- * FormItem类型组件的基类
- */
-export class FormItem extends Component {
-
-    config: FormItemConfig // 组件配置
+    config: FormItemConfig
 
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
+        this.componentName = 'InputNumber';
         this.config = config;
     }
 
@@ -34,14 +24,15 @@ export class FormItem extends Component {
         for (let propKey in this.props) {
             const propValue = this.props[propKey];
             propsCode.push(
-                `${propKey}={'${propValue}'}`
+                `${propKey}={${propValue}}`
             );
         }
+        console.log(this.props, 'this.props', propsCode);
         return `<Form.Item>
         {
             this.props.form.getFieldDecorator('${this.config.label}')(
-                <${this.componentName}
-                    ${propsCode}
+                <InputNumber
+                    ${propsCode.join(',').replace(/,/g, '\n')}
                 />
             )
         }

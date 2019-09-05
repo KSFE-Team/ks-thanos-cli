@@ -35,7 +35,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     effect: Effect | undefined; // 组件所用的effect
 
     constructor(page: Page, // 页面
-                config: ComponentConfig, // 组件配置
+        config: ComponentConfig, // 组件配置
     ) {
         super();
 
@@ -114,7 +114,6 @@ export abstract class Component extends BasicContainer implements ComponentConfi
             this.props[key] = `${value}`;
         }
     }
-
     /**
      * 获取组件所需导入的依赖
      */
