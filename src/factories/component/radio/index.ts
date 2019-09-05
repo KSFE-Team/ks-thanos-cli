@@ -17,16 +17,15 @@ export class Radio extends Component {
     initPageState() {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
-    
 
     toCode() {
         let code = this.config.props.configList.map((item: any, index: any) => {
-            let value=typeof item.value === 'number'?item.value:`'${item.value}'`;
-            return (
-                ` <Radio value={${value}} key={${item.id}}>${item.label}</Radio>`
-            );
-        });
-        let defaultValue= typeof this.config.props.defaultValue === 'number'?this.config.props.defaultValue:`'${this.config.props.defaultValue}'`
+                let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
+                return (
+                    ` <Radio value={${value}} key={${item.id}}>${item.label}</Radio>`
+                );
+            }),
+            defaultValue = typeof this.config.props.defaultValue === 'number' ? this.config.props.defaultValue : `'${this.config.props.defaultValue}'`;
         return `<Form.Item
         label='${this.config.label}'
         >
@@ -38,9 +37,7 @@ export class Radio extends Component {
                 initialValue: ${defaultValue}
             })(
                 <Radio.Group>
-                ${
-                    code.join('\n')
-                }
+                ${code.join('\n')}
                 </Radio.Group>
             )
         }
