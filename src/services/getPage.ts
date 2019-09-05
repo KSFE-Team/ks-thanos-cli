@@ -135,6 +135,22 @@ export async function getPage(pageName: string) {
                         'source': "antd",
                         'stateName': "dateObj"
                     },
+                    {
+                        'stateName': 'inputNumber',
+                        'componentName': 'InputNumber',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'keys',
+                        'label': 'label',
+                        'props': {
+                            'min': 0,
+                            'max': 0,
+                            'defaultValue': 0,
+                            'disabled': false,
+                            'precision': 0,
+                            'step': 1,
+                        }
+                    }
                 ]
             },
             {
@@ -153,12 +169,12 @@ export async function getPage(pageName: string) {
                             'dataIndex': 'name'
                         },
                         {
-                            title: '操作',
-                            component: {
-                                componentName: 'a', // 组件名称
-                                text: '跳转',
-                                type: 'link',
-                                href: 'http://www.baidu.com',
+                            'title': '操作',
+                            'component': {
+                                'componentName': 'a', // 组件名称
+                                'text': '跳转',
+                                'type': 'link',
+                                'href': 'http://www.baidu.com',
                             }
                         }
                     ]
