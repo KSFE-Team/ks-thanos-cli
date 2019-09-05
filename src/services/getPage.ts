@@ -8,13 +8,29 @@ export async function getPage(pageName: string) {
                         'componentName': 'Input',
                         'source': 'antd',
                         'default': false,
-                        'key': 'name',
+                        'keys': 'name',
                         'label': '名字',
                         'id': '5ivoubchgjx',
                         'parentId': 'm7c9g9zy3uc',
                         'configVisible': false,
                         'props': {
                             'placeholder': '名字'
+                        }
+                    },
+                    {
+                        'stateName': 'inputNumber',
+                        'componentName': 'InputNumber',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'key',
+                        'label': 'label',
+                        'props': {
+                            'min': 0,
+                            'max': 0,
+                            'defaultValue': 0,
+                            'disabled': false,
+                            'precision': 0,
+                            'step': 1,
                         }
                     }
                 ],
@@ -31,63 +47,6 @@ export async function getPage(pageName: string) {
                 'componentName': 'Form',
                 'source': 'antd',
                 'default': false
-            },
-            {
-                'stateName': 'table',
-                'componentName': 'Table',
-                'source': 'antd',
-                'default': false,
-                'props': {
-                    'columns': [
-                        {
-                            'title': '示例',
-                            'dataIndex': 'example'
-                        },
-                        {
-                            'title': '名字',
-                            'dataIndex': 'name'
-                        },
-                        {
-                            'title': '操作',
-                            'component': {
-                                'componentName': 'a', // 组件名称
-                                'text': '跳转',
-                                'type': 'link',
-                                'href': 'http://www.baidu.com',
-                            }
-                        }
-                    ]
-                },
-                'dependencies': {
-                    'type': 'fetch',
-                    'responseType': 'list',
-                    'api': '/api/ser',
-                    'method': 'GET'
-                },
-                'components': [],
-                'id': 'm7c9g9zy3uc',
-                'configVisible': false
-            },
-            {
-                'components': [
-                    {
-                        'stateName': 'inputNumber',
-                        'componentName': 'InputNumber',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'key',
-                        'label': 'label',
-                        'props': {
-                            'placeholder': '',
-                            'min': 0,
-                            'max': 0,
-                            'defaultValue': 0,
-                            'disabled': false,
-                            'precision': 0,
-                            'step': 1,
-                        }
-                    }
-                ],
             }
         ]
     };
