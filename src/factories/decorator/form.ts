@@ -1,7 +1,7 @@
 import { FormDecoratorConfig } from './types';
-import { BasicElement } from 'Src/factories/basicElement';
+import { Decorator } from './index';
 
-export class FormDecorator extends BasicElement {
+export class FormDecorator extends Decorator {
 
     config: FormDecoratorConfig
 
@@ -29,6 +29,10 @@ export class FormDecorator extends BasicElement {
             });`;
     }
 
+    getOutputPropTypesCode() {
+        return '';
+    }
+
     getImports() {
         return [
             {
@@ -43,7 +47,7 @@ export class FormDecorator extends BasicElement {
         const mapPropsToFieldsCode = this.getMapPropsToFieldsCode();
         const onFieldsChangeCode = this.getOnFieldsChangeCode();
         return `@Form.create({
-                mapPropsToFields(props) { 
+                mapPropsToFields(props) {
                     return {
                         ${mapPropsToFieldsCode}
                     };
