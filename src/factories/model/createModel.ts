@@ -14,7 +14,7 @@ export async function createModel(
     }
 ) {
     const { page, projectPath } = options;
-    const modelPath = path.join(projectPath, 'pages', page.pageName, 'model.js');
+    const modelPath = path.join(projectPath, 'src/pages', page.pageName, 'model.js');
 
     writeFile(modelPath, page.model.toCode());
 

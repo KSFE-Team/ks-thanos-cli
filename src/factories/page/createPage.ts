@@ -23,7 +23,7 @@ export function createPage(
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
     debug(`projectPath: ${projectPath}`);
 
-    const pagePath = path.join(projectPath, 'pages', upperFirst(pageName), 'index.js');
+    const pagePath = path.join(projectPath, 'src/pages', upperFirst(pageName), 'index.js');
     const { components = [] } = pageConfig;
     const pageInstance = new Page(pageName, components);
 
