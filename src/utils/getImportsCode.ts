@@ -1,6 +1,7 @@
 import Debug from './debugger';
 import { Import } from '../factories/page/types';
 import { FileImport } from './types/basic';
+import { uniqueArray } from './array';
 
 const debug = Debug(__filename);
 
@@ -24,8 +25,8 @@ export function getImportsCode(imports: Import[]) {
     const codes: string[] = [];
     Object.entries(pageImports).forEach((item) => {
         const [source, modules] = item;
-        const defaultImportModules = modules.filter(({ defaultImport }) => defaultImport).map(({ name }) => name);
-        const importModules = modules.filter(({ defaultImport }) => !defaultImport).map(({ name }) => name);
+        const defaultImportModules = uniqueArray(modules.filter(({ defaultImport }) => defaultImport).map(({ name }) => name));
+        const importModules = uniqueArray(modules.filter(({ defaultImport }) => !defaultImport).map(({ name }) => name));
         const defaultImportModulesCode = defaultImportModules.join();
         const importModulesCode = importModules.join(', ');
         debug(`defaultImportModules code: ${defaultImportModulesCode}`);
