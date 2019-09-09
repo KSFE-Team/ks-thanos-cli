@@ -30,11 +30,10 @@ commander
     });
 
 commander
-    .command('init [projectName]')
-    .option('--force', `强制删除并重新初始化模板目录[${errorText('DANGROUS')}]`)
+    .command('init')
     .description('初始化项目')
+    .option('--force', `强制删除并重新初始化模板目录[${errorText('DANGROUS')}]`)
     .action(async(
-        projectName: string,
         options: {
             force: boolean;
         }
@@ -42,7 +41,6 @@ commander
         debug(`Init project`);
         const { force } = options;
         await runInit({
-            projectName,
             isForce: force
         });
     });
