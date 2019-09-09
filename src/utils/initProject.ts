@@ -34,7 +34,8 @@ export function installDependencies(projectPath: string) {
 
     try {
         execSync(cmdStr, {
-            encoding: 'utf-8'
+            encoding: 'utf-8',
+            stdio: 'inherit'
         });
     } catch(err) {
         console.log(errorText(err));
