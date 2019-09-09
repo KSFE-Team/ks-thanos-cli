@@ -2,7 +2,7 @@
 
 import commander from 'commander';
 import Debug from '../src/utils/debugger';
-import { runSync } from '../src/index';
+import { runSync, runInit } from '../src/index';
 
 const debug = Debug(__filename);
 
@@ -24,6 +24,18 @@ commander
         await runSync({
             projectPath,
             pageName
+        });
+    });
+
+commander
+    .command('init [projectName]')
+    .description('初始化项目')
+    .action(async(
+        projectName: string
+    ) => {
+        debug(`Init project`);
+        await runInit({
+            projectName
         });
     });
 

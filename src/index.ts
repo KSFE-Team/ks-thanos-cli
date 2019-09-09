@@ -4,6 +4,8 @@ import { getPage } from './services/getPage';
 import { createPage } from './factories/page/createPage';
 import { createModel } from './factories/model/createModel';
 import { infoText, successText } from './utils/log';
+import { initProjectFolder, installDependencies } from './utils/initProject';
+import path from 'path';
 
 const debug = Debug(__filename);
 
@@ -31,4 +33,13 @@ export async function runSync(options: {
     });
 
     console.log(successText(`${pageName} 生成成功！`));
+}
+
+export async function runInit(options: {
+    projectName: string;
+}) {
+    const { projectName } = options;
+    const projectPath = path.join(process.cwd(), projectName);
+    initProjectFolder(projectName);
+    installDependencies(projectPath);
 }
