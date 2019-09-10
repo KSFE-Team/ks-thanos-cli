@@ -122,8 +122,8 @@ export class Table extends Component {
         let imports = super.getImports();
         imports = imports.concat([
             {
-                source: 'actions',
-                name: 'kredux',
+                source: 'kredux',
+                name: 'actions',
                 defaultImport: false
             }
         ]);

@@ -50,8 +50,8 @@ export class Form extends Component {
                 defaultImport: false
             },
             {
-                source: 'actions',
-                name: 'kredux',
+                source: 'kredux',
+                name: 'actions',
                 defaultImport: false
             }
         ]);

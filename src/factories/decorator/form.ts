@@ -41,8 +41,8 @@ export class FormDecorator extends Decorator {
                 defaultImport: false
             },
             {
-                source: 'actions',
-                name: 'kredux',
+                source: 'kredux',
+                name: 'actions',
                 defaultImport: false
             }
         ];
