@@ -3,7 +3,6 @@ import { writeFile } from 'Src/utils/file';
 import path from 'path';
 import Debug from 'Src/utils/debugger';
 import { formatFile } from 'Src/utils/format';
-import { upperFirst } from 'Src/utils/string';
 
 const debug = Debug(__filename);
 
