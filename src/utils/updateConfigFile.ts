@@ -21,7 +21,7 @@ export async function updateConfigFile(options: {
 
     replaceStr = `case '/${pageName}':
                 return [
-                    () => import('${path.join('./pages', pagePath, pageName, 'model')}')
+                    () => import('./${path.join('pages', pagePath, 'model')}')
                 ];
             default:`;
 
