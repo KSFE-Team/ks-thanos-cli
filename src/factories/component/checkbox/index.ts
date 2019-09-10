@@ -48,9 +48,7 @@ export class Checkbox extends Component {
         return `<Form.Item label='${this.config.label}'>
     {
         this.props.Form.getFieldDecorator('${this.config.key}')(
-            <Checkbox.Group 
-                ${this.getProps(this.props)}
-            >   
+            <Checkbox.Group>   
                 ${
         code.join('\n')
         }
