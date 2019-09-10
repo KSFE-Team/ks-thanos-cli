@@ -11,7 +11,12 @@ export class ListEffect extends Effect {
             {
                 name: 'message',
                 source: 'antd',
-                defaultImport: true
+                defaultImport: false
+            },
+            {
+                name: 'actions',
+                source: 'kredux',
+                defaultImport: false
             }
         ];
         return imports;
@@ -29,8 +34,8 @@ async ${this.name}(payload, getState) {
             page: state.page,
         };
 
-        const response = await request('${this.config.api}', { 
-            method: ${this.method},
+        const response = await request('${this.config.api}', {
+            method: '${this.method}',
             data: postData
         });
 

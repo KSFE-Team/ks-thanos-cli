@@ -20,6 +20,11 @@ export class DeleteEffect extends Effect {
                 name: 'message',
                 source: 'antd',
                 defaultImport: false
+            },
+            {
+                source: 'actions',
+                name: 'kredux',
+                defaultImport: false
             }
         ];
         return imports;
@@ -27,7 +32,7 @@ export class DeleteEffect extends Effect {
 
     toCode() {
         return `
-            async ${this.name}(payload, getState) { 
+            async ${this.name}(payload, getState) {
                 try {
                     const response = await request(${this.api}, {
                         method: '${this.method}',

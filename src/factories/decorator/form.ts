@@ -30,7 +30,7 @@ export class FormDecorator extends Decorator {
     }
 
     getOutputPropTypesCode() {
-        return '';
+        return 'form: PropTypes.object,\n';
     }
 
     getImports() {
@@ -38,6 +38,11 @@ export class FormDecorator extends Decorator {
             {
                 name: 'Form',
                 source: 'antd',
+                defaultImport: false
+            },
+            {
+                source: 'actions',
+                name: 'kredux',
                 defaultImport: false
             }
         ];

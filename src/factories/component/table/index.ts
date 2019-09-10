@@ -120,7 +120,13 @@ export class Table extends Component {
 
     getImports() {
         let imports = super.getImports();
-
+        imports = imports.concat([
+            {
+                source: 'actions',
+                name: 'kredux',
+                defaultImport: false
+            }
+        ]);
         // 获取 column 中的依赖
         this.columns.forEach((column) => {
             imports = imports.concat(column.getImports());

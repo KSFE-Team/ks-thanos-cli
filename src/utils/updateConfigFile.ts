@@ -1,6 +1,7 @@
 import Debug from './debugger';
-import path from 'path';
+import path, { format } from 'path';
 import fsExtra from 'fs-extra';
+import { formatFile } from './format';
 
 const debug = Debug(__filename);
 
@@ -26,4 +27,6 @@ export async function updateConfigFile(options: {
     const newContent = content.replace(/default:/, replaceStr);
 
     await fsExtra.outputFile(configFilePath, newContent, { encoding: 'utf-8' });
+
+    formatFile(configFilePath);
 }

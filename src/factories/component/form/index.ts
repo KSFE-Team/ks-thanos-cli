@@ -13,7 +13,7 @@ export interface FormComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
     activeEvent: { // 触发事件
         eventType: string; // 事件类型
-        dependencies: EffectConfig; // 数据依赖     
+        dependencies: EffectConfig; // 数据依赖
     };
 }
 
@@ -47,6 +47,11 @@ export class Form extends Component {
             {
                 source: 'antd',
                 name: 'Col',
+                defaultImport: false
+            },
+            {
+                source: 'actions',
+                name: 'kredux',
                 defaultImport: false
             }
         ]);
