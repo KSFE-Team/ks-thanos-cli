@@ -27,7 +27,6 @@ export class InputNumber extends Component {
                 `${propKey}={${propValue}}`
             );
         }
-        console.log(this.props, 'this.props', propsCode);
         return `<Form.Item>
         {
             this.props.form.getFieldDecorator('${this.config.label}')(
