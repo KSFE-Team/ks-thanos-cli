@@ -47,7 +47,9 @@ export class DatePicker extends Component {
     return `<Form.Item label='${this.config.label}'>
     {
         this.props.form.getFieldDecorator('${this.config.key}')(
-            <DatePicker ${propsCode.join(' ').replace(/\"/g, "'")}/>
+            <DatePicker
+              ${propsCode.join('\n').replace(/\"/g, "'")}
+            />
         )
     }
 </Form.Item>`;

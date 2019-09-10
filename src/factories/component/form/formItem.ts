@@ -7,7 +7,7 @@ import Page from 'Src/factories/page';
 export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
-    isRequired:boolean;
+    isRequired: boolean;
     props: {
         [name: string]: any;
     };
@@ -37,9 +37,9 @@ export class FormItem extends Component {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item>
+        return `<Form.Item label={'${this.config.label}'}>
         {
-            this.props.form.getFieldDecorator('${this.config.label}')(
+            this.props.form.getFieldDecorator('${this.config.key}')(
                 <${this.componentName}
                     ${propsCode}
                 />
