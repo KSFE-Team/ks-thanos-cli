@@ -2,50 +2,6 @@ export async function getPage(pageName: string) {
     return {
         'components': [
             {
-                'stateName': 'orderState',
-                'componentName': 'Select',
-                'source': 'antd',
-                'default': false,
-                'props': {
-                    disabled: false,
-                    placeholder: 'placeholder',
-                    showSearch: true,
-                    allowClear: true
-                },
-                'defaultValue': '订单',
-                label: 'firstLabel',
-                options: [
-                    {
-                        props: {
-                            disabled: false,
-                            key: '1',
-                            title: 'title1',
-                            value: '任小超太酷',
-                            className: 'child-option'
-                        },
-                        lable: '第一个内容',
-                    },
-                    {
-                        props: {
-                            disabled: false,
-                            key: '2',
-                            title: 'title2',
-                            value: '任小超太帅',
-                            className: 'child-option-second'
-                        },
-                        lable: '第二个内容',
-                    }
-                ],
-                // optGroup: OptGroupData[];
-                'dependencies': {
-                    'type': 'fetch',
-                    'responseType': 'list',
-                    'api': '/api/ser',
-                    'method': 'GET'
-                },
-                'components': [],
-            },
-            {
                 'stateName': 'table',
                 'activeEvent': {
                     'eventType': 'api',
@@ -75,6 +31,7 @@ export async function getPage(pageName: string) {
                         }
                     },
                     {
+<<<<<<< HEAD
                         'stateName': 'dateObj',
                         'componentName': 'RangePicker',
                         'source': 'antd',
@@ -136,6 +93,8 @@ export async function getPage(pageName: string) {
                         'stateName': 'dateObj'
                     },
                     {
+=======
+>>>>>>> inputNumber
                         'stateName': 'inputNumber',
                         'componentName': 'InputNumber',
                         'source': 'antd',
@@ -152,6 +111,7 @@ export async function getPage(pageName: string) {
                         }
                     }
                 ]
+<<<<<<< HEAD
             },
             {
                 'stateName': 'datePic',
@@ -242,6 +202,8 @@ export async function getPage(pageName: string) {
                 'components': [],
                 'id': 'm7c9g9zy3uc',
                 'configVisible': false
+=======
+>>>>>>> inputNumber
             }
         ]
     };
