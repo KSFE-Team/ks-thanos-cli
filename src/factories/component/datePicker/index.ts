@@ -33,7 +33,7 @@ export class DatePicker extends Component {
 
   toCode() {
     const propsKeyArr: string[] = this.config.props && Object.keys(this.config.props);
-    let propsCode = propsKeyArr.map((item) => {
+    const propsCode = propsKeyArr.map((item) => {
       let value: any = this.config.props[item];
       switch (item) {
         case 'placeholder':
@@ -44,10 +44,6 @@ export class DatePicker extends Component {
           return `${item}='${value}'`
       }
     });
-    //   handlePropsCode = JSON.stringify(propsCode);
-    // handlePropsCode = handlePropsCode.replace(/,/g, "\n");
-    // let propsCodeList: [] = JSON.parse(handlePropsCode);
-    // console.log('propsCode111', propsCodeList);
     return `<Form.Item label='${this.config.label}'>
     {
         this.props.form.getFieldDecorator('${this.config.key}')(
