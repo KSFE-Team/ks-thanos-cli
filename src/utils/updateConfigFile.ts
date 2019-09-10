@@ -1,5 +1,5 @@
 import Debug from './debugger';
-import path, { format } from 'path';
+import path from 'path';
 import fsExtra from 'fs-extra';
 import { formatFile } from './format';
 
