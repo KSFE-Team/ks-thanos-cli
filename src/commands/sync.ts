@@ -5,7 +5,7 @@ import { createPage } from 'Src/factories/page/createPage';
 import { createModel } from 'Src/factories/model/createModel';
 import { updateConfigFile } from 'Src/utils/updateConfigFile';
 import { prompt } from 'inquirer';
-import { upperFirst, isChinese, isEnglish } from 'Src/utils/string';
+import { upperFirst, isChinese, isEnglish, lowerFirst } from 'Src/utils/string';
 import path from 'path';
 
 const debug = Debug(__filename);
@@ -84,7 +84,8 @@ export async function runSync(options: {
 
         await updateConfigFile({
             projectPath,
-            pageName
+            pageName: lowerFirst(pageName),
+            pagePath: path.join(firstUpperPagePath, upperFirst(pageName))
         });
 
         console.log(successText(`${pageName} 生成成功！`));

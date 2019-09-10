@@ -120,7 +120,8 @@ export default class Page extends BasicContainer {
     public toCode() {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
-        const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
+        const decoratorCode = this.decorators.filter((item) => !(item instanceof ConnectDecorator)).map((item) => item.toCode()).join('\n');
+        const connectDecoratorCode = this.decorators.filter((item) => item instanceof ConnectDecorator).map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
         const propTypesCode = this.getPropTypesCode();
@@ -128,6 +129,7 @@ export default class Page extends BasicContainer {
         return `
 ${importsCode}
 
+${connectDecoratorCode}
 ${decoratorCode}
 export default class ${this.className} extends React.Component {
 

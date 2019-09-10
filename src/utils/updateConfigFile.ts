@@ -8,8 +8,9 @@ const debug = Debug(__filename);
 export async function updateConfigFile(options: {
     projectPath: string;
     pageName: string;
+    pagePath: string;
 }) {
-    const { projectPath, pageName } = options;
+    const { projectPath, pageName, pagePath } = options;
     const configFilePath = path.join(projectPath, 'src/config.js');
 
     debug(`Update config file: ${configFilePath}`);
@@ -20,7 +21,7 @@ export async function updateConfigFile(options: {
 
     replaceStr = `case '/${pageName}':
                 return [
-                    () => import('./pages/${pageName}/model')
+                    () => import('${path.join('./pages', pagePath, pageName, 'model')}')
                 ];
             default:`;
 
