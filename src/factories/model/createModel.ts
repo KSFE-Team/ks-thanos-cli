@@ -10,11 +10,12 @@ import { formatFile } from 'Src/utils/format';
 export async function createModel(
     options: {
         page: Page; // page对象
-        projectPath: string; // 项目地址
+        pageChineseName: string; // 页面中文名称
+        pagePath: string; // 页面路径
     }
 ) {
-    const { page, projectPath } = options;
-    const modelPath = path.join(projectPath, 'src/pages', page.pageName, 'model.js');
+    const { page, pagePath } = options;
+    const modelPath = path.join(pagePath, 'model.js');
 
     writeFile(modelPath, page.model.toCode());
 

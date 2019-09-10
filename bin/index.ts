@@ -16,16 +16,13 @@ commander
     .usage('<command> [command-options]');
 
 commander
-    .command('sync [pageName]')
+    .command('sync')
     .description('同步页面')
-    .action(async(
-        pageName: string
-    ) => {
-        debug(`Sync page from ${pageName}`);
+    .action(async() => {
+        debug(`Sync page`);
         const projectPath = process.cwd();
         await runSync({
             projectPath,
-            pageName
         });
     });
 
