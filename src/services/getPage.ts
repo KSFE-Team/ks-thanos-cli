@@ -1,4 +1,4 @@
-export async function getPage() {
+export async function getPage(pageName: string) {
     return {
         pageName,
         'components': [
