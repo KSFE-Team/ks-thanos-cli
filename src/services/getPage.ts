@@ -1,5 +1,6 @@
 export async function getPage(pageName: string) {
     return {
+        pageName,
         'components': [
             {
                 'stateName': 'orderState',
