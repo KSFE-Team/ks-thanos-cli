@@ -1,175 +1,41 @@
-export async function getPage(pageName: string) {
+export async function getPage() {
     return {
         'components': [
             {
-                'stateName': 'table',
-                'activeEvent': {
-                    'eventType': 'api',
-                    'dependencies': {
-                        'type': 'fetch',
-                        'responseType': 'list',
-                        'api': '/api/ser',
-                        'method': 'GET'
-                    }
-                },
-                'componentName': 'Form',
+                'stateName': 'orderState',
+                'componentName': 'Select',
                 'source': 'antd',
                 'default': false,
-                'components': [
+                'key': 'selectState',
+                'props': {
+                    'disabled': false,
+                    'placeholder': 'placeholder',
+                    'showSearch': true,
+                    'allowClear': true
+                },
+                'defaultValue': '订单',
+                'label': 'firstLabel',
+                'options': [
                     {
-                        'stateName': 'table',
-                        'componentName': 'Input',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'name',
-                        'label': '名字',
-                        'id': '5ivoubchgjx',
-                        'parentId': 'm7c9g9zy3uc',
-                        'configVisible': false,
                         'props': {
-                            'placeholder': '名字'
-                        }
-                    },
-                    {
-                        'stateName': 'dateObj',
-                        'componentName': 'RangePicker',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'createTime',
-                        'label': '创建时间',
-                        'parentComponentName': 'DatePicker',
-                        'props': {
-                            'format': 'YYYY-MM-DD HH:mm:ss',
-                            'showTime': { 'format': 'HH:mm' },
-                            'placeholder': ['开始时间', '截止时间']
-                        },
-                        'id': 'shwh0urbw4c'
-                    },
-                    {
-                        'stateName': 'dateObj',
-                        'componentName': 'Textarea',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'createTime',
-                        'label': '创建时间',
-                        'parentComponentName': 'DatePicker',
-                        'props': {
-                            'placeholder': '天气晚来秋。',
-                            'rows': 3,
-                        },
-                        'id': 'shwh0urbw4c'
-                    },
-                    {
-                        'componentName': 'Radio',
-                        'configVisible': false,
-                        'default': false,
-                        'defaultValue':1,
-                        'id': 'gcw5obgdm2',
-                        'isRequired': true,
-                        'key': 'status',
-                        'label': '状态',
-                        'options': [{ 'rowKey': 1,'text':'启用','value':1,'disabled':true },{ 'rowKey': 2,'text':'禁用','value':2,'disabled':true }],
-                        'source': 'antd',
-                        'stateName': 'dateObj'
-                    },
-                    {
-                        'stateName': 'inputNumber',
-                        'componentName': 'InputNumber',
-                        'source': 'antd',
-                        'default': false,
-                        'key': 'keys',
-                        'label': 'label',
-                        'props': {
-                            'min': 0,
-                            'max': 0,
-                            'defaultValue': 0,
                             'disabled': false,
-                            'precision': 0,
-                            'step': 1,
-                        }
+                            'key': '1',
+                            'title': 'title1',
+                            'value': '第一个option',
+                        },
+                        'label': '第一个内容',
+                    },
+                    {
+                        'props': {
+                            'disabled': false,
+                            'key': '2',
+                            'title': 'title2',
+                            'value': '第二个option',
+                        },
+                        'label': '第二个内容',
                     }
-                ]
-            },
-            {
-                'stateName': 'datePic',
-                'componentName': 'DatePicker',
-                'source': 'antd',
-                'default': false,
-                'key': 'publishTime',
-                'label': '发布时间',
-                'props': {
-                    'format': 'YYYY-MM-DD HH:mm:ss',
-                    'showTime': { 'format': 'HH:mm' },
-                    'placeholder': '发布时间'
-                },
-                'id': 'dfcsa5db2ee'
-            },
-            {
-                'stateName': 'table',
-                'componentName': 'Table',
-                'source': 'antd',
-                'default': false,
-                'props': {
-                    'columns': [
-                        {
-                            'stateName': 'orderState',
-                            'componentName': 'Select',
-                            'source': 'antd',
-                            'default': false,
-                            'props': {
-                                'disabled': false,
-                                'placeholder': 'placeholder',
-                                'showSearch': true,
-                                'allowClear': true
-                            },
-                            'defaultValue': '订单',
-                            'label': 'firstLabel',
-                            'options': [
-                                {
-                                    'props': {
-                                        'disabled': false,
-                                        'key': '1',
-                                        'title': 'title1',
-                                        'value': '第一个option',
-                                        'className': 'child-option'
-                                    },
-                                    'lable': '第一个内容',
-                                },
-                                {
-                                    'props': {
-                                        'disabled': false,
-                                        'key': '2',
-                                        'title': 'title2',
-                                        'value': '第二个option',
-                                        'className': 'child-option-second'
-                                    },
-                                    'lable': '第二个内容',
-                                }
-                            ],
-                            // optGroup: OptGroupData[];
-                            'dependencies': {
-                                'type': 'fetch',
-                                'responseType': 'list',
-                                'api': '/api/ser',
-                                'method': 'GET'
-                            },
-                            'components': [],
-                        },
-                        {
-                            'title': '名字',
-                            'dataIndex': 'name'
-                        },
-                        {
-                            'title': '操作',
-                            'component': {
-                                'componentName': 'a', // 组件名称
-                                'text': '跳转',
-                                'type': 'link',
-                                'href': 'http://www.baidu.com',
-                            }
-                        }
-                    ]
-                },
+                ],
+                // optGroup: OptGroupData[];
                 'dependencies': {
                     'type': 'fetch',
                     'responseType': 'list',
@@ -177,8 +43,6 @@ export async function getPage(pageName: string) {
                     'method': 'GET'
                 },
                 'components': [],
-                'id': 'm7c9g9zy3uc',
-                'configVisible': false
             }
         ]
     };
