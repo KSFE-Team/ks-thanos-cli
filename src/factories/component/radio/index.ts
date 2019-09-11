@@ -1,9 +1,16 @@
 import Page from 'Src/factories/page';
-import { FormItemConfig } from '../form/formItem';
+import {  ComponentConfig } from '../basic/index';
 import { Component } from 'Src/factories/component/basic';
 /**
  * Radio组件
  */
+interface FormItemConfig extends ComponentConfig {
+    label: string; // 搜索表单标题
+    key: string; // 表单绑定Key
+    isRequired: boolean;
+    options: any[];
+    defaultValue: any;
+}
 export class Radio extends Component {
 
     config: FormItemConfig
@@ -19,13 +26,13 @@ export class Radio extends Component {
     }
 
     toCode() {
-        let code = this.config.props.configList.map((item: any, index: any) => {
+        let code = this.config.options.map((item: any, index: number) => {
                 let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
                 return (
-                    ` <Radio value={${value}} key={${item.id}}>${item.label}</Radio>`
+                    ` <Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`
                 );
             }),
-            defaultValue = typeof this.config.props.defaultValue === 'number' ? this.config.props.defaultValue : `'${this.config.props.defaultValue}'`;
+            defaultValue = typeof this.config.defaultValue === 'number' ? this.config.defaultValue : `'${this.config.defaultValue}'`;
         return `<Form.Item
         label='${this.config.label}'
         >
