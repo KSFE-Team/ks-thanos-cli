@@ -7,7 +7,7 @@ import Page from 'Src/factories/page';
 export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
-    isRequired:boolean;
+    isRequired: boolean;
     props: {
         [name: string]: any;
     };

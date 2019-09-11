@@ -104,36 +104,17 @@ export async function getPage(pageName: string) {
                         'id': 'shwh0urbw4c'
                     },
                     {
-                        'componentName': "Radio",
+                        'componentName': 'Radio',
                         'configVisible': false,
                         'default': false,
-                        'id': "gcw5obgdm2",
-                        'isRequired': false,
-                        'key': "status",
-                        'label': "状态",
-                        'props': {
-                            'configList': [{ 'id': 1,'label':'启用','value':1 },{ 'id': 2,'label':'禁用','value':0 }],
-                            'label':'状态',
-                            'defaultValue':1
-                        },
-                        'source': "antd",
-                        'stateName': "dateObj"
-                    },
-                    {
-                        'componentName': "Radio",
-                        'configVisible': false,
-                        'default': false,
-                        'id': "gcw5obgdm3",
-                        'isRequired': false,
-                        'key': "name",
-                        'label': "姓名",
-                        'props': {
-                            'configList': [{ 'id': 1,'label':'崔云云','value':'cyy' },{ 'id': 2,'label':'曾威','value':'zw' }],
-                            'label':'姓名',
-                            'defaultValue':'cyy'
-                        },
-                        'source': "antd",
-                        'stateName': "dateObj"
+                        'defaultValue':1,
+                        'id': 'gcw5obgdm2',
+                        'isRequired': true,
+                        'key': 'status',
+                        'label': '状态',
+                        'options': [{ 'rowKey': 1,'text':'启用','value':1,'disabled':true },{ 'rowKey': 2,'text':'禁用','value':2,'disabled':true }],
+                        'source': 'antd',
+                        'stateName': 'dateObj'
                     },
                 ]
             },
