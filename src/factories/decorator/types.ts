@@ -14,5 +14,6 @@ export interface ConnectDecoratorConfig extends Decorator {
 
 export interface FormDecoratorConfig  extends Decorator {
     name: 'Form.create'; // 名称
+    type: 'search' | 'normal'; // 类型
     formItems: string[]; // 表单中的子元素
 }

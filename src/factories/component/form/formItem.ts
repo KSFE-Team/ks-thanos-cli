@@ -1,5 +1,4 @@
 import { Component, ComponentConfig } from '../basic/index';
-import Page from 'Src/factories/page';
 
 /**
  * FormItem组件配置
@@ -8,6 +7,7 @@ export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
     isRequired: boolean;
+    formType: 'search' | 'normal';
     props: {
         [name: string]: any;
     };
@@ -16,35 +16,14 @@ export interface FormItemConfig extends ComponentConfig {
 /**
  * FormItem类型组件的基类
  */
-export class FormItem extends Component {
-
-    config: FormItemConfig // 组件配置
-
-    constructor(page: Page, config: FormItemConfig) {
-        super(page, config);
-        this.config = config;
-    }
+export abstract class FormItem extends Component {
 
     initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+        if (this.config.formType === 'search') {
+            this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+        }
     }
 
-    toCode() {
-        const propsCode = [];
-        for (let propKey in this.props) {
-            const propValue = this.props[propKey];
-            propsCode.push(
-                `${propKey}={'${propValue}'}`
-            );
-        }
-        return `<Form.Item label={'${this.config.label}'}>
-        {
-            this.props.form.getFieldDecorator('${this.config.key}')(
-                <${this.componentName}
-                    ${propsCode}
-                />
-            )
-        }
-    </Form.Item>`;
-    }
+    abstract config: FormItemConfig // 组件配置
+
 }

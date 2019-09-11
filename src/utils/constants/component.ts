@@ -11,17 +11,17 @@ import { InputNumber } from 'Src/factories/component/inputNumber';
 import { DatePicker } from 'Src/factories/component/datePicker';
 
 export const COMPONENT_TYPES_MAP: {
-  [name: string]: typeof BasicComponent;
+    [name: string]: typeof BasicComponent;
 } = {
-  Table: Table, // 列表组件
-  Form: Form, // 表单组件
-  Input: Input, // input组件
-  a: ClickableComponent,
-  Button: ClickableComponent,
-  Select: Select,
-  RangePicker: RangePicker,
-  Textarea: Textarea, // 文本框组件
-  InputNumber: InputNumber,
-  Radio,
-  DatePicker: DatePicker
-}
+    Table: Table, // 列表组件
+    Form: Form, // 表单组件
+    Input: Input, // input组件
+    a: ClickableComponent,
+    Button: ClickableComponent,
+    Select: Select,
+    RangePicker: RangePicker,
+    Textarea: Textarea, // 文本框组件
+    InputNumber: InputNumber,
+    Radio,
+    DatePicker: DatePicker
+};

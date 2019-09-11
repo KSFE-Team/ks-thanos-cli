@@ -51,6 +51,9 @@ export class FormDecorator extends Decorator {
     toCode() {
         const mapPropsToFieldsCode = this.getMapPropsToFieldsCode();
         const onFieldsChangeCode = this.getOnFieldsChangeCode();
+        if(this.config.type === 'normal') {
+            return `@Form.create()`;
+        }
         return `@Form.create({
                 mapPropsToFields(props) {
                     return {
