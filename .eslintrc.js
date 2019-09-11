@@ -45,9 +45,9 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/explicit-member-accessibility': 0,
         '@typescript-eslint/no-unused-vars': ['error', {
-            'vars': 'after-used',
+            'vars': 'all',
             'args': 'after-used',
-            'ignoreRestSiblings': false
+            'ignoreRestSiblings': true
         }]
     }
 }
