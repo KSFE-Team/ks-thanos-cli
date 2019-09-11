@@ -36,16 +36,15 @@ async ${this.name}(payload, getState) {
 
         const response = await request('${this.config.api}', {
             method: '${this.method}',
-            data: postData
+            body: postData
         });
 
         if (response && response.code === 200) {
             actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
-                    list: response.data.content,
-                    page: response.data.pageNumber,
-                    total: response.data.totalElements
+                    list: response.page.list,
+                    total: response.page.totalCount
                 }
             });
         } else {
