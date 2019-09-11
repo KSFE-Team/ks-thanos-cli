@@ -5,7 +5,7 @@ import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
 import { Select } from 'Src/factories/component/select';
 import { RangePicker } from 'Src/factories/component/rangePicker';
-import { Textarea } from 'Src/factories/component/textarea';
+import { TextArea } from 'Src/factories/component/textArea';
 import { Radio } from 'Src/factories/component/radio';
 import { InputNumber } from 'Src/factories/component/inputNumber';
 import { Checkbox } from 'Src/factories/component/checkbox';
@@ -23,7 +23,7 @@ export const COMPONENT_TYPES_MAP: {
     Select: Select,
     Checkbox: Checkbox, // 复选框组件
     RangePicker: RangePicker,
-    Textarea: Textarea, // 文本框组件
+    Textarea: TextArea, // 文本框组件
     InputNumber: InputNumber,
     Radio,
     DatePicker: DatePicker

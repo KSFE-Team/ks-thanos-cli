@@ -5,12 +5,12 @@ import { Component } from 'Src/factories/component/basic';
 /**
  * Textarea组件
  */
-export class Textarea extends Component {
+export class TextArea extends Component {
 
     config: FormItemConfig
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
-        this.componentName = 'Textarea';
+        this.componentName = 'TextArea';
         this.config = config;
     }
 
@@ -26,7 +26,7 @@ export class Textarea extends Component {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item>
+        return `<Form.Item label={'${this.config.label}>
         {
             this.props.form.getFieldDecorator('${this.config.key}')(
                 <Input.TextArea
