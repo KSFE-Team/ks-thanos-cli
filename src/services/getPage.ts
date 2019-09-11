@@ -2,50 +2,6 @@ export async function getPage(pageName: string) {
     return {
         'components': [
             {
-                'stateName': 'orderState',
-                'componentName': 'Select',
-                'source': 'antd',
-                'default': false,
-                'props': {
-                    disabled: false,
-                    placeholder: 'placeholder',
-                    showSearch: true,
-                    allowClear: true
-                },
-                'defaultValue': '订单',
-                label: 'firstLabel',
-                options: [
-                    {
-                        props: {
-                            disabled: false,
-                            key: '1',
-                            title: 'title1',
-                            value: '任小超太酷',
-                            className: 'child-option'
-                        },
-                        lable: '第一个内容',
-                    },
-                    {
-                        props: {
-                            disabled: false,
-                            key: '2',
-                            title: 'title2',
-                            value: '任小超太帅',
-                            className: 'child-option-second'
-                        },
-                        lable: '第二个内容',
-                    }
-                ],
-                // optGroup: OptGroupData[];
-                'dependencies': {
-                    'type': 'fetch',
-                    'responseType': 'list',
-                    'api': '/api/ser',
-                    'method': 'GET'
-                },
-                'components': [],
-            },
-            {
                 'stateName': 'table',
                 'activeEvent': {
                     'eventType': 'api',
@@ -84,7 +40,7 @@ export async function getPage(pageName: string) {
                         'parentComponentName': 'DatePicker',
                         'props': {
                             'format': 'YYYY-MM-DD HH:mm:ss',
-                            'showTime': {'format': 'HH:mm'},
+                            'showTime': { 'format': 'HH:mm' },
                             'placeholder': ['开始时间', '截止时间']
                         },
                         'id': 'shwh0urbw4c'
@@ -116,7 +72,37 @@ export async function getPage(pageName: string) {
                         'source': 'antd',
                         'stateName': 'dateObj'
                     },
+                    {
+                        'stateName': 'inputNumber',
+                        'componentName': 'InputNumber',
+                        'source': 'antd',
+                        'default': false,
+                        'key': 'keys',
+                        'label': 'label',
+                        'props': {
+                            'min': 0,
+                            'max': 0,
+                            'defaultValue': 0,
+                            'disabled': false,
+                            'precision': 0,
+                            'step': 1,
+                        }
+                    }
                 ]
+            },
+            {
+                'stateName': 'datePic',
+                'componentName': 'DatePicker',
+                'source': 'antd',
+                'default': false,
+                'key': 'publishTime',
+                'label': '发布时间',
+                'props': {
+                    'format': 'YYYY-MM-DD HH:mm:ss',
+                    'showTime': { 'format': 'HH:mm' },
+                    'placeholder': '发布时间'
+                },
+                'id': 'dfcsa5db2ee'
             },
             {
                 'stateName': 'table',
@@ -126,20 +112,60 @@ export async function getPage(pageName: string) {
                 'props': {
                     'columns': [
                         {
-                            'title': '示例',
-                            'dataIndex': 'example'
+                            'stateName': 'orderState',
+                            'componentName': 'Select',
+                            'source': 'antd',
+                            'default': false,
+                            'props': {
+                                'disabled': false,
+                                'placeholder': 'placeholder',
+                                'showSearch': true,
+                                'allowClear': true
+                            },
+                            'defaultValue': '订单',
+                            'label': 'firstLabel',
+                            'options': [
+                                {
+                                    'props': {
+                                        'disabled': false,
+                                        'key': '1',
+                                        'title': 'title1',
+                                        'value': '第一个option',
+                                        'className': 'child-option'
+                                    },
+                                    'lable': '第一个内容',
+                                },
+                                {
+                                    'props': {
+                                        'disabled': false,
+                                        'key': '2',
+                                        'title': 'title2',
+                                        'value': '第二个option',
+                                        'className': 'child-option-second'
+                                    },
+                                    'lable': '第二个内容',
+                                }
+                            ],
+                            // optGroup: OptGroupData[];
+                            'dependencies': {
+                                'type': 'fetch',
+                                'responseType': 'list',
+                                'api': '/api/ser',
+                                'method': 'GET'
+                            },
+                            'components': [],
                         },
                         {
                             'title': '名字',
                             'dataIndex': 'name'
                         },
                         {
-                            title: '操作',
-                            component: {
-                                componentName: 'a', // 组件名称
-                                text: '跳转',
-                                type: 'link',
-                                href: 'http://www.baidu.com',
+                            'title': '操作',
+                            'component': {
+                                'componentName': 'a', // 组件名称
+                                'text': '跳转',
+                                'type': 'link',
+                                'href': 'http://www.baidu.com',
                             }
                         }
                     ]

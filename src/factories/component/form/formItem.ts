@@ -37,9 +37,9 @@ export class FormItem extends Component {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item>
+        return `<Form.Item label={'${this.config.label}'}>
         {
-            this.props.form.getFieldDecorator('${this.config.label}')(
+            this.props.form.getFieldDecorator('${this.config.key}')(
                 <${this.componentName}
                     ${propsCode}
                 />

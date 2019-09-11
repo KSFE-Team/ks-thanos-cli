@@ -24,7 +24,6 @@ export class Radio extends Component {
     initPageState() {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
-    
 
     toCode() {
         let code = this.config.options.map((item: any, index: number) => {
@@ -45,9 +44,7 @@ export class Radio extends Component {
                 initialValue: ${defaultValue}
             })(
                 <Radio.Group>
-                ${
-    code.join('\n')
-}
+                ${code.join('\n')}
                 </Radio.Group>
             )
         }

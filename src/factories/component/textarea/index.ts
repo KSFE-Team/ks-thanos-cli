@@ -30,7 +30,7 @@ export class Textarea extends Component {
         {
             this.props.form.getFieldDecorator('${this.config.key}')(
                 <Input.TextArea
-                    ${propsCode}
+                    ${propsCode.join('\n')}
                 />
             )
         }

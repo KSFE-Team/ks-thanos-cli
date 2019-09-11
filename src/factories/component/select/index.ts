@@ -20,9 +20,6 @@ export class Select extends Component {
     initPageState() {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
-    initPageLifecycle() {
-        // this.page.addDidMountStep(`this.${this.effect.name}();`);
-    }
     getProps = (data: PropsConfig) => {
         const propsCode = [];
         for (let propKey in data) {
@@ -36,7 +33,6 @@ export class Select extends Component {
                     `${propKey}={'${propValue}'}`
                 );
             }
-
         }
         return propsCode.join('\n');
     }
@@ -54,13 +50,11 @@ export class Select extends Component {
                 <Select 
                     ${this.getProps(this.props)}
                 >   
-                    ${
-                        code.join('\n')
-                    }
+                    ${code.join('\n')}
                 </Select>
 
             )
-        }
+        } 
     </Form.Item>`;
     }
 }
