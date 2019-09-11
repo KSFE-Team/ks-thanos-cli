@@ -1,27 +1,20 @@
 import Page from 'Src/factories/page';
 import { Component } from 'Src/factories/component/basic';
-import { SelectConfig, PropsConfig } from './interface';
-import { EffectManager } from 'Src/factories/model/effect/manager';
-// import { EffectConfig } from 'Src/factories/model/effect';
+import { SelectConfig, PropsConfig, OptionData } from './interface';
 /**
  * Select组件
  */
 export class Select extends Component {
     config: SelectConfig;
-    // effect: EffectConfig
     constructor(page: Page, config: SelectConfig) {
         super(page, config);
         this.componentName = 'Select';
         this.config = config;
         this.props = config.props;
-        this.effect = EffectManager.create(this.stateName, page.model, config.dependencies);
     }
 
     initPageState() {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
-    }
-    initPageLifecycle() {
-        // this.page.addDidMountStep(`this.${this.effect.name}();`);
     }
     getProps = (data: PropsConfig) => {
         const propsCode = [];
@@ -36,31 +29,29 @@ export class Select extends Component {
                     `${propKey}={'${propValue}'}`
                 );
             }
-
-        }
+        };
         return propsCode.join('\n');
     }
     toCode() {
-        let code = this.config.options.map((item: any, index: any) => {
+        let code = this.config.options.map((item: OptionData) => {
             return (
                 `<Select.Option ${this.getProps(item.props)}>
-                    ${item.lable}
+                    ${item.label}
                 </Select.Option>`
             );
         });
-        return `<Form.Item>
-        {
-            this.props.Form.getFieldDecorator('${this.config.label}')(
-                <Select 
-                    ${this.getProps(this.props)}
-                >   
-                    ${
-                        code.join('\n')
-                    }
-                </Select>
+        return `
+        <Form.Item>
+            {
+                this.props.form.getFieldDecorator('${this.config.label}')(
+                    <Select 
+                        ${this.getProps(this.props)}
+                    >   
+                        ${ code.join('\n')}
+                    </Select>
 
-            )
-        }
-    </Form.Item>`;
+                )
+            }
+        </Form.Item>`;
     }
 }
