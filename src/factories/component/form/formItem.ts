@@ -8,6 +8,7 @@ export interface FormItemConfig extends ComponentConfig {
     key: string; // 表单绑定Key
     isRequired: boolean;
     formType: 'search' | 'normal';
+    defaultValue: any;
     props: {
         [name: string]: any;
     };
@@ -20,7 +21,17 @@ export abstract class FormItem extends Component {
 
     initPageState() {
         if (this.config.formType === 'search') {
-            this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+            let stateValue = `''`;
+            switch (typeof this.config.defaultValue) {
+                case 'boolean':
+                case 'number':
+                    stateValue = `${this.config.defaultValue}`;
+                    break;
+                case 'string':
+                    stateValue = `'${this.config.defaultValue}'`;
+                    break;
+            }
+            this.page.model.addInitialState(this.stateName, this.config.key, stateValue);
         }
     }
 
