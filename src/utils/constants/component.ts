@@ -8,7 +8,9 @@ import { RangePicker } from 'Src/factories/component/rangePicker';
 import { Textarea } from 'Src/factories/component/textarea';
 import { Radio } from 'Src/factories/component/radio';
 import { InputNumber } from 'Src/factories/component/inputNumber';
+import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
+
 
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
@@ -19,6 +21,7 @@ export const COMPONENT_TYPES_MAP: {
     a: ClickableComponent,
     Button: ClickableComponent,
     Select: Select,
+    Checkbox: Checkbox, // 复选框组件
     RangePicker: RangePicker,
     Textarea: Textarea, // 文本框组件
     InputNumber: InputNumber,

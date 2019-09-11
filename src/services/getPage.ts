@@ -3,50 +3,6 @@ export async function getPage(pageName: string) {
         pageName,
         'components': [
             {
-                'stateName': 'orderState',
-                'componentName': 'Select',
-                'source': 'antd',
-                'default': false,
-                'props': {
-                    disabled: false,
-                    placeholder: 'placeholder',
-                    showSearch: true,
-                    allowClear: true
-                },
-                'defaultValue': '订单',
-                label: 'firstLabel',
-                options: [
-                    {
-                        props: {
-                            disabled: false,
-                            key: '1',
-                            title: 'title1',
-                            value: '任小超太酷',
-                            className: 'child-option'
-                        },
-                        lable: '第一个内容',
-                    },
-                    {
-                        props: {
-                            disabled: false,
-                            key: '2',
-                            title: 'title2',
-                            value: '任小超太帅',
-                            className: 'child-option-second'
-                        },
-                        lable: '第二个内容',
-                    }
-                ],
-                // optGroup: OptGroupData[];
-                'dependencies': {
-                    'type': 'fetch',
-                    'responseType': 'list',
-                    'api': '/api/ser',
-                    'method': 'GET'
-                },
-                'components': [],
-            },
-            {
                 'stateName': 'table',
                 'activeEvent': {
                     'eventType': 'api',
@@ -108,31 +64,12 @@ export async function getPage(pageName: string) {
                         'componentName': 'Radio',
                         'configVisible': false,
                         'default': false,
+                        'defaultValue':1,
                         'id': 'gcw5obgdm2',
-                        'isRequired': false,
+                        'isRequired': true,
                         'key': 'status',
                         'label': '状态',
-                        'props': {
-                            'configList': [{ 'id': 1, 'label': '启用', 'value': 1 }, { 'id': 2, 'label': '禁用', 'value': 0 }],
-                            'label': '状态',
-                            'defaultValue': 1
-                        },
-                        'source': 'antd',
-                        'stateName': 'dateObj'
-                    },
-                    {
-                        'componentName': 'Radio',
-                        'configVisible': false,
-                        'default': false,
-                        'id': 'gcw5obgdm3',
-                        'isRequired': false,
-                        'key': 'name',
-                        'label': '姓名',
-                        'props': {
-                            'configList': [{ 'id': 1, 'label': '崔云云', 'value': 'cyy' }, { 'id': 2, 'label': '曾威', 'value': 'zw' }],
-                            'label': '姓名',
-                            'defaultValue': 'cyy'
-                        },
+                        'options': [{ 'rowKey': 1,'text':'启用','value':1,'disabled':true },{ 'rowKey': 2,'text':'禁用','value':2,'disabled':true }],
                         'source': 'antd',
                         'stateName': 'dateObj'
                     },
