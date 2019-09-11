@@ -8,10 +8,10 @@ export interface SelectConfig extends ComponentConfig {
     label: string;
     props: {
         [key: string]: string | boolean;
-        disabled: boolean;
-        placeholder: string;
-        showSearch: boolean;
-        allowClear: boolean;
+        // disabled: boolean;
+        // placeholder: string;
+        // showSearch: boolean;
+        // allowClear: boolean;
     };
     defaultValue?: string | number;
     options: OptionData[];
@@ -22,30 +22,29 @@ export interface SelectConfig extends ComponentConfig {
 
 export interface OptionData {
     props: {
-        disabled: boolean;
-        key: string;
-        title: string;
+        disabled?: boolean;
+        key?: string;
+        title?: string;
         value: string | number;
-        className: string;
-    },
-    lable: string | number;
+    };
+    label: string | number;
 }
 
 export interface OptGroupData {
     key: string;
-    laber: string;
+    label: string;
     options: OptionData[];
 }
 
 export interface PropsConfig {
-    [key: string]: any;
-    placeholder?: string;
-    showSearch?: boolean;
-    allowClear?: boolean;
-    disabled?: boolean;
-    key?: string;
-    title?: string;
-    value?: string | number;
-    className?: string;
+    [key: string]: string | number | boolean | undefined;
+    // placeholder?: string;
+    // showSearch?: boolean;
+    // allowClear?: boolean;
+    // disabled?: boolean;
+    // key?: string;
+    // title?: string;
+    // value?: string | number;
+    // className?: string;
 }
 
