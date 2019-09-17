@@ -22,19 +22,19 @@ export abstract class FormItem extends Component {
 
     initPageState() {
         if (this.config.formType === 'search') {
-            const defaultValue = this.config.initialValue;
+            const initialValue = this.config.initialValue;
             let stateValue = `''`;
-            switch (typeof defaultValue) {
+            switch (typeof initialValue) {
                 case 'boolean':
                 case 'number':
-                    stateValue = `${defaultValue}`;
+                    stateValue = `${initialValue}`;
                     break;
                 case 'string':
-                    stateValue = `'${defaultValue}'`;
+                    stateValue = `'${initialValue}'`;
                     break;
                 default:
-                    if (isArray(defaultValue)) {
-                        stateValue = `[${defaultValue.map((item) => {
+                    if (isArray(initialValue)) {
+                        stateValue = `[${initialValue.map((item) => {
                             if (typeof item === 'string') {
                                 return `'${item}'`;
                             }
@@ -43,8 +43,8 @@ export abstract class FormItem extends Component {
                             }
                             return item;
                         }).toString()}]`;
-                    } else if (isObject(defaultValue)) {
-                        stateValue = `${JSON.stringify(defaultValue)}`;
+                    } else if (isObject(initialValue)) {
+                        stateValue = `${JSON.stringify(initialValue)}`;
                     }
             }
             this.page.model.addInitialState(this.stateName, this.config.key, stateValue);
