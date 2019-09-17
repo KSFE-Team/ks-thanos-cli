@@ -126,6 +126,11 @@ export default class Page extends BasicContainer {
                 name: 'PropTypes',
                 source: 'prop-types',
                 defaultImport: true
+            },
+            {
+                source: 'ks-cms-ui',
+                name: 'KSWhiteCard',
+                defaultImport: false
             }
         ];
         this.components.forEach((component) => {
@@ -167,9 +172,9 @@ export default class ${this.className} extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <KSWhiteCard>
                 ${componentsCode}
-            </React.Fragment>
+            </KSWhiteCard>
         );
     }
 }

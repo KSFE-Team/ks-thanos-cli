@@ -16,6 +16,7 @@ export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
 } = {
     Table: Table, // 列表组件
+    KSTable: Table, //
     Form: Form, // 表单组件
     Input: Input, // input组件
     a: ClickableComponent,

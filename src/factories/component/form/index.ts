@@ -45,11 +45,6 @@ export class Form extends Component {
                 source: 'kredux',
                 name: 'actions',
                 defaultImport: false
-            },
-            {
-                source: 'ks-cms-ui',
-                name: 'KSWhiteCard',
-                defaultImport: false
             }
         ]);
         if (this.config.type === 'search') {
@@ -130,16 +125,14 @@ export class Form extends Component {
 
     toCode() {
         if (this.config.type === 'search') {
-            return `<KSWhiteCard>
-                <Form>
-                    <KSSearchForm
-                        form={this.props.form}
-                        components={[
-                            ${this.components.map(this.toSearchFormItemCode).join(',\n')}
-                        ]}
-                    />
-                </Form>
-            </KSWhiteCard>`;
+            return `<Form>
+            <KSSearchForm
+                form={this.props.form}
+                components={[
+                    ${this.components.map(this.toSearchFormItemCode).join(',\n')}
+                ]}
+            />
+        </Form>`;
         }
 
         const componentsCode = this.components.map(this.toNormalFormItemCode);
