@@ -1,11 +1,6 @@
-import { ComponentConfig } from '../basic/index';
 import { EffectConfig } from 'Src/factories/model/effect';
-export interface SelectConfig extends ComponentConfig {
-    stateName: string;
-    componentName: string;
-    source: string;
-    default: boolean;
-    label: string;
+import { FormItemConfig } from '../form/formItem';
+export interface SelectConfig extends FormItemConfig {
     props: {
         [key: string]: string | boolean;
         // disabled: boolean;
@@ -13,10 +8,8 @@ export interface SelectConfig extends ComponentConfig {
         // showSearch: boolean;
         // allowClear: boolean;
     };
-    defaultValue?: string | number;
     options: OptionData[];
     optGroup: OptGroupData[];
-    key: string;
     dependencies: EffectConfig;
 }
 

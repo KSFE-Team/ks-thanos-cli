@@ -14,6 +14,10 @@ export class Input extends FormItem {
         this.config = config;
     }
 
+    getDecoratorConfigCode() {
+        return '{}';
+    }
+
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
@@ -22,15 +26,8 @@ export class Input extends FormItem {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item
-        label={'${this.config.label}'}>
-        {
-            this.props.form.getFieldDecorator('${this.config.key}')(
-                <Input
-                    ${propsCode}
-                />
-            )
-        }
-    </Form.Item>`;
+        return `<Input
+        ${propsCode}
+    />`;
     }
 }

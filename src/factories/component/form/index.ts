@@ -24,6 +24,7 @@ export interface FormComponentConfig extends ComponentConfig {
 export class Form extends Component {
 
     config: FormComponentConfig // 组件配置
+    components: FormItem[] = [];
 
     constructor(page: Page, config: FormComponentConfig) {
         super(page, config);
@@ -41,26 +42,29 @@ export class Form extends Component {
         let imports = super.getImports();
         imports = imports.concat([
             {
-                source: 'antd',
-                name: 'Row',
-                defaultImport: false
-            },
-            {
-                source: 'antd',
-                name: 'Col',
-                defaultImport: false
-            },
-            {
                 source: 'kredux',
                 name: 'actions',
                 defaultImport: false
             },
             {
-                source: 'antd',
-                name: 'Button',
+                source: 'ks-cms-ui',
+                name: 'KSWhiteCard',
                 defaultImport: false
             }
         ]);
+        if (this.config.type === 'search') {
+            imports.push({
+                source: 'ks-cms-ui',
+                name: 'KSSearchForm',
+                defaultImport: false
+            });
+        } else {
+            imports.push({
+                source: 'antd',
+                name: 'Button',
+                defaultImport: false
+            });
+        }
         return imports;
     }
 
@@ -102,32 +106,47 @@ export class Form extends Component {
         this.page.addDecorator(decorator);
     }
 
-    getButtonCode(){
-        if(this.config.type === 'search') {
-            return `<Col span={3}>
-            <Button onClick={() => {
-                this.${this.stateName}Reset();
-            }}>
-                查询
-            </Button>
-            </Col>`;
-        } else {
-            return ``;
-        }
+    getButtonCode() {
+        return ``;
+    }
+
+    toSearchFormItemCode(item: FormItem) {
+        return `{
+                key: '${item.config.key}',
+                title: '${item.config.label}',
+                component: ${item.toCode()}
+            }`;
+    }
+
+    toNormalFormItemCode(item: FormItem) {
+        return `<Form.Item label={${item.config.label}}>
+            {
+                this.props.Form.getFieldDecorator('${item.config.key}', ${item.getDecoratorConfigCode()})(
+                    ${item.toCode()}
+                )
+            }
+        </Form.Item>`;
     }
 
     toCode() {
-        const componentsCode = this.components.map((item) => `<Col span={3}>
-            ${item.toCode()}
-        </Col>`);
+        if (this.config.type === 'search') {
+            return `<KSWhiteCard>
+                <Form>
+                    <KSSearchForm
+                        form={this.props.form}
+                        components={[
+                            ${this.components.map(this.toSearchFormItemCode).join(',\n')}
+                        ]}
+                    />
+                </Form>
+            </KSWhiteCard>`;
+        }
+
+        const componentsCode = this.components.map(this.toNormalFormItemCode);
         const buttonCode = this.getButtonCode();
-        return`
-<${this.componentName}>
-    <Row>
+        return `<Form>
         ${componentsCode.join('\n')}
         ${buttonCode}
-    </Row>
-</${this.componentName}>
-`;
+    </Form>`;
     }
 }

@@ -1,11 +1,11 @@
 import Page from 'Src/factories/page';
 import { FormItemConfig } from '../form/formItem';
-import { Component } from 'Src/factories/component/basic';
+import { FormItem } from 'Src/factories/component/form/formItem';
 
 /**
  * Input组件
  */
-export class RangePicker extends Component {
+export class RangePicker extends FormItem {
 
     config: FormItemConfig;
 
@@ -14,10 +14,6 @@ export class RangePicker extends Component {
         this.componentName = 'RangePicker';
         this.parentComponentName = 'DatePicker';
         this.config = config;
-    }
-
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
 
     getImports() {
@@ -30,6 +26,10 @@ export class RangePicker extends Component {
             }
         ]);
         return imports;
+    }
+
+    getDecoratorConfigCode() {
+        return `{}`;
     }
 
     toCode() {
@@ -45,15 +45,8 @@ export class RangePicker extends Component {
                     return `${item}='${value}'`;
             }
         });
-        return `<Form.Item 
-                    label='${this.config.label}'>
-    {
-        this.props.form.getFieldDecorator('${this.config.key}')(
-            <DatePicker.RangePicker 
-                ${propsCode.join('\n').replace(/\"/g, '\'')}
-            />
-        )
-    }
-</Form.Item>`;
+        return `<DatePicker.RangePicker
+        ${propsCode.join('\n').replace(/\"/g, '\'')}
+    />`;
     }
 }

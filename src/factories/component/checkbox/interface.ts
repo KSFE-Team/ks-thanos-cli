@@ -1,18 +1,11 @@
-import { ComponentConfig } from '../basic/index';
 import { EffectConfig } from 'Src/factories/model/effect';
-export interface CheckboxConfig extends ComponentConfig {
-    stateName: string;
-    componentName: string;
-    source: string;
-    default: boolean;
-    label: string;
+import { FormItemConfig } from 'Src/factories/component/form/formItem';
+export interface CheckboxConfig extends FormItemConfig {
     props: {
         disabled: boolean;
         [key: string]: string | boolean;
     };
-    defaultValue?: string | number;
     options: OptionData[];
-    key: string;
     dependencies: EffectConfig;
 }
 

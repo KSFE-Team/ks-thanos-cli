@@ -1,53 +1,43 @@
 import Page from 'Src/factories/page';
-import {  ComponentConfig } from '../basic/index';
-import { Component } from 'Src/factories/component/basic';
+import { FormItem } from 'Src/factories/component/form/formItem';
+import { FormItemConfig } from '../form/formItem';
 /**
  * Radio组件
  */
-interface FormItemConfig extends ComponentConfig {
-    label: string; // 搜索表单标题
-    key: string; // 表单绑定Key
-    isRequired: boolean;
+interface RadioConfig extends FormItemConfig {
     options: any[];
-    defaultValue: any;
 }
-export class Radio extends Component {
+export class Radio extends FormItem {
 
-    config: FormItemConfig
+    config: RadioConfig
 
-    constructor(page: Page, config: FormItemConfig) {
+    constructor(page: Page, config: RadioConfig) {
         super(page, config);
         this.componentName = 'Radio';
         this.config = config;
     }
 
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+    getDecoratorConfigCode() {
+        return `{
+            rules: [
+                {
+                    required: ${this.config.isRequired},
+                    message: '请选择${this.config.label}'
+                }
+            ],
+            initialValue: ${this.config.initialValue}
+        }`;
     }
 
     toCode() {
         let code = this.config.options.map((item: any) => {
-                let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
-                return (
-                    ` <Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`
-                );
-            }),
-            defaultValue = typeof this.config.defaultValue === 'number' ? this.config.defaultValue : `'${this.config.defaultValue}'`;
-        return `<Form.Item
-        label='${this.config.label}'
-        >
-        {
-            this.props.form.getFieldDecorator('${this.config.key}',{
-                rules: [
-                    {required: ${this.config.isRequired}, message: '请选择${this.config.label}'}
-                ],
-                initialValue: ${defaultValue}
-            })(
-                <Radio.Group>
-                ${code.join('\n')}
-                </Radio.Group>
-            )
-        }
-    </Form.Item>`;
+            let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
+            return (
+                `<Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`
+            );
+        });
+        return `<Radio.Group>
+        ${code.join('\n')}
+        </Radio.Group>`;
     }
 }

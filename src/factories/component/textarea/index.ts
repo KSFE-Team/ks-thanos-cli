@@ -1,11 +1,10 @@
 import Page from 'Src/factories/page';
-import { FormItemConfig } from '../form/formItem';
-import { Component } from 'Src/factories/component/basic';
+import { FormItemConfig, FormItem } from '../form/formItem';
 
 /**
  * Textarea组件
  */
-export class Textarea extends Component {
+export class Textarea extends FormItem {
 
     config: FormItemConfig
     constructor(page: Page, config: FormItemConfig) {
@@ -14,8 +13,8 @@ export class Textarea extends Component {
         this.config = config;
     }
 
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+    getDecoratorConfigCode() {
+        return `{}`;
     }
 
     toCode() {
@@ -26,14 +25,8 @@ export class Textarea extends Component {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item>
-        {
-            this.props.form.getFieldDecorator('${this.config.key}')(
-                <Input.TextArea
-                    ${propsCode.join('\n')}
-                />
-            )
-        }
-    </Form.Item>`;
+        return `<Input.TextArea
+        ${propsCode.join('\n')}
+    />`;
     }
 }

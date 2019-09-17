@@ -9,7 +9,7 @@ export interface FormItemConfig extends ComponentConfig {
     key: string; // 表单绑定Key
     isRequired: boolean; // 是否必填
     formType: 'search' | 'normal'; // 表单类型
-    defaultValue: any; // 默认值
+    initialValue: any; // 默认值
     props: { // 组件属性
         [name: string]: any;
     };
@@ -22,7 +22,7 @@ export abstract class FormItem extends Component {
 
     initPageState() {
         if (this.config.formType === 'search') {
-            const defaultValue = this.config.defaultValue;
+            const defaultValue = this.config.initialValue;
             let stateValue = `''`;
             switch (typeof defaultValue) {
                 case 'boolean':
@@ -52,5 +52,5 @@ export abstract class FormItem extends Component {
     }
 
     abstract config: FormItemConfig // 组件配置
-
+    abstract getDecoratorConfigCode(): string
 }

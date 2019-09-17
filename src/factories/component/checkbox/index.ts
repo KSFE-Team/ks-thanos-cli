@@ -1,12 +1,12 @@
 import Page from 'Src/factories/page';
 // import { FormItemConfig } from '../form/formItem';
 import { CheckboxConfig, PropsConfig } from './interface';
-import { Component } from 'Src/factories/component/basic';
+import { FormItem } from 'Src/factories/component/form/formItem';
 
 /**
  * Checkbox组件
  */
-export class Checkbox extends Component {
+export class Checkbox extends FormItem {
 
     config: CheckboxConfig
 
@@ -16,9 +16,6 @@ export class Checkbox extends Component {
         this.config = config;
     }
 
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
-    }
     getProps = (data: PropsConfig) => {
         const propsCode = [];
         for (let propKey in data) {
@@ -35,8 +32,12 @@ export class Checkbox extends Component {
         }
         return propsCode.join('\n');
     }
+
+    getDecoratorConfigCode() {
+        return '{}';
+    }
+
     toCode() {
-        console.log(this.config);
         let code = this.config.options.map((item: any) => {
             return (
                 `<Checkbox ${this.getProps(item.props)}>
@@ -44,17 +45,10 @@ export class Checkbox extends Component {
                 </Checkbox>`
             );
         });
-        return `<Form.Item label='${this.config.label}'>
-    {
-        this.props.Form.getFieldDecorator('${this.config.key}')(
+        return `
             <Checkbox.Group>
-                ${
-    code.join('\n')
-}
+                ${code.join('\n')}
             </Checkbox.Group>
-
-        )
-    }
-</Form.Item>`;
+        `;
     }
 }

@@ -1,11 +1,11 @@
 import Page from 'Src/factories/page';
 import { FormItemConfig } from '../form/formItem';
-import { Component } from 'Src/factories/component/basic';
+import { FormItem } from 'Src/factories/component/form/formItem';
 
 /**
  * DatePicker组件
  */
-export class DatePicker extends Component {
+export class DatePicker extends FormItem {
 
     config: FormItemConfig;
 
@@ -13,10 +13,6 @@ export class DatePicker extends Component {
         super(page, config);
         this.componentName = 'DatePicker';
         this.config = config;
-    }
-
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
 
     getImports() {
@@ -29,6 +25,10 @@ export class DatePicker extends Component {
             }
         ]);
         return imports;
+    }
+
+    getDecoratorConfigCode() {
+        return '{}';
     }
 
     toCode() {
@@ -44,14 +44,8 @@ export class DatePicker extends Component {
                     return `${item}='${value}'`;
             }
         });
-        return `<Form.Item label='${this.config.label}'>
-    {
-        this.props.form.getFieldDecorator('${this.config.key}')(
-            <DatePicker
-              ${propsCode.join('\n').replace(/\"/g, '\'')}
-            />
-        )
-    }
-</Form.Item>`;
+        return `<DatePicker
+        ${propsCode.join('\n').replace(/\"/g, '\'')}
+      />`;
     }
 }

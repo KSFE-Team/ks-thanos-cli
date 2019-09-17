@@ -1,10 +1,10 @@
 import Page from 'Src/factories/page';
-import { Component } from 'Src/factories/component/basic';
 import { SelectConfig, PropsConfig, OptionData } from './interface';
+import { FormItem } from 'Src/factories/component/form/formItem';
 /**
  * Select组件
  */
-export class Select extends Component {
+export class Select extends FormItem {
     config: SelectConfig;
     constructor(page: Page, config: SelectConfig) {
         super(page, config);
@@ -13,9 +13,10 @@ export class Select extends Component {
         this.props = config.props;
     }
 
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
+    getDecoratorConfigCode() {
+        return `{}`;
     }
+
     getProps = (data: PropsConfig) => {
         const propsCode = [];
         for (let propKey in data) {
@@ -32,6 +33,7 @@ export class Select extends Component {
         };
         return propsCode.join('\n');
     }
+
     toCode() {
         let code = this.config.options.map((item: OptionData) => {
             return (
@@ -40,18 +42,11 @@ export class Select extends Component {
                 </Select.Option>`
             );
         });
-        return `
-        <Form.Item>
-            {
-                this.props.form.getFieldDecorator('${this.config.label}')(
-                    <Select 
-                        ${this.getProps(this.props)}
-                    >   
-                        ${ code.join('\n')}
-                    </Select>
 
-                )
-            }
-        </Form.Item>`;
+        return `<Select
+            ${this.getProps(this.props)}
+        >
+            ${ code.join('\n')}
+        </Select>`;
     }
 }
