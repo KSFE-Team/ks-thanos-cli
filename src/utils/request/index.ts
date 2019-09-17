@@ -35,7 +35,7 @@ async function request(options: {
             }
             const { errcode, result: responseResult } = response.data;
             const { result, message } = responseResult;
-            if (!errcode || !result) {
+            if (errcode || !result) {
                 throw new Error(message);
             }
 
