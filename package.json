@@ -6,6 +6,7 @@
   "bin": "output/bin/index.js",
   "dependencies": {
     "@types/eslint": "^4.16.6",
+    "axios": "^0.19.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "debug": "^4.1.1",
@@ -15,6 +16,7 @@
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/debug": "^4.1.4",
     "@types/fs-extra": "^8.0.0",
     "@types/inquirer": "^6.5.0",
