@@ -38,7 +38,7 @@
   "scripts": {
     "start": "tsc --watch",
     "build": "tsc",
-    "test": "eslint src --ext js,jsx,ts,tsx && npm run build"
+    "test": "eslint src --ext js,jsx,ts,tsx --quiet && npm run build"
   },
   "repository": {
     "type": "git",

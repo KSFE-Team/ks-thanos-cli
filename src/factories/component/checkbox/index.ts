@@ -32,13 +32,12 @@ export class Checkbox extends Component {
                     `${propKey}={'${propValue}'}`
                 );
             }
-
         }
         return propsCode.join('\n');
     }
     toCode() {
         console.log(this.config);
-        let code = this.config.options.map((item: any, index: any) => {
+        let code = this.config.options.map((item: any) => {
             return (
                 `<Checkbox ${this.getProps(item.props)}>
                     ${item.text}
@@ -48,10 +47,10 @@ export class Checkbox extends Component {
         return `<Form.Item label='${this.config.label}'>
     {
         this.props.Form.getFieldDecorator('${this.config.key}')(
-            <Checkbox.Group>   
+            <Checkbox.Group>
                 ${
-        code.join('\n')
-        }
+    code.join('\n')
+}
             </Checkbox.Group>
 
         )

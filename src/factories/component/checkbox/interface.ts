@@ -7,8 +7,8 @@ export interface CheckboxConfig extends ComponentConfig {
     default: boolean;
     label: string;
     props: {
-        [key: string]: string | boolean;
         disabled: boolean;
+        [key: string]: string | boolean;
     };
     defaultValue?: string | number;
     options: OptionData[];
@@ -21,14 +21,14 @@ export interface OptionData {
         disabled: boolean;
         checked: boolean;
         value: string | number;
-    },
+    };
     text: string | number;
 }
 
 export interface PropsConfig {
-    [key: string]: any;
     disabled?: boolean;
     checked?: boolean;
     value?: string | number;
+    [key: string]: any;
 }
 
