@@ -1,11 +1,20 @@
 import { ConnectDecoratorConfig } from './types';
 import { Decorator } from './index';
+import { Value } from '../value/index';
 
 export class ConnectDecorator extends Decorator {
     config: ConnectDecoratorConfig
     constructor(config: ConnectDecoratorConfig) {
         super();
         this.config = config;
+    }
+
+    updateInputProps(inputProps: string[]) {
+        this.config.inputProps = this.config.inputProps.concat(inputProps);
+    }
+
+    updateOutputProps(outputProps: Value[]) {
+        this.config.outputProps = this.config.outputProps.concat(outputProps);
     }
 
     getOutputPropTypesCode() {

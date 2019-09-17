@@ -8,6 +8,7 @@ import { FormDecorator } from '../decorator/form';
 import { getImportsCode } from 'Src/utils/getImportsCode';
 import { BasicContainer } from 'Src/factories/basicElement';
 import { ComponentManager } from '../component/manager';
+import { Value } from 'Src/factories/value';
 
 const debug = Debug(__filename);
 
@@ -18,6 +19,7 @@ export default class Page extends BasicContainer {
 
     public model: Model; // 页面关联的model
 
+    private connectDecorator: ConnectDecorator;
     private decorators: (ConnectDecorator | FormDecorator)[] = []; // 页面所使用的 decorator
     private components: Component[] = []; // 页面中的子组件
     private methods: string[] = []; // 页面方法
@@ -32,11 +34,25 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.className = upperFirst(name);
-
+        this.connectDecorator = new ConnectDecorator({
+            name: 'connect',
+            pageName: this.pageName,
+            inputProps: [
+                this.pageName,
+            ],
+            outputProps: [
+                new Value({
+                    key: this.pageName,
+                    value: this.pageName,
+                    type: 'object'
+                })
+            ]
+        });
         this.model = new Model({
             initialState: {},
             namespace: this.pageName
         });
+        this.decorators.push(this.connectDecorator);
         this.init(components);
     }
 
@@ -83,8 +99,16 @@ export default class Page extends BasicContainer {
         this.didMountStep.push(stepCode);
     }
 
+    public updateConnectDecorator(inputProps: string[], outputProps: Value[]) {
+        this.connectDecorator.updateInputProps(inputProps);
+        this.connectDecorator.updateOutputProps(outputProps);
+    }
+
     getPropTypesCode() {
-        return this.decorators.map((item) => item.getOutputPropTypesCode()).filter((code) => code).join('\n');
+        return this.decorators
+            .map((item) => item.getOutputPropTypesCode())
+            .filter((code) => code)
+            .join(',\n');
     }
 
     /**
@@ -121,7 +145,7 @@ export default class Page extends BasicContainer {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
         const decoratorCode = this.decorators.filter((item) => !(item instanceof ConnectDecorator)).map((item) => item.toCode()).join('\n');
-        const connectDecoratorCode = this.decorators.filter((item) => item instanceof ConnectDecorator).map((item) => item.toCode()).join('\n');
+        const connectDecoratorCode = this.connectDecorator.toCode();
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
         const propTypesCode = this.getPropTypesCode();

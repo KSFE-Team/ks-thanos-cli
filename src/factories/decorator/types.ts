@@ -1,7 +1,6 @@
 import { Value } from '../value';
 
 interface Decorator {
-    stateName: string;
     pageName: string;
 }
 
@@ -13,6 +12,7 @@ export interface ConnectDecoratorConfig extends Decorator {
 }
 
 export interface FormDecoratorConfig  extends Decorator {
+    stateName: string;
     name: 'Form.create'; // 名称
     type: 'search' | 'normal'; // 类型
     formItems: string[]; // 表单中的子元素

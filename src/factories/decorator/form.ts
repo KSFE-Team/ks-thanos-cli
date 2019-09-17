@@ -30,7 +30,7 @@ export class FormDecorator extends Decorator {
     }
 
     getOutputPropTypesCode() {
-        return 'form: PropTypes.object,\n';
+        return 'form: PropTypes.object\n';
     }
 
     getImports() {
@@ -51,18 +51,18 @@ export class FormDecorator extends Decorator {
     toCode() {
         const mapPropsToFieldsCode = this.getMapPropsToFieldsCode();
         const onFieldsChangeCode = this.getOnFieldsChangeCode();
-        if(this.config.type === 'normal') {
-            return `@Form.create()`;
+        if(this.config.type === 'search') {
+            return `@Form.create({
+                    mapPropsToFields(props) {
+                        return {
+                            ${mapPropsToFieldsCode}
+                        };
+                    },
+                    onFieldsChange(props, fields) {
+                        ${onFieldsChangeCode}
+                    }
+                })`;
         }
-        return `@Form.create({
-                mapPropsToFields(props) {
-                    return {
-                        ${mapPropsToFieldsCode}
-                    };
-                },
-                onFieldsChange(props, fields) {
-                    ${onFieldsChangeCode}
-                }
-            })`;
+        return `@Form.create()`;
     }
 }

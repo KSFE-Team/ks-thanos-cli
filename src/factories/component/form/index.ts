@@ -29,7 +29,7 @@ export class Form extends Component {
         super(page, config);
         this.config = config;
 
-        const activeEvent = this.config.activeEvent;
+        const activeEvent = this.config.activeEvent || {};
         const activeEventType = activeEvent.eventType;
 
         if (activeEventType === 'api') {
@@ -53,6 +53,11 @@ export class Form extends Component {
             {
                 source: 'kredux',
                 name: 'actions',
+                defaultImport: false
+            },
+            {
+                source: 'antd',
+                name: 'Button',
                 defaultImport: false
             }
         ]);

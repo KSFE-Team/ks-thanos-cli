@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
-  "bin": "output/bin/index.js",
+  "bin": {
+    "thanos": "output/bin/index.js"
+  },
   "dependencies": {
     "@types/eslint": "^4.16.6",
     "axios": "^0.19.0",

@@ -2,8 +2,6 @@ import { Component, ComponentConfig } from '../basic';
 import Debug from 'Src/utils/debugger';
 import { TableColumn, TableColumnConfig } from './tableColumn';
 import Page from 'Src/factories/page';
-import { ConnectDecoratorConfig } from 'Src/factories/decorator/types';
-import { ConnectDecorator } from 'Src/factories/decorator/connect';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
 import { EffectManager } from 'Src/factories/model/effect/manager';
@@ -88,34 +86,16 @@ export class Table extends Component {
 
     initPageDecorators() {
         const { pageName } = this.page;
-
-        const decoratorConfig: ConnectDecoratorConfig = {
-            name: 'connect',
-            stateName: this.stateName,
-            pageName: this.page.pageName,
-            inputProps: [
-                pageName,
-                'loading'
-            ],
-            process: [
-            ],
-            outputProps: [
-                new Value({
-                    key: pageName,
-                    value: pageName,
-                    type: 'object'
-                }),
+        this.page.updateConnectDecorator(
+            ['loading'],
+            [
                 new Value({
                     key: `${this.stateName}ListLoading`,
                     value: `loading.effects['${pageName}/${this.effect.name}']`,
                     type: 'bool'
                 })
             ]
-        };
-        debug(`add decorators: ${JSON.stringify(decoratorConfig)}`);
-
-        const decorator = new ConnectDecorator(decoratorConfig);
-        this.page.addDecorator(decorator);
+        );
     }
 
     getImports() {
