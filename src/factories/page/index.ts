@@ -15,6 +15,7 @@ const debug = Debug(__filename);
 export default class Page extends BasicContainer {
 
     public pageName: string = ''; // 页面名称
+    public pageChineseName: string = ''; // 页面中文名称
     public className: string = ''; // 页面类名称
 
     public model: Model; // 页面关联的model
@@ -30,9 +31,18 @@ export default class Page extends BasicContainer {
      * @param name 页面名
      * @param components 页面中的配置
      */
-    constructor(name: string, components: ComponentConfig[] = []) {
+    constructor({
+        name,
+        chineseName,
+        components = []
+    }: {
+        name: string;
+        chineseName: string;
+        components: ComponentConfig[];
+    }) {
         super();
         this.pageName = lowerFirst(name);
+        this.pageChineseName = chineseName;
         this.className = upperFirst(name);
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
@@ -172,7 +182,9 @@ export default class ${this.className} extends React.Component {
 
     render() {
         return (
-            <KSWhiteCard>
+            <KSWhiteCard
+                title={'${this.pageChineseName}'}
+            >
                 ${componentsCode}
             </KSWhiteCard>
         );

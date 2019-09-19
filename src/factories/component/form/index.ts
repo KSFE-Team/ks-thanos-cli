@@ -5,6 +5,7 @@ import { FormDecorator } from 'Src/factories/decorator/form';
 import Page from 'Src/factories/page';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
+import { getPropValue } from 'Src/utils/getPropValue';
 
 /**
  * 表单组件配置
@@ -57,6 +58,11 @@ export class Form extends Component {
             imports.push({
                 source: 'antd',
                 name: 'Button',
+                defaultImport: false
+            });
+            imports.push({
+                source: 'Src/utils/constants',
+                name: 'FORM_LAYOUT',
                 defaultImport: false
             });
         }
@@ -114,9 +120,13 @@ export class Form extends Component {
     }
 
     toNormalFormItemCode(item: FormItem) {
-        return `<Form.Item label={${item.config.label}}>
+        const labelValue = getPropValue(item.config.label);
+        return `<Form.Item
+            label={${labelValue}}
+            { ...FORM_LAYOUT }
+            >
             {
-                this.props.Form.getFieldDecorator('${item.config.key}', ${item.getDecoratorConfigCode()})(
+                this.props.form.getFieldDecorator('${item.config.key}', ${item.getDecoratorConfigCode()})(
                     ${item.toCode()}
                 )
             }

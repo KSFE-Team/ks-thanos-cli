@@ -1,5 +1,5 @@
 import { Component, ComponentConfig } from '../basic/index';
-import { isArray, isObject } from 'util';
+import { getPropValue } from 'Src/utils/getPropValue';
 
 /**
  * FormItem组件配置
@@ -22,31 +22,7 @@ export abstract class FormItem extends Component {
 
     initPageState() {
         if (this.config.formType === 'search') {
-            const initialValue = this.config.initialValue;
-            let stateValue = `''`;
-            switch (typeof initialValue) {
-                case 'boolean':
-                case 'number':
-                    stateValue = `${initialValue}`;
-                    break;
-                case 'string':
-                    stateValue = `'${initialValue}'`;
-                    break;
-                default:
-                    if (isArray(initialValue)) {
-                        stateValue = `[${initialValue.map((item) => {
-                            if (typeof item === 'string') {
-                                return `'${item}'`;
-                            }
-                            if (isObject(item)) {
-                                return JSON.stringify(item);
-                            }
-                            return item;
-                        }).toString()}]`;
-                    } else if (isObject(initialValue)) {
-                        stateValue = `${JSON.stringify(initialValue)}`;
-                    }
-            }
+            const stateValue = getPropValue(this.config.initialValue);
             this.page.model.addInitialState(this.stateName, this.config.key, stateValue);
         }
     }

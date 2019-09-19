@@ -17,14 +17,18 @@ export function createPage(
         pageConfig: any; // 页面配置
     }
 ) {
-    const { pageName, pagePath, pageConfig } = options;
+    const { pageName, pageChineseName, pagePath, pageConfig } = options;
 
     debug(`pageName: ${pageName}`);
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
 
     const pageFilePath = path.join(pagePath, 'index.js');
     const { components = [] } = pageConfig;
-    const pageInstance = new Page(pageName, components);
+    const pageInstance = new Page({
+        name: pageName,
+        chineseName: pageChineseName,
+        components,
+    });
 
     // 输出文件
     writeFile(pageFilePath, pageInstance.toCode());
