@@ -55,7 +55,7 @@ export class NormalFormDelegate extends FormDelegate {
 
     initPageTitle() {
         const form = this.form;
-        form.page.addPageTitleCode(`
+        form.page.initPageTitleCode(`
             <div>
                 <Row>
                     <Col span={8} style={{ lineHeight: '32px' }}>

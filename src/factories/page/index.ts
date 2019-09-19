@@ -25,7 +25,7 @@ export default class Page extends BasicContainer {
     private components: Component[] = []; // 页面中的子组件
     private methods: string[] = []; // 页面方法
     private didMountStep: string[] = []; // componentDidMount 中的步骤
-    private pageTitle: string = '';
+    private pageTitleCode: string = '';
 
     /**
      * 构造函数
@@ -44,7 +44,7 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
-        this.pageTitle = this.pageChineseName;
+        this.pageTitleCode = `'${this.pageChineseName}'`;
         this.className = upperFirst(name);
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
@@ -116,8 +116,8 @@ export default class Page extends BasicContainer {
         this.connectDecorator.updateOutputProps(outputProps);
     }
 
-    addPageTitleCode(code: string) {
-        this.pageTitle = code;
+    initPageTitleCode(code: string) {
+        this.pageTitleCode = code;
     }
 
     getPropTypesCode() {
@@ -193,7 +193,7 @@ export default class ${this.className} extends React.Component {
     render() {
         return (
             <KSWhiteCard
-                title={'${this.pageTitle}'}
+                title={${this.pageTitleCode}}
             >
                 ${componentsCode}
             </KSWhiteCard>
