@@ -11,7 +11,7 @@ export class SearchFormDelegate extends FormDelegate {
     constructor(form: Form) {
         super(form);
 
-        const activeEvents = form.config.activeEvents;
+        const activeEvents = form.config.activeEvents || [];
 
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
