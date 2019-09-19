@@ -1,8 +1,42 @@
 import { getPropValue } from 'Src/utils/getPropValue';
 import { FormItem } from 'Src/factories/component/formItem';
 import { FormDelegate } from '../formDelegate/index';
+import { Effect } from 'Src/factories/model/effect/index';
+import { Form } from '../index';
+import { EffectManager } from 'Src/factories/model/effect/manager';
+import { Value } from 'Src/factories/value';
 
 export class NormalFormDelegate extends FormDelegate {
+
+    createEffect: Effect | undefined
+    updateEffect: Effect | undefined
+
+    constructor(form: Form) {
+        super(form);
+
+        const activeEvents = form.config.activeEvents;
+
+        activeEvents.forEach((activeEvent) => {
+            const activeEventType = activeEvent.eventType;
+            const actionType = activeEvent.dependencies.actionType;
+
+            if (activeEventType === 'request') {
+                const effect = EffectManager.create(
+                    form.stateName,
+                    form.page.model,
+                    activeEvent.dependencies
+                );
+                switch (actionType) {
+                    case 'create':
+                        this.createEffect = effect;
+                        break;
+                    case 'update':
+                        this.updateEffect = effect;
+                }
+            }
+        });
+    }
+
     getImports() {
         let imports = [
             {
@@ -24,9 +58,44 @@ export class NormalFormDelegate extends FormDelegate {
                 source: 'antd',
                 name: 'Icon',
                 defaultImport: false
+            },
+            {
+                source: 'goto',
+                name: 'go',
+                defaultImport: false
             }
         ];
         return imports;
+    }
+
+    initEffects() {
+        const pageModel = this.form.page.model;
+        const effects = [this.createEffect, this.updateEffect];
+        effects.forEach((effect) => {
+            if (!effect) {
+                return;
+            }
+            if (!pageModel.getEffect(effect.name)) {
+                pageModel.addEffect(effect);
+            }
+        });
+    }
+
+    initPageDecorators() {
+        const form = this.form;
+
+        if (this.createEffect && this.updateEffect) {
+            form.page.updateConnectDecorator(
+                ['loading'],
+                [
+                    new Value({
+                        key: `requestLoading`,
+                        value: `loading.effects['${form.page.pageName}/${this.createEffect.name}'] || loading.effects['${form.page.pageName}/${this.updateEffect.name}']`,
+                        type: 'bool'
+                    })
+                ]
+            );
+        }
     }
 
     initPageMethods() {
@@ -65,11 +134,13 @@ export class NormalFormDelegate extends FormDelegate {
                         <Button
                             type='primary'
                             className='mar-l-4'
+                            loading={ this.props.requestLoading }
                             onClick={this.handleSubmit}
                         ><Icon type="form" />保存</Button>
                         <Button
                             className='mar-l-4'
                             onClick={() => {
+                                goto.go(-1);
                             }}><Icon type="rollback" />返回</Button>
                     </Col>
                 </Row>

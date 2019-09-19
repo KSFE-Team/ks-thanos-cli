@@ -90,7 +90,7 @@ export class Table extends Component {
             ['loading'],
             [
                 new Value({
-                    key: `${this.stateName}ListLoading`,
+                    key: `${this.effect.name}Loading`,
                     value: `loading.effects['${pageName}/${this.effect.name}']`,
                     type: 'bool'
                 })

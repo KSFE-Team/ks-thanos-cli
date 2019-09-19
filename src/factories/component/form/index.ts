@@ -3,7 +3,6 @@ import { FormDecoratorConfig } from 'Src/factories/decorator/types';
 import { FormItem, FormItemConfig } from '../formItem';
 import { FormDecorator } from 'Src/factories/decorator/form';
 import Page from 'Src/factories/page';
-import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
 import { SearchFormDelegate } from './searchForm/index';
 import { NormalFormDelegate } from 'Src/factories/component/form/normalForm';
@@ -15,10 +14,10 @@ import { FormDelegate } from './formDelegate/index';
 export interface FormComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
     type: 'search' | 'normal';
-    activeEvent: { // 触发事件
-        eventType: string; // 事件类型
+    activeEvents: { // 触发事件
+        eventType: 'request' | 'link' | 'modal'; // 事件类型
         dependencies: EffectConfig; // 数据依赖
-    };
+    }[];
 }
 
 /**
@@ -34,17 +33,10 @@ export class Form extends Component {
         super(page, config);
         this.config = config;
 
-        const activeEvent = this.config.activeEvent || {};
-        const activeEventType = activeEvent.eventType;
-
         if (this.config.type === 'search') {
             this.delegate = new SearchFormDelegate(this);
         } else {
             this.delegate = new NormalFormDelegate(this);
-        }
-
-        if (activeEventType === 'api') {
-            this.effect = new ListEffect(this.stateName, page.model, config.activeEvent.dependencies);
         }
     }
 
@@ -67,12 +59,7 @@ export class Form extends Component {
     }
 
     initEffects() {
-        const pageModel = this.page.model;
-        if (this.effect) {
-            if (!pageModel.getEffect(this.effect.name)) {
-                pageModel.addEffect(this.effect);
-            }
-        }
+        this.delegate.initEffects && this.delegate.initEffects();
     }
 
     initPageMethods() {

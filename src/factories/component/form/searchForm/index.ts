@@ -1,14 +1,51 @@
 import { FormItem } from '../../formItem';
 import { FormDelegate } from '../formDelegate/index';
+import { Effect } from 'Src/factories/model/effect';
+import { Form } from '../index';
+import { EffectManager } from 'Src/factories/model/effect/manager';
 
 export class SearchFormDelegate extends FormDelegate {
+
+    listEffect: Effect | undefined
+
+    constructor(form: Form) {
+        super(form);
+
+        const activeEvents = form.config.activeEvents;
+
+        activeEvents.forEach((activeEvent) => {
+            const activeEventType = activeEvent.eventType;
+
+            if (activeEventType === 'request') {
+                this.listEffect = EffectManager.create(
+                    form.stateName,
+                    form.page.model,
+                    activeEvent.dependencies
+                );
+            }
+        });
+    }
+
     getImports() {
         const imports = [{
             source: 'ks-cms-ui',
             name: 'KSSearchForm',
             defaultImport: false
+        }, {
+            source: 'ks-cms-utils',
+            name: 'goto',
+            defaultImport: false
         }];
         return imports;
+    }
+
+    initEffects() {
+        const pageModel = this.form.page.model;
+        if (this.listEffect) {
+            if (!pageModel.getEffect(this.listEffect.name)) {
+                pageModel.addEffect(this.listEffect);
+            }
+        }
     }
 
     initPageMethods() {
@@ -52,6 +89,12 @@ export class SearchFormDelegate extends FormDelegate {
                         }}
                         className='mar-l-4'
                     >查询</Button>
+                    <Button
+                        onClick={() => {
+                            // TODO: 跳转新增页面
+                            goto.go('');
+                        }}
+                    >新增</Button>
                     </Fragment>}
             />
         </Form>`;

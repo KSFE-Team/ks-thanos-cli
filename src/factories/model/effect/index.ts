@@ -5,7 +5,7 @@ import { BasicElement } from 'Src/factories/basicElement';
 export interface EffectConfig {
     type: 'fetch' | 'dict'; // 数据来源类型
     api: string; // 接口地址
-    actionType: 'save' | 'delete' | 'update' | 'get';
+    actionType: 'create' | 'delete' | 'update' | 'get';
     responseType: 'list' | 'object'; // 接口返回类型
     method: 'POST' | 'GET'; // 接口类型
     params?: {
@@ -19,8 +19,10 @@ interface MAP {
 }
 
 const PREFIX_NAME_MAP: MAP = {
-    'GET': 'load',
-    'POST': 'set'
+    'get': 'load',
+    'create': 'create',
+    'delete': 'delete',
+    'update': 'update'
 };
 
 const SUFFIX_NAME_MAP: MAP = {
@@ -63,6 +65,6 @@ export abstract class Effect extends BasicElement {
         this.responseType = responseType;
         this.actionType = actionType;
         this.params = params;
-        this.name = PREFIX_NAME_MAP[method] + upperFirst(stateName) + SUFFIX_NAME_MAP[responseType];
+        this.name = PREFIX_NAME_MAP[actionType] + upperFirst(stateName) + SUFFIX_NAME_MAP[responseType];
     }
 }
