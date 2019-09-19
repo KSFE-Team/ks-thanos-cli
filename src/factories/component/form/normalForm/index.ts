@@ -108,7 +108,7 @@ export class NormalFormDelegate extends FormDelegate {
 
     initPageMethods() {
         const form = this.form;
-        if (!this.updateEffect || !this.updateEffect) {
+        if (!this.createEffect || !this.updateEffect) {
             return;
         }
         form.page.addMethod(`
@@ -126,7 +126,7 @@ export class NormalFormDelegate extends FormDelegate {
                     if (id >= 0) {
                         actions.${form.page.pageName}.${this.updateEffect.name}(postData);
                     } else {
-                        actions.${form.page.pageName}.create${this.updateEffect.name}(postData);
+                        actions.${form.page.pageName}.${this.createEffect.name}(postData);
                     }
                 });
             }
