@@ -33,8 +33,8 @@ async ${this.name}(payload, getState) {
         if (response && response.code === 200) {
             message.success('修改成功！');
         }
-    } catch (err) {
-        message.error(response.message);
+    } catch (error) {
+        console.error(error);
     }
 }
 `;
