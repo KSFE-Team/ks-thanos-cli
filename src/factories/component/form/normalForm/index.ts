@@ -5,6 +5,9 @@ import { Effect } from 'Src/factories/model/effect/index';
 import { Form } from '../index';
 import { EffectManager } from 'Src/factories/model/effect/manager';
 import { Value } from 'Src/factories/value';
+import Debug from 'Src/utils/debugger';
+
+const debug = Debug(__filename);
 
 export class NormalFormDelegate extends FormDelegate {
 
@@ -19,7 +22,7 @@ export class NormalFormDelegate extends FormDelegate {
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
             const actionType = activeEvent.dependencies.actionType;
-
+            debug(`NormalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
                 const effect = EffectManager.create(
                     form.stateName,
@@ -28,9 +31,11 @@ export class NormalFormDelegate extends FormDelegate {
                 );
                 switch (actionType) {
                     case 'create':
+                        debug('生成 createEffect');
                         this.createEffect = effect;
                         break;
                     case 'update':
+                        debug('生成 updateEffect');
                         this.updateEffect = effect;
                 }
             }
@@ -60,8 +65,8 @@ export class NormalFormDelegate extends FormDelegate {
                 defaultImport: false
             },
             {
-                source: 'goto',
-                name: 'go',
+                source: 'ks-cms-utils',
+                name: 'goto',
                 defaultImport: false
             }
         ];
@@ -95,6 +100,8 @@ export class NormalFormDelegate extends FormDelegate {
                     })
                 ]
             );
+        } else {
+            debug('NormalForm 缺少 createEffect 或 updateEffect');
         }
     }
 

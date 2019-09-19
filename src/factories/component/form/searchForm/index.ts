@@ -3,6 +3,9 @@ import { FormDelegate } from '../formDelegate/index';
 import { Effect } from 'Src/factories/model/effect';
 import { Form } from '../index';
 import { EffectManager } from 'Src/factories/model/effect/manager';
+import Debug from 'Src/utils/debugger';
+
+const debug = Debug(__filename);
 
 export class SearchFormDelegate extends FormDelegate {
 
@@ -15,8 +18,9 @@ export class SearchFormDelegate extends FormDelegate {
 
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
-
+            debug(`NormalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
+                debug('生成 listEffect');
                 this.listEffect = EffectManager.create(
                     form.stateName,
                     form.page.model,
@@ -45,6 +49,8 @@ export class SearchFormDelegate extends FormDelegate {
             if (!pageModel.getEffect(this.listEffect.name)) {
                 pageModel.addEffect(this.listEffect);
             }
+        } else {
+            debug('SearchForm 缺少 listEffect');
         }
     }
 
