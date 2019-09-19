@@ -141,28 +141,28 @@ export class NormalFormDelegate extends FormDelegate {
 
     initPageTitle() {
         const form = this.form;
-        form.page.initPageTitleCode(`
-            <div>
-                <Row>
-                    <Col span={8} style={{ lineHeight: '32px' }}>
-                        ${form.page.pageChineseName}
-                    </Col>
-                    <Col span={16} style={{ textAlign: 'right' }}>
-                        <Button
-                            type='primary'
-                            className='mar-l-4'
-                            loading={ this.props.requestLoading }
-                            onClick={this.handleSubmit}
-                        ><Icon type="form" />保存</Button>
-                        <Button
-                            className='mar-l-4'
-                            onClick={() => {
-                                goto.go(-1);
-                            }}><Icon type="rollback" />返回</Button>
-                    </Col>
-                </Row>
-            </div>
-        `);
+        form.page.initPageTitleCode(`pageTitle={
+                            <div>
+                                <Row>
+                                    <Col span={8} style={{ lineHeight: '32px' }}>
+                                        ${form.page.pageChineseName}
+                                    </Col>
+                                    <Col span={16} style={{ textAlign: 'right' }}>
+                                        <Button
+                                            type='primary'
+                                            className='mar-l-4'
+                                            loading={ this.props.requestLoading }
+                                            onClick={this.handleSubmit}
+                                        ><Icon type="form" />保存</Button>
+                                        <Button
+                                            className='mar-l-4'
+                                            onClick={() => {
+                                                goto.go(-1);
+                                            }}><Icon type="rollback" />返回</Button>
+                                    </Col>
+                                </Row>
+                            </div>
+                        }`);
     }
 
     toFormItemCode(item: FormItem) {

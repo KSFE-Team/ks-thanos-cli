@@ -44,7 +44,7 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
-        this.pageTitleCode = `'${this.pageChineseName}'`;
+        this.pageTitleCode = `title={'${this.pageChineseName}'}`;
         this.className = upperFirst(name);
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
@@ -193,7 +193,7 @@ export default class ${this.className} extends React.Component {
     render() {
         return (
             <KSWhiteCard
-                title={${this.pageTitleCode}}
+                ${this.pageTitleCode}
             >
                 ${componentsCode}
             </KSWhiteCard>
