@@ -1,5 +1,5 @@
 import Page from 'Src/factories/page';
-import { FormItemConfig, FormItem } from '../form/formItem';
+import { FormItemConfig, FormItem } from '../formItem';
 
 /**
  * Textarea组件

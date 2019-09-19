@@ -1,6 +1,6 @@
 import Page from 'Src/factories/page';
-import { FormItemConfig } from '../form/formItem';
-import { FormItem } from 'Src/factories/component/form/formItem';
+import { FormItemConfig } from '../formItem';
+import { FormItem } from 'Src/factories/component/formItem';
 
 /**
  * Input组件

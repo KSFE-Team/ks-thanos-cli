@@ -1,7 +1,7 @@
 import Page from 'Src/factories/page';
 // import { FormItemConfig } from '../form/formItem';
 import { CheckboxConfig, PropsConfig } from './interface';
-import { FormItem } from 'Src/factories/component/form/formItem';
+import { FormItem } from 'Src/factories/component/formItem';
 
 /**
  * Checkbox组件

@@ -14,17 +14,18 @@ const debug = Debug(__filename);
 
 export default class Page extends BasicContainer {
 
-    public pageName: string = ''; // 页面名称
-    public pageChineseName: string = ''; // 页面中文名称
-    public className: string = ''; // 页面类名称
+    pageName: string = ''; // 页面名称
+    pageChineseName: string = ''; // 页面中文名称
+    className: string = ''; // 页面类名称
 
-    public model: Model; // 页面关联的model
+    model: Model; // 页面关联的model
 
     private connectDecorator: ConnectDecorator;
     private decorators: (ConnectDecorator | FormDecorator)[] = []; // 页面所使用的 decorator
     private components: Component[] = []; // 页面中的子组件
     private methods: string[] = []; // 页面方法
     private didMountStep: string[] = []; // componentDidMount 中的步骤
+    private pageTitle: string = '';
 
     /**
      * 构造函数
@@ -43,6 +44,7 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
+        this.pageTitle = this.pageChineseName;
         this.className = upperFirst(name);
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
@@ -70,7 +72,7 @@ export default class Page extends BasicContainer {
      * 页面初始化
      * @param config 页面配置
      */
-    public init(config: ComponentConfig[] = []) {
+    init(config: ComponentConfig[] = []) {
         config.forEach((componentConfig) => {
             debug(`add component: ${JSON.stringify(componentConfig)}`);
             ComponentManager.add(this, componentConfig);
@@ -81,7 +83,7 @@ export default class Page extends BasicContainer {
      * 添加 decorator
      * @param decorator decorator对象
      */
-    public addDecorator(decorator: ConnectDecorator | FormDecorator) {
+    addDecorator(decorator: ConnectDecorator | FormDecorator) {
         this.decorators.push(decorator);
     }
 
@@ -89,7 +91,7 @@ export default class Page extends BasicContainer {
      * 添加组件
      * @param component 组件对象
      */
-    public addComponent(component: Component) {
+    addComponent(component: Component) {
         this.components.push(component);
     }
 
@@ -97,7 +99,7 @@ export default class Page extends BasicContainer {
      * 添加方法
      * @param methodCode 方法代码
      */
-    public addMethod(methodCode: string) {
+    addMethod(methodCode: string) {
         this.methods.push(methodCode);
     }
 
@@ -105,13 +107,17 @@ export default class Page extends BasicContainer {
      * 添加 componentDidMount 步骤
      * @param stepCode 步骤代码
      */
-    public addDidMountStep(stepCode: string) {
+    addDidMountStep(stepCode: string) {
         this.didMountStep.push(stepCode);
     }
 
-    public updateConnectDecorator(inputProps: string[], outputProps: Value[]) {
+    updateConnectDecorator(inputProps: string[], outputProps: Value[]) {
         this.connectDecorator.updateInputProps(inputProps);
         this.connectDecorator.updateOutputProps(outputProps);
+    }
+
+    addPageTitleCode(code: string) {
+        this.pageTitle = code;
     }
 
     getPropTypesCode() {
@@ -156,7 +162,7 @@ export default class Page extends BasicContainer {
      * 生成代码
      * @returns 代码
      */
-    public toCode() {
+    toCode() {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
         const decoratorCode = this.decorators.filter((item) => !(item instanceof ConnectDecorator)).map((item) => item.toCode()).join('\n');
@@ -183,7 +189,7 @@ export default class ${this.className} extends React.Component {
     render() {
         return (
             <KSWhiteCard
-                title={'${this.pageChineseName}'}
+                title={'${this.pageTitle}'}
             >
                 ${componentsCode}
             </KSWhiteCard>

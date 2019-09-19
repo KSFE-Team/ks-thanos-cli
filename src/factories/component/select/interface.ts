@@ -1,5 +1,5 @@
 import { EffectConfig } from 'Src/factories/model/effect';
-import { FormItemConfig } from '../form/formItem';
+import { FormItemConfig } from '../formItem';
 export interface SelectConfig extends FormItemConfig {
     props: {
         [key: string]: string | boolean;

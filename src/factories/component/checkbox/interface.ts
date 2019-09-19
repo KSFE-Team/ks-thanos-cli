@@ -1,5 +1,5 @@
 import { EffectConfig } from 'Src/factories/model/effect';
-import { FormItemConfig } from 'Src/factories/component/form/formItem';
+import { FormItemConfig } from 'Src/factories/component/formItem';
 export interface CheckboxConfig extends FormItemConfig {
     props: {
         disabled: boolean;

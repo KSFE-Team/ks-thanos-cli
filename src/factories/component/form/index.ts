@@ -1,11 +1,13 @@
 import { Component, ComponentConfig } from '../basic/index';
 import { FormDecoratorConfig } from 'Src/factories/decorator/types';
-import { FormItem, FormItemConfig } from './formItem';
+import { FormItem, FormItemConfig } from '../formItem';
 import { FormDecorator } from 'Src/factories/decorator/form';
 import Page from 'Src/factories/page';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
-import { getPropValue } from 'Src/utils/getPropValue';
+import { SearchFormDelegate } from './searchForm/index';
+import { NormalFormDelegate } from 'Src/factories/component/form/normalForm';
+import { FormDelegate } from './formDelegate/index';
 
 /**
  * 表单组件配置
@@ -26,6 +28,7 @@ export class Form extends Component {
 
     config: FormComponentConfig // 组件配置
     components: FormItem[] = [];
+    delegate: FormDelegate;
 
     constructor(page: Page, config: FormComponentConfig) {
         super(page, config);
@@ -33,6 +36,12 @@ export class Form extends Component {
 
         const activeEvent = this.config.activeEvent || {};
         const activeEventType = activeEvent.eventType;
+
+        if (this.config.type === 'search') {
+            this.delegate = new SearchFormDelegate(this);
+        } else {
+            this.delegate = new NormalFormDelegate(this);
+        }
 
         if (activeEventType === 'api') {
             this.effect = new ListEffect(this.stateName, page.model, config.activeEvent.dependencies);
@@ -46,26 +55,14 @@ export class Form extends Component {
                 source: 'kredux',
                 name: 'actions',
                 defaultImport: false
-            }
-        ]);
-        if (this.config.type === 'search') {
-            imports.push({
-                source: 'ks-cms-ui',
-                name: 'KSSearchForm',
-                defaultImport: false
-            });
-        } else {
-            imports.push({
+            },
+            {
                 source: 'antd',
                 name: 'Button',
                 defaultImport: false
-            });
-            imports.push({
-                source: 'Src/utils/constants',
-                name: 'FORM_LAYOUT',
-                defaultImport: false
-            });
-        }
+            },
+            ...this.delegate.getImports()
+        ]);
         return imports;
     }
 
@@ -79,20 +76,7 @@ export class Form extends Component {
     }
 
     initPageMethods() {
-        if (this.effect && this.effect.responseType === 'list' && this.config.type === 'search') {
-            const pageModel = this.page.model;
-            this.page.addMethod(`
-                ${this.stateName}Reset() {
-                    actions.${pageModel.namespace}.setReducers({
-                        ${this.stateName}: {
-                            ...this.props.${pageModel.namespace}.${this.stateName},
-                            page: 1
-                        }
-                    });
-                    this.${this.effect.name}();
-                }
-            `);
-        }
+        this.delegate.initPageMethods && this.delegate.initPageMethods();
     }
 
     initPageDecorators() {
@@ -105,51 +89,11 @@ export class Form extends Component {
         };
         const decorator = new FormDecorator(decoratorConfig);
         this.page.addDecorator(decorator);
-    }
 
-    getButtonCode() {
-        return ``;
-    }
-
-    toSearchFormItemCode(item: FormItem) {
-        return `{
-                key: '${item.config.key}',
-                title: '${item.config.label}',
-                component: ${item.toCode()}
-            }`;
-    }
-
-    toNormalFormItemCode(item: FormItem) {
-        const labelValue = getPropValue(item.config.label);
-        return `<Form.Item
-            label={${labelValue}}
-            { ...FORM_LAYOUT }
-            >
-            {
-                this.props.form.getFieldDecorator('${item.config.key}', ${item.getDecoratorConfigCode()})(
-                    ${item.toCode()}
-                )
-            }
-        </Form.Item>`;
+        this.delegate.initPageDecorators && this.delegate.initPageDecorators();
     }
 
     toCode() {
-        if (this.config.type === 'search') {
-            return `<Form>
-            <KSSearchForm
-                form={this.props.form}
-                components={[
-                    ${this.components.map(this.toSearchFormItemCode).join(',\n')}
-                ]}
-            />
-        </Form>`;
-        }
-
-        const componentsCode = this.components.map(this.toNormalFormItemCode);
-        const buttonCode = this.getButtonCode();
-        return `<Form>
-        ${componentsCode.join('\n')}
-        ${buttonCode}
-    </Form>`;
+        return this.delegate.toCode();
     }
 }

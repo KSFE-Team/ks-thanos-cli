@@ -21,7 +21,7 @@ export class ComponentManager {
             page = target.page;
         }
 
-        const TargetComponentClass = COMPONENT_TYPES_MAP[config.componentName];
+        let TargetComponentClass = COMPONENT_TYPES_MAP[config.componentName];
         if (TargetComponentClass) {
             componentInstance = new TargetComponentClass(page, config);
             target.addComponent(componentInstance);

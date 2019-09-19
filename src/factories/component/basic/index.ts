@@ -84,6 +84,11 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     initPageDecorators?(): void;
 
     /**
+     * 初始化页面标题
+     */
+    initPageTitle?(): void;
+
+    /**
      * 组件初始化
      */
     init() {
@@ -97,6 +102,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
         this.initPageMethods && this.initPageMethods();
         this.initPageLifecycle && this.initPageLifecycle();
         this.initPageDecorators && this.initPageDecorators();
+        this.initPageTitle && this.initPageTitle();
     }
 
     /**

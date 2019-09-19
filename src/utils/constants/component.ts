@@ -1,5 +1,4 @@
 import { Table } from 'Src/factories/component/table/index';
-import { Form } from 'Src/factories/component/form';
 import { Input } from 'Src/factories/component/input';
 import { BasicComponent } from '../types/basic';
 import { ClickableComponent } from 'Src/factories/component/clickableComponent';
@@ -10,6 +9,7 @@ import { Radio } from 'Src/factories/component/radio';
 import { InputNumber } from 'Src/factories/component/inputNumber';
 import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
+import { Form } from 'Src/factories/component/form/index';
 
 
 export const COMPONENT_TYPES_MAP: {

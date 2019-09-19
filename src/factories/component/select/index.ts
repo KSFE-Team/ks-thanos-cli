@@ -1,6 +1,6 @@
 import Page from 'Src/factories/page';
 import { SelectConfig, PropsConfig, OptionData } from './interface';
-import { FormItem } from 'Src/factories/component/form/formItem';
+import { FormItem } from 'Src/factories/component/formItem';
 /**
  * Select组件
  */
