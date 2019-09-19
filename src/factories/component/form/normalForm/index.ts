@@ -34,6 +34,9 @@ export class NormalFormDelegate extends FormDelegate {
         form.page.addMethod(`
             handleSubmit() {
                 this.props.form.validateFieldsAndScroll({ force: true }, (err, fieldsValue) => {
+                    if (err) {
+                        return;
+                    }
                     const { ${form.stateName} } = this.props.${form.page.pageName};
                     const postData = {
                         ...${form.stateName},
@@ -45,7 +48,7 @@ export class NormalFormDelegate extends FormDelegate {
                     } else {
                         actions.${form.page.pageName}.create${form.upperStateName}(postData);
                     }
-                }
+                });
             }
         `);
     }

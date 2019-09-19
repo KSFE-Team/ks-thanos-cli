@@ -10,6 +10,7 @@ export abstract class FormDelegate {
 
     initPageDecorators?(): void;
     initPageMethods?(): void;
+    initPageTitle?(): void;
     abstract getImports(): Import[];
     abstract toCode(): string;
 }

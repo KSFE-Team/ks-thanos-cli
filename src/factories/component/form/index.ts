@@ -93,6 +93,10 @@ export class Form extends Component {
         this.delegate.initPageDecorators && this.delegate.initPageDecorators();
     }
 
+    initPageTitle() {
+        this.delegate.initPageTitle && this.delegate.initPageTitle();
+    }
+
     toCode() {
         return this.delegate.toCode();
     }

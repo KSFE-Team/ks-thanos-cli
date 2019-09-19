@@ -121,10 +121,14 @@ export default class Page extends BasicContainer {
     }
 
     getPropTypesCode() {
-        return this.decorators
+        const decoratorPropTypesCode = this.decorators
             .map((item) => item.getOutputPropTypesCode())
-            .filter((code) => code)
-            .join(',\n');
+            .filter((code) => code);
+
+        return [
+            ...decoratorPropTypesCode,
+            'match: PropTypes.object'
+        ].join(',\n');
     }
 
     /**
