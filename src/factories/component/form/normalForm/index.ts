@@ -76,6 +76,12 @@ export class NormalFormDelegate extends FormDelegate {
         return imports;
     }
 
+    initPageState() {
+        const form = this.form;
+        const pageModel = form.page.model;
+        pageModel.addInitialState(form.stateName, '');
+    }
+
     initEffects() {
         const pageModel = this.form.page.model;
         const effects = [this.createEffect, this.updateEffect];

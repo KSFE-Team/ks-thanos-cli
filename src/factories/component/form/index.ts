@@ -66,6 +66,10 @@ export class Form extends Component {
         this.delegate.initPageMethods && this.delegate.initPageMethods();
     }
 
+    initPageState() {
+        this.delegate.initPageState && this.delegate.initPageState();
+    }
+
     initPageDecorators() {
         const decoratorConfig: FormDecoratorConfig = {
             name: 'Form.create',

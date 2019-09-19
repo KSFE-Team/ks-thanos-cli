@@ -11,6 +11,7 @@ export abstract class FormDelegate {
     initPageDecorators?(): void;
     initPageMethods?(): void;
     initPageTitle?(): void;
+    initPageState?(): void;
     abstract initEffects(): void;
     abstract getImports(): Import[];
     abstract toCode(): string;

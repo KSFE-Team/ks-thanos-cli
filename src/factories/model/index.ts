@@ -38,9 +38,11 @@ export default class Model extends BasicElement {
      * @param key 属性的key
      * @param value 属性的value
      */
-    addInitialState(stateName: string, key: string, value: string) {
+    addInitialState(stateName: string, key: string, value?: string) {
         const state = this.initialState[stateName] || {};
-        state[key] = value;
+        if (value) {
+            state[key] = value;
+        }
         this.initialState[stateName] = state;
     }
 
