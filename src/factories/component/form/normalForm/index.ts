@@ -40,6 +40,9 @@ export class NormalFormDelegate extends FormDelegate {
                 }
             }
         });
+        if (!this.createEffect || !this.updateEffect) {
+            debug('NormalForm 缺少 createEffect 或 updateEffect');
+        }
     }
 
     getImports() {
@@ -100,13 +103,14 @@ export class NormalFormDelegate extends FormDelegate {
                     })
                 ]
             );
-        } else {
-            debug('NormalForm 缺少 createEffect 或 updateEffect');
         }
     }
 
     initPageMethods() {
         const form = this.form;
+        if (!this.updateEffect || !this.updateEffect) {
+            return;
+        }
         form.page.addMethod(`
             handleSubmit = () => {
                 this.props.form.validateFieldsAndScroll({ force: true }, (err, fieldsValue) => {
@@ -120,9 +124,9 @@ export class NormalFormDelegate extends FormDelegate {
                     };
                     const id = this.props.match.params.id;
                     if (id >= 0) {
-                        actions.${form.page.pageName}.update${form.upperStateName}(postData);
+                        actions.${form.page.pageName}.${this.updateEffect.name}(postData);
                     } else {
-                        actions.${form.page.pageName}.create${form.upperStateName}(postData);
+                        actions.${form.page.pageName}.create${this.updateEffect.name}(postData);
                     }
                 });
             }

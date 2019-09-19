@@ -28,6 +28,9 @@ export class SearchFormDelegate extends FormDelegate {
                 );
             }
         });
+        if (!this.listEffect) {
+            debug('SearchForm 缺少 listEffect');
+        }
     }
 
     getImports() {
@@ -49,8 +52,6 @@ export class SearchFormDelegate extends FormDelegate {
             if (!pageModel.getEffect(this.listEffect.name)) {
                 pageModel.addEffect(this.listEffect);
             }
-        } else {
-            debug('SearchForm 缺少 listEffect');
         }
     }
 

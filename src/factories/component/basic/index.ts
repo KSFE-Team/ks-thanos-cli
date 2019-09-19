@@ -3,6 +3,7 @@ import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
 import {Effect} from 'Src/factories/model/effect';
 import {BasicContainer} from 'Src/factories/basicElement';
+import { upperFirst } from 'Src/utils/string';
 
 const debug = Debug(__filename);
 
@@ -47,6 +48,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
         this.componentName = componentName;
         this.parentComponentName = parentComponentName;
         this.stateName = stateName;
+        this.upperStateName = upperFirst(stateName);
         this.source = source;
         this.default = defaultImport;
 
