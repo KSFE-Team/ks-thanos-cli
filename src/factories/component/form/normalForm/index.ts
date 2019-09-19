@@ -30,7 +30,7 @@ export class NormalFormDelegate extends FormDelegate {
                     activeEvent.dependencies
                 );
                 switch (actionType) {
-                    case 'create':
+                    case 'save':
                         debug('生成 createEffect');
                         this.createEffect = effect;
                         break;
