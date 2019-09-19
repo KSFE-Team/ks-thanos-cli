@@ -12,11 +12,6 @@ export class CreateEffect extends Effect {
                 name: 'message',
                 source: 'antd',
                 defaultImport: false
-            },
-            {
-                name: 'actions',
-                source: 'kredux',
-                defaultImport: false
             }
         ];
         return imports;
