@@ -32,7 +32,7 @@ export class NormalFormDelegate extends FormDelegate {
     initPageMethods() {
         const form = this.form;
         form.page.addMethod(`
-            handleSubmit() {
+            handleSubmit = () => {
                 this.props.form.validateFieldsAndScroll({ force: true }, (err, fieldsValue) => {
                     if (err) {
                         return;
