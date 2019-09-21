@@ -33,8 +33,7 @@ async function request(options: {
             if (response.status !== 200) {
                 throw new Error(response.statusText);
             }
-            const { errcode, result: responseResult } = response.data;
-            const { result, message } = responseResult;
+            const { errcode, message, result } = response.data;
             if (errcode || !result) {
                 throw new Error(message);
             }
