@@ -8,6 +8,10 @@ import { prompt } from 'inquirer';
 
 const debug = Debug(__filename);
 
+/**
+ * 运行项目初始化命令
+ * @param options.isForce 是否强制删除已经存在的文件夹
+ */
 export async function runInit(options: {
     isForce: boolean;
 }) {

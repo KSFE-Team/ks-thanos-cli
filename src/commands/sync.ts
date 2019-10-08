@@ -10,8 +10,12 @@ import path from 'path';
 
 const debug = Debug(__filename);
 
+/**
+ * 运行页面同步命令
+ * @param options 参数
+ */
 export async function runSync(options: {
-    projectPath: string;
+    projectPath: string; // 项目根目录地址
 }) {
     const questions = [
         {
@@ -56,6 +60,7 @@ export async function runSync(options: {
 
     const { templateName, pageName, pageChineseName, pagePath } = await prompt(questions);
 
+    // 页面名称，首字母大写
     let firstUpperPagePath = pagePath.split('/').map((path: string) => upperFirst(path)).join('/');
 
     const { projectPath } = options;
