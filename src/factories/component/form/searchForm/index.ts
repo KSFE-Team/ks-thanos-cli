@@ -89,7 +89,7 @@ export class SearchFormDelegate extends FormDelegate {
                 components={[
                     ${form.components.map(this.toFormItemCode).join(',\n')}
                 ]}
-                actions={<Fragment>
+                actions={<React.Fragment>
                     <Button
                         onClick={() => {
                             this.${form.stateName}Reset();
@@ -102,7 +102,7 @@ export class SearchFormDelegate extends FormDelegate {
                             goto.go('');
                         }}
                     >新增</Button>
-                    </Fragment>}
+                    </React.Fragment>}
             />
         </Form>`;
     }
