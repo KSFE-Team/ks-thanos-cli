@@ -25,6 +25,11 @@ export class DeleteEffect extends Effect {
                 source: 'kredux',
                 name: 'actions',
                 defaultImport: false
+            },
+            {
+                name: 'API',
+                source: 'Src/api/api',
+                defaultImport: false
             }
         ];
         return imports;
@@ -34,7 +39,7 @@ export class DeleteEffect extends Effect {
         return `
             async ${this.name}(payload, getState) {
                 try {
-                    const response = await request(${this.api}, {
+                    const response = await request(API.${this.model.namespace}.${this.api.key}, {
                         method: '${this.method}',
                         data: payload
                     });

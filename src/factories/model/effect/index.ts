@@ -1,10 +1,15 @@
 import Model from '../index';
 import { upperFirst } from 'Src/utils/string';
 import { BasicElement } from 'Src/factories/basicElement';
+import path from 'path';
+import fsExtra from 'fs-extra';
 
 export interface EffectConfig {
     type: 'fetch' | 'dict'; // 数据来源类型
-    api: string; // 接口地址
+    api: {
+        key: string;
+        value: string;
+    }; // 接口地址
     actionType: 'save' | 'delete' | 'update' | 'get';
     responseType: 'list' | 'object'; // 接口返回类型
     method: 'POST' | 'GET'; // 接口类型
@@ -36,7 +41,10 @@ export abstract class Effect extends BasicElement {
     stateName: string // effect所关联的state名称
     model: Model // effect所在的model对象
     type: string // 数据来源类型
-    api: string // 接口地址
+    api: {
+        key: string;
+        value: string;
+    } // 接口地址配置
     actionType: string // CRUD类型
     responseType: string // 接口返回类型
     method: string // 接口类型
@@ -66,5 +74,15 @@ export abstract class Effect extends BasicElement {
         this.actionType = actionType;
         this.params = params;
         this.name = PREFIX_NAME_MAP[actionType] + upperFirst(stateName) + SUFFIX_NAME_MAP[responseType];
+
+        /** 设置 apiData.json 中的 api */
+        const apiDataPath = path.join(process.cwd(), 'src/api/apiData.json');
+        const apiDataJSON = fsExtra.readJSONSync(apiDataPath);
+        const pageAPI = apiDataJSON[this.model.namespace] || {};
+        pageAPI[api.key] = api.value;
+        apiDataJSON[this.model.namespace] = pageAPI;
+        fsExtra.writeJSONSync(apiDataPath, apiDataJSON, {
+            spaces: '\t'
+        });
     }
 }

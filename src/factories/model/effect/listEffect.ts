@@ -17,6 +17,11 @@ export class ListEffect extends Effect {
                 name: 'actions',
                 source: 'kredux',
                 defaultImport: false
+            },
+            {
+                name: 'API',
+                source: 'Src/api/api',
+                defaultImport: false
             }
         ];
         return imports;
@@ -34,7 +39,7 @@ async ${this.name}(payload, getState) {
             page: state.page,
         };
 
-        const response = await request('${this.config.api}', {
+        const response = await request(API.${this.model.namespace}.${this.api.key}, {
             method: '${this.method}',
             body: postData
         });

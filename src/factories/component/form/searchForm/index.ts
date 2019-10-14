@@ -91,12 +91,15 @@ export class SearchFormDelegate extends FormDelegate {
                 ]}
                 actions={<React.Fragment>
                     <Button
+                        type="primary"
+                        className="mar-l-4"
                         onClick={() => {
                             this.${form.stateName}Reset();
                         }}
-                        className='mar-l-4'
                     >查询</Button>
                     <Button
+                        type="primary"
+                        className="mar-l-4"
                         onClick={() => {
                             // TODO: 跳转新增页面
                             goto.go('');
