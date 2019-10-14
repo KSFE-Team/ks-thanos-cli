@@ -15,7 +15,7 @@ export class UpdateeEffect extends Effect {
             },
             {
                 name: 'API',
-                source: 'Src/api/api',
+                source: 'Src/api',
                 defaultImport: false
             }
         ];

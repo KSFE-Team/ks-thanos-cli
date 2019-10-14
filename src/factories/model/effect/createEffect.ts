@@ -15,7 +15,7 @@ export class CreateEffect extends Effect {
             },
             {
                 name: 'API',
-                source: 'Src/api/api',
+                source: 'Src/api',
                 defaultImport: false
             }
         ];

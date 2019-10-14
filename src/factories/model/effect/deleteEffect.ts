@@ -28,7 +28,7 @@ export class DeleteEffect extends Effect {
             },
             {
                 name: 'API',
-                source: 'Src/api/api',
+                source: 'Src/api',
                 defaultImport: false
             }
         ];
