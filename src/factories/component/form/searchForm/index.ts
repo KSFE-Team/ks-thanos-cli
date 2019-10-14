@@ -57,7 +57,7 @@ export class SearchFormDelegate extends FormDelegate {
 
     initPageMethods() {
         const form = this.form;
-        if (form.effect && form.effect.responseType === 'list') {
+        if (this.listEffect) {
             const pageModel = form.page.model;
             form.page.addMethod(`
                 ${form.stateName}Reset() {
@@ -67,7 +67,7 @@ export class SearchFormDelegate extends FormDelegate {
                             page: 1
                         }
                     });
-                    this.${form.effect.name}();
+                    this.${this.listEffect.name}();
                 }
             `);
         }
@@ -91,7 +91,6 @@ export class SearchFormDelegate extends FormDelegate {
                 ]}
                 actions={<React.Fragment>
                     <Button
-                        type="primary"
                         className="mar-l-4"
                         onClick={() => {
                             this.${form.stateName}Reset();
