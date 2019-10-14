@@ -7,6 +7,7 @@ import { updateConfigFile } from 'Src/utils/updateConfigFile';
 import { prompt } from 'inquirer';
 import { upperFirst, isChinese, isEnglish, lowerFirst } from 'Src/utils/string';
 import path from 'path';
+import fsExtra from 'fs-extra';
 
 const debug = Debug(__filename);
 
@@ -58,12 +59,19 @@ export async function runSync(options: {
         }
     ];
 
+    const { projectPath } = options;
+
+    // 验证是否在项目根目录（判断是否有无 package.json）
+    if(!fsExtra.existsSync(path.join(projectPath, 'package.json'))) {
+        console.log(errorText('请在项目根目录中执行此命令！'));
+        return;
+    }
+
     const { templateName, pageName, pageChineseName, pagePath } = await prompt(questions);
 
     // 页面名称，首字母大写
     let firstUpperPagePath = pagePath.split('/').map((path: string) => upperFirst(path)).join('/');
 
-    const { projectPath } = options;
     const pageFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath, upperFirst(pageName));
 
     debug(`Sync args —— projectPath: ${projectPath}, pageName: ${firstUpperPagePath}, templateName: ${templateName}, pageChineseName: ${pageChineseName}, pagePath: ${pagePath}`);
