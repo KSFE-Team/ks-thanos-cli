@@ -105,6 +105,11 @@ export class Table extends Component {
                 source: 'kredux',
                 name: 'actions',
                 defaultImport: false
+            },
+            {
+                source: 'ks-cms-ui',
+                name: 'KSTable',
+                defaultImport: false
             }
         ]);
         // 获取 column 中的依赖
@@ -138,7 +143,7 @@ export class Table extends Component {
             );
         }
         return `<React.Fragment>
-            <${this.componentName}
+            <KSTable
                 ${propsCode.join('\n')}
             />
         </React.Fragment>`;
