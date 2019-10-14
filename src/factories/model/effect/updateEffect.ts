@@ -30,7 +30,7 @@ async ${this.name}(payload, getState) {
             method: '${this.method}',
             body: payload
         });
-        if (response && response.code === 200) {
+        if (response && response.code === 0) {
             message.success('修改成功！');
         }
     } catch (error) {

@@ -43,7 +43,7 @@ export class DeleteEffect extends Effect {
                         method: '${this.method}',
                         data: payload
                     });
-                    if (response && response.code === 200) {
+                    if (response && response.code === 0) {
                         message.success('删除成功！');
                         actions.${this.model.namespace}.${this.stateName}.load${upperFirst(this.stateName)}List();
                     }

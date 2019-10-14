@@ -44,7 +44,7 @@ async ${this.name}(payload, getState) {
             body: postData
         });
 
-        if (response && response.code === 200) {
+        if (response && response.code === 0) {
             actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
