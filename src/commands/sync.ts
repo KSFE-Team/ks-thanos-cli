@@ -5,7 +5,7 @@ import { createPage } from 'Src/factories/page/createPage';
 import { createModel } from 'Src/factories/model/createModel';
 import { updateConfigFile } from 'Src/utils/updateConfigFile';
 import { prompt } from 'inquirer';
-import { upperFirst, isChinese, isEnglish, lowerFirst } from 'Src/utils/string';
+import { upperFirst, isEnglish, lowerFirst } from 'Src/utils/string';
 import path from 'path';
 import fsExtra from 'fs-extra';
 
@@ -41,17 +41,17 @@ export async function runSync(options: {
                 return true;
             }
         },
-        {
-            type: 'input',
-            name: 'pageChineseName',
-            message: '页面中文名',
-            validate: (value: string) => {
-                if (!isChinese(value)) {
-                    return '请输入页面中文名';
-                }
-                return true;
-            }
-        },
+        // {
+        //     type: 'input',
+        //     name: 'pageChineseName',
+        //     message: '页面中文名',
+        //     validate: (value: string) => {
+        //         if (!isChinese(value)) {
+        //             return '请输入页面中文名';
+        //         }
+        //         return true;
+        //     }
+        // },
         {
             type: 'input',
             name: 'pagePath',
