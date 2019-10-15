@@ -164,7 +164,7 @@ export class NormalFormDelegate extends FormDelegate {
                                         <Button
                                             className='mar-l-4'
                                             onClick={() => {
-                                                goto.push(-1);
+                                                goto.go(-1);
                                             }}><Icon type="rollback" />返回</Button>
                                     </Col>
                                 </Row>
