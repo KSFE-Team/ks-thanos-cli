@@ -24,7 +24,7 @@ export class UpdateeEffect extends Effect {
 
     toCode() {
         return `
-async ${this.name}(payload, getState) {
+async ${this.name}(payload) {
     try {
         const response = await request(API.${this.model.namespace}.${this.api.key}, {
             method: '${this.method}',

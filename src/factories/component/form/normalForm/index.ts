@@ -34,6 +34,7 @@ export class NormalFormDelegate extends FormDelegate {
                     case 'get':
                         debug('生成 getEffect');
                         this.getEffect = effect;
+                        break;
                     case 'save':
                         debug('生成 createEffect');
                         this.createEffect = effect;
@@ -41,6 +42,7 @@ export class NormalFormDelegate extends FormDelegate {
                     case 'update':
                         debug('生成 updateEffect');
                         this.updateEffect = effect;
+                        break;
                 }
             }
         });
@@ -88,7 +90,7 @@ export class NormalFormDelegate extends FormDelegate {
 
     initEffects() {
         const pageModel = this.form.page.model;
-        const effects = [this.createEffect, this.updateEffect];
+        const effects = [this.getEffect, this.createEffect, this.updateEffect];
         effects.forEach((effect) => {
             if (!effect) {
                 return;
@@ -174,9 +176,11 @@ export class NormalFormDelegate extends FormDelegate {
         if (this.getEffect) {
             const { config, page } = this.form;
             const paramKey = config.paramKey || 'id';
-            this.form.page.addDidMountStep(`actions.${page.pageName}.${this.getEffect.name}({
-                ${paramKey}: this.props.match.params.${paramKey}
-            });`);
+            this.form.page.addDidMountStep(`if (this.props.match.params.${paramKey} > 0) {
+                actions.${page.pageName}.${this.getEffect.name}({
+                    ${paramKey}: this.props.match.params.${paramKey}
+                });
+            }`);
         }
     }
 
