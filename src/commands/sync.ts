@@ -1,5 +1,5 @@
 import Debug from 'Src/utils/debugger';
-import { infoText, successText, errorText } from 'Src/utils/log';
+import { infoText, successText, errorText, createSplash } from 'Src/utils/log';
 import { getPage } from 'Src/services/getPage';
 import { createPage } from 'Src/factories/page/createPage';
 import { createModel } from 'Src/factories/model/createModel';
@@ -24,7 +24,7 @@ export async function runSync(options: {
             name: 'templateName',
             message: '模板名称',
             validate: (value: string) => {
-                if(!value) {
+                if (!value) {
                     return '请输入模板名称';
                 }
                 return true;
@@ -62,7 +62,7 @@ export async function runSync(options: {
     const { projectPath } = options;
 
     // 验证是否在项目根目录（判断是否有无 package.json）
-    if(!fsExtra.existsSync(path.join(projectPath, 'package.json'))) {
+    if (!fsExtra.existsSync(path.join(projectPath, 'package.json'))) {
         console.log(errorText('请在项目根目录中执行此命令！'));
         return;
     }
@@ -102,6 +102,8 @@ export async function runSync(options: {
         });
 
         console.log(successText(`${pageName} 生成成功！`));
+        console.log('\n');
+        console.log(createSplash('THANOS'));
     } catch (err) {
         console.log(errorText(err.message));
     }

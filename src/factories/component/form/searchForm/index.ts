@@ -101,7 +101,7 @@ export class SearchFormDelegate extends FormDelegate {
                         className="mar-l-4"
                         onClick={() => {
                             // TODO: 跳转新增页面
-                            goto.go('');
+                            goto.push('');
                         }}
                     >新增</Button>
                     </React.Fragment>}
