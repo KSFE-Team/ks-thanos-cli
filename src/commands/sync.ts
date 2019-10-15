@@ -103,6 +103,6 @@ export async function runSync(options: {
 
         console.log(successText(`${pageName} 生成成功！`));
     } catch (err) {
-        console.log(errorText(err));
+        console.log(errorText(err.message));
     }
 }

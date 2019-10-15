@@ -35,7 +35,10 @@ async function request(options: {
             }
             const { errcode, message, result } = response.data;
             if (errcode || !result) {
-                throw new Error(message);
+                if (result) {
+                    throw new Error(result.message || '请求失败！');
+                }
+                throw new Error(message || '请求失败！');
             }
 
             return result;
