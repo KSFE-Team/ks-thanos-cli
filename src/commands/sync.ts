@@ -41,17 +41,17 @@ export async function runSync(options: {
                 return true;
             }
         },
-        // {
-        //     type: 'input',
-        //     name: 'pageChineseName',
-        //     message: '页面中文名',
-        //     validate: (value: string) => {
-        //         if (!isChinese(value)) {
-        //             return '请输入页面中文名';
-        //         }
-        //         return true;
-        //     }
-        // },
+        {
+            type: 'input',
+            name: 'pageChineseName',
+            message: '页面名称',
+            validate: (value: string) => {
+                if (!value) {
+                    return '请输入页面名称';
+                }
+                return true;
+            }
+        },
         {
             type: 'input',
             name: 'pagePath',

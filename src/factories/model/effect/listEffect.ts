@@ -62,8 +62,8 @@ async ${this.name}(payload, getState) {
             actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
-                    list: response.page.list,
-                    total: response.page.totalCount
+                    list: response.data.list,
+                    total: response.data.totalCount
                 }
             });
         } else {
