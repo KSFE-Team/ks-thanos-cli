@@ -1,6 +1,7 @@
 import Page from 'Src/factories/page';
 import { FormItem } from 'Src/factories/component/formItem';
 import { FormItemConfig } from '../formItem';
+import { getPropValue } from 'Src/utils/getPropValue';
 /**
  * Radio组件
  */
@@ -31,7 +32,7 @@ export class Radio extends FormItem {
 
     toCode() {
         let code = this.config.options.map((item: any) => {
-            let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
+            let value = getPropValue(item.value);
             return (
                 `<Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`
             );

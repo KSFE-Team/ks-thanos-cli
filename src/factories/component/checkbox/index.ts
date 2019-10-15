@@ -2,6 +2,7 @@ import Page from 'Src/factories/page';
 // import { FormItemConfig } from '../form/formItem';
 import { CheckboxConfig, PropsConfig } from './interface';
 import { FormItem } from 'Src/factories/component/formItem';
+import { getPropValue } from 'Src/utils/getPropValue';
 
 /**
  * Checkbox组件
@@ -19,16 +20,10 @@ export class Checkbox extends FormItem {
     getProps = (data: PropsConfig) => {
         const propsCode = [];
         for (let propKey in data) {
-            const propValue = data[propKey];
-            if (typeof propValue === 'boolean') {
-                propsCode.push(
-                    `${propKey}={${propValue}}`
-                );
-            } else {
-                propsCode.push(
-                    `${propKey}={'${propValue}'}`
-                );
-            }
+            const propValue = getPropValue(data[propKey]);
+            propsCode.push(
+                `${propKey}={${propValue}}`
+            );
         }
         return propsCode.join('\n');
     }

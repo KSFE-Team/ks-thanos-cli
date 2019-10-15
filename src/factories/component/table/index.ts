@@ -100,18 +100,20 @@ export class Table extends Component {
 
     getImports() {
         let imports = super.getImports();
-        imports = imports.concat([
-            {
-                source: 'kredux',
-                name: 'actions',
-                defaultImport: false
-            },
-            {
-                source: 'ks-cms-ui',
-                name: 'KSTable',
-                defaultImport: false
-            }
-        ]);
+        imports = imports
+            .filter((item) => item.name !== 'Table')
+            .concat([
+                {
+                    source: 'kredux',
+                    name: 'actions',
+                    defaultImport: false
+                },
+                {
+                    source: 'ks-cms-ui',
+                    name: 'KSTable',
+                    defaultImport: false
+                }
+            ]);
         // 获取 column 中的依赖
         this.columns.forEach((column) => {
             imports = imports.concat(column.getImports());

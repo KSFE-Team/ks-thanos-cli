@@ -2,6 +2,7 @@ import Debug from './debugger';
 import path from 'path';
 import fsExtra from 'fs-extra';
 import { formatFile } from './format';
+import { lowerFirst } from './string';
 
 const debug = Debug(__filename);
 
@@ -10,16 +11,17 @@ export async function updateConfigFile(options: {
     pageName: string;
     pagePath: string;
 }) {
-    const { projectPath, pageName, pagePath } = options;
+    const { projectPath, pagePath } = options;
     const configFilePath = path.join(projectPath, 'src/config.js');
 
     debug(`Update config file: ${configFilePath}`);
 
     const content = await fsExtra.readFile(configFilePath, 'utf-8');
 
-    let replaceStr = '';
+    let replaceStr = '',
+        firstLowerPagePath = pagePath.split('/').map((item) => lowerFirst(item)).join('/');
 
-    replaceStr = `case '/${pageName}':
+    replaceStr = `case '${path.join('/', firstLowerPagePath)}':
                 return [
                     () => import('./${path.join('pages', pagePath, 'model')}')
                 ];

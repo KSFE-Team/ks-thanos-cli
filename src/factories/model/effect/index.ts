@@ -15,8 +15,15 @@ export interface EffectConfig {
     method: 'POST' | 'GET'; // 接口类型
     params?: {
         name: string;
+        value: string;
         defaultValue: string;
     }[];
+}
+
+export interface EffectRequestParams {
+    name: string;
+    value?: string;
+    defaultValue?: string;
 }
 
 interface MAP {
@@ -40,7 +47,7 @@ export abstract class Effect extends BasicElement {
     name: string // effect的名称
     stateName: string // effect所关联的state名称
     model: Model // effect所在的model对象
-    type: string // 数据来源类型
+    dataSourceType: string // 数据来源类型
     api: {
         key: string;
         value: string;
@@ -50,6 +57,7 @@ export abstract class Effect extends BasicElement {
     method: string // 接口类型
     params: {
         name: string;
+        value: string;
         defaultValue: string;
     }[] = [] // 接口定义参数
 
@@ -69,7 +77,7 @@ export abstract class Effect extends BasicElement {
         const { method, api, type, params = [], actionType, responseType } = config;
         this.method = method;
         this.api = api;
-        this.type = type;
+        this.dataSourceType = type;
         this.responseType = responseType;
         this.actionType = actionType;
         this.params = params;
@@ -85,4 +93,6 @@ export abstract class Effect extends BasicElement {
             spaces: '\t'
         });
     }
+
+    abstract toCode(requestParams?: EffectRequestParams[]): string
 }

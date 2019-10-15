@@ -1,4 +1,4 @@
-import { Effect } from './index';
+import { Effect, EffectRequestParams } from './index';
 
 export class ListEffect extends Effect {
     getImports() {
@@ -27,16 +27,30 @@ export class ListEffect extends Effect {
         return imports;
     }
 
-    toCode() {
+    toCode(listParmas: EffectRequestParams[] = []) {
         const namespace = this.model.namespace;
+        const otherPostData = listParmas.map((param) => {
+            const { name, value, defaultValue } = param;
+            if (value) {
+                if(defaultValue) {
+                    return `${name}: ${value} || ${defaultValue}`;
+                }
+                return `${name}: ${value}`;
+            } else {
+                if (defaultValue) {
+                    return `${name}: (state.${name} && state.${name}.value) || ${defaultValue}`;
+                }
+                return `${name}: state.${name} && state.${name}.value`;
+            }
+        }).join(',\n');
         return `
 async ${this.name}(payload, getState) {
     try {
         const state = getState().${namespace}.${this.stateName};
 
         let postData = {
-            size: state.limit,
-            page: state.page,
+            pageSize: state.limit,
+            pageNo: state.page,${otherPostData ? '\n' + otherPostData : ''}
         };
 
         const response = await request(API.${this.model.namespace}.${this.api.key}, {

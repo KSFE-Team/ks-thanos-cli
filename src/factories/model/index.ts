@@ -2,6 +2,8 @@ import { Effect } from './effect';
 import { getImportsCode } from 'Src/utils/getImportsCode';
 import { Import } from 'Src/factories/page/types';
 import { BasicElement } from 'Src/factories/basicElement';
+import { EffectRequestParams } from './effect/index';
+import { ListEffect } from 'Src/factories/model/effect/listEffect';
 
 interface InitialState {
     [stateName: string]: {
@@ -21,6 +23,8 @@ export default class Model extends BasicElement {
     } = {} // model中的effect
     namespace: string = '' // model的namespace
     initialState: InitialState = {} // model的initalState
+
+    listEffectRequestParams: EffectRequestParams[] = [];
 
     /**
      * 构造函数
@@ -44,6 +48,10 @@ export default class Model extends BasicElement {
             state[key] = value;
         }
         this.initialState[stateName] = state;
+    }
+
+    addListEffectRequestParams(params: EffectRequestParams) {
+        this.listEffectRequestParams.push(params);
     }
 
     /**
@@ -83,7 +91,15 @@ export default class Model extends BasicElement {
      * 获取effect代码
      */
     getEffectsCode() {
-        return Object.values(this.effects).map((effect) => effect.toCode()).join(',\n');
+        return Object
+            .values(this.effects)
+            .map((effect) => {
+                if(effect instanceof ListEffect) {
+                    return effect.toCode(this.listEffectRequestParams);
+                }
+                return effect.toCode();
+            })
+            .join(',\n');
     }
 
     /**

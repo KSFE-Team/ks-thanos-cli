@@ -5,7 +5,7 @@ export abstract class BasicElement {
     /**
      * 生成代码
      */
-    abstract toCode(): string
+    abstract toCode(...args: any[]): string
     /**
      * 获取元素 import
      */
