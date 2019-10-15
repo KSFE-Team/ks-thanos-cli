@@ -98,11 +98,11 @@ export async function runSync(options: {
         await updateConfigFile({
             projectPath,
             pageName: lowerFirst(pageName),
-            pagePath: path.join(firstUpperPagePath, upperFirst(pageName))
+            pagePath: path.join(firstUpperPagePath, upperFirst(pageName)),
+            pageConfig
         });
 
         console.log(successText(`${pageName} 生成成功！`));
-        console.log('\n');
         console.log(createSplash('THANOS'));
     } catch (err) {
         console.log(errorText(err.message));

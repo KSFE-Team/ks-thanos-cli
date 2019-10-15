@@ -11,6 +11,7 @@ const debug = Debug(__filename);
 
 export class NormalFormDelegate extends FormDelegate {
 
+    getEffect: Effect | undefined
     createEffect: Effect | undefined
     updateEffect: Effect | undefined
 
@@ -30,6 +31,9 @@ export class NormalFormDelegate extends FormDelegate {
                     activeEvent.dependencies
                 );
                 switch (actionType) {
+                    case 'get':
+                        debug('生成 getEffect');
+                        this.getEffect = effect;
                     case 'save':
                         debug('生成 createEffect');
                         this.createEffect = effect;
@@ -117,6 +121,7 @@ export class NormalFormDelegate extends FormDelegate {
         if (!this.createEffect || !this.updateEffect) {
             return;
         }
+        const paramKey = this.form.config.paramKey || 'id';
         form.page.addMethod(`
             handleSubmit = () => {
                 this.props.form.validateFieldsAndScroll({ force: true }, (err, fieldsValue) => {
@@ -128,8 +133,8 @@ export class NormalFormDelegate extends FormDelegate {
                         ...${form.stateName},
                         ...fieldsValue
                     };
-                    const id = this.props.match.params.id;
-                    if (id >= 0) {
+                    const ${paramKey} = this.props.match.params.${paramKey};
+                    if (${paramKey} >= 0) {
                         actions.${form.page.pageName}.${this.updateEffect.name}(postData);
                     } else {
                         actions.${form.page.pageName}.${this.createEffect.name}(postData);
@@ -163,6 +168,16 @@ export class NormalFormDelegate extends FormDelegate {
                                 </Row>
                             </div>
                         }`);
+    }
+
+    initPageLifeCycle() {
+        if (this.getEffect) {
+            const { config, page } = this.form;
+            const paramKey = config.paramKey || 'id';
+            this.form.page.addDidMountStep(`actions.${page.pageName}.${this.getEffect.name}({
+                ${paramKey}: this.props.match.params.${paramKey}
+            });`);
+        }
     }
 
     toFormItemCode(item: FormItem) {

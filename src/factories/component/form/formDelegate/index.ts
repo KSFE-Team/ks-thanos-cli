@@ -29,6 +29,11 @@ export abstract class FormDelegate {
     initPageState?(): void;
 
     /**
+     * 初始页面生命周期
+     */
+    initPageLifeCycle?(): void;
+
+    /**
      * 初始effect
      */
     abstract initEffects(): void;

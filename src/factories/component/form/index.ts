@@ -14,6 +14,7 @@ import { FormDelegate } from './formDelegate/index';
 export interface FormComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
     type: 'search' | 'normal';
+    paramKey: string;
     activeEvents: { // 触发事件
         eventType: 'request' | 'link' | 'modal'; // 事件类型
         dependencies: EffectConfig; // 数据依赖
@@ -86,6 +87,10 @@ export class Form extends Component {
 
     initPageTitle() {
         this.delegate.initPageTitle && this.delegate.initPageTitle();
+    }
+
+    initPageLifecycle() {
+        this.delegate.initPageLifeCycle && this.delegate.initPageLifeCycle();
     }
 
     toCode() {

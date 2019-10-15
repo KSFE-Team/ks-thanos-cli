@@ -17,7 +17,7 @@ export default class Page extends BasicContainer {
     pageName: string = ''; // 页面名称
     pageChineseName: string = ''; // 页面中文名称
     className: string = ''; // 页面类名称
-
+    paramKey: string = ''; // 页面路由参数
     model: Model; // 页面关联的model
 
     private connectDecorator: ConnectDecorator;
@@ -35,17 +35,20 @@ export default class Page extends BasicContainer {
     constructor({
         name,
         chineseName,
-        components = []
+        components = [],
+        paramKey = ''
     }: {
         name: string;
         chineseName: string;
         components: ComponentConfig[];
+        paramKey: string;
     }) {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
         this.pageTitleCode = `title={'${this.pageChineseName}'}`;
         this.className = upperFirst(name);
+        this.paramKey = paramKey;
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
             pageName: this.pageName,

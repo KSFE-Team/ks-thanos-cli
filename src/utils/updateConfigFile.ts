@@ -10,8 +10,9 @@ export async function updateConfigFile(options: {
     projectPath: string;
     pageName: string;
     pagePath: string;
+    pageConfig: any;
 }) {
-    const { projectPath, pagePath } = options;
+    const { projectPath, pagePath, pageConfig } = options;
     const configFilePath = path.join(projectPath, 'src/config.js');
 
     debug(`Update config file: ${configFilePath}`);
@@ -21,7 +22,7 @@ export async function updateConfigFile(options: {
     let replaceStr = '',
         firstLowerPagePath = pagePath.split('/').map((item) => lowerFirst(item)).join('/');
 
-    replaceStr = `case '${path.join('/', firstLowerPagePath)}':
+    replaceStr = `case '${path.join('/', firstLowerPagePath, pageConfig.paramKey ? `/:${pageConfig.paramKey}` : '')}':
                 return [
                     () => import('./${path.join('pages', pagePath, 'model')}')
                 ];
