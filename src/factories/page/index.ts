@@ -9,6 +9,8 @@ import { getImportsCode } from 'Src/utils/getImportsCode';
 import { BasicContainer } from 'Src/factories/basicElement';
 import { ComponentManager } from '../component/manager';
 import { Value } from 'Src/factories/value';
+import prettier from 'prettier';
+import prettierConfig from 'Src/utils/prettierConfig';
 
 const debug = Debug(__filename);
 
@@ -178,7 +180,7 @@ export default class Page extends BasicContainer {
         const didMountStepCode = this.didMountStep.join('\n');
         const propTypesCode = this.getPropTypesCode();
 
-        return `
+        return prettier.format(`
 ${importsCode}
 
 ${connectDecoratorCode}
@@ -203,6 +205,6 @@ export default class ${this.className} extends React.Component {
         );
     }
 }
-`;
+`, prettierConfig);
     }
 }

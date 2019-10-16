@@ -16,7 +16,8 @@
     "figlet": "^1.2.4",
     "fs-extra": "^8.0.1",
     "inquirer": "^6.5.2",
-    "module-alias": "^2.2.1"
+    "module-alias": "^2.2.1",
+    "prettier": "^1.18.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -25,6 +26,7 @@
     "@types/fs-extra": "^8.0.0",
     "@types/inquirer": "^6.5.0",
     "@types/node": "^12.0.10",
+    "@types/prettier": "^1.18.3",
     "@types/request": "^2.48.1",
     "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
