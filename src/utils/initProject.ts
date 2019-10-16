@@ -5,6 +5,9 @@ import fsExtra from 'fs-extra';
 
 const debug = Debug(__filename);
 
+/**
+ * 初始化项目文件夹
+ */
 export function initProjectFolder(projectName: string) {
     const branchName = 'master';
     const projectRepo = 'http://gitlab.devops.kaishustory.com/ks_h5_kms/ks-pcweb-thanos-base.git';

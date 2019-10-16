@@ -1,5 +1,9 @@
 import { isArray, isObject } from 'util';
 
+/**
+ * 获取 prop 属性值的代码
+ * @param value 属性值
+ */
 export function getPropValue(value: any) {
     let propValue = `''`;
     switch (typeof value) {
