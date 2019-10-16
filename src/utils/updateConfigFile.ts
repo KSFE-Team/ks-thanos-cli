@@ -3,6 +3,7 @@ import path from 'path';
 import fsExtra from 'fs-extra';
 import { formatFile } from './format';
 import { lowerFirst } from './string';
+import { writeFile } from './file';
 
 const debug = Debug(__filename);
 
@@ -30,7 +31,7 @@ export async function updateConfigFile(options: {
 
     const newContent = content.replace(/default:/, replaceStr);
 
-    await fsExtra.outputFile(configFilePath, newContent, { encoding: 'utf-8' });
+    await writeFile(configFilePath, newContent, false);
 
     formatFile(configFilePath);
 }
