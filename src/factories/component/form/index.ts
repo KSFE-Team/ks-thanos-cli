@@ -94,10 +94,12 @@ export class Form extends Component {
         const componentsCode = this.components.map((item) => `<Col span={3}>
             ${item.toCode()}
         </Col>`);
-        return `<${this.componentName}>
-            <Row>
-                ${componentsCode}
-            </Row>
-        </${this.componentName}>`;
+        return`
+<${this.componentName}>
+    <Row>
+        ${componentsCode.join('\n')}
+    </Row>
+</${this.componentName}>
+`;
     }
 }

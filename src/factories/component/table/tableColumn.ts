@@ -4,17 +4,17 @@ import { Component, ComponentConfig } from 'Src/factories/component/basic';
 import { ComponentManager } from '../manager';
 
 export interface TableColumnConfig {
-    title: string;
-    dataIndex: string;
-    component?: ComponentConfig;
+    title: string; // 标题
+    dataIndex: string; // dataIndex
+    component?: ComponentConfig; // 渲染组件
 }
 
 export class TableColumn extends BasicContainer implements TableColumnConfig {
-    page: Page
-    config: TableColumnConfig
-    title: string
-    dataIndex: string
-    component: Component | undefined
+    page: Page // 所属页面对象
+    config: TableColumnConfig // column配置
+    title: string // 标题
+    dataIndex: string // dataIndex
+    component: Component | undefined // 需要渲染的组件
 
     constructor(page: Page, config: TableColumnConfig) {
         super();

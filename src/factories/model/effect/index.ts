@@ -45,6 +45,11 @@ export abstract class Effect extends BasicElement {
 
     config: EffectConfig;
 
+    /**
+     * @param stateName 状态名称
+     * @param model 所属的model对象
+     * @param config 配置
+     */
     constructor(stateName: string, model: Model, config: EffectConfig) {
         super();
         this.model = model;

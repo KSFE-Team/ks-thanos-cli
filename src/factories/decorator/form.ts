@@ -21,7 +21,7 @@ export class FormDecorator extends BasicElement {
     }
 
     getOnFieldsChangeCode() {
-        return `actions.${this.config.pageName}.setReducer({
+        return `actions.${this.config.pageName}.setReducers({
                 ${this.config.stateName}: {
                     ...props.${this.config.pageName}.${this.config.stateName},
                     ...fields
