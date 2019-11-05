@@ -7,6 +7,13 @@ import { writeFile } from './file';
 
 const debug = Debug(__filename);
 
+/**
+ * 更新项目目录中的config文件
+ * @param options.projectPath 项目地址
+ * @param options.pageName 页面名称
+ * @param options.pagePath 页面地址
+ * @param options.pageConfig 页面配置
+ */
 export async function updateConfigFile(options: {
     projectPath: string;
     pageName: string;
