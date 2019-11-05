@@ -188,7 +188,7 @@ export class NormalFormDelegate extends FormDelegate {
         debug(`normalForm: toFormItemCode ---- ${item.componentName}`);
         const labelValue = getPropValue(item.config.label);
 
-        if(item.componentName === 'Framgent') {
+        if(item.componentName === 'Fragment') {
             return item.toCode();
         }
 

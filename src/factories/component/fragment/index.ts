@@ -11,7 +11,8 @@ const debug = Debug(__filename);
  */
 export interface FragmentComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
-    paramKey: string;
+    showKey: string,
+    showValue: any,
 }
 
 
@@ -26,7 +27,7 @@ export class Fragment extends Component {
     constructor(page: Page, config: FragmentComponentConfig) {
         super(page, config);
 
-        this.componentName = 'Framgent';
+        this.componentName = 'Fragment';
         this.config = config;
     }
 
@@ -48,7 +49,6 @@ export class Fragment extends Component {
     }
 
     toFormItemCode(item: FormItem) {
-        // debug(JSON.stringify(item));
         debug('Fragment: toFormItemCode');
         const labelValue = getPropValue(item.config.label);
         return `<Form.Item
@@ -65,8 +65,12 @@ export class Fragment extends Component {
 
     toCode() {
         const componentsCode = this.components.map(this.toFormItemCode);
-        return `<Fragment>
-        ${componentsCode.join('\n')}
-    </Fragment>`;
+        return `
+            {
+                this.props.form.getFieldValue('${this.config.showKey}') === ${this.config.showValue} && <Fragment>
+                    ${componentsCode.join('\n')}
+                </Fragment>
+            }
+        `;
     }
 }
