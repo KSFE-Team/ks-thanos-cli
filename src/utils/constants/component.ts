@@ -10,6 +10,7 @@ import { InputNumber } from 'Src/factories/component/inputNumber';
 import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
 import { Form } from 'Src/factories/component/form/index';
+import { Fragment } from 'Src/factories/component/fragment';
 
 
 export const COMPONENT_TYPES_MAP: {
@@ -27,5 +28,6 @@ export const COMPONENT_TYPES_MAP: {
     Textarea: Textarea, // 文本框组件
     InputNumber: InputNumber,
     Radio,
-    DatePicker: DatePicker
+    DatePicker: DatePicker,
+    Fragment: Fragment
 };
