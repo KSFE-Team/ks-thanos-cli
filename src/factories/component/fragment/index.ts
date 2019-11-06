@@ -63,19 +63,20 @@ export class Fragment extends Component {
         </Form.Item>`;
     }
 
-    toCode(subComponent?:any[]) {
-        const components = subComponent || this.components;
+    toCode(item?:any) {
+        const components = item ? item.components : this.components;
         const componentsCode:any[] = components.map((item:any) => {
             if (item.componentName === 'Fragment') {
-                return this.toCode(item.components || []);
+                return this.toCode(item);
             }
             let formItemCode = this.toFormItemCode(item);
             return formItemCode;
         });
-        console.log(`toCode componentsCode ======++++++====== ${componentsCode}`)
+        const showKey = (item || this).config.showKey;
+        const showValue = (item || this).config.showValue;
         return `
             {
-                this.props.form.getFieldValue('${this.config.showKey}') === ${this.config.showValue} && <Fragment>
+                this.props.form.getFieldValue('${showKey}') === ${showValue} && <Fragment>
                     ${componentsCode.join('\n')}
                 </Fragment>
             }
