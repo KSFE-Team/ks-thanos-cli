@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.0.1...v1.0.3) (2019-11-06)
+
+
+### Bug Fixes
+
+* 1. 解除中文名限制;2. 修复response.data ([267888f](https://github.com/KSFE-Team/ks-thanos-cli/commit/267888f))
+* go(-1) ([f17ee7e](https://github.com/KSFE-Team/ks-thanos-cli/commit/f17ee7e))
+* 使用KSTable ([61f1fda](https://github.com/KSFE-Team/ks-thanos-cli/commit/61f1fda))
+* 修复normalForm中effect的问题 ([cd15751](https://github.com/KSFE-Team/ks-thanos-cli/commit/cd15751))
+* 修复normalForm中缺少itemEffect的问题 ([412a306](https://github.com/KSFE-Team/ks-thanos-cli/commit/412a306))
+* 修复searchFormDelegate未生成reset方法的问题 ([ef2ab72](https://github.com/KSFE-Team/ks-thanos-cli/commit/ef2ab72))
+* 修复searchForm中缺少Fragment的引用问题 ([578aed8](https://github.com/KSFE-Team/ks-thanos-cli/commit/578aed8))
+* 修复大量bug ([4ab026c](https://github.com/KSFE-Team/ks-thanos-cli/commit/4ab026c))
+* 修复报错处理 ([a662309](https://github.com/KSFE-Team/ks-thanos-cli/commit/a662309))
+* 修复路由跳转 ([befef17](https://github.com/KSFE-Team/ks-thanos-cli/commit/befef17))
+* 修改API引入地址 ([f42e86f](https://github.com/KSFE-Team/ks-thanos-cli/commit/f42e86f))
+* 修改code ([e2f8c8e](https://github.com/KSFE-Team/ks-thanos-cli/commit/e2f8c8e))
+* 改造api属性 ([2e4948d](https://github.com/KSFE-Team/ks-thanos-cli/commit/2e4948d))
+* 暂时去除中文名输入 ([d6eb939](https://github.com/KSFE-Team/ks-thanos-cli/commit/d6eb939))
+* 调整prettier ([6fa84b0](https://github.com/KSFE-Team/ks-thanos-cli/commit/6fa84b0))
+* 限制sync命令的执行位置 ([e355e2b](https://github.com/KSFE-Team/ks-thanos-cli/commit/e355e2b))
+
+
+### Features
+
+* 升级版本号 ([6e3d821](https://github.com/KSFE-Team/ks-thanos-cli/commit/6e3d821))
+* 引入 prettier ([ec8aca9](https://github.com/KSFE-Team/ks-thanos-cli/commit/ec8aca9))
+
+
+
 ### [1.0.1](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.0.0...v1.0.1) (2019-10-08)
 
 
