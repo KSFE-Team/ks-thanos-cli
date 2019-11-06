@@ -49,7 +49,7 @@ export class Fragment extends Component {
     }
 
     toFormItemCode(item: FormItem) {
-        debug('Fragment: toFormItemCode');
+        debug(`Fragment: toFormItemCode  ======  ${item.componentName}`);
         const labelValue = getPropValue(item.config.label);
         return `<Form.Item
                 label={${labelValue}}
@@ -63,8 +63,16 @@ export class Fragment extends Component {
         </Form.Item>`;
     }
 
-    toCode() {
-        const componentsCode = this.components.map(this.toFormItemCode);
+    toCode(subComponent?:any[]) {
+        const components = subComponent || this.components;
+        const componentsCode:any[] = components.map((item:any) => {
+            if (item.componentName === 'Fragment') {
+                return this.toCode(item.components || []);
+            }
+            let formItemCode = this.toFormItemCode(item);
+            return formItemCode;
+        });
+        console.log(`toCode componentsCode ======++++++====== ${componentsCode}`)
         return `
             {
                 this.props.form.getFieldValue('${this.config.showKey}') === ${this.config.showValue} && <Fragment>
