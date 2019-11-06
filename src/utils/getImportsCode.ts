@@ -5,6 +5,10 @@ import { uniqueArray } from './array';
 
 const debug = Debug(__filename);
 
+/**
+ * 生成 import 相关的 code
+ * @param imports 文件中需要 import 的对象
+ */
 export function getImportsCode(imports: Import[]) {
     const pageImports: FileImport = {};
 
