@@ -2,6 +2,8 @@ import { Component, ComponentConfig } from 'Src/factories/component/basic';
 import Page from 'Src/factories/page';
 import { TableColumn } from './table/tableColumn';
 import { COMPONENT_TYPES_MAP } from 'Src/utils/constants/component';
+import { KMSCloudComponent } from 'Src/factories/component/cloudComponent';
+import { FormItemConfig } from './formItem';
 
 export class ComponentManager {
     /**
@@ -24,6 +26,10 @@ export class ComponentManager {
         let TargetComponentClass = COMPONENT_TYPES_MAP[config.componentName];
         if (TargetComponentClass) {
             componentInstance = new TargetComponentClass(page, config);
+            target.addComponent(componentInstance);
+        } else if (config.componentType === 'kmsCloud') {
+            // kms云组件
+            componentInstance = new KMSCloudComponent(page, config as FormItemConfig);
             target.addComponent(componentInstance);
         }
 

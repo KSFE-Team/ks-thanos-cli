@@ -9,6 +9,7 @@ const debug = Debug(__filename);
 
 export interface ComponentConfig {
     componentName: string; // 组件名称
+    componentType: string; // 组件类型 kmsCloud
     parentComponentName: string; // 父组件名称
     stateName: string; // 组件使用state名称
     source: string; // 组件来源
