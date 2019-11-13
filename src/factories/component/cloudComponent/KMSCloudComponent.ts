@@ -37,7 +37,7 @@ export class KMSCloudComponent extends FormItem {
     async updateCloudModel() {
         const cloudModelPath = path.join(process.cwd(), 'src/cloudModel.json');
         const cloudModelJSON = await fsExtra.readJSONSync(cloudModelPath);
-        cloudModelJSON[`${this.componentName}`] = `Src/Components/${this.packageName}/src/model`
+        cloudModelJSON[`${this.componentName}`] = `Src/Components/${this.packageName}/src/model`;
         await writeJSON(cloudModelPath, cloudModelJSON);
     }
 

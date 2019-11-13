@@ -22,6 +22,7 @@ export interface ComponentConfig {
 
 export abstract class Component extends BasicContainer implements ComponentConfig {
     componentName = ''; // 组件名称
+    componentType = ''; // 组件类型
     parentComponentName = ''; // 父组件名称
     stateName = ''; // 组件所使用的状态名称
     upperStateName = ''; // 组件所使用的状态名称（首字母大写）
