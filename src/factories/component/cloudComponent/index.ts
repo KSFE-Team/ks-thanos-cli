@@ -1,0 +1,1 @@
+export { KMSCloudComponent } from './KMSCloudComponent';
