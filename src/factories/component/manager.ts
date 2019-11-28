@@ -27,7 +27,7 @@ export class ComponentManager {
         if (TargetComponentClass) {
             componentInstance = new TargetComponentClass(page, config);
             target.addComponent(componentInstance);
-        } else if (config.componentType === 'kmsCloud') {
+        } else if (config.componentType === 'cloud') {
             // kms云组件
             componentInstance = new KMSCloudComponent(page, config as FormItemConfig);
             target.addComponent(componentInstance);

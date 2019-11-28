@@ -20,6 +20,7 @@ export class KMSCloudComponent extends FormItem {
         this.packageName = `@ks/kms-${this.componentName.toLowerCase()}`;
         this.config = config;
         this.install();
+        this.registerComponent();
         this.updateCloudModel();
     }
 
@@ -34,11 +35,20 @@ export class KMSCloudComponent extends FormItem {
         );
     }
 
+    /* 更新以来redux */
     async updateCloudModel() {
-        const cloudModelPath = path.join(process.cwd(), 'src/cloudModel.json');
+        const cloudModelPath = path.join(process.cwd(), 'src/defaultModel.json');
         const cloudModelJSON = await fsExtra.readJSONSync(cloudModelPath);
-        cloudModelJSON[`${this.componentName}`] = `Src/Components/${this.packageName}/src/model`;
+        cloudModelJSON[`${this.componentName}`] = `components/${this.packageName}/src/model`;
         await writeJSON(cloudModelPath, cloudModelJSON);
+    }
+
+    /* 注册组件 */
+    registerComponent = async() => {
+        const registerPath = path.join(process.cwd(), 'src/register.json');
+        const registerJSON = await fsExtra.readJSONSync(registerPath) || {};
+        registerJSON[`${this.componentName}`] = `components/${this.packageName}/src/index`;
+        await writeJSON(registerPath, registerJSON);
     }
 
     getDecoratorConfigCode() {
@@ -48,7 +58,7 @@ export class KMSCloudComponent extends FormItem {
     getImports() {
         let imports = [
             {
-                source: `Src/Components/${this.packageName}`,
+                source: `Src/components/${this.packageName}`,
                 name: this.componentName,
                 defaultImport: this.config.default
             }
@@ -65,7 +75,7 @@ export class KMSCloudComponent extends FormItem {
             );
         }
         return `<${this.componentName}
-        ${propsCode}
+        ${propsCode.join('\n')}
     />`;
     }
 }
