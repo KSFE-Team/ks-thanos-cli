@@ -9,12 +9,24 @@ export class ConnectDecorator extends Decorator {
         this.config = config;
     }
 
+    /* 更新connect注入 */
     updateInputProps(inputProps: string[]) {
         this.config.inputProps = this.config.inputProps.concat(inputProps);
     }
 
+    /* 更新connect输出 */
     updateOutputProps(outputProps: Value[]) {
         this.config.outputProps = this.config.outputProps.concat(outputProps);
+    }
+
+    /* 替换connect注入 */
+    replaceInputProps(inputProps: string[]) {
+        this.config.inputProps = inputProps;
+    }
+
+    /* 替换connect输出 */
+    replaceOutputProps(outputProps: Value[]) {
+        this.config.outputProps = outputProps;
     }
 
     getOutputPropTypesCode() {
@@ -36,7 +48,7 @@ export class ConnectDecorator extends Decorator {
     }
 
     toCode() {
-        const inputCode = this.config.inputProps.join(',\n');
+        const inputCode = Array.from(new Set(this.config.inputProps)).join(',\n');
         const outputCode = this.config.outputProps.map((props) => {
             const { key, value } = props;
             if (key === value) {

@@ -34,7 +34,7 @@ export class ComponentManager {
         }
 
         if (componentInstance) {
-            if (config.components) {
+            if (config.components && config.componentName !== 'RelationTable') {
                 config.components.forEach((itemConfig) => {
                     ComponentManager.add(componentInstance as Component, itemConfig);
                 });

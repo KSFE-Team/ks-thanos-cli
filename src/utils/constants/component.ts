@@ -11,6 +11,7 @@ import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
 import { Form } from 'Src/factories/component/form/index';
 import { Fragment } from 'Src/factories/component/fragment';
+import { RelationTable } from 'Src/factories/component/relationTable';
 
 
 export const COMPONENT_TYPES_MAP: {
@@ -29,5 +30,6 @@ export const COMPONENT_TYPES_MAP: {
     InputNumber: InputNumber,
     Radio,
     DatePicker: DatePicker,
-    Fragment: Fragment
+    Fragment: Fragment,
+    RelationTable: RelationTable
 };

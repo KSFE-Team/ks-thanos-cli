@@ -1,6 +1,6 @@
-import { Component, ComponentConfig } from '../basic';
+import { Component, ComponentConfig } from '../../basic';
 import Debug from 'Src/utils/debugger';
-import { TableColumn, TableColumnConfig } from './tableColumn';
+import { TableColumn, TableColumnConfig } from '../../table/tableColumn';
 import Page from 'Src/factories/page';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
@@ -16,6 +16,7 @@ export interface TableComponentConfig extends ComponentConfig {
     dependencies: EffectConfig; // 数据依赖配置
     showSelectedRows: string[] | number[]; // 是否展示选中
     showSelectedRowsType: string[] | number[]; // 是否展示选中
+    tableType: number
 }
 
 /**
@@ -38,6 +39,7 @@ export class Table extends Component {
         const { showSelectedRows, showSelectedRowsType } = this.config;
         this.addProp('rowKey', `'id'`);
         this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
+        this.addProp('autoHeight', `{type: 'column'}`);
         this.addProp('loading', `this.props.${pageName}.${this.stateName}ListLoading`);
         this.addProp('pagination', `{
             current: this.props.${pageName}.${this.stateName}.page,
@@ -73,8 +75,7 @@ export class Table extends Component {
     initPageMethods() {
         const dataDependenciesEffect = this.effect;
         const { pageName } = this.page;
-        const { showSelectedRows } = this.config;
-
+        const { showSelectedRows, tableType } = this.config;
         this.page.addMethod(`
             ${dataDependenciesEffect.name}() {
                 actions.${pageName}.${dataDependenciesEffect.name}();
@@ -103,10 +104,23 @@ export class Table extends Component {
                 });
             };`)
         }
+
+        /* 如果为子列表则监听父列表selectRowKey */
+        if (`${tableType}` === '3') {
+            this.page.addMethod(`componentDidUpdate(prevProps) {
+                if (this.props.${pageName}.${this.stateName}.selectedRowKeys !== prevProps.${pageName}.${this.stateName}.selectedRowKeys) {
+                    this.${dataDependenciesEffect.name}();
+                }
+            };`)
+        }
     }
 
     initPageLifecycle() {
-        this.page.addDidMountStep(`this.${this.effect.name}();`);
+        const { tableType } = this.config;
+        /* 子列表默认不加载数据 */
+        if (`${tableType}` !== '3') {
+            this.page.addDidMountStep(`this.${this.effect.name}();`);
+        }
     }
 
     initPageDecorators() {

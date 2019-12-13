@@ -33,7 +33,7 @@ export class DatePicker extends FormItem {
 
     toCode() {
         const propsKeyArr: string[] = this.config.props && Object.keys(this.config.props);
-        const propsCode = propsKeyArr.map((item) => {
+        const propsCode = (propsKeyArr || []).map((item) => {
             let value: any = this.config.props[item];
             switch (item) {
                 case 'placeholder':

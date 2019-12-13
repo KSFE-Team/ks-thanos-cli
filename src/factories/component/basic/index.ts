@@ -44,7 +44,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
 
         this.page = page;
 
-        const {componentName, stateName, source, default: defaultImport, parentComponentName} = config;
+        const {componentName, stateName = '', source, default: defaultImport, parentComponentName} = config;
 
         this.config = config;
         this.componentName = componentName;

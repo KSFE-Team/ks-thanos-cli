@@ -1,34 +1,36 @@
 import { Import } from './types';
 import Debug from 'Src/utils/debugger';
 import { upperFirst, lowerFirst } from 'Src/utils/string';
-import { Component, ComponentConfig } from '../component/basic';
-import Model from '../model';
-import { ConnectDecorator } from '../decorator/connect';
-import { FormDecorator } from '../decorator/form';
+import { Component, ComponentConfig } from '../../../component/basic';
+import { ConnectDecorator } from '../../../decorator/connect';
+import { FormDecorator } from '../../../decorator/form';
 import { getImportsCode } from 'Src/utils/getImportsCode';
-import { BasicContainer } from 'Src/factories/basicElement';
-import { ComponentManager } from '../component/manager';
+import { ComponentManager } from './manager';
 import { Value } from 'Src/factories/value';
+import { BasicContainer } from 'Src/factories/basicElement';
 
 const debug = Debug(__filename);
 
-export default class Page extends BasicContainer {
+export default class File extends BasicContainer {
 
     pageName: string = ''; // 页面名称
     pageChineseName: string = ''; // 页面中文名称
     className: string = ''; // 页面类名称
     paramKey: string = ''; // 页面路由参数
     pagePath: string = ''; // 页面路径
-    model: Model; // 页面关联的model
+    // model: Model; // 页面关联的model
+    connectDecorator: any;
+    decorators: any[] = [];
+    methods: any[] = [];
+    didMountStep: any[] = [];
+    components: any[] = [];
+    model: any;
+    filePage: any;
+    pageTitleCode: any = '';
 
-    connectDecorator: ConnectDecorator;
-    decorators: (ConnectDecorator | FormDecorator)[] = []; // 页面所使用的 decorator
-    components: Component[] = []; // 页面中的子组件
-    methods: string[] = []; // 页面方法
-    didMountStep: string[] = []; // componentDidMount 中的步骤
-    pageTitleCode: string = '';
-    isUseCard: Boolean = true; // 是否使用KSWhiteCard
-
+    propTypesCode: any[] = [
+        'match: PropTypes.object'
+    ]; // 默认的参数类型定义
     /**
      * 构造函数
      * @param name 页面名
@@ -39,21 +41,23 @@ export default class Page extends BasicContainer {
         chineseName,
         components = [],
         paramKey = '',
-        pagePath = ''
+        pagePath = '',
+        filePage
     }: {
         name: string;
         chineseName: string;
         components: ComponentConfig[];
         paramKey: string;
         pagePath: string;
+        filePage: any;
     }) {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
-        this.pageTitleCode = `title={'${this.pageChineseName}'}`;
         this.className = upperFirst(name);
         this.paramKey = paramKey;
         this.pagePath = pagePath;
+        this.filePage = filePage;
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
             pageName: this.pageName,
@@ -68,10 +72,7 @@ export default class Page extends BasicContainer {
                 })
             ]
         });
-        this.model = new Model({
-            initialState: {},
-            namespace: this.pageName
-        });
+        this.model = this.filePage.model;
         this.decorators.push(this.connectDecorator);
         this.init(components);
     }
@@ -133,6 +134,10 @@ export default class Page extends BasicContainer {
         this.pageTitleCode = code;
     }
 
+    updatePropTypesCode = (code: string) => {
+        this.propTypesCode.push(code);
+    }
+
     getPropTypesCode() {
         const decoratorPropTypesCode = this.decorators
             .map((item) => item.getOutputPropTypesCode())
@@ -140,7 +145,7 @@ export default class Page extends BasicContainer {
 
         return [
             ...decoratorPropTypesCode,
-            'match: PropTypes.object'
+            ...this.propTypesCode
         ].join(',\n');
     }
 
@@ -156,18 +161,16 @@ export default class Page extends BasicContainer {
                 defaultImport: true
             },
             {
+                name: 'Fragment',
+                source: 'react',
+                defaultImport: false
+            },
+            {
                 name: 'PropTypes',
                 source: 'prop-types',
                 defaultImport: true
             }
         ];
-        if (this.isUseCard) {
-            imports.push({
-                source: 'ks-cms-ui',
-                name: 'KSWhiteCard',
-                defaultImport: false
-            });
-        }
         this.components.forEach((component) => {
             imports = imports.concat(component.getImports());
         });
@@ -175,17 +178,6 @@ export default class Page extends BasicContainer {
             imports = imports.concat(decorator.getImports());
         });
         return imports;
-    }
-
-    getPageCard = (codes: string, titleCodes: string) => {
-        if (this.isUseCard) {
-            return `<KSWhiteCard
-                ${titleCodes}
-            >
-                ${codes}
-            </KSWhiteCard>`;
-        }
-        return codes;
     }
 
     /**
@@ -218,12 +210,12 @@ export default class ${this.className} extends React.Component {
 
     render() {
         return (
-            ${this.getPageCard(componentsCode, this.pageTitleCode)}
+            <Fragment>
+                ${componentsCode}
+            </Fragment>
         );
     }
 }
 `;
     }
 }
-
-export const getPage = () => Page
