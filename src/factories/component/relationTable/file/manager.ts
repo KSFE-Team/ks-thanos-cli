@@ -26,7 +26,9 @@ export class ComponentManager {
         let TargetComponentClass = RELATION_TABLE_COMPONENTS[config.componentName] || COMPONENT_TYPES_MAP[config.componentName];
         if (TargetComponentClass) {
             componentInstance = new TargetComponentClass(file, config);
-            target.addComponent(componentInstance);
+            if (componentInstance) {
+                target.addComponent(componentInstance);
+            }
         }
 
         if (componentInstance) {

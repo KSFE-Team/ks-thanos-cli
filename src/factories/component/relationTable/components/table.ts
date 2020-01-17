@@ -16,7 +16,8 @@ export interface TableComponentConfig extends ComponentConfig {
     dependencies: EffectConfig; // 数据依赖配置
     showSelectedRows: string[] | number[]; // 是否展示选中
     showSelectedRowsType: string[] | number[]; // 是否展示选中
-    tableType: number
+    tableType: number,
+    parentTableStageName: string, // 父子级table 父table的stateName
 }
 
 /**
@@ -30,7 +31,10 @@ export class Table extends Component {
 
     constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
-        this.effect = EffectManager.create(this.stateName, page.model, config.dependencies);
+        this.effect = EffectManager.create(this.stateName, page.model, {
+            ...config.dependencies,
+            showSelectedRows: !!config.showSelectedRows
+        });
         this.config = config;
     }
 
@@ -107,8 +111,9 @@ export class Table extends Component {
 
         /* 如果为子列表则监听父列表selectRowKey */
         if (`${tableType}` === '3') {
+            const tempStateName = this.config.parentTableStageName || this.stateName;
             this.page.addMethod(`componentDidUpdate(prevProps) {
-                if (this.props.${pageName}.${this.stateName}.selectedRowKeys !== prevProps.${pageName}.${this.stateName}.selectedRowKeys) {
+                if (this.props.${pageName}.${tempStateName}.selectedRowKeys !== prevProps.${pageName}.${tempStateName}.selectedRowKeys) {
                     this.${dataDependenciesEffect.name}();
                 }
             };`)

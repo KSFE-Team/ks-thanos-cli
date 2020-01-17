@@ -9,6 +9,7 @@ export interface EffectConfig {
     api: {
         key: string;
         value: string;
+        stageName: string;
     }; // 接口地址
     actionType: 'save' | 'delete' | 'update' | 'get';
     responseType: 'list' | 'object'; // 接口返回类型
@@ -18,6 +19,7 @@ export interface EffectConfig {
         value: string;
         defaultValue: string;
     }[];
+    showSelectedRows?: boolean
 }
 
 export interface EffectRequestParams {
@@ -51,6 +53,7 @@ export abstract class Effect extends BasicElement {
     api: {
         key: string;
         value: string;
+        stageName: string;
     } // 接口地址配置
     actionType: string // CRUD类型
     responseType: string // 接口返回类型
@@ -88,10 +91,14 @@ export abstract class Effect extends BasicElement {
         const apiDataJSON = fsExtra.readJSONSync(apiDataPath);
         const pageAPI = apiDataJSON[this.model.namespace] || {};
         pageAPI[api.key] = api.value;
-        apiDataJSON[this.model.namespace] = pageAPI;
+        apiDataJSON[api.stageName||this.model.namespace] = pageAPI;
         fsExtra.writeJSONSync(apiDataPath, apiDataJSON, {
             spaces: '\t'
         });
+    }
+
+    getRowSelectionCodes = () => {
+        
     }
 
     abstract toCode(requestParams?: EffectRequestParams[]): string

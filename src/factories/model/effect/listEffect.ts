@@ -43,6 +43,12 @@ export class ListEffect extends Effect {
                 return `${name}: state.${name} && state.${name}.value`;
             }
         }).join(',\n');
+
+        // 是否自动选中第一条
+        let selectionCodes = '';
+        if (this.config.showSelectedRows) {
+            selectionCodes = `,\nselectedRowKeys: response.data.list.length ? [response.data.list[0].id] : [],\nselectedRows: response.data.list.length ? [response.data.list[0]] : []`;
+        }
         return `
 async ${this.name}(payload, getState) {
     try {
@@ -53,7 +59,7 @@ async ${this.name}(payload, getState) {
             pageNo: state.page,${otherPostData ? '\n' + otherPostData : ''}
         };
 
-        const response = await request(API.${this.model.namespace}.${this.api.key}, {
+        const response = await request(API.${this.api.stageName || this.model.namespace}.${this.api.key}, {
             method: '${this.method}',
             body: postData
         });
@@ -63,7 +69,7 @@ async ${this.name}(payload, getState) {
                 ${this.stateName}: {
                     ...state,
                     list: response.data.list,
-                    total: response.data.totalCount
+                    total: response.data.totalCount${selectionCodes}
                 }
             });
         } else {

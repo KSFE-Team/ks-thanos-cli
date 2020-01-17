@@ -35,6 +35,7 @@ export class RelationTable extends Component {
                 paramKey: page.paramKey,
                 fileName: 'ParentForm',
                 pageName: page.pageName,
+                pageComponents: config.components,
                 pageConfig: {
                     components: [config.components[0]],
                     paramKey: page.paramKey,
@@ -48,6 +49,7 @@ export class RelationTable extends Component {
                 paramKey: page.paramKey,
                 fileName: 'ParentTable',
                 pageName: page.pageName,
+                pageComponents: config.components,
                 pageConfig: {
                     components: [config.components[1]],
                     paramKey: page.paramKey,
@@ -61,6 +63,7 @@ export class RelationTable extends Component {
                 paramKey: page.paramKey,
                 fileName: 'ChildForm',
                 pageName: page.pageName,
+                pageComponents: config.components,
                 pageConfig: {
                     components: [config.components[2]],
                     paramKey: page.paramKey,
@@ -74,8 +77,12 @@ export class RelationTable extends Component {
                 paramKey: page.paramKey,
                 fileName: 'ChildTable',
                 pageName: page.pageName,
+                pageComponents: config.components,
                 pageConfig: {
-                    components: [config.components[3]],
+                    components: [{
+                        ...config.components[3],
+                        parentTableStageName: config.components[1].stateName
+                    }],
                     paramKey: page.paramKey,
                 }
             }

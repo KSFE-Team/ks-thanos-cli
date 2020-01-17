@@ -20,6 +20,7 @@ export interface FormComponentConfig extends ComponentConfig {
         eventType: 'request' | 'link' | 'modal'; // 事件类型
         dependencies: EffectConfig; // 数据依赖
     }[];
+    relationId: string; // 关联ID
 }
 
 /**
@@ -39,10 +40,21 @@ export class SearchForm extends Component {
             debug(`NormalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
                 debug('生成 listEffect');
+                let dependencies = activeEvent.dependencies;
+                if (config.relationId) {
+                    // 暂时只找第一层级
+                    const relationComponent = this.page.pageComponents.find((component: any) => `${component.id}` === `${config.relationId}`);
+                    if (relationComponent) {
+                        dependencies = {
+                            ...dependencies,
+                            showSelectedRows: relationComponent.showSelectedRows
+                        };
+                    }
+                }
                 this.listEffect = EffectManager.create(
                     this.stateName,
                     this.page.model,
-                    activeEvent.dependencies
+                    dependencies
                 );
             }
         });

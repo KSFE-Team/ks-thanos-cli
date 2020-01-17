@@ -27,6 +27,8 @@ export default class File extends BasicContainer {
     model: any;
     filePage: any;
     pageTitleCode: any = '';
+    isUseCard: boolean;
+    pageComponents: any[];
 
     propTypesCode: any[] = [
         'match: PropTypes.object'
@@ -42,7 +44,8 @@ export default class File extends BasicContainer {
         components = [],
         paramKey = '',
         pagePath = '',
-        filePage
+        filePage,
+        pageComponents
     }: {
         name: string;
         chineseName: string;
@@ -50,6 +53,7 @@ export default class File extends BasicContainer {
         paramKey: string;
         pagePath: string;
         filePage: any;
+        pageComponents: ComponentConfig[]
     }) {
         super();
         this.pageName = lowerFirst(name);
@@ -58,6 +62,9 @@ export default class File extends BasicContainer {
         this.paramKey = paramKey;
         this.pagePath = pagePath;
         this.filePage = filePage;
+        this.isUseCard = true;
+        this.pageComponents = pageComponents;
+
         this.connectDecorator = new ConnectDecorator({
             name: 'connect',
             pageName: this.pageName,
@@ -147,6 +154,11 @@ export default class File extends BasicContainer {
             ...decoratorPropTypesCode,
             ...this.propTypesCode
         ].join(',\n');
+    }
+
+    /* 页面card配置 */
+    getPageCard = (codes: string) => {
+        return codes;
     }
 
     /**

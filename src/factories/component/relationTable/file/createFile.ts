@@ -16,21 +16,23 @@ export function createFile(
         pagePath: string; // 页面路径
         pageConfig: any; // 页面配置
         fileName: string; // 文件名称
-        page: any; // 文件类型
+        page: any; // 页面配置
+        pageComponents: any[]; // 页面组件配置
     }
 ) {
-    const { pageName, chineseName, pagePath, pageConfig = {}, fileName, page } = options;
+    const { pageName, chineseName, pagePath, pageConfig = {}, fileName, page, pageComponents } = options;
     debug(`pageName: ${pageName}`);
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
     const pageFilePath = path.join(pagePath, `/components/${fileName}.js`);
-    const { components = [], paramKey = '' } = pageConfig;
+    const { components = [], paramKey = ''} = pageConfig;
     const pageInstance = new File({
         name: pageName,
         chineseName: chineseName,
         components,
         pagePath,
         paramKey,
-        filePage: page
+        filePage: page,
+        pageComponents
     });
 
     // 输出文件
