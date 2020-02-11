@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.0.3...v1.1.0) (2020-02-11)
+
+
+### Bug Fixes
+
+* eslint ([8e41d1f](https://github.com/KSFE-Team/ks-thanos-cli/commit/8e41d1f))
+
+
+### Features
+
+* cli支持kms云组件 ([77e0d67](https://github.com/KSFE-Team/ks-thanos-cli/commit/77e0d67))
+* fragment区域块 ([055b5b5](https://github.com/KSFE-Team/ks-thanos-cli/commit/055b5b5))
+* fragment多层时的显隐控制 ([9fb7d2f](https://github.com/KSFE-Team/ks-thanos-cli/commit/9fb7d2f))
+* 修改npm为yarn， 发布1.1.0 ([0136098](https://github.com/KSFE-Team/ks-thanos-cli/commit/0136098))
+* 修改云组件参数 ([e5798ee](https://github.com/KSFE-Team/ks-thanos-cli/commit/e5798ee))
+* 修改副作用配置 ([0daf94f](https://github.com/KSFE-Team/ks-thanos-cli/commit/0daf94f))
+* 区块链显隐控制 ([115435f](https://github.com/KSFE-Team/ks-thanos-cli/commit/115435f))
+* 多层Fragment组件解析 ([1cd254f](https://github.com/KSFE-Team/ks-thanos-cli/commit/1cd254f))
+* 父子级table ([270a827](https://github.com/KSFE-Team/ks-thanos-cli/commit/270a827))
+
+
+
 ### [1.0.3](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.0.1...v1.0.3) (2019-11-06)
 
 
