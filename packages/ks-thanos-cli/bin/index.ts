@@ -45,12 +45,8 @@ commander
     .command('ui')
     .description('工具可视化')
     .action(async() => {
-        // debug(`Init project`);
-        console.log('start ui');
-        // const { force } = options;
-        // await runInit({
-        //     isForce: force
-        // });
+        debug(`start ui`);
+        await runUi();
     });
 
 commander.parse(process.argv);
