@@ -1,0 +1,13 @@
+{
+    "apps": [
+        {
+            "name": "server-scaffold",
+            "script": "./output/index.js",
+            "watch": true,
+            "ignore_watch": [
+                "node_modules",
+                "log"
+            ]
+        }
+    ]
+}

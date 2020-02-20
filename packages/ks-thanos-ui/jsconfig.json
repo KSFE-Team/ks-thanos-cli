@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "Styles/*": [
+                "./src/styles/*"
+            ],
+            "Medias/*": [
+                "./src/medias/*"
+            ],
+            "Components/*": [
+                "./src/components/*"
+            ],
+            "Utils/*": [
+                "./src/utils/*"
+            ],
+            "Modules/*": [
+                "./src/modules/*"
+            ],
+            "Services/*": [
+                "./src/services/*"
+            ],
+            "Actions/*": [
+                "./src/actions/*"
+            ],
+            "Reducers/*": [
+                "./src/reducers/*"
+            ],
+            "Containers/*": [
+                "./src/containers/*"
+            ],
+            "Models/*": [
+                "./src/models/*"
+            ],
+            "Src/*": [
+                "./src/*"
+            ]
+        }
+    }
+}

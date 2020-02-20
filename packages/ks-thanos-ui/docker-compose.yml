@@ -1,0 +1,17 @@
+version: "3"
+services:
+    # web服务
+    web:
+        container_name: ks-pcweb-scaffold # 设置名称
+        image: 172.16.1.179:3011/ks-project:latest # 使用 ks-project:v1.0.0 进行构建
+        volumes: # 定义数据卷
+            - ".:/project" # 将当前目录映射到docker对应的文件中
+            - "/project/node_modules"
+            - "/project/.vscode"
+            - "/project/.idea"
+        ports:
+            - "${PORT}:8787"
+        environment:
+            - TERM=xterm-256color`
+        tty: true
+        command: bash -c "npm run ${CMD}"

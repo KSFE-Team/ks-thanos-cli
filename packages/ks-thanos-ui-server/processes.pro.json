@@ -1,0 +1,22 @@
+{
+    "apps": [
+        {
+            "name": "server-scaffold",
+            "script": "./output/index.js",
+            "watch": true,
+            "ignore_watch": [
+                "node_modules",
+                "log"
+            ],
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "max_restarts": 20,
+            "restart_delay": 4000,
+            "listen_timeout": 8000,
+            "instances": 1,
+            "exec_mode": "fork",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        }
+    ]
+}

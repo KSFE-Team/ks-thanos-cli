@@ -1,0 +1,52 @@
+{
+    "name": "ks-thanos-ui",
+    "version": "1.0.0",
+    "description": "> TODO: description",
+    "author": "caic <caichenyu@ksjgs.com>",
+    "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/ks-thanos-ui#readme",
+    "license": "ISC",
+    "main": "lib/ks-thanos-ui.js",
+    "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+    },
+    "files": [
+        "lib"
+    ],
+    "publishConfig": {
+        "registry": "http://172.16.1.179:4873/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KSFE-Team/ks-thanos-cli.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from root\" && exit 1",
+        "debug": "ks build --debug",
+        "start": "ks start",
+        "build": "ks build",
+        "docker-start": "CMD=start PORT=8787 docker-compose up",
+        "docker-build": "CMD=build PORT=8787 docker-compose up",
+        "docker-enter": "docker exec -it ks-pcweb-scaffold bash"
+    },
+    "bugs": {
+        "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
+    },
+    "ks-web-cli": {
+        "type": "pcweb",
+        "publicPath": "/"
+    },
+    "dependencies": {
+        "core-js": "^2.6.5",
+        "kredux": "^1.0.0",
+        "ks-libs": "1.1.9",
+        "ks-utils": "2.3.9",
+        "prop-types": "^15.6.1",
+        "react": "^16.6.0",
+        "react-dom": "^16.6.0",
+        "react-router": "^4.2.0"
+    },
+    "devDependencies": {
+        "@ks-web-cli/webpack-tools": "^3.8.0"
+    }
+}
