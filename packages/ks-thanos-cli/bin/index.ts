@@ -2,8 +2,7 @@
 
 import commander from 'commander';
 import Debug from '../src/utils/debugger';
-import { runSync } from '../src';
-import { runInit } from '../src';
+import { runSync, runInit, runUi } from '../src';
 import { errorText } from '../src/utils/log';
 
 const debug = Debug(__filename);
@@ -40,6 +39,18 @@ commander
         await runInit({
             isForce: force
         });
+    });
+
+commander
+    .command('ui')
+    .description('工具可视化')
+    .action(async() => {
+        // debug(`Init project`);
+        console.log('start ui');
+        // const { force } = options;
+        // await runInit({
+        //     isForce: force
+        // });
     });
 
 commander.parse(process.argv);
