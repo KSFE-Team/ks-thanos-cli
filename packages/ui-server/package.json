@@ -11,7 +11,8 @@
         "test": "__tests__"
     },
     "files": [
-        "lib"
+        "lib",
+        "src"
     ],
     "publishConfig": {
         "registry": "http://172.16.1.179:4873/"
@@ -35,6 +36,8 @@
         "publicPath": "/"
     },
     "dependencies": {
+        "chalk": "^3.0.0",
+        "figlet": "^1.2.4",
         "koa": "^2.6.2",
         "koa-bodyparser": "^4.2.1",
         "koa-router": "^7.4.0",
@@ -42,6 +45,7 @@
         "ks-utils": "^2.3.9",
         "ks-web-cli": "^3.8.0",
         "mongodb": "^3.1.10",
+        "open": "^7.0.2",
         "winston": "^3.2.1"
     },
     "devDependencies": {

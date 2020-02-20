@@ -1,12 +1,12 @@
 import Koa from 'koa';
 import router from './routers';
-import { initDatabase } from './models';
+// import { initDatabase } from './models';
 import bodyParser from 'koa-bodyparser';
-import databaseConfig from './models/config';
+// import databaseConfig from './models/config';
 import cors from 'koa2-cors';
 import logger from './utils/logger';
 
-const port = 3000;
+// const port = 3000;
 const app = new Koa();
 
 process.on('unhandledRejection', (err) => {
@@ -67,14 +67,14 @@ app.use((context, next) => {
 });
 
 // 初始化数据库
-initDatabase(databaseConfig)
-    .then(startServer)
-    .catch((err) => {
-        logger.error(err);
-    });
+// initDatabase(databaseConfig)
+//     .then(startServer)
+//     .catch((err) => {
+//         logger.error(err);
+//     });
 
-function startServer() {
-    app.listen(port, () => {
-        logger.info(`server listening on ${port}...`);
-    });
-}
+// function startServer() {
+//     app.listen(port, () => {
+//         logger.info(`server listening on ${port}...`);
+//     });
+// }
