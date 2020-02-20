@@ -1,4 +1,4 @@
-// import { ThanosUi } from '@ks-thanos-ui-server/lib/ui';
+import ThanosUi from '@ks-thanos/ui-server/output/ui';
 // import Debug from 'Src/utils/debugger';
 // import { infoText, successText, errorText, createSplash } from 'Src/utils/log';
 // import { getPage } from 'Src/services/getPage';
@@ -17,7 +17,6 @@
  * @param options 参数
  */
 export async function runUi() {
-    console.log('start ui');
-    // const thanosUi = new ThanosUi();
-    // thanosUi.start();
+    const thanosUi = new ThanosUi();
+    thanosUi.start();
 }
