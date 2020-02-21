@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.project-container {
+    background: #353545;
+    height: 100vh;
+}
+
+.btn {
+    margin-left: 12px;
+    padding: 4px 16px;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-start {
+    background: #1890ff;
+    border: 1px solid #1890ff;
+    color: #fff;
+}
+
+.btn-stop {
+    background: #f31212;
+    border: 1px solid #f31212;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .project-left-side {
+
+        .project-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px;
+            cursor: pointer;
+        }
+    }
+
+    .terminal-wrapper {
+        margin-top: 20px;
+        flex: 1;
+
+        .btn-wrapper {
+            margin-left: 10%;
+            margin-bottom: 12px;
+        }
+
+        #terminal {
+            margin-left: 10%;
+            width: 80%;
+        }
+    }
+}
+
+.folder-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000000;
+}
+
+.folder-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.3;
+    background: #000;
+}
+
+.folder-wrapper {
+    z-index: 1;
+    position: absolute;
+    width: 600px;
+    height: 550px;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -275px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+
+    .file-toolbar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 50px;
+        background: #343537;
+        color: #fff;
+    }
+
+    .file-item-wrapper {
+        flex: 1;
+        overflow: auto;
+
+        .file-item {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    }
+
+    .file-bottom-toolbar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        height: 50px;
+        background: #343537;
+        color: #fff;
+        padding-right: 12px;
+
+        .btn-confirm {
+            background: #1890ff;
+            border: 1px solid #1890ff;
+            color: #fff;
+        }
+    }
+}
+

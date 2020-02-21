@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/models/config.js"],"names":["host","port","dbName"],"mappings":";;;;;;eAAe;AAEXA,EAAAA,IAAI,EAAE,qBAFK;AAIXC,EAAAA,IAAI,EAAE,OAJK;AAMXC,EAAAA,MAAM,EAAE;AANG,C","sourcesContent":["export default {\n    // 数据库地址\n    host: 'mongodb://localhost',\n    // 数据库端口\n    port: '27017',\n    // 使用数据库名称\n    dbName: 'test',\n};\n"],"file":"config.js"}

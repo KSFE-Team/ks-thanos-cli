@@ -3,7 +3,7 @@ services:
     # web服务
     web:
         container_name: ks-pcweb-scaffold # 设置名称
-        image: 172.16.1.179:3011/ks-project:latest # 使用 ks-project:v1.0.0 进行构建
+        image: harbor.devops.kaishustory.com/h5/ks-project:latest # 使用 ks-project:v1.0.0 进行构建
         volumes: # 定义数据卷
             - ".:/project" # 将当前目录映射到docker对应的文件中
             - "/project/node_modules"
