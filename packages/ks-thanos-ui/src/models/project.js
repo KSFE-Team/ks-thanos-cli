@@ -67,6 +67,14 @@ const projectModel = {
                     projectName: currentPath.substring(currentPath.lastIndexOf('/') + 1)
                 });
             }
+        },
+        /**
+         * 取消选择项目
+         */
+        cancelSelect() {
+            actions.project.setReducers({
+                isShowFolder: false
+            });
         }
     }
 };

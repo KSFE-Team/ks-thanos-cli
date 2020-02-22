@@ -47,7 +47,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/babel-tools": "^3.6.2",
-        "@ks-web-cli/jest-tools": "^3.2.2"
+        "@ks-web-cli/babel-tools": "^3.10.0",
+        "@ks-web-cli/jest-tools": "^3.10.0"
     }
 }
