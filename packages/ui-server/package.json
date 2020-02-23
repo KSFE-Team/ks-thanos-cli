@@ -42,10 +42,12 @@
         "ks-utils": "^2.3.9",
         "ks-web-cli": "^3.8.0",
         "mongodb": "^3.1.10",
+        "socket.io": "^2.3.0",
+        "tree-kill": "^1.2.2",
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/babel-tools": "^3.6.2",
-        "@ks-web-cli/jest-tools": "^3.2.2"
+        "@ks-web-cli/babel-tools": "^3.10.0",
+        "@ks-web-cli/jest-tools": "^3.10.0"
     }
 }

@@ -5,9 +5,11 @@ import bodyParser from 'koa-bodyparser';
 import databaseConfig from './models/config';
 import cors from 'koa2-cors';
 import logger from './utils/logger';
+import { createSocket } from './socket';
 
 const port = 3000;
 const app = new Koa();
+const server = createSocket(app);
 
 process.on('unhandledRejection', (err) => {
     logger.error(err);
@@ -74,7 +76,7 @@ initDatabase(databaseConfig)
     });
 
 function startServer() {
-    app.listen(port, () => {
+    server.listen(port, () => {
         logger.info(`server listening on ${port}...`);
     });
 }
