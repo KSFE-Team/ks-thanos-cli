@@ -36,6 +36,7 @@
         "publicPath": "/"
     },
     "dependencies": {
+        "axios": "^0.19.2",
         "chalk": "^3.0.0",
         "figlet": "^1.2.4",
         "koa": "^2.6.2",
@@ -49,7 +50,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/babel-tools": "^3.6.2",
-        "@ks-web-cli/jest-tools": "^3.2.2"
+        "@ks-web-cli/babel-tools": "^3.10.0",
+        "@ks-web-cli/jest-tools": "^3.10.0"
     }
 }

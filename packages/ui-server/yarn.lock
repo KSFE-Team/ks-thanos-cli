@@ -1113,10 +1113,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@ks-web-cli/babel-tools@^3.6.2":
-  version "3.6.2"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2fbabel-tools/-/babel-tools-3.6.2.tgz#7ad9bb62b4d8279e7601b45c09a0c95b3c23b8df"
-  integrity sha512-Ra06UuN+eHlrSJSHxOGDmZrgyNguGjeOXJU4xNqzjq+gPvXNMmTjwhg84HEshac26IvFmo2sn8cbLJMjuasJUA==
+"@ks-web-cli/babel-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2fbabel-tools/-/babel-tools-3.10.0.tgz#937db1c7a56a4e12b0d1ad4db36d3fbce5f876cb"
+  integrity sha512-0lInUwrpCnNsh4Rj4L314wCjxjqapjPTht4nSsUbGJ6d2QwjEVSi2t0IJYK0plLRYEEjzBb3TkIdLoNH41mibg==
   dependencies:
     "@babel/cli" "7.2.3"
     "@babel/core" "7.2.2"
@@ -1129,8 +1129,9 @@
     "@babel/preset-env" "7.3.1"
     "@babel/preset-react" "7.0.0"
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/eslint-tools" "^3.6.2"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/eslint-tools" "^3.10.0"
+    "@ks-web-cli/utils" "^3.10.0"
+    babel-plugin-dynamic-import-webpack "^1.1.0"
     babel-plugin-import "^1.12.0"
     babel-plugin-module-resolver "^3.2.0"
     babel-plugin-react-css-modules "^5.2.6"
@@ -1140,13 +1141,13 @@
     core-js "2.6.5"
     metro-react-native-babel-preset "^0.56.0"
 
-"@ks-web-cli/eslint-tools@^3.6.2":
-  version "3.6.2"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2feslint-tools/-/eslint-tools-3.6.2.tgz#fa7a225a84c8957425c4f5c097f88a1ac6a0bfbe"
-  integrity sha512-jdAbWyIvqQ105wyfOWNOvB6C8REdKAOcItiN7/AvErvNSOC6NhRLtuvYeV1XeuIwFp4uSei6xJHSqV5GK2D5lg==
+"@ks-web-cli/eslint-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2feslint-tools/-/eslint-tools-3.10.0.tgz#f5fa1016992c122d1e359fb0d56bd6a160b75fb1"
+  integrity sha512-g9XgTZy0loAcBU8zSUFs34rpu6fyHdPkBMrA6NUdgU4bP4gSmukS2XaB4mxAq95Nm7I+oJlUMVic8FsRGanJ7A==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/utils" "^3.10.0"
     "@typescript-eslint/eslint-plugin" "^1.10.2"
     "@typescript-eslint/parser" "^1.10.2"
     babel-eslint "8.x"
@@ -1163,21 +1164,21 @@
     eslint-plugin-react "^7.11.1"
     eslint-plugin-standard "^4.0.0"
 
-"@ks-web-cli/jest-tools@^3.2.2":
-  version "3.2.2"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2fjest-tools/-/jest-tools-3.2.2.tgz#ae98ed1bad610dc9b7bb2cd88b859cb7917591ed"
-  integrity sha512-zREbExC4pwzrZhbGjYKFOnRCexw2zOtD6Sf6Gv5l6Wyw2ihWolFnaLwNgu1XU8W0B9kNTDPh73So0M/wR4ALDw==
+"@ks-web-cli/jest-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2fjest-tools/-/jest-tools-3.10.0.tgz#43d9e9a0edcb69c58c0860c0be78f64155a2e913"
+  integrity sha512-uMtlWHUKpZhPjl62agZrEZQFdbkslXGVX9VyOzZj6wCIxpP4vZvX/a1nOpj76kyovAwJ01skOkhkjCTtBS2TFA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/utils" "^3.10.0"
     core-js "2.6.5"
     fs-extra "^8.1.0"
     jest "^24.8.0"
 
-"@ks-web-cli/utils@^3.2.0":
-  version "3.2.0"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2futils/-/utils-3.2.0.tgz#ff3d1c4ac416a75eed2c7614416b9c30cfe775a4"
-  integrity sha512-DFkUNINrbLF+39ajBuynUFjKXG7g2zI35DUxlOdRF5viFT6XvchZ1PB+gEph2hETHx+zB2q4vgauf7uWUxsvUw==
+"@ks-web-cli/utils@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2futils/-/utils-3.10.0.tgz#1e4cdc11080948703191a6f4671f74c65e9c3a96"
+  integrity sha512-CDIHXCcNmiDuukA41ZE1L2ADAdJiZdHoh6nSPtkkxg/pOIc1oAKOitwWYeC9QsCUMYIgdK69ouxssbtdBalNQg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     chalk "^2.4.2"
@@ -1185,9 +1186,9 @@
     debug "^4.1.1"
 
 "@types/babel__core@^7.1.0":
-  version "7.1.4"
-  resolved "http://172.16.1.179:4873/@types%2fbabel__core/-/babel__core-7.1.4.tgz#5c5569cc40e5f2737dfc00692f5444e871e4a234"
-  integrity sha1-XFVpzEDl8nN9/ABpL1RE6HHkojQ=
+  version "7.1.5"
+  resolved "http://172.16.1.179:4873/@types%2fbabel__core/-/babel__core-7.1.5.tgz#e4d84704b4df868b3ad538365a13da2fa6dbc023"
+  integrity sha1-5NhHBLTfhos61Tg2WhPaL6bbwCM=
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
@@ -1211,9 +1212,9 @@
     "@babel/types" "^7.0.0"
 
 "@types/babel__traverse@*", "@types/babel__traverse@^7.0.6":
-  version "7.0.8"
-  resolved "http://172.16.1.179:4873/@types%2fbabel__traverse/-/babel__traverse-7.0.8.tgz#479a4ee3e291a403a1096106013ec22cf9b64012"
-  integrity sha1-R5pO4+KRpAOhCWEGAT7CLPm2QBI=
+  version "7.0.9"
+  resolved "http://172.16.1.179:4873/@types%2fbabel__traverse/-/babel__traverse-7.0.9.tgz#be82fab304b141c3eee81a4ce3b034d0eba1590a"
+  integrity sha1-voL6swSxQcPu6BpM47A00OuhWQo=
   dependencies:
     "@babel/types" "^7.3.0"
 
@@ -1362,9 +1363,9 @@ ajv-keywords@^3.2.0:
   integrity sha1-75FuJxxkrBIXH9g4TqrmsjRYVNo=
 
 ajv@^6.10.2, ajv@^6.5.3, ajv@^6.5.5, ajv@^6.9.1:
-  version "6.11.0"
-  resolved "http://172.16.1.179:4873/ajv/-/ajv-6.11.0.tgz#c3607cbc8ae392d8a5a536f25b21f8e5f3f87fe9"
-  integrity sha1-w2B8vIrjktilpTbyWyH45fP4f+k=
+  version "6.12.0"
+  resolved "http://172.16.1.179:4873/ajv/-/ajv-6.12.0.tgz#06d60b96d87b8454a5adaba86e7854da629db4b7"
+  integrity sha1-BtYLlth7hFSlrauobnhU2mKdtLc=
   dependencies:
     fast-deep-equal "^3.1.1"
     fast-json-stable-stringify "^2.0.0"
@@ -1552,6 +1553,13 @@ aws4@^1.8.0:
   resolved "http://172.16.1.179:4873/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha1-fjPY99RJs/ZzzXLeuavcVS2+Uo4=
 
+axios@^0.19.2:
+  version "0.19.2"
+  resolved "http://172.16.1.179:4873/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
+  dependencies:
+    follow-redirects "1.5.10"
+
 babel-eslint@8.x:
   version "8.2.6"
   resolved "http://172.16.1.179:4873/babel-eslint/-/babel-eslint-8.2.6.tgz#6270d0c73205628067c0f7ae1693a9e797acefd9"
@@ -1583,6 +1591,11 @@ babel-plugin-dynamic-import-node@^2.3.0:
   integrity sha1-8A9Qe9qjw+P/bn5emNkKesq5b38=
   dependencies:
     object.assign "^4.1.0"
+
+babel-plugin-dynamic-import-webpack@^1.1.0:
+  version "1.1.0"
+  resolved "http://172.16.1.179:4873/babel-plugin-dynamic-import-webpack/-/babel-plugin-dynamic-import-webpack-1.1.0.tgz#955306608cdae6191cd1d3f50cf93826ff69f4e1"
+  integrity sha1-lVMGYIza5hkc0dP1DPk4Jv9p9OE=
 
 babel-plugin-import@^1.12.0:
   version "1.13.0"
@@ -1883,9 +1896,9 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   integrity sha1-48mzFWnhBoEd8kL3FXJaH0xJQyA=
 
 caniuse-lite@^1.0.30001027:
-  version "1.0.30001027"
-  resolved "http://172.16.1.179:4873/caniuse-lite/-/caniuse-lite-1.0.30001027.tgz#283e2ef17d94889cc216a22c6f85303d78ca852d"
-  integrity sha1-KD4u8X2UiJzCFqIsb4UwPXjKhS0=
+  version "1.0.30001028"
+  resolved "http://172.16.1.179:4873/caniuse-lite/-/caniuse-lite-1.0.30001028.tgz#f2241242ac70e0fa9cda55c2776d32a0867971c2"
+  integrity sha1-8iQSQqxw4Pqc2lXCd20yoIZ5ccI=
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -2426,9 +2439,9 @@ csv-generate@^3.2.4:
   integrity sha1-RA2rkXcznuBnbJ5cFvUOKzRjwBk=
 
 csv-parse@^4.8.2:
-  version "4.8.5"
-  resolved "http://172.16.1.179:4873/csv-parse/-/csv-parse-4.8.5.tgz#32e92a0e0acedab141bd5c5a3ad6fc3316f2c72d"
-  integrity sha1-MukqDgrO2rFBvVxaOtb8Mxbyxy0=
+  version "4.8.6"
+  resolved "http://172.16.1.179:4873/csv-parse/-/csv-parse-4.8.6.tgz#e3e01c2c9593194f1b7aae6291c65304b35022c8"
+  integrity sha1-4+AcLJWTGU8beq5ikcZTBLNQIsg=
 
 csv-stringify@^5.3.4:
   version "5.3.6"
@@ -2480,6 +2493,13 @@ dateformat@^3.0.0:
   resolved "http://172.16.1.179:4873/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha1-puN0maTZqc+F71hyBE1ikByYia4=
 
+debug@=3.1.0, debug@~3.1.0:
+  version "3.1.0"
+  resolved "http://172.16.1.179:4873/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
+  dependencies:
+    ms "2.0.0"
+
 debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
   resolved "http://172.16.1.179:4873/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -2500,13 +2520,6 @@ debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
   integrity sha1-O3ImAlUQnGtYnO4FDx1RYTlmR5E=
   dependencies:
     ms "^2.1.1"
-
-debug@~3.1.0:
-  version "3.1.0"
-  resolved "http://172.16.1.179:4873/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
-  dependencies:
-    ms "2.0.0"
 
 decamelize-keys@^1.0.0:
   version "1.1.0"
@@ -2734,9 +2747,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.349:
-  version "1.3.353"
-  resolved "http://172.16.1.179:4873/electron-to-chromium/-/electron-to-chromium-1.3.353.tgz#c6f13f27d5212643979867a400c1a5e8a4ef042a"
-  integrity sha1-xvE/J9UhJkOXmGekAMGl6KTvBCo=
+  version "1.3.359"
+  resolved "http://172.16.1.179:4873/electron-to-chromium/-/electron-to-chromium-1.3.359.tgz#198d44baf90a432c0afab9c1edec87a3031ddec9"
+  integrity sha1-GY1EuvkKQywK+rnB7eyHowMd3sk=
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -2748,10 +2761,10 @@ emoji-regex@^8.0.0:
   resolved "http://172.16.1.179:4873/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha1-6Bj9ac5cz8tARZT4QpY79TFkzDc=
 
-emojis-list@^2.0.0:
-  version "2.1.0"
-  resolved "http://172.16.1.179:4873/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
-  integrity sha1-TapNnbAPmBmIDHn6RXrlsJof04k=
+emojis-list@^3.0.0:
+  version "3.0.0"
+  resolved "http://172.16.1.179:4873/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
+  integrity sha1-VXBmIEatKeLpFucariYKvf9Pang=
 
 enabled@1.0.x:
   version "1.0.2"
@@ -3309,6 +3322,13 @@ flatted@^2.0.0:
   version "2.0.1"
   resolved "http://172.16.1.179:4873/flatted/-/flatted-2.0.1.tgz#69e57caa8f0eacbc281d2e2cb458d46fdb449e08"
   integrity sha1-aeV8qo8OrLwoHS4stFjUb9tEngg=
+
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "http://172.16.1.179:4873/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
+  dependencies:
+    debug "=3.1.0"
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -4761,12 +4781,12 @@ ks-utils@^2.3.9, ks-utils@^2.4.1:
   integrity sha512-3eeM6ziZZB3Sf0GceQQQ3pSc+OwggpkESzZN2bgyQfcr8aNfwdFvWjFUIRwC9igyAziq4ZWZxC408pdzQZGmLw==
 
 ks-web-cli@^3.8.0:
-  version "3.8.0"
-  resolved "http://172.16.1.179:4873/ks-web-cli/-/ks-web-cli-3.8.0.tgz#025eaaffd35fe5d616ef9e578f7d5d71eb56a823"
-  integrity sha512-3u/h/jpmOEwdpe17JEyT1/cbG8LvxYlgFUxkkQP14hsX0egFh7uzMCfB7uRjQwMuK1b9k6yQG5mqngbQxaNdlg==
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/ks-web-cli/-/ks-web-cli-3.10.0.tgz#888e02b62f85c809abdbb33d70189539ab106351"
+  integrity sha512-mWqedPMZwfhyewj1MRslSpp6p0py0WlZkCAIwHy4COVL+2fhnkvEZJDLYUohjUiGovidwaHwVmpIHgv4lDJ3ew==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/utils" "^3.10.0"
     commander "^2.15.1"
     core-js "2.6.5"
     figlet "^1.2.1"
@@ -4854,12 +4874,12 @@ loader-fs-cache@^1.0.0:
     mkdirp "0.5.1"
 
 loader-utils@^1.0.2, loader-utils@^1.1.0:
-  version "1.2.3"
-  resolved "http://172.16.1.179:4873/loader-utils/-/loader-utils-1.2.3.tgz#1ff5dc6911c9f0a062531a4c04b609406108c2c7"
-  integrity sha1-H/XcaRHJ8KBiUxpMBLYJQGEIwsc=
+  version "1.4.0"
+  resolved "http://172.16.1.179:4873/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
+  integrity sha1-xXm140yzSxp07cbB+za/o3HVphM=
   dependencies:
     big.js "^5.2.2"
-    emojis-list "^2.0.0"
+    emojis-list "^3.0.0"
     json5 "^1.0.1"
 
 locate-path@^2.0.0:
@@ -5370,9 +5390,9 @@ node-notifier@^5.4.2:
     which "^1.3.0"
 
 node-releases@^1.1.49:
-  version "1.1.49"
-  resolved "http://172.16.1.179:4873/node-releases/-/node-releases-1.1.49.tgz#67ba5a3fac2319262675ef864ed56798bb33b93e"
-  integrity sha1-Z7paP6wjGSYmde+GTtVnmLszuT4=
+  version "1.1.50"
+  resolved "http://172.16.1.179:4873/node-releases/-/node-releases-1.1.50.tgz#803c40d2c45db172d0410e4efec83aa8c6ad0592"
+  integrity sha1-gDxA0sRdsXLQQQ5O/sg6qMatBZI=
   dependencies:
     semver "^6.3.0"
 
@@ -5953,9 +5973,9 @@ postcss@^6.0.1:
     supports-color "^5.4.0"
 
 postcss@^7.0.1, postcss@^7.0.2:
-  version "7.0.26"
-  resolved "http://172.16.1.179:4873/postcss/-/postcss-7.0.26.tgz#5ed615cfcab35ba9bbb82414a4fa88ea10429587"
-  integrity sha1-XtYVz8qzW6m7uCQUpPqI6hBClYc=
+  version "7.0.27"
+  resolved "http://172.16.1.179:4873/postcss/-/postcss-7.0.27.tgz#cc67cdc6b0daa375105b7c424a85567345fc54d9"
+  integrity sha1-zGfNxrDao3UQW3xCSoVWc0X8VNk=
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
@@ -7177,9 +7197,9 @@ triple-beam@^1.2.0, triple-beam@^1.3.0:
   integrity sha1-pZUhTHKY24M57u7gg+TRC9jLjdk=
 
 tslib@^1.8.1, tslib@^1.9.0:
-  version "1.10.0"
-  resolved "http://172.16.1.179:4873/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
-  integrity sha1-w8GflZc/sKYpc/sJ2Q2WHuQ+XIo=
+  version "1.11.0"
+  resolved "http://172.16.1.179:4873/tslib/-/tslib-1.11.0.tgz#f1f3528301621a53220d58373ae510ff747a66bc"
+  integrity sha1-8fNSgwFiGlMiDVg3OuUQ/3R6Zrw=
 
 tsscmp@1.0.6:
   version "1.0.6"
@@ -7194,12 +7214,12 @@ tsutils@^3.7.0:
     tslib "^1.8.1"
 
 tty-table@^2.6.2:
-  version "2.8.11"
-  resolved "http://172.16.1.179:4873/tty-table/-/tty-table-2.8.11.tgz#98e68aa2ca4262f876d00f8d28bc2461efdc6915"
-  integrity sha1-mOaKospCYvh20A+NKLwkYe/caRU=
+  version "2.8.12"
+  resolved "http://172.16.1.179:4873/tty-table/-/tty-table-2.8.12.tgz#cee2ec298a6116d56cbf09dffad279c0e7b273f9"
+  integrity sha1-zuLsKYphFtVsvwnf+tJ5wOeyc/k=
   dependencies:
-    chalk "^2.4.2"
     csv "^5.3.1"
+    kleur "^3.0.3"
     smartwrap "^1.2.3"
     strip-ansi "^6.0.0"
     wcwidth "^1.0.1"
@@ -7238,9 +7258,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 uglify-js@^3.1.4:
-  version "3.7.7"
-  resolved "http://172.16.1.179:4873/uglify-js/-/uglify-js-3.7.7.tgz#21e52c7dccda80a53bf7cde69628a7e511aec9c9"
-  integrity sha1-IeUsfczagKU7983mliin5RGuyck=
+  version "3.8.0"
+  resolved "http://172.16.1.179:4873/uglify-js/-/uglify-js-3.8.0.tgz#f3541ae97b2f048d7e7e3aa4f39fd8a1f5d7a805"
+  integrity sha1-81Qa6XsvBI1+fjqk85/YofXXqAU=
   dependencies:
     commander "~2.20.3"
     source-map "~0.6.1"

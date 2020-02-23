@@ -1,7 +1,7 @@
 import ThanosUi from '@ks-thanos/ui-server/output/ui';
 // import Debug from 'Src/utils/debugger';
 // import { infoText, successText, errorText, createSplash } from 'Src/utils/log';
-// import { getPage } from 'Src/services/getPage';
+// import { getPage } from 'Src/services/getPage';œ
 // import { createPage } from 'Src/factories/page/createPage';
 // import { createModel } from 'Src/factories/model/createModel';
 // import { updateConfigFile } from 'Src/utils/updateConfigFile';
@@ -11,12 +11,14 @@ import ThanosUi from '@ks-thanos/ui-server/output/ui';
 // import fsExtra from 'fs-extra';
 
 // const debug = Debug(__filename);
-
 /**
  * 运行页面同步命令
  * @param options 参数
  */
-export async function runUi() {
-    const thanosUi = new ThanosUi();
+export async function runUi(config: any) {
+    const { env = 'production' } = config;
+    const thanosUi = new ThanosUi({
+        env
+    });
     thanosUi.start();
 }

@@ -44,9 +44,14 @@ commander
 commander
     .command('ui')
     .description('工具可视化')
-    .action(async() => {
+    .option('--env [env]', `运行环境`)
+    .action(async(
+        options: {
+            env: string;
+        }
+    ) => {
         debug(`start ui`);
-        await runUi();
+        await runUi(options);
     });
 
 commander.parse(process.argv);

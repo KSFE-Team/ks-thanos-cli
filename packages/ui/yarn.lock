@@ -957,10 +957,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@ks-web-cli/babel-tools@^3.6.2":
-  version "3.6.2"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2fbabel-tools/-/babel-tools-3.6.2.tgz#7ad9bb62b4d8279e7601b45c09a0c95b3c23b8df"
-  integrity sha512-Ra06UuN+eHlrSJSHxOGDmZrgyNguGjeOXJU4xNqzjq+gPvXNMmTjwhg84HEshac26IvFmo2sn8cbLJMjuasJUA==
+"@ks-web-cli/babel-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2fbabel-tools/-/babel-tools-3.10.0.tgz#937db1c7a56a4e12b0d1ad4db36d3fbce5f876cb"
+  integrity sha512-0lInUwrpCnNsh4Rj4L314wCjxjqapjPTht4nSsUbGJ6d2QwjEVSi2t0IJYK0plLRYEEjzBb3TkIdLoNH41mibg==
   dependencies:
     "@babel/cli" "7.2.3"
     "@babel/core" "7.2.2"
@@ -973,8 +973,9 @@
     "@babel/preset-env" "7.3.1"
     "@babel/preset-react" "7.0.0"
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/eslint-tools" "^3.6.2"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/eslint-tools" "^3.10.0"
+    "@ks-web-cli/utils" "^3.10.0"
+    babel-plugin-dynamic-import-webpack "^1.1.0"
     babel-plugin-import "^1.12.0"
     babel-plugin-module-resolver "^3.2.0"
     babel-plugin-react-css-modules "^5.2.6"
@@ -984,13 +985,13 @@
     core-js "2.6.5"
     metro-react-native-babel-preset "^0.56.0"
 
-"@ks-web-cli/eslint-tools@^3.6.2":
-  version "3.6.2"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2feslint-tools/-/eslint-tools-3.6.2.tgz#fa7a225a84c8957425c4f5c097f88a1ac6a0bfbe"
-  integrity sha512-jdAbWyIvqQ105wyfOWNOvB6C8REdKAOcItiN7/AvErvNSOC6NhRLtuvYeV1XeuIwFp4uSei6xJHSqV5GK2D5lg==
+"@ks-web-cli/eslint-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2feslint-tools/-/eslint-tools-3.10.0.tgz#f5fa1016992c122d1e359fb0d56bd6a160b75fb1"
+  integrity sha512-g9XgTZy0loAcBU8zSUFs34rpu6fyHdPkBMrA6NUdgU4bP4gSmukS2XaB4mxAq95Nm7I+oJlUMVic8FsRGanJ7A==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/utils" "^3.10.0"
     "@typescript-eslint/eslint-plugin" "^1.10.2"
     "@typescript-eslint/parser" "^1.10.2"
     babel-eslint "8.x"
@@ -1007,36 +1008,36 @@
     eslint-plugin-react "^7.11.1"
     eslint-plugin-standard "^4.0.0"
 
-"@ks-web-cli/stylelint-tools@^3.2.0":
-  version "3.2.0"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2fstylelint-tools/-/stylelint-tools-3.2.0.tgz#3f35484967b4cd87541bfc90e84c47a54e0f24aa"
-  integrity sha512-LkMjeIidq+oh3oWFdAKUrTopCVJjN1FwFMc93EJjSQDrkf1+Fek2FAk8KREC7wD/w7DLvbg+bNVJwLAy3PMpvA==
+"@ks-web-cli/stylelint-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2fstylelint-tools/-/stylelint-tools-3.10.0.tgz#06d146f5881d0b4c9d24456cc134f8d3cf1f8895"
+  integrity sha512-F93w10FL31qyqfkRdk4F3GJBTsI7heXj12CjXrDj2yDt3q4jwFq7ugD0HklK56iSaV7gomJhbTfX0rzJRjT3lA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/utils" "^3.10.0"
     core-js "2.6.5"
     stylelint-config-recommended-scss "^3.2.0"
 
-"@ks-web-cli/utils@^3.2.0":
-  version "3.2.0"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2futils/-/utils-3.2.0.tgz#ff3d1c4ac416a75eed2c7614416b9c30cfe775a4"
-  integrity sha512-DFkUNINrbLF+39ajBuynUFjKXG7g2zI35DUxlOdRF5viFT6XvchZ1PB+gEph2hETHx+zB2q4vgauf7uWUxsvUw==
+"@ks-web-cli/utils@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2futils/-/utils-3.10.0.tgz#1e4cdc11080948703191a6f4671f74c65e9c3a96"
+  integrity sha512-CDIHXCcNmiDuukA41ZE1L2ADAdJiZdHoh6nSPtkkxg/pOIc1oAKOitwWYeC9QsCUMYIgdK69ouxssbtdBalNQg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     chalk "^2.4.2"
     core-js "2.6.5"
     debug "^4.1.1"
 
-"@ks-web-cli/webpack-tools@^3.8.0":
-  version "3.8.0"
-  resolved "http://172.16.1.179:4873/@ks-web-cli%2fwebpack-tools/-/webpack-tools-3.8.0.tgz#a42d6e8b942a6955cf7a5d8e2d7e7455600f8c00"
-  integrity sha512-p/GUOtvmS87z0yrRq4iZM14fjLokXG4FoAPyoEsh+WgnTdVwK3hVjTfJHrrnbxfXUlFB0uGLtT4py04UrJfcHw==
+"@ks-web-cli/webpack-tools@^3.10.0":
+  version "3.10.0"
+  resolved "http://172.16.1.179:4873/@ks-web-cli%2fwebpack-tools/-/webpack-tools-3.10.0.tgz#80a1fad814d35ebd398fb612a647008b30892dae"
+  integrity sha512-6L+0YyT5JH0rxFHugmamVfxAtDG9D3Dqq3d8ldsVDV8MLaZds8JqD/J7LEty4RdCDJE8k13syyv0WTtS7F/Wiw==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@ks-web-cli/babel-tools" "^3.6.2"
-    "@ks-web-cli/eslint-tools" "^3.6.2"
-    "@ks-web-cli/stylelint-tools" "^3.2.0"
-    "@ks-web-cli/utils" "^3.2.0"
+    "@ks-web-cli/babel-tools" "^3.10.0"
+    "@ks-web-cli/eslint-tools" "^3.10.0"
+    "@ks-web-cli/stylelint-tools" "^3.10.0"
+    "@ks-web-cli/utils" "^3.10.0"
     autoprefixer "^9.6.0"
     babel-loader "^8.0.5"
     cache-loader "^4.0.0"
@@ -1639,6 +1640,11 @@ babel-plugin-dynamic-import-node@^2.3.0:
   integrity sha1-8A9Qe9qjw+P/bn5emNkKesq5b38=
   dependencies:
     object.assign "^4.1.0"
+
+babel-plugin-dynamic-import-webpack@^1.1.0:
+  version "1.1.0"
+  resolved "http://172.16.1.179:4873/babel-plugin-dynamic-import-webpack/-/babel-plugin-dynamic-import-webpack-1.1.0.tgz#955306608cdae6191cd1d3f50cf93826ff69f4e1"
+  integrity sha1-lVMGYIza5hkc0dP1DPk4Jv9p9OE=
 
 babel-plugin-import@^1.12.0:
   version "1.13.0"

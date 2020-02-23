@@ -47,6 +47,6 @@
         "react-router": "^4.2.0"
     },
     "devDependencies": {
-        "@ks-web-cli/webpack-tools": "^3.8.0"
+        "@ks-web-cli/webpack-tools": "^3.10.0"
     }
 }

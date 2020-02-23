@@ -3,6 +3,7 @@ import kredux, { dynamic } from 'kredux';
 import getRouteList from './routers/getRouteList';
 import { browserHistory } from './routers/utils';
 import Loading from './components/Loading';
+import './entry';
 
 // 导入样式文件
 import './styles/index.scss';
