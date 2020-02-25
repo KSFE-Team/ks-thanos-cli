@@ -1,5 +1,6 @@
 import { actions, connect } from 'kredux';
 import Api from 'Utils/request';
+import terminal from 'Modules/project/terminal';
 
 /**
  * 首页页面的业务模块
@@ -10,9 +11,27 @@ const projectModel = {
         isShowFolder: false,
         fileList: [],
         currentPath: '/Users',
-        projectName: ''
+        projects: [],
+        currentIndex: 0
     },
     effects: {
+        /**
+         * 初始化
+         */
+        init() {
+            const projectsStr = localStorage.getItem('projects');
+
+            if (projectsStr) {
+                let projects = JSON.parse(projectsStr);
+
+                if (projects && projects.length > 0) {
+                    actions.project.setReducers({
+                        projects,
+                        currentPath: projects[0].path
+                    });
+                }
+            }
+        },
         /**
          * 执行命令
          */
@@ -56,16 +75,25 @@ const projectModel = {
          * 确认文件
          */
         confirmFilePath(payload, getState) {
-            const { fileList, currentPath } = getState().project;
+            const { fileList, projects, currentPath } = getState().project;
             const length = fileList.filter((f) => f.name === 'package.json').length;
 
             if (length === 1) {
+                const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+
+                projects.push({
+                    path: currentPath,
+                    name
+                });
+
                 actions.project.setReducers({
                     isShowFolder: false,
                     fileList: [],
                     currentPath,
-                    projectName: currentPath.substring(currentPath.lastIndexOf('/') + 1)
+                    projects
                 });
+
+                localStorage.setItem('projects', JSON.stringify(projects));
             }
         },
         /**
@@ -75,6 +103,38 @@ const projectModel = {
             actions.project.setReducers({
                 isShowFolder: false
             });
+        },
+        /**
+         * 切换当前项目
+         */
+        changeCurrentIndex(payload, getState) {
+            const { projects } = getState().project;
+
+            if (projects[payload]) {
+                actions.project.setReducers({
+                    currentIndex: payload,
+                    currentPath: projects[payload].path
+                });
+
+                terminal.clear();
+                terminal.write(projects[payload].log || '');
+            }
+        },
+        /**
+         * 清空日志
+         */
+        clear(payload, getState) {
+            const { projects, currentIndex } = getState().project;
+
+            if (projects[currentIndex]) {
+                const project = projects[currentIndex];
+                project.log = '';
+                terminal.write('\r\n');
+                terminal.clear();
+                actions.project.setReducers({
+                    projects
+                });
+            }
         }
     }
 };

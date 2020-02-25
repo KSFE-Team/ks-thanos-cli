@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Terminal } from 'xterm';
 import { actions } from 'kredux';
 import lottie from 'lottie-web';
 import { projectContainer } from 'Models/project';
 import { FitAddon } from 'xterm-addon-fit';
+import terminal from './terminal';
 import './index.scss';
 import '../../../node_modules/xterm/css/xterm.css';
-
-export const terminal = new Terminal({
-    allowTransparency: true,
-    theme: {
-        background: '#00000077'
-    }
-});
 
 @projectContainer
 export default class Project extends Component {
@@ -27,6 +20,8 @@ export default class Project extends Component {
     }
 
     componentDidMount() {
+        actions.project.init();
+
         const fitAddon = new FitAddon();
         terminal.loadAddon(fitAddon);
         terminal.open(document.getElementById('terminal'));
@@ -52,7 +47,7 @@ export default class Project extends Component {
     }
 
     handleClear = () => {
-        terminal.clear();
+        actions.project.clear();
     }
 
     handleSelectProject = (add = '') => {
@@ -166,7 +161,7 @@ export default class Project extends Component {
     }
 
     render() {
-        const { fileList, currentPath, isShowFolder } = this.props.project;
+        const { fileList, currentPath, projects, isShowFolder, currentIndex } = this.props.project;
         return (
             <div
                 className="project-container"
@@ -187,8 +182,20 @@ export default class Project extends Component {
                             <span className="project-add-icon" onClick={() => this.handleSelectProject('')}>+</span>
                         </div>
                         <div className="project-empty">
-                            <img src="https://cdn.kaishuhezi.com/kstory/activity_flow/image/b74cce89-a6ef-41d0-a9e3-57168e37416f.png" alt="美国队长提醒你先添加项目" />
-                            <span className="empty-text">美队提醒您：点击加号添加项目</span>
+                            {
+                                projects.length > 0 ? (
+                                    <ul className="project-list-wrapper">
+                                        {
+                                            projects.map((p, index) => <li className={`project-item${index === currentIndex ? ' active' : ''}`} key={p.name} onClick={() => actions.project.changeCurrentIndex(index)}>{p.name}</li>)
+                                        }
+                                    </ul>
+                                ) : (
+                                    <React.Fragment>
+                                        <img src="https://cdn.kaishuhezi.com/kstory/activity_flow/image/b74cce89-a6ef-41d0-a9e3-57168e37416f.png" alt="美国队长提醒你先添加项目" />
+                                        <span className="empty-text">美队提醒您：点击加号添加项目</span>
+                                    </React.Fragment>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="terminal-wrapper">

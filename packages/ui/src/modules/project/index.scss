@@ -62,8 +62,8 @@
     .project-left-side {
         display: flex;
         flex-direction: column;
-        width: 200px;
-        min-width: 200px;
+        width: 250px;
+        min-width: 250px;
         
         .project-title-wrapper {
             display: flex;
@@ -81,6 +81,19 @@
 
             .project-add-icon {
                 padding: 0 12px;
+            }
+        }
+
+        .project-list-wrapper {
+            .project-item {
+                list-style: none;
+                padding: 6px 12px;
+                color: #fff;
+                cursor: pointer;
+
+                &.active {
+                    background: #00000055;
+                }
             }
         }
 
