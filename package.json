@@ -1,29 +1,36 @@
 {
-    "name": "ks-thanos",
-    "version": "1.1.0",
-    "description": "> TODO: description",
-    "author": "caic <caichenyu@ksjgs.com>",
-    "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli#readme",
-    "license": "ISC",
-    "main": "lib/ks-thanos-cli.js",
-    "directories": {
-      "lib": "lib",
-      "test": "__tests__"
-    },
-    "files": [
-      "lib"
-    ],
-    "publishConfig": {
-      "registry": "http://172.16.1.179:4873/"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/KSFE-Team/ks-thanos-cli.git"
-    },
-    "scripts": {
-      "test": "echo \"Error: run tests from root\" && exit 1"
-    },
-    "bugs": {
-      "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
-    }
+  "name": "ks-thanos",
+  "version": "1.1.0",
+  "description": "> TODO: description",
+  "author": "caic <caichenyu@ksjgs.com>",
+  "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli#readme",
+  "license": "ISC",
+  "main": "lib/ks-thanos-cli.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://172.16.1.179:4873/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KSFE-Team/ks-thanos-cli.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "start": "concurrently \"yarn run start:cli\" \"yarn run start:ui\" \"yarn run start:ui-server\"",
+    "start:cli": "cd packages/ks-thanos-cli && yarn run start",
+    "start:ui": "cd packages/ui && yarn run start",
+    "start:ui-server": "cd packages/ui-server && npm run pm2 && npm run complie"
+  },
+  "bugs": {
+    "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
   }
+}
