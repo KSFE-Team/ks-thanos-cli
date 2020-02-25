@@ -104,9 +104,69 @@ export default class Project extends Component {
         this.animate.setSpeed(1);
     }
 
+    /**
+     * 灭霸弹框
+     */
+    handleThanos = () => {
+        this.showThanosModal();
+    }
+
+    /**
+     * 打开灭霸配置弹框
+     */
+    showThanosModal = () => {
+        console.log('open modal');
+    }
+
+    /**
+     * 获取操作
+     */
+    getActions = () => {
+        const isStarting = true;
+        let actions = [];
+        switch (isStarting) {
+            case true:
+                actions = [
+                    {
+                        className: 'btn-start',
+                        onClick: this.handleStart,
+                        text: '启动'
+                    },
+                    {
+                        className: 'btn-stop',
+                        onClick: this.handleStop,
+                        text: '停止'
+                    },
+                    {
+                        className: 'btn-clear',
+                        onClick: this.handleClear,
+                        text: '清空日志'
+                    },
+                    {
+                        className: 'btn-clear',
+                        onClick: this.handleThanos,
+                        text: '灭霸'
+                    }
+                ];
+                break;
+            case false:
+                return [
+                    {
+                        className: 'btn-start',
+                        onClick: this.handleStart,
+                        text: '启动'
+                    },
+                ];
+        }
+        return actions.map(({ className, onClick, text }, idx) => {
+            return (
+                <button className={`btn ${className || ''}`} key={idx} onClick={onClick}>{text}</button>
+            );
+        });
+    }
+
     render() {
         const { fileList, currentPath, isShowFolder } = this.props.project;
-
         return (
             <div
                 className="project-container"
@@ -133,9 +193,9 @@ export default class Project extends Component {
                     </div>
                     <div className="terminal-wrapper">
                         <div className="btn-wrapper">
-                            <button className="btn btn-start" onClick={this.handleStart}>启动</button>
-                            <button className="btn btn-stop" onClick={this.handleStop}>停止</button>
-                            <button className="btn btn-clear" onClick={this.handleClear}>清空日志</button>
+                            {
+                                this.getActions()
+                            }
                         </div>
                         <div id="terminal"></div>
                     </div>

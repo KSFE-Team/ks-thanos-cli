@@ -4,15 +4,15 @@ import router from './routers';
 import bodyParser from 'koa-bodyparser';
 // import databaseConfig from './models/config';
 import cors from 'koa2-cors';
-import logger from './utils/logger';
+// import logger from './utils/logger';
 import { createSocket } from './socket';
 
-// const port = 3000;
+const port = 3000;
 const app = new Koa();
 const server = createSocket(app);
 
-process.on('unhandledRejection', (err) => {
-    logger.error(err);
+process.on('unhandledRejection', () => {
+    // logger.error(err);
 });
 
 app.use(cors({
@@ -20,16 +20,16 @@ app.use(cors({
     allowMethods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token', 'X-Requested-With']
 }));
-app.use((context, next) => {
-    logger.info(`${context.method} ${context.href} ${context.headers['content-type']} ${context.headers['user-agent']} ${context.headers.token || ''}`);
-    return next();
-});
+// app.use((context, next) => {
+//     logger.info(`${context.method} ${context.href} ${context.headers['content-type']} ${context.headers['user-agent']} ${context.headers.token || ''}`);
+//     return next();
+// });
 app.use(async(context, next) => {
     try {
         await next();
     } catch (error) {
         // 错误处理
-        logger.error(`${error.stack}`);
+        // logger.error(`${error.stack}`);
         context.status = 200;
         context.body = {
             errcode: error.code || -1,
@@ -68,15 +68,17 @@ app.use((context, next) => {
     return next();
 });
 
-// 初始化数据库
+// 初始化数据库;
 // initDatabase(databaseConfig)
 //     .then(startServer)
 //     .catch((err) => {
-//         logger.error(err);
+//         // logger.error(err);
 //     });
 
-function startServer() {
+startServer();
+
+export function startServer() {
     server.listen(port, () => {
-        logger.info(`server listening on ${port}...`);
+        // logger.info(`server listening on ${port}...`);
     });
 }

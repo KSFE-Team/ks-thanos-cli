@@ -23,7 +23,7 @@
     "scripts": {
         "test": "echo \"Error: run tests from root\" && exit 1",
         "debug": "ks build --debug",
-        "start": "ks start",
+        "start": "ks start --port 8001",
         "build": "ks build",
         "docker-start": "CMD=start PORT=8787 docker-compose up",
         "docker-build": "CMD=build PORT=8787 docker-compose up",

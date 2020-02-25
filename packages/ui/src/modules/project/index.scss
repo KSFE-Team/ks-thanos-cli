@@ -32,6 +32,14 @@
     color: #fff;
 }
 
+.btn-disabled {
+    background: #f31212;
+    border: 1px solid #f31212;
+    border-radius: 10px;
+    color: #fff;
+    cursor: di;
+}
+
 .project-header {
     width: 100%;
     height: 80px;
