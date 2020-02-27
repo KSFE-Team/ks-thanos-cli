@@ -20,10 +20,18 @@
     "type": "git",
     "url": "git+https://github.com/KSFE-Team/ks-thanos-cli.git"
   },
+  "ks-web-cli": {
+    "type": "module",
+    "useTs": false
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
+  },
+  "devDependencies": {
+    "@ks-web-cli/babel-tools": "^3.10.0",
+    "@ks-web-cli/jest-tools": "^3.10.0"
   }
 }
