@@ -1,14 +1,6 @@
 import ThanosUi from '@ks-thanos/ui-server/output/ui';
-// import Debug from 'Src/utils/debugger';
-// import { infoText, successText, errorText, createSplash } from 'Src/utils/log';
-// import { getPage } from 'Src/services/getPage';œ
-// import { createPage } from 'Src/factories/page/createPage';
-// import { createModel } from 'Src/factories/model/createModel';
-// import { updateConfigFile } from 'Src/utils/updateConfigFile';
-// import { prompt } from 'inquirer';
-// import { upperFirst, isEnglish, lowerFirst } from 'Src/utils/string';
-// import path from 'path';
-// import fsExtra from 'fs-extra';
+import { constants } from '@ks-thanos/utils';
+const { ENV_PRODUCTION } = constants;
 
 // const debug = Debug(__filename);
 /**
@@ -16,7 +8,7 @@ import ThanosUi from '@ks-thanos/ui-server/output/ui';
  * @param options 参数
  */
 export async function runUi(config: any) {
-    const { env = 'production' } = config;
+    const { env = ENV_PRODUCTION } = config;
     const thanosUi = new ThanosUi({
         env
     });

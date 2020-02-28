@@ -16,7 +16,8 @@ const debug = Debug(__filename);
  * @param options 参数
  */
 export async function runSync(options: {
-    projectPath: string; // 项目根目录地址
+    projectPath: string, // 项目根目录地址
+    config: string; // 一键配置参数
 }) {
     const questions = [
         {
@@ -59,15 +60,15 @@ export async function runSync(options: {
         }
     ];
 
-    const { projectPath } = options;
-
+    const { projectPath, config: mutipleConfig } = options;
+    const config = mutipleConfig && JSON.parse(mutipleConfig);
     // 验证是否在项目根目录（判断是否有无 package.json）
     if (!fsExtra.existsSync(path.join(projectPath, 'package.json'))) {
         console.log(errorText('请在项目根目录中执行此命令！'));
         return;
     }
 
-    const { templateName, pageName, pageChineseName, pagePath } = await prompt(questions);
+    const { templateName, pageName, pageChineseName, pagePath } = config || await prompt(questions);
 
     // 页面名称，首字母大写
     let firstUpperPagePath = pagePath.split('/').map((path: string) => upperFirst(path)).join('/');

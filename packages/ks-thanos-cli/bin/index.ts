@@ -17,11 +17,18 @@ commander
 commander
     .command('sync')
     .description('同步页面')
-    .action(async() => {
+    .option('--config [config]', '同步配置参数')
+    .action(async(
+        options: {
+            config: string
+        }
+    ) => {
         debug(`Sync page`);
+        const { config } = options;
         const projectPath = process.cwd();
         await runSync({
             projectPath,
+            config
         });
     });
 

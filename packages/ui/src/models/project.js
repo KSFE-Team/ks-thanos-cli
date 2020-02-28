@@ -1,4 +1,5 @@
 import { actions, connect } from 'kredux';
+import { message } from 'antd';
 import Api from 'Utils/request';
 import terminal from 'Modules/project/terminal';
 
@@ -7,13 +8,17 @@ import terminal from 'Modules/project/terminal';
  */
 const projectModel = {
     namespace: 'project', // 项目命名空间,
+
     initialState: {
         isShowFolder: false,
         fileList: [],
         currentPath: '/Users',
         projects: [],
-        currentIndex: 0
+        currentIndex: 0,
+
+        thanosModalVisible: false, // 灭霸弹框 显|隐
     },
+
     effects: {
         /**
          * 初始化
@@ -94,6 +99,8 @@ const projectModel = {
                 });
 
                 localStorage.setItem('projects', JSON.stringify(projects));
+            } else {
+                alert('请选择正确的项目根目录');
             }
         },
         /**
@@ -135,6 +142,22 @@ const projectModel = {
                     projects
                 });
             }
+        },
+        /**
+         * 执行灭霸命令
+         */
+        thanos: async(payload) => {
+            const response = await Api.getData({
+                api: 'thanos',
+                method: 'GET',
+                params: payload
+            });
+            if (response.code === 0) {
+                message.success('灭霸打响指了');
+                actions.project.setReducers({
+                    thanosModalVisible: false
+                });
+            }
         }
     }
 };
@@ -142,6 +165,9 @@ const projectModel = {
 /**
  * 首页模块的容器
  */
-export const projectContainer = connect(({ project }) => ({ project }));
+export const projectContainer = connect(({ project, loading }) => ({
+    project,
+    thanosLoading: loading.effects['project/thanos']
+}));
 
 export default projectModel;

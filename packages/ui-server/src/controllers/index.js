@@ -1,6 +1,7 @@
 // import logger from '../utils/logger/index';
 import file from './file';
 import runCommand from './runCommand';
+import thanos from './thanos';
 
 export default function(context) {
     // logger.info('hello!');
@@ -11,5 +12,6 @@ export default function(context) {
 
 export {
     file,
-    runCommand
+    runCommand,
+    thanos
 };

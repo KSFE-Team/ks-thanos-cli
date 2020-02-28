@@ -4,6 +4,8 @@ import { actions } from 'kredux';
 import lottie from 'lottie-web';
 import { projectContainer } from 'Models/project';
 import { FitAddon } from 'xterm-addon-fit';
+import FolderListModal from './FolderListModal';
+import ThanosModal from './ThanosModal';
 import terminal from './terminal';
 import './index.scss';
 import '../../../node_modules/xterm/css/xterm.css';
@@ -103,14 +105,9 @@ export default class Project extends Component {
      * 灭霸弹框
      */
     handleThanos = () => {
-        this.showThanosModal();
-    }
-
-    /**
-     * 打开灭霸配置弹框
-     */
-    showThanosModal = () => {
-        console.log('open modal');
+        actions.project.setReducers({
+            thanosModalVisible: true
+        });
     }
 
     /**
@@ -161,7 +158,10 @@ export default class Project extends Component {
     }
 
     render() {
-        const { fileList, currentPath, projects, isShowFolder, currentIndex } = this.props.project;
+        const {
+            projects, isShowFolder, currentIndex,
+            thanosModalVisible,
+        } = this.props.project;
         return (
             <div
                 className="project-container"
@@ -208,26 +208,14 @@ export default class Project extends Component {
                     </div>
 
                 </div>
-                <div className="folder-container" style={{display: isShowFolder ? 'block' : 'none'}}>
-                    <div className="folder-mask"></div>
-                    <div className="folder-wrapper">
-                        <div className="file-toolbar">
-                            <span className="btn" onClick={this.handleBack}>{`<`}</span>
-                            <span>当前路径：{currentPath}</span>
-                        </div>
-                        <div className="file-item-wrapper">
-                            {
-                                fileList.map((f) => {
-                                    return <div key={f.name} className="file-item" onClick={() => this.handleSelectProject(`/${f.name}`)}>{f.name}</div>;
-                                })
-                            }
-                        </div>
-                        <div className="file-bottom-toolbar">
-                            <span className="btn btn-cancel"onClick={this.handleCancel}>取消</span>
-                            <span className="btn btn-confirm"onClick={this.handleConfirm}>确认</span>
-                        </div>
-                    </div>
-                </div>
+                {/* 设置文件目录弹框 */}
+                {
+                    isShowFolder && <FolderListModal/>
+                }
+                {/* 灭霸弹框 */}
+                {
+                    thanosModalVisible && <ThanosModal/>
+                }
             </div>
         );
     }

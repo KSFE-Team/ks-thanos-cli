@@ -1,7 +1,8 @@
 // import Koa from 'koa';
 // import axios from 'axios';
-import { openBrowser, createSplash } from './utils';
-
+import { constants } from '@ks-thanos/utils';
+import { openBrowser, createSplash } from './utils'; ;
+const { ENV_PRODUCTION } = constants;
 /**
  * ui界面的构造函数
  */
@@ -10,8 +11,8 @@ export default class ThanosUi {
         this.init();
         this.config = {
             port: 8001, // CLI可视化服务端口
-            // uiPort: 8001, // 前端端口
             ...config,
+            initPath: '/project/'
         };
     }
 
@@ -40,17 +41,16 @@ export default class ThanosUi {
     }
 
     async start() {
-        const { port, env } = this.config;
-        if (env === 'production') {
+        const { port, env, initPath } = this.config;
+        const url = `http://localhost:${port}${initPath}`;
+        if (env === ENV_PRODUCTION) {
             this.server = this.app.listen(port, () => {
-                const url = `http://localhost:${port}/`;
                 createSplash('THANOS UI');
                 console.log(`server listening on ${port}...`);
                 console.log(`🚀 Starting thanos ui\n⛽️ Ready on ${url}`);
                 openBrowser(url);
             });
         } else {
-            const url = `http://localhost:8001/project/`;
             openBrowser(url);
         }
     }

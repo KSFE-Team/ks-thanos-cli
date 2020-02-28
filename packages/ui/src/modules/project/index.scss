@@ -172,38 +172,17 @@
         background: #343537;
         color: #fff;
     }
+}
 
-    .file-item-wrapper {
-        flex: 1;
-        overflow: auto;
+.file-item-wrapper {
+    flex: 1;
+    overflow: auto;
 
-        .file-item {
-            padding: 6px 12px;
-            cursor: pointer;
-        }
-    }
-
-    .file-bottom-toolbar {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-end;
-        height: 50px;
-        background: #343537;
-        color: #fff;
-        padding-right: 12px;
-
-        .btn-cancel {
-            background: #fff;
-            border: 1px solid #fff;
-            color: #000;
-        }
-
-        .btn-confirm {
-            background: #1890ff;
-            border: 1px solid #1890ff;
-            color: #fff;
+    .file-item {
+        padding: 6px 12px;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(0, 0, 0, .15);
         }
     }
 }
-
