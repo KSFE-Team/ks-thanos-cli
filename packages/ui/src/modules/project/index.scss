@@ -175,6 +175,9 @@
 }
 
 .file-item-wrapper {
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
     flex: 1;
     overflow: auto;
 
