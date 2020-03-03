@@ -34,6 +34,10 @@ export default function(context) {
         return;
     }
 
+    if (spawns[cwd] && context.query.command === 'start') {
+        kill(spawns[cwd]);
+    }
+
     const spawnObj = childProcess.spawn(`npm`, [context.query.command], {cwd, encoding: 'utf-8'});
     spawnObj.stdout.on('data', function(chunk) {
         sendLog(chunk.toString());
