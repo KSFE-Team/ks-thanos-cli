@@ -62,6 +62,7 @@ typings/
 
 pages
 output
+**/output
 
 .idea
 .DS_Store

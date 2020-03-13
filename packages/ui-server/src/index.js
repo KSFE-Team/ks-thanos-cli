@@ -75,8 +75,7 @@ app.use((context, next) => {
 //         // logger.error(err);
 //     });
 
-startServer();
-
+// startServer();
 export function startServer() {
     server.listen(port, () => {
         // logger.info(`server listening on ${port}...`);

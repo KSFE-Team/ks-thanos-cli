@@ -20,7 +20,7 @@ commander
     .option('--config [config]', '同步配置参数')
     .action(async(
         options: {
-            config: string
+            config: string;
         }
     ) => {
         debug(`Sync page`);
@@ -52,9 +52,13 @@ commander
     .command('ui')
     .description('工具可视化')
     .option('--env [env]', `运行环境`)
+    .option('--uiEnv [env]', `ui运行环境`)
+    .option('--serverEnv [env]', `server运行环境`)
     .action(async(
         options: {
             env: string;
+            uiEnv: string;
+            serverEnv: string;
         }
     ) => {
         debug(`start ui`);

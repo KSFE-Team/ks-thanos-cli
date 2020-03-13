@@ -1,11 +1,6 @@
 import routes from './routes';
 
-let pathname = '/';
-if (__DEV__) {
-    pathname = '/h5/ks-project';
-} else {
-    pathname = '';
-}
+let pathname = '';
 
 const getRouteList = () => {
     return routes.map((route) => ({

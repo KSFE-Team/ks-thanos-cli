@@ -1,6 +1,6 @@
 {
   "name": "@ks-thanos/utils",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "description": "> TODO: description",
   "author": "caic <caichenyu@ksjgs.com>",
   "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/utils#readme",
@@ -26,13 +26,14 @@
     "useTs": false
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "ks build"
   },
   "bugs": {
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
   "devDependencies": {
-    "@ks-web-cli/babel-tools": "^3.10.0",
-    "@ks-web-cli/jest-tools": "^3.10.0"
+    "@ks-web-cli/babel-tools": "^3.11.0",
+    "@ks-web-cli/jest-tools": "^3.11.0"
   }
 }

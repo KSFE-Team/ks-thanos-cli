@@ -1,12 +1,14 @@
 {
   "name": "ks-thanos-cli",
-  "version": "1.1.0",
+  "version": "1.2.0-beta.1",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
     "thanos": "output/bin/index.js"
   },
   "dependencies": {
+    "@ks-thanos/ui-server": "1.0.0-beta.2",
+    "@ks-thanos/utils": "^1.0.0-beta.1",
     "@types/eslint": "^4.16.6",
     "axios": "^0.19.0",
     "bluebird": "^3.7.1",
@@ -17,9 +19,7 @@
     "fs-extra": "^8.0.1",
     "inquirer": "^6.5.2",
     "module-alias": "^2.2.1",
-    "prettier": "^1.18.2",
-    "@ks-thanos/ui-server": "^1.0.0",
-    "@ks-thanos/utils": "^1.0.0"
+    "prettier": "^1.18.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
