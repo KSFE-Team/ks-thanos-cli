@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "target": "esnext",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
@@ -10,7 +10,7 @@
         "removeComments": true,
         "strict": true,
         "alwaysStrict": true,
-        "outDir": "output",
+        "outDir": "./output",
         "rootDir": "./",
         "noUnusedLocals": true,
         "allowJs": true,

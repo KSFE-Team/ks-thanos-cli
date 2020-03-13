@@ -1,6 +1,6 @@
 {
   "name": "ks-thanos-cli",
-  "version": "1.2.0-beta.1",
+  "version": "1.2.0-beta.3",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
@@ -42,12 +42,11 @@
     "eslint-plugin-node": "^7.0.0",
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
-    "lerna": "^3.20.2",
-    "typescript": "^3.5.2"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "tsc --watch",
-    "build": "tsc",
+    "build": "rm -rf ./output && tsc",
     "test": "eslint src --ext js,jsx,ts,tsx --quiet && npm run build"
   },
   "repository": {
