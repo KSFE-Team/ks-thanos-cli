@@ -1,14 +1,12 @@
 import Koa from 'koa';
 import { readFileSync } from 'fs';
-import { constants } from '@ks-thanos/utils';
+import { constants, getYarnGlobalDir, message } from '@ks-thanos/utils';
 import { openBrowser, createSplash } from './utils';
 import checkUi from './checkUi';
 import { startServer } from './index';
-const userHome = require('user-home');
 const staticServer = require('koa-static');
 const { ENV_PRODUCTION } = constants;
-// const THANOS = '.thanos'; // 灭霸配置目录
-const LOCAL_CONFIG_PATH = `${userHome}/.config/yarn/global/node_modules/@ks-thanos/ui`; // 配置根目录
+const LOCAL_CONFIG_PATH = `${getYarnGlobalDir().data}/node_modules/@ks-thanos/ui`; // 配置根目录
 /**
  * ui界面的构造函数
  */
@@ -30,7 +28,6 @@ export default class ThanosUi {
         /* 生产环境进行ui环境检查,并且进行server初始配置 */
         if (uiEnv === ENV_PRODUCTION) {
             await checkUi({
-                userHome,
                 uiGlobalDir: LOCAL_CONFIG_PATH
             });
             this.app = new Koa();
@@ -52,13 +49,12 @@ export default class ThanosUi {
         if (serverEnv === ENV_PRODUCTION) {
             startServer();
         }
-        console.log('uiEnv', uiEnv);
         /* 生产环境启动端口监听 */
         if (uiEnv === ENV_PRODUCTION) {
             this.server = this.app.listen(port, () => {
                 createSplash('THANOS UI');
-                console.log(`server listening on ${port}...`);
-                console.log(`🚀 Starting thanos ui\n⛽️ Ready on ${url}`);
+                console.log(message.info(`server listening on ${port}...`));
+                console.log(message.info(`🚀 Starting thanos ui\n⛽️ Ready on ${url}`));
                 openBrowser(url);
             });
         } else {

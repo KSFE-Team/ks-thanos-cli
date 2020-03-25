@@ -1,6 +1,6 @@
 {
     "name": "@ks-thanos/ui-server",
-    "version": "1.0.0-beta.2",
+    "version": "1.0.1",
     "description": "> TODO: description",
     "author": "caic <caichenyu@ksjgs.com>",
     "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/ks-thanos-ui#readme",
@@ -34,7 +34,7 @@
         "publicPath": "/"
     },
     "dependencies": {
-        "@ks-thanos/utils": "^1.0.0-beta.1",
+        "@ks-thanos/utils": "^1.0.1",
         "axios": "^0.19.2",
         "chalk": "^3.0.0",
         "figlet": "^1.2.4",
@@ -44,7 +44,6 @@
         "koa-static": "^5.0.0",
         "koa2-cors": "^2.0.6",
         "ks-utils": "^2.3.9",
-        "ks-web-cli": "^3.8.0",
         "mongodb": "^3.1.10",
         "open": "^7.0.2",
         "socket.io": "^2.3.0",
@@ -53,7 +52,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/babel-tools": "^3.11.0",
-        "@ks-web-cli/jest-tools": "^3.11.0"
+        "@ks-web-cli/babel-tools": "^3.12.0",
+        "@ks-web-cli/jest-tools": "^3.12.0"
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ks-thanos/utils",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.1",
   "description": "> TODO: description",
   "author": "caic <caichenyu@ksjgs.com>",
   "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/utils#readme",
@@ -33,7 +33,10 @@
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
   "devDependencies": {
-    "@ks-web-cli/babel-tools": "^3.11.0",
-    "@ks-web-cli/jest-tools": "^3.11.0"
+    "@ks-web-cli/babel-tools": "^3.12.0",
+    "@ks-web-cli/jest-tools": "^3.12.0"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0"
   }
 }

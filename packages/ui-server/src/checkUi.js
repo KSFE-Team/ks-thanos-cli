@@ -1,10 +1,10 @@
 import fs from 'fs';
+import { message } from '@ks-thanos/utils';
 const childProcess = require('child_process');
 /**
  * 检查ui文件
  */
 export default function({
-    userHome, // 用户主路径
     uiGlobalDir, // ui全局路径
 }) {
     /* 检查用户根目录下是否有thanos配置文件 */
@@ -24,14 +24,12 @@ export default function({
             /* 版本比较 */
             if (checkVersion(newVersion, version)) {
                 installLatestVersion();
-            } else {
-                // console.log('is latest');
             }
         }
     } catch (error) {
         /* 如果全局没有ui */
-        console.log('thanos not found @ks-thanos/ui in yarn global dir');
-        console.log('thanos will be install @ks-thanos/ui');
+        console.log(message.info('thanos not found @ks-thanos/ui in yarn global dir'));
+        console.log(message.info('thanos will be install @ks-thanos/ui'));
         installLatestVersion();
     }
 };
@@ -49,5 +47,4 @@ const installLatestVersion = () => {
         'add',
         '@ks-thanos/ui'
     ], {encoding: 'utf-8', stdio: 'inherit'});
-}
-;
+};
