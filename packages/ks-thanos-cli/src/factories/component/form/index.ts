@@ -93,6 +93,14 @@ export class Form extends Component {
         this.delegate.initPageLifeCycle && this.delegate.initPageLifeCycle();
     }
 
+    initStateVariableDeclaration() {
+        this.delegate.initStateVariableDeclaration && this.delegate.initStateVariableDeclaration();
+    }
+
+    initRenderVariableDeclaration() {
+        this.delegate.initRenderVariableDeclaration && this.delegate.initRenderVariableDeclaration();
+    }
+
     toCode() {
         return this.delegate.toCode();
     }

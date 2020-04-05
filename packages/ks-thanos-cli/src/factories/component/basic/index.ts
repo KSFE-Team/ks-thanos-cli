@@ -93,6 +93,16 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     initPageTitle?(): void;
 
     /**
+     * 初始化state配置
+     */
+    initStateVariableDeclaration?(): void;
+
+    /**
+     * 初始化render前 变量配置
+     */
+    initRenderVariableDeclaration?(): void;
+
+    /**
      * 组件初始化
      */
     init() {
@@ -107,6 +117,8 @@ export abstract class Component extends BasicContainer implements ComponentConfi
         this.initPageLifecycle && this.initPageLifecycle();
         this.initPageDecorators && this.initPageDecorators();
         this.initPageTitle && this.initPageTitle();
+        this.initStateVariableDeclaration && this.initStateVariableDeclaration();
+        this.initRenderVariableDeclaration && this.initRenderVariableDeclaration();
     }
 
     /**

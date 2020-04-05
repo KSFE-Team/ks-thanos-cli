@@ -22,6 +22,7 @@ export class SearchFormDelegate extends FormDelegate {
             if (activeEventType === 'request') {
                 debug('生成 listEffect');
                 this.listEffect = EffectManager.create(
+                    form.page.pageName,
                     form.stateName,
                     form.page.model,
                     activeEvent.dependencies
@@ -104,7 +105,7 @@ export class SearchFormDelegate extends FormDelegate {
                             goto.push('');
                         }}
                     >新增</Button>
-                    </React.Fragment>}
+                </React.Fragment>}
             />
         </Form>`;
     }

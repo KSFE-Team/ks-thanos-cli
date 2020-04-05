@@ -1,13 +1,13 @@
 import { Effect } from './index';
-import Model from '..';
+// import Model from '..';
 import { upperFirst } from 'Src/utils/string';
-import { EffectConfig } from 'Src/factories/model/effect';
+// import { EffectConfig } from 'Src/factories/model/effect';
 
 export class DeleteEffect extends Effect {
 
-    constructor(stateName: string, model: Model, config: EffectConfig) {
-        super(stateName, model, config);
-    }
+    // constructor(stateName: string, model: Model, config: EffectConfig) {
+    //     super(stateName, model, config);
+    // }
 
     getImports() {
         const imports = [
@@ -45,7 +45,7 @@ export class DeleteEffect extends Effect {
                     });
                     if (response && response.code === 0) {
                         message.success('删除成功！');
-                        actions.${this.model.namespace}.${this.stateName}.load${upperFirst(this.stateName)}List();
+                        actions.${this.model.namespace}.load${upperFirst(this.effectName)}List();
                     }
                 } catch (error) {
                     console.error(error);

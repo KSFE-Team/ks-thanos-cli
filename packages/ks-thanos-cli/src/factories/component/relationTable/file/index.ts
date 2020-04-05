@@ -4,7 +4,7 @@ import { upperFirst, lowerFirst } from 'Src/utils/string';
 import { Component, ComponentConfig } from '../../../component/basic';
 import { ConnectDecorator } from '../../../decorator/connect';
 import { FormDecorator } from '../../../decorator/form';
-import { getImportsCode } from 'Src/utils/getImportsCode';
+import { getImportsCode } from 'Src/utils/getCode';
 import { ComponentManager } from './manager';
 import { Value } from 'Src/factories/value';
 import { BasicContainer } from 'Src/factories/basicElement';
@@ -53,7 +53,7 @@ export default class File extends BasicContainer {
         paramKey: string;
         pagePath: string;
         filePage: any;
-        pageComponents: ComponentConfig[]
+        pageComponents: ComponentConfig[];
     }) {
         super();
         this.pageName = lowerFirst(name);

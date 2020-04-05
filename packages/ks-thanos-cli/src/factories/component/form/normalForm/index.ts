@@ -26,6 +26,7 @@ export class NormalFormDelegate extends FormDelegate {
             debug(`NormalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
                 const effect = EffectManager.create(
+                    form.page.pageName,
                     form.stateName,
                     form.page.model,
                     activeEvent.dependencies
@@ -135,7 +136,7 @@ export class NormalFormDelegate extends FormDelegate {
                         ...${form.stateName},
                         ...fieldsValue
                     };
-                    const ${paramKey} = this.props.match.params.${paramKey};
+                    const ${paramKey} = this.state.${paramKey};
                     if (${paramKey} >= 0) {
                         actions.${form.page.pageName}.${this.updateEffect.name}(postData);
                     } else {
@@ -149,39 +150,59 @@ export class NormalFormDelegate extends FormDelegate {
     initPageTitle() {
         const form = this.form;
         form.page.initPageTitleCode(`pageTitle={
-                            <div>
-                                <Row>
-                                    <Col span={8} style={{ lineHeight: '32px' }}>
-                                        ${form.page.pageChineseName}
-                                    </Col>
-                                    <Col span={16} style={{ textAlign: 'right' }}>
-                                        <Button
-                                            type='primary'
-                                            className='mar-l-4'
-                                            loading={ this.props.requestLoading }
-                                            onClick={this.handleSubmit}
-                                        ><Icon type="form" />保存</Button>
-                                        <Button
-                                            className='mar-l-4'
-                                            onClick={() => {
-                                                goto.go(-1);
-                                            }}><Icon type="rollback" />返回</Button>
-                                    </Col>
-                                </Row>
-                            </div>
-                        }`);
+            <div>
+                <Row>
+                    <Col span={8} style={{ lineHeight: '32px' }}>
+                        ${form.page.pageChineseName}
+                    </Col>
+                    <Col span={16} style={{ textAlign: 'right' }}>
+                        <Button
+                            type='primary'
+                            className='mar-l-4'
+                            loading={ this.props.requestLoading }
+                            onClick={this.handleSubmit}
+                        ><Icon type="form" />保存</Button>
+                        <Button
+                            className='mar-l-4'
+                            onClick={() => {
+                                goto.go(-1);
+                            }}><Icon type="rollback" />返回</Button>
+                    </Col>
+                </Row>
+            </div>
+        }`);
     }
 
     initPageLifeCycle() {
         if (this.getEffect) {
             const { config, page } = this.form;
             const paramKey = config.paramKey || 'id';
-            this.form.page.addDidMountStep(`if (this.props.match.params.${paramKey} > 0) {
+            this.form.page.addDidMountStep(`if (this.state.${paramKey} > 0) {
                 actions.${page.pageName}.${this.getEffect.name}({
-                    ${paramKey}: this.props.match.params.${paramKey}
+                    ${paramKey}: this.state.${paramKey}
                 });
             }`);
         }
+    }
+
+    initStateVariableDeclaration() {
+        this.form.page.addStateVariableDeclaration({
+            key: 'id',
+            value: 'this.props.match.params.id'
+        });
+    }
+
+    initRenderVariableDeclaration() {
+        const { page, stateName } = this.form;
+        const { pageName } = page;
+        this.form.page.addRenderVariableDeclaration({
+            name: 'getFieldDecorator',
+            source: 'this.props.form'
+        });
+        this.form.page.addRenderVariableDeclaration({
+            name: stateName,
+            source: `this.props.${pageName}`
+        });
     }
 
     toFormItemCode(item: FormItem) {
@@ -192,13 +213,15 @@ export class NormalFormDelegate extends FormDelegate {
             return item.toCode();
         }
 
+        let fieldConfigCode = item.getDecoratorConfigCode()
+            .replace(/}$/, `\ninitialValue: ${this.form.stateName}.${item.config.key}\n}`);
         return `<Form.Item
-                label={${labelValue}}
-                { ...FORM_LAYOUT }
-            >
+            label={${labelValue}}
+            { ...FORM_LAYOUT }
+        >
             {
-                this.props.form.getFieldDecorator('${item.config.key}', ${item.getDecoratorConfigCode()})(
-                    ${item.toCode()}
+                getFieldDecorator('${item.config.key}',${fieldConfigCode})(
+                    \n${item.toCode()}\n
                 )
             }
         </Form.Item>`;
@@ -206,7 +229,9 @@ export class NormalFormDelegate extends FormDelegate {
 
     toCode() {
         const form = this.form;
-        const componentsCode = form.components.map(this.toFormItemCode);
+        const componentsCode = form.components.map((item: FormItem) => {
+            return this.toFormItemCode(item);
+        });
         return `<Form>
         ${componentsCode.join('\n')}
     </Form>`;

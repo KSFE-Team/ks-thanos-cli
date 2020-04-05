@@ -1,5 +1,5 @@
 import { Effect } from './effect';
-import { getImportsCode } from 'Src/utils/getImportsCode';
+import { getImportsCode } from 'Src/utils/getCode';
 import { Import } from 'Src/factories/page/types';
 import { BasicElement } from 'Src/factories/basicElement';
 import { EffectRequestParams } from './effect/index';

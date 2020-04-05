@@ -1,11 +1,11 @@
-import { Import } from './types';
+import { Import, VariableDeclaration, VariableFromState } from './types';
 import Debug from 'Src/utils/debugger';
 import { upperFirst, lowerFirst } from 'Src/utils/string';
 import { Component, ComponentConfig } from '../component/basic';
 import Model from '../model';
 import { ConnectDecorator } from '../decorator/connect';
 import { FormDecorator } from '../decorator/form';
-import { getImportsCode } from 'Src/utils/getImportsCode';
+import { getImportsCode, getRenderVariableDeclarationCode, getStateVariableDeclarationCode } from 'Src/utils/getCode';
 import { BasicContainer } from 'Src/factories/basicElement';
 import { ComponentManager } from '../component/manager';
 import { Value } from 'Src/factories/value';
@@ -27,7 +27,9 @@ export default class Page extends BasicContainer {
     methods: string[] = []; // 页面方法
     didMountStep: string[] = []; // componentDidMount 中的步骤
     pageTitleCode: string = '';
-    isUseCard: Boolean = true; // 是否使用KSWhiteCard
+    renderVariableDeclaration: VariableDeclaration[] = []; // render前定义的变量
+    stateVariableDeclaration: VariableFromState[] = []; // state中的定义变量
+    isUseCard: boolean = true; // 是否使用KSWhiteCard
 
     /**
      * 构造函数
@@ -119,6 +121,22 @@ export default class Page extends BasicContainer {
         this.didMountStep.push(stepCode);
     }
 
+    /**
+     * 增加render时的变量声明
+     * @param config VariableDeclaration
+     */
+    addRenderVariableDeclaration(config: VariableDeclaration) {
+        this.renderVariableDeclaration.push(config);
+    }
+
+    /**
+     * 增加初始state的变量声明
+     * @param config VariableDeclaration
+     */
+    addStateVariableDeclaration(config: VariableFromState) {
+        this.stateVariableDeclaration.push(config);
+    }
+
     updateConnectDecorator(inputProps: string[], outputProps: Value[]) {
         this.connectDecorator.updateInputProps(inputProps);
         this.connectDecorator.updateOutputProps(outputProps);
@@ -200,7 +218,8 @@ export default class Page extends BasicContainer {
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
         const propTypesCode = this.getPropTypesCode();
-
+        const renderVariableDeclarationCode = getRenderVariableDeclarationCode(this.renderVariableDeclaration);
+        const stateVariableDeclarationCode = getStateVariableDeclarationCode(this.stateVariableDeclaration);
         return `
 ${importsCode}
 
@@ -211,12 +230,14 @@ export default class ${this.className} extends React.Component {
     static propTypes = {
         ${propTypesCode}
     }
+    ${stateVariableDeclarationCode}
     ${methodsCode}
     componentDidMount() {
         ${didMountStepCode}
     }
 
     render() {
+        ${renderVariableDeclarationCode}
         return (
             ${this.getPageCard(componentsCode, this.pageTitleCode)}
         );
@@ -226,4 +247,4 @@ export default class ${this.className} extends React.Component {
     }
 }
 
-export const getPage = () => Page
+export const getPage = () => Page;

@@ -16,6 +16,7 @@ export interface TableComponentConfig extends ComponentConfig {
     dependencies: EffectConfig; // 数据依赖配置
     showSelectedRows: string[] | number[]; // 是否展示选中
     showSelectedRowsType: string[] | number[]; // 是否展示选中
+    props: any;
 }
 
 /**
@@ -29,25 +30,24 @@ export class Table extends Component {
 
     constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
-        this.effect = EffectManager.create(this.stateName, page.model, config.dependencies);
+        this.effect = EffectManager.create(this.page.pageName, config.stateName, page.model, config.dependencies);
         this.config = config;
     }
 
     initProps() {
-        const { pageName } = this.page;
         const { showSelectedRows, showSelectedRowsType } = this.config;
         this.addProp('rowKey', `'id'`);
-        this.addProp('dataSource', `this.props.${pageName}.${this.stateName}.list`);
-        this.addProp('loading', `this.props.${pageName}.${this.stateName}ListLoading`);
+        this.addProp('dataSource', `${this.stateName}.list`);
+        this.addProp('loading', `${this.effect.name}Loading`);
         this.addProp('pagination', `{
-            current: this.props.${pageName}.${this.stateName}.page,
-            pageSize: this.props.${pageName}.${this.stateName}.limit,
-            total: this.props.${pageName}.${this.stateName}.total,
+            current: ${this.stateName}.page,
+            pageSize: ${this.stateName}.limit,
+            total: ${this.stateName}.total,
             onChange: this.onPageChange
         }`);
         showSelectedRows && this.addProp('rowSelection', `{
             type: '${showSelectedRowsType}',
-            selectedRowKeys: this.props.${pageName}.${this.stateName}.selectedRowKeys,
+            selectedRowKeys: ${this.stateName}.selectedRowKeys,
             onChange: this.onChange.bind(this)
         }`);
     }
@@ -101,7 +101,7 @@ export class Table extends Component {
                         selectedRows: selectedRows
                     }
                 });
-            };`)
+            };`);
         }
     }
 
@@ -121,6 +121,42 @@ export class Table extends Component {
                 })
             ]
         );
+    }
+
+    
+    initRenderVariableDeclaration() {
+        const { pageName } = this.page;
+        const renderVariables = [
+            {
+                name: 'columns',
+                source: 'this.state'
+            },
+            {
+                name: pageName,
+                source: `this.props`
+            },
+            {
+                name: this.stateName,
+                source: `this.props.${pageName}`
+            },
+            {
+                name: `${this.effect.name}Loading`,
+                source: 'this.props'
+            }
+        ];
+        renderVariables.forEach((config) => {
+            this.page.addRenderVariableDeclaration(config);
+        });
+    }
+
+    initStateVariableDeclaration() {
+        const columnsData = this.config.props.columns as TableColumnConfig[];
+        this.columns = columnsData.map((columnData) => new TableColumn(this.page, columnData));
+        const columnsCode = this.columns.map((column) => column.toCode()).join(',\n');   
+        this.page.addStateVariableDeclaration({
+            key: 'columns',
+            value: `[${columnsCode}]`
+        });
     }
 
     getImports() {
@@ -149,12 +185,13 @@ export class Table extends Component {
     addProp(key: string, value: any) {
         let finalValue = `${value}`;
         if (key === 'columns') {
-            const columnsData = value as TableColumnConfig[];
-            this.columns = columnsData.map((columnData) => new TableColumn(this.page, columnData));
-            const columnsCode = this.columns.map((column) => column.toCode()).join(',\n');
-            finalValue = `[
-                ${columnsCode}
-            ]`;
+            // const columnsData = value as TableColumnConfig[];
+            // this.columns = columnsData.map((columnData) => new TableColumn(this.page, columnData));
+            // const columnsCode = this.columns.map((column) => column.toCode()).join(',\n');
+            // finalValue = `[
+            //     ${columnsCode}
+            // ]`;
+            finalValue = `columns`;
         }
         super.addProp(key, finalValue);
     }

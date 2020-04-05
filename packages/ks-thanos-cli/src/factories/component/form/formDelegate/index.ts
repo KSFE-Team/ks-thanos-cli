@@ -34,6 +34,16 @@ export abstract class FormDelegate {
     initPageLifeCycle?(): void;
 
     /**
+     * 初始化state配置
+     */
+    initStateVariableDeclaration?(): void;
+
+    /**
+     * 初始化render前 变量配置
+     */
+    initRenderVariableDeclaration?(): void;
+
+    /**
      * 初始effect
      */
     abstract initEffects(): void;

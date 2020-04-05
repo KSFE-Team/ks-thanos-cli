@@ -28,7 +28,7 @@ export class Input extends FormItem {
             );
         }
         return `<Input
-        ${propsCode}
+            ${propsCode.join('\n')}
     />`;
     }
 }

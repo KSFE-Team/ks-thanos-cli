@@ -19,7 +19,7 @@ export interface EffectConfig {
         value: string;
         defaultValue: string;
     }[];
-    showSelectedRows?: boolean
+    showSelectedRows?: boolean;
 }
 
 export interface EffectRequestParams {
@@ -48,6 +48,7 @@ export abstract class Effect extends BasicElement {
 
     name: string // effect的名称
     stateName: string // effect所关联的state名称
+    effectName: string // effect名称原始名称
     model: Model // effect所在的model对象
     dataSourceType: string // 数据来源类型
     api: {
@@ -71,12 +72,12 @@ export abstract class Effect extends BasicElement {
      * @param model 所属的model对象
      * @param config 配置
      */
-    constructor(stateName: string, model: Model, config: EffectConfig) {
+    constructor(effectName: string, stateName: string, model: Model, config: EffectConfig) {
         super();
         this.model = model;
         this.config = config;
         this.stateName = stateName;
-
+        this.effectName = effectName;
         const { method, api, type, params = [], actionType, responseType } = config;
         this.method = method;
         this.api = api;
@@ -84,14 +85,14 @@ export abstract class Effect extends BasicElement {
         this.responseType = responseType;
         this.actionType = actionType;
         this.params = params;
-        this.name = PREFIX_NAME_MAP[actionType] + upperFirst(stateName) + SUFFIX_NAME_MAP[responseType];
+        this.name = PREFIX_NAME_MAP[actionType] + upperFirst(effectName) + SUFFIX_NAME_MAP[responseType];
 
         /** 设置 apiData.json 中的 api */
         const apiDataPath = path.join(process.cwd(), 'src/api/apiData.json');
         const apiDataJSON = fsExtra.readJSONSync(apiDataPath);
         const pageAPI = apiDataJSON[this.model.namespace] || {};
         pageAPI[api.key] = api.value;
-        apiDataJSON[api.stageName||this.model.namespace] = pageAPI;
+        apiDataJSON[api.stageName || this.model.namespace] = pageAPI;
         fsExtra.writeJSONSync(apiDataPath, apiDataJSON, {
             spaces: '\t'
         });

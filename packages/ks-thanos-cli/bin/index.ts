@@ -4,13 +4,14 @@ import commander from 'commander';
 import Debug from '../src/utils/debugger';
 import { runSync, runInit, runUi } from '../src';
 import { errorText } from '../src/utils/log';
+import { message } from '@ks-thanos/utils';
 
 const debug = Debug(__filename);
 
 const ownPkgJSON = require('../../package.json');
 
 commander
-    .description('凯叔前端灭霸系统工具')
+    .description(message.info('凯叔前端灭霸系统工具'))
     .version(ownPkgJSON.version)
     .usage('<command> [command-options]');
 
