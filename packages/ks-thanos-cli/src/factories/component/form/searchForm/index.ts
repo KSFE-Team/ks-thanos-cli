@@ -43,6 +43,10 @@ export class SearchFormDelegate extends FormDelegate {
             source: 'ks-cms-utils',
             name: 'goto',
             defaultImport: false
+        },{
+            source: './model',
+            name: 'STATE',
+            defaultImport: false
         }];
         return imports;
     }
@@ -54,6 +58,11 @@ export class SearchFormDelegate extends FormDelegate {
                 pageModel.addEffect(this.listEffect);
             }
         }
+    }
+
+    initPageLifeCycle() {
+        const { page } = this.form;
+        this.form.page.addDidMountStep(`actions.${page.pageName}.setReducers(STATE);`);
     }
 
     initPageMethods() {

@@ -19,22 +19,14 @@ export class Radio extends FormItem {
     }
 
     getDecoratorConfigCode() {
-        return `{
-            rules: [
-                {
-                    required: ${this.config.isRequired},
-                    message: '请选择${this.config.label}'
-                }
-            ],
-            initialValue: ${this.config.initialValue}
-        }`;
+        return `{}`;
     }
 
     toCode() {
         let code = this.config.options.map((item: any) => {
             let value = getPropValue(item.value);
             return (
-                `<Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`
+                `<Radio value={'${value}'} key={'${value}'}>${item.text}</Radio>`
             );
         });
         return `<Radio.Group>
