@@ -47,7 +47,7 @@
     user-home "^2.0.0"
     winston "^3.2.1"
 
-"@ks-thanos/utils@^1.0.1":
+"@ks-thanos/utils@1.0.1", "@ks-thanos/utils@^1.0.1":
   version "1.0.1"
   resolved "http://172.16.1.179:4873/@ks-thanos%2futils/-/utils-1.0.1.tgz#79771956e31a85218af5ca25eca39f7fdebc7d2e"
   integrity sha512-e6TUVME8QQG8tE6hAhnb1/YyE53OMMFGB3ciluTjoHlrItT5OwPv3lU2V0BUvBMRec97rLBkajr4NqqqLlfWxA==

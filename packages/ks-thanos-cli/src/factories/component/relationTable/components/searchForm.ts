@@ -52,6 +52,7 @@ export class SearchForm extends Component {
                     }
                 }
                 this.listEffect = EffectManager.create(
+                    this.page.pageName,
                     this.stateName,
                     this.page.model,
                     dependencies
@@ -150,11 +151,10 @@ export class SearchForm extends Component {
                     )
                 }
             </Form.Item>
-        </Col>`
+        </Col>`;
     }
 
     toCode() {
-        
         return `<Form>
             <Row>
                 <Col
@@ -182,6 +182,6 @@ export class SearchForm extends Component {
                     </Form.Item>
                 </Col>
             </Row>
-        </Form>`
+        </Form>`;
     }
 }
