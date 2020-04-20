@@ -70,7 +70,7 @@ export class SearchFormDelegate extends FormDelegate {
         if (this.listEffect) {
             const pageModel = form.page.model;
             form.page.addMethod(`
-                ${form.stateName}Reset() {
+                ${form.stateName}Reset = () => {
                     actions.${pageModel.namespace}.setReducers({
                         ${form.stateName}: {
                             ...this.props.${pageModel.namespace}.${form.stateName},

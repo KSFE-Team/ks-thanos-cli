@@ -81,7 +81,7 @@ export class Table extends Component {
             }
         `);
         this.page.addMethod(`
-            onPageChange(page, pageSize) {
+            onPageChange = (page, pageSize) => {
                 actions.${pageName}.setReducers({
                     ${this.stateName}: {
                         ...this.props.${pageName}.${this.stateName},
@@ -93,7 +93,7 @@ export class Table extends Component {
             }
         `);
         if (showSelectedRows) {
-            this.page.addMethod(`onChange(selectedRowKeys, selectedRows) {
+            this.page.addMethod(`onChange = (selectedRowKeys, selectedRows) => {
                 actions.${pageName}.setReducers({
                     ${this.stateName}: {
                         ...this.props.${pageName}.${this.stateName},

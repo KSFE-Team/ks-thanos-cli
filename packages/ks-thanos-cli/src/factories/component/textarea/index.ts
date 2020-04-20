@@ -17,6 +17,15 @@ export class Textarea extends FormItem {
         return `{}`;
     }
 
+    getImports() {
+        const imports = [{
+            source: 'antd',
+            name: 'Input',
+            defaultImport: false
+        }];
+        return imports;
+    }
+
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
