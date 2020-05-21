@@ -1,11 +1,10 @@
 import Page from 'Src/factories/page';
-import { FormItemConfig } from '../form/formItem';
-import { Component } from 'Src/factories/component/basic';
+import { FormItemConfig, FormItem } from '../form/formItem';
 
 /**
  * Input组件
  */
-export class Input extends Component {
+export class Input extends FormItem {
 
     config: FormItemConfig
 
@@ -13,10 +12,6 @@ export class Input extends Component {
         super(page, config);
         this.componentName = 'Input';
         this.config = config;
-    }
-
-    initPageState() {
-        this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
 
     toCode() {
@@ -27,7 +22,8 @@ export class Input extends Component {
                 `${propKey}={'${propValue}'}`
             );
         }
-        return `<Form.Item label={'${this.config.label}'}>
+        return `<Form.Item
+        label={'${this.config.label}'}>
         {
             this.props.form.getFieldDecorator('${this.config.key}')(
                 <Input

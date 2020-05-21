@@ -35,22 +35,25 @@ export class RangePicker extends Component {
     toCode() {
         const propsKeyArr: string[] = this.config.props && Object.keys(this.config.props);
         const propsCode = propsKeyArr.map((item) => {
-            let value: any = this.config.props[item];
+            let value: any[] | string = this.config.props[item];
             switch (item) {
                 case 'placeholder':
-                    return `${item}={[${value.map((e: any)=> `'${e}'`).join(',')}]}`;
+                    return `${item}={[${Array.isArray(value) && value.map((e: any)=> `'${e}'`).join(',')}]}`;
                 case 'showTime':
                     return `${item}={${JSON.stringify(value)}}`;
                 case 'format':
                     return `${item}='${value}'`;
             }
         });
-        return `<Form.Item label='${this.config.label}'>
+        return `<Form.Item 
+                    label='${this.config.label}'>
     {
         this.props.form.getFieldDecorator('${this.config.key}')(
-            <DatePicker.RangePicker ${propsCode.join(' ').replace(/\"/g, '\'')}/>
+            <DatePicker.RangePicker 
+                ${propsCode.join('\n').replace(/\"/g, '\'')}
+            />
         )
     }
 </Form.Item>`;
     }
-} 
+}

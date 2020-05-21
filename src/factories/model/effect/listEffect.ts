@@ -11,7 +11,12 @@ export class ListEffect extends Effect {
             {
                 name: 'message',
                 source: 'antd',
-                defaultImport: true
+                defaultImport: false
+            },
+            {
+                name: 'actions',
+                source: 'kredux',
+                defaultImport: false
             }
         ];
         return imports;
@@ -29,18 +34,17 @@ async ${this.name}(payload, getState) {
             page: state.page,
         };
 
-        const response = await request('${this.config.api}', { 
-            method: ${this.method},
-            data: postData
+        const response = await request('${this.config.api}', {
+            method: '${this.method}',
+            body: postData
         });
 
         if (response && response.code === 200) {
             actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
-                    list: response.data.content,
-                    page: response.data.pageNumber,
-                    total: response.data.totalElements
+                    list: response.page.list,
+                    total: response.page.totalCount
                 }
             });
         } else {

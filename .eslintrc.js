@@ -33,7 +33,6 @@ module.exports = {
         'import/no-webpack-loader-syntax': 'off', // 不禁用 webpack-loader 语法
         'no-eval': 0,
         'no-template-curly-in-string': 0,
-        '@typescript-eslint/restrict-plus-operands': 2,
         '@typescript-eslint/restrict-plus-operands': 0,
         '@typescript-eslint/member-ordering': 2,
         '@typescript-eslint/no-console': 0,
@@ -44,6 +43,11 @@ module.exports = {
         '@typescript-eslint/no-eval': 0,
         '@typescript-eslint/no-use-before-define': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
-        '@typescript-eslint/explicit-member-accessibility': 0
+        '@typescript-eslint/explicit-member-accessibility': 0,
+        '@typescript-eslint/no-unused-vars': ['error', {
+            'vars': 'all',
+            'args': 'after-used',
+            'ignoreRestSiblings': true
+        }]
     }
 }

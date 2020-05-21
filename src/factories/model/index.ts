@@ -112,12 +112,12 @@ export const STATE = {
 export default {
     namespace: '${this.namespace}',
 
-    state: { ...STATE },
+    initialState: { ...STATE },
 
     effects: {
         ${effectsCode}
     }
-}        
+}
         `;
     }
 }

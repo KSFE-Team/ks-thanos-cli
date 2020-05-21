@@ -7,6 +7,7 @@ import { ConnectDecorator } from 'Src/factories/decorator/connect';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 import { EffectConfig } from 'Src/factories/model/effect';
 import { EffectManager } from 'Src/factories/model/effect/manager';
+import { Value } from 'Src/factories/value';
 
 const debug = Debug(__filename);
 
@@ -99,8 +100,16 @@ export class Table extends Component {
             process: [
             ],
             outputProps: [
-                pageName,
-                `${this.stateName}ListLoading: loading.effects['${pageName}/${this.effect.name}']`
+                new Value({
+                    key: pageName,
+                    value: pageName,
+                    type: 'object'
+                }),
+                new Value({
+                    key: `${this.stateName}ListLoading`,
+                    value: `loading.effects['${pageName}/${this.effect.name}']`,
+                    type: 'bool'
+                })
             ]
         };
         debug(`add decorators: ${JSON.stringify(decoratorConfig)}`);
@@ -111,7 +120,13 @@ export class Table extends Component {
 
     getImports() {
         let imports = super.getImports();
-
+        imports = imports.concat([
+            {
+                source: 'kredux',
+                name: 'actions',
+                defaultImport: false
+            }
+        ]);
         // 获取 column 中的依赖
         this.columns.forEach((column) => {
             imports = imports.concat(column.getImports());

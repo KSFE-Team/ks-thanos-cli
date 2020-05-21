@@ -11,9 +11,10 @@ import { EffectConfig } from 'Src/factories/model/effect';
  */
 export interface FormComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
+    type: 'search' | 'normal';
     activeEvent: { // 触发事件
         eventType: string; // 事件类型
-        dependencies: EffectConfig; // 数据依赖     
+        dependencies: EffectConfig; // 数据依赖
     };
 }
 
@@ -48,6 +49,11 @@ export class Form extends Component {
                 source: 'antd',
                 name: 'Col',
                 defaultImport: false
+            },
+            {
+                source: 'kredux',
+                name: 'actions',
+                defaultImport: false
             }
         ]);
         return imports;
@@ -63,7 +69,7 @@ export class Form extends Component {
     }
 
     initPageMethods() {
-        if (this.effect && this.effect.responseType === 'list') {
+        if (this.effect && this.effect.responseType === 'list' && this.config.type === 'search') {
             const pageModel = this.page.model;
             this.page.addMethod(`
                 ${this.stateName}Reset() {
@@ -82,6 +88,7 @@ export class Form extends Component {
     initPageDecorators() {
         const decoratorConfig: FormDecoratorConfig = {
             name: 'Form.create',
+            type: this.config.type,
             pageName: this.page.pageName,
             stateName: this.stateName,
             formItems: this.components.map((item) => (item as FormItem).config.key)
@@ -90,14 +97,30 @@ export class Form extends Component {
         this.page.addDecorator(decorator);
     }
 
+    getButtonCode(){
+        if(this.config.type === 'search') {
+            return `<Col span={3}>
+            <Button onClick={() => {
+                this.${this.stateName}Reset();
+            }}>
+                查询
+            </Button>
+            </Col>`;
+        } else {
+            return ``;
+        }
+    }
+
     toCode() {
         const componentsCode = this.components.map((item) => `<Col span={3}>
             ${item.toCode()}
         </Col>`);
+        const buttonCode = this.getButtonCode();
         return`
 <${this.componentName}>
     <Row>
         ${componentsCode.join('\n')}
+        ${buttonCode}
     </Row>
 </${this.componentName}>
 `;

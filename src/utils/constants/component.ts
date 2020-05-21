@@ -13,7 +13,7 @@ import { DatePicker } from 'Src/factories/component/datePicker';
 
 
 export const COMPONENT_TYPES_MAP: {
-  [name: string]: typeof BasicComponent;
+    [name: string]: typeof BasicComponent;
 } = {
     Table: Table, // 列表组件
     Form: Form, // 表单组件
@@ -27,4 +27,4 @@ export const COMPONENT_TYPES_MAP: {
     InputNumber: InputNumber,
     Radio,
     DatePicker: DatePicker
-}
+};

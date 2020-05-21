@@ -1,11 +1,19 @@
 import { ConnectDecoratorConfig } from './types';
-import { BasicElement } from 'Src/factories/basicElement';
+import { Decorator } from './index';
 
-export class ConnectDecorator extends BasicElement {
+export class ConnectDecorator extends Decorator {
     config: ConnectDecoratorConfig
     constructor(config: ConnectDecoratorConfig) {
         super();
         this.config = config;
+    }
+
+    getOutputPropTypesCode() {
+        const outputProps = this.config.outputProps;
+        return outputProps.map((props) => {
+            const {key, type} = props;
+            return `${key}: PropTypes.${type}`;
+        }).join(',\n');
     }
 
     getImports() {
@@ -20,13 +28,20 @@ export class ConnectDecorator extends BasicElement {
 
     toCode() {
         const inputCode = this.config.inputProps.join(',\n');
-        const outputCode = this.config.outputProps.join(',\n');
+        const outputCode = this.config.outputProps.map((props) => {
+            const { key, value } = props;
+            if (key === value) {
+                return key;
+            } else {
+                return `${key}: ${value}`;
+            }
+        }).join(',\n');
         return `@connect((
-            { 
+            {
                 ${inputCode}
             }
         ) => ({
-            ${outputCode}   
+            ${outputCode}
         }))`;
     }
 }

@@ -3,7 +3,6 @@ import { writeFile } from 'Src/utils/file';
 import path from 'path';
 import Debug from 'Src/utils/debugger';
 import { formatFile } from 'Src/utils/format';
-import { upperFirst } from 'Src/utils/string';
 
 const debug = Debug(__filename);
 
@@ -13,22 +12,22 @@ const debug = Debug(__filename);
 export function createPage(
     options: {
         pageName: string; // 页面名称
+        pageChineseName: string; // 页面中文名称
+        pagePath: string; // 页面路径
         pageConfig: any; // 页面配置
-        projectPath: string; // 项目地址
     }
 ) {
-    const { pageName, pageConfig, projectPath } = options;
+    const { pageName, pagePath, pageConfig } = options;
 
     debug(`pageName: ${pageName}`);
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
-    debug(`projectPath: ${projectPath}`);
 
-    const pagePath = path.join(projectPath, 'pages', upperFirst(pageName), 'index.js');
+    const pageFilePath = path.join(pagePath, 'index.js');
     const { components = [] } = pageConfig;
     const pageInstance = new Page(pageName, components);
 
     // 输出文件
-    writeFile(pagePath, pageInstance.toCode());
+    writeFile(pageFilePath, pageInstance.toCode());
 
     // eslint格式化文件
     formatFile(pagePath);

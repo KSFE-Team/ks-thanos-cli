@@ -1,7 +1,7 @@
 import { FormDecoratorConfig } from './types';
-import { BasicElement } from 'Src/factories/basicElement';
+import { Decorator } from './index';
 
-export class FormDecorator extends BasicElement {
+export class FormDecorator extends Decorator {
 
     config: FormDecoratorConfig
 
@@ -29,11 +29,20 @@ export class FormDecorator extends BasicElement {
             });`;
     }
 
+    getOutputPropTypesCode() {
+        return 'form: PropTypes.object,\n';
+    }
+
     getImports() {
         return [
             {
                 name: 'Form',
                 source: 'antd',
+                defaultImport: false
+            },
+            {
+                source: 'kredux',
+                name: 'actions',
                 defaultImport: false
             }
         ];
@@ -42,8 +51,11 @@ export class FormDecorator extends BasicElement {
     toCode() {
         const mapPropsToFieldsCode = this.getMapPropsToFieldsCode();
         const onFieldsChangeCode = this.getOnFieldsChangeCode();
+        if(this.config.type === 'normal') {
+            return `@Form.create()`;
+        }
         return `@Form.create({
-                mapPropsToFields(props) { 
+                mapPropsToFields(props) {
                     return {
                         ${mapPropsToFieldsCode}
                     };

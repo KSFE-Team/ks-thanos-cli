@@ -83,6 +83,10 @@ export default class Page extends BasicContainer {
         this.didMountStep.push(stepCode);
     }
 
+    getPropTypesCode() {
+        return this.decorators.map((item) => item.getOutputPropTypesCode()).filter((code) => code).join('\n');
+    }
+
     /**
      * 获取 import
      * @returns 需要import的模块
@@ -92,6 +96,11 @@ export default class Page extends BasicContainer {
             {
                 name: 'React',
                 source: 'react',
+                defaultImport: true
+            },
+            {
+                name: 'PropTypes',
+                source: 'prop-types',
                 defaultImport: true
             }
         ];
@@ -111,15 +120,22 @@ export default class Page extends BasicContainer {
     public toCode() {
         const importsCode = getImportsCode(this.getImports());
         const componentsCode = this.components.map((item) => item.toCode()).join('\n');
-        const decoratorCode = this.decorators.map((item) => item.toCode()).join('\n');
+        const decoratorCode = this.decorators.filter((item) => !(item instanceof ConnectDecorator)).map((item) => item.toCode()).join('\n');
+        const connectDecoratorCode = this.decorators.filter((item) => item instanceof ConnectDecorator).map((item) => item.toCode()).join('\n');
         const methodsCode = this.methods.join('\n');
         const didMountStepCode = this.didMountStep.join('\n');
+        const propTypesCode = this.getPropTypesCode();
 
         return `
 ${importsCode}
 
+${connectDecoratorCode}
 ${decoratorCode}
 export default class ${this.className} extends React.Component {
+
+    static propTypes = {
+        ${propTypesCode}
+    }
     ${methodsCode}
     componentDidMount() {
         ${didMountStepCode}
