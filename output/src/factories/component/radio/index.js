@@ -11,7 +11,7 @@ class Radio extends basic_1.Component {
         this.page.model.addInitialState(this.stateName, this.config.key, `''`);
     }
     toCode() {
-        let code = this.config.options.map((item, index) => {
+        let code = this.config.options.map((item) => {
             let value = typeof item.value === 'number' ? item.value : `'${item.value}'`;
             return (` <Radio value={${value}} key={${item.rowKey}}>${item.text}</Radio>`);
         }), defaultValue = typeof this.config.defaultValue === 'number' ? this.config.defaultValue : `'${this.config.defaultValue}'`;
