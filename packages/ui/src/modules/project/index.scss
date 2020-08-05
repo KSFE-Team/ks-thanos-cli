@@ -94,6 +94,11 @@
                 &.active {
                     background: #00000055;
                 }
+
+                .project-item-delete {
+                    float: right;
+                    margin-top: 4px;
+                }
             }
         }
 
@@ -138,7 +143,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 10000000;
+    z-index: 101;
 }
 
 .folder-mask {
@@ -183,9 +188,42 @@
 
     .file-item {
         padding: 6px 12px;
-        cursor: pointer;
-        &:hover {
-            background-color: rgba(0, 0, 0, .15);
+        // cursor: pointer;
+        
+        &:nth-child(2n - 1) {
+            background-color: rgba(245, 245, 245, 1);
         }
+
+        &:hover {
+            background-color: rgba(42, 107, 210, 1);
+        }
+
+        .file-item-icon {
+            margin-right: 8px;
+            position: relative;
+            top: 2px;
+        }
+
+        &.dir {
+            cursor: pointer;
+        }
+    }
+
+    .create-folder-input {
+        height: 26px;
+        line-height: 26px;
+        width: calc(100% - 24px);
+        margin: 0 12px;
+    }
+}
+
+.file-modal-tools {
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
+    width: 100%;
+    padding: 0 12px;
+
+    .anticon {
+        cursor: pointer;
     }
 }

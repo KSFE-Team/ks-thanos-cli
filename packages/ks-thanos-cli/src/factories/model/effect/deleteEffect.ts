@@ -48,7 +48,7 @@ export class DeleteEffect extends Effect {
                         actions.${this.model.namespace}.load${upperFirst(this.effectName)}List();
                     }
                 } catch (error) {
-                    console.error(error);
+                    actions.login.commonError(error);
                 }
             }
         `;

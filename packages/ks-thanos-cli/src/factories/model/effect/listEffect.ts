@@ -9,11 +9,6 @@ export class ListEffect extends Effect {
                 defaultImport: true
             },
             {
-                name: 'message',
-                source: 'antd',
-                defaultImport: false
-            },
-            {
                 name: 'actions',
                 source: 'kredux',
                 defaultImport: false
@@ -68,15 +63,13 @@ async ${this.name}(payload, getState) {
             actions.${namespace}.setReducers({
                 ${this.stateName}: {
                     ...state,
-                    list: response.data.list,
                     total: response.data.totalCount${selectionCodes}
-                }
+                },
+                list: response.data.list
             });
-        } else {
-            message.error(response.message);
         }
     } catch (error) {
-        console.error(error);
+        actions.login.commonError(error);
     }
 }`;
     }

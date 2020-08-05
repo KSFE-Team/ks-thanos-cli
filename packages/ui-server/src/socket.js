@@ -9,13 +9,13 @@ export const createSocket = (app) => {
     });
     // 连接事件
     socketIo.on('connection', (socket) => {
-        console.log(`有客户端连接成功: ${JSON.stringify(socket.handshake.query || {})}`);
+        // console.log(`有客户端连接成功: ${JSON.stringify(socket.handshake.query || {})}`);
         socket.join(roomId);
 
         socket.emit('connection', '连接成功');
         // 断开事件
         socket.on('disconnect', function(data) {
-            console.log(`有客户端失去连接: ${JSON.stringify(socket.handshake.query || {})}`);
+            // console.log(`有客户端失去连接: ${JSON.stringify(socket.handshake.query || {})}`);
             socket.leave(roomId);
         });
     });

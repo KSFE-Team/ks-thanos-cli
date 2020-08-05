@@ -6,7 +6,7 @@ import { EffectRequestParams } from './effect/index';
 import { ListEffect } from 'Src/factories/model/effect/listEffect';
 
 interface InitialState {
-    [stateName: string]: {
+    [stateName: string]: string | {
         [name: string]: string;
     };
 }
@@ -43,11 +43,15 @@ export default class Model extends BasicElement {
      * @param value 属性的value
      */
     addInitialState(stateName: string, key: string, value?: string) {
-        const state = this.initialState[stateName] || {};
-        if (value) {
+        let initialState = this.initialState || {},
+            state = this.initialState[stateName] || {};
+        if (value && typeof state !== 'string') {
             state[key] = value;
+            this.initialState[stateName] = state;
+        } else if(key) {
+            initialState[stateName] = key;
+            this.initialState = initialState;
         }
-        this.initialState[stateName] = state;
     }
 
     addListEffectRequestParams(params: EffectRequestParams) {
@@ -76,13 +80,19 @@ export default class Model extends BasicElement {
     getStateCode() {
         let stateCode = [];
         for (let stateKey in this.initialState) {
-            const innerStateCode = Object.entries(this.initialState[stateKey]).map((stateObject) => {
-                const [key, value] = stateObject;
-                return `${key}: ${value}`;
-            }).join(',\n');
-            stateCode.push(`${stateKey}: {
-                ${innerStateCode}
-            }`);
+            let innerStateCode;
+            if (typeof this.initialState[stateKey] === 'string') {
+                innerStateCode = this.initialState[stateKey];
+            } else {
+                innerStateCode = Object.entries(this.initialState[stateKey]).map((stateObject) => {
+                    const [key, value] = stateObject;
+                    return `${key}: ${value}`;
+                }).join(',\n');
+                innerStateCode = `{
+                    ${innerStateCode}
+                }`;
+            }
+            stateCode.push(`${stateKey}: ${innerStateCode}`);
         }
         return stateCode.join(',\n');
     }

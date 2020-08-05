@@ -14,6 +14,11 @@ export class CreateEffect extends Effect {
                 defaultImport: false
             },
             {
+                name: 'actions',
+                source: 'kredux',
+                defaultImport: false
+            },
+            {
                 name: 'API',
                 source: 'Src/api',
                 defaultImport: false
@@ -34,7 +39,7 @@ async ${this.name}(payload) {
             message.success('新增成功！');
         }
     } catch (error) {
-        console.error(error);
+        actions.login.commonError(error);
     }
 }
 `;

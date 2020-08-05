@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { actions } from 'kredux';
+import { Icon } from 'antd';
 import lottie from 'lottie-web';
 import { projectContainer } from 'Models/project';
 import { FitAddon } from 'xterm-addon-fit';
@@ -40,12 +41,12 @@ export default class Project extends Component {
     }
 
     handleStart = () => {
-        actions.project.runCommand('start');
+        actions.project.runNpmCommand('start');
     }
 
     handleStop = () => {
         this.handleClear();
-        actions.project.runCommand('stop');
+        actions.project.runNpmCommand('stop');
     }
 
     handleClear = () => {
@@ -186,7 +187,28 @@ export default class Project extends Component {
                                 projects.length > 0 ? (
                                     <ul className="project-list-wrapper">
                                         {
-                                            projects.map((p, index) => <li className={`project-item${index === currentIndex ? ' active' : ''}`} key={p.name} onClick={() => actions.project.changeCurrentIndex(index)}>{p.name}</li>)
+                                            projects.map((p, index) => <li
+                                                className={`project-item${index === currentIndex ? ' active' : ''}`}
+                                                key={p.name}
+                                                onClick={() => actions.project.changeCurrentIndex(index)}
+                                            >
+                                                {p.name} <Icon
+                                                    className={'project-item-delete'}
+                                                    theme={'filled'}
+                                                    type='delete'
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        const filterProjects = projects.filter((_, idx) => {
+                                                            return idx !== index;
+                                                        });
+                                                        actions.project.setReducers({
+                                                            projects: filterProjects
+                                                        });
+                                                        localStorage.setItem('projects', JSON.stringify(filterProjects));
+                                                    }}
+                                                />
+                                            </li>
+                                            )
                                         }
                                     </ul>
                                 ) : (

@@ -6,12 +6,12 @@ import { runSync, runInit, runUi } from '../src';
 import { errorText } from '../src/utils/log';
 import { message } from '@ks-thanos/utils';
 
+const { info } = message;
 const debug = Debug(__filename);
-
 const ownPkgJSON = require('../../package.json');
 
 commander
-    .description(message.info('凯叔前端灭霸系统工具'))
+    .description(info('凯叔前端灭霸系统工具local'))
     .version(ownPkgJSON.version)
     .usage('<command> [command-options]');
 

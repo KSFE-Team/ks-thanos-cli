@@ -17,7 +17,12 @@ export class UpdateeEffect extends Effect {
                 name: 'API',
                 source: 'Src/api',
                 defaultImport: false
-            }
+            },
+            {
+                source: 'kredux',
+                name: 'actions',
+                defaultImport: false
+            },
         ];
         return imports;
     }
@@ -34,7 +39,7 @@ async ${this.name}(payload) {
             message.success('修改成功！');
         }
     } catch (error) {
-        console.error(error);
+        actions.login.commonError(error);
     }
 }
 `;

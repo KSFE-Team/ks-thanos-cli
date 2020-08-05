@@ -48,9 +48,9 @@ export function getImportsCode(imports: Import[]) {
  * 生成 render前 定义变量 相关的 code
  */
 interface TreeNode {
-    id?: string | number;
-    parentId?: string | number;
-    rootId?: string | number | null;
+    id: string | number;
+    parentId: string | number;
+    rootId: string | number | null;
     children?: TreeNode[];
 }
 
@@ -98,7 +98,6 @@ export const getRenderVariableDeclarationCode = (variables: VariableDeclaration[
                         };
                     }
                 }
-
                 /* 最后一个key */
                 if (dependencieTree.length - index === 1) {
                     hasKeyMap[name] = {
@@ -178,7 +177,7 @@ export function toTreeData(data: any[], attributes: TreeNode = {
 /**
  * 递归树型结构
  */
-const toTreeRenderVariable = (treeDatas: TreeNode[], parentNode: TreeNode = {}) => {
+const toTreeRenderVariable = (treeDatas: TreeNode[], parentNode?: TreeNode) => {
     let result = '';
     result += toRenderVariable(treeDatas, parentNode);
     treeDatas.forEach((data) => {
@@ -193,8 +192,8 @@ const toTreeRenderVariable = (treeDatas: TreeNode[], parentNode: TreeNode = {}) 
 /**
  * 拼接变量声明
  */
-const toRenderVariable = (nodes: TreeNode[], parentNode: TreeNode = {}) => {
-    const grandParentId = parentNode.parentId;
+const toRenderVariable = (nodes: TreeNode[], parentNode?: TreeNode) => {
+    const grandParentId = (parentNode || {}).parentId;
     const [{parentId}] = nodes;
     if (parentId === THIS) {
         return '';

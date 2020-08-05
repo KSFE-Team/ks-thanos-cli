@@ -29,10 +29,6 @@
     "bugs": {
         "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
     },
-    "ks-web-cli": {
-        "type": "server",
-        "publicPath": "/"
-    },
     "dependencies": {
         "@ks-thanos/utils": "^1.0.1",
         "axios": "^0.19.2",
@@ -52,7 +48,6 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/babel-tools": "^3.12.0",
-        "@ks-web-cli/jest-tools": "^3.12.0"
+        "@ks-web-cli/plugin-server": "^4.6.3"
     }
 }

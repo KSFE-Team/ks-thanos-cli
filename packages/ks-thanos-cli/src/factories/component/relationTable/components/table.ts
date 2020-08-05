@@ -70,7 +70,7 @@ export class Table extends Component {
     initPageState() {
         const { showSelectedRows } = this.config;
         const pageModel = this.page.model;
-        pageModel.addInitialState(this.stateName, 'list', '[]');
+        pageModel.addInitialState(`list`, '[]');
         pageModel.addInitialState(this.stateName, 'page', '1');
         pageModel.addInitialState(this.stateName, 'limit', '10');
         pageModel.addInitialState(this.stateName, 'total', '0');

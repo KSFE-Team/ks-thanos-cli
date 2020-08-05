@@ -15,6 +15,7 @@ const debug = Debug(__filename);
 export interface TableComponentConfig extends ComponentConfig {
     dependencies: EffectConfig; // 数据依赖配置
     showSelectedRows: string[] | number[]; // 是否展示选中
+    showPagination: boolean;
     showSelectedRowsType: string[] | number[]; // 是否展示选中
     props: any;
 }
@@ -35,16 +36,16 @@ export class Table extends Component {
     }
 
     initProps() {
-        const { showSelectedRows, showSelectedRowsType } = this.config;
+        const { showSelectedRows, showSelectedRowsType, showPagination } = this.config;
         this.addProp('rowKey', `'id'`);
-        this.addProp('dataSource', `${this.stateName}.list`);
+        this.addProp('dataSource', `list`);
         this.addProp('loading', `${this.effect.name}Loading`);
-        this.addProp('pagination', `{
+        this.addProp('pagination', showPagination ? `{
             current: ${this.stateName}.page,
             pageSize: ${this.stateName}.limit,
             total: ${this.stateName}.total,
             onChange: this.onPageChange
-        }`);
+        }` : 'false');
         showSelectedRows && this.addProp('rowSelection', `{
             type: '${showSelectedRowsType}',
             selectedRowKeys: ${this.stateName}.selectedRowKeys,
@@ -62,7 +63,7 @@ export class Table extends Component {
     initPageState() {
         const { showSelectedRows } = this.config;
         const pageModel = this.page.model;
-        pageModel.addInitialState(this.stateName, 'list', '[]');
+        pageModel.addInitialState(`list`, '[]');
         pageModel.addInitialState(this.stateName, 'page', '1');
         pageModel.addInitialState(this.stateName, 'limit', '10');
         pageModel.addInitialState(this.stateName, 'total', '0');
@@ -73,14 +74,15 @@ export class Table extends Component {
     initPageMethods() {
         const dataDependenciesEffect = this.effect;
         const { pageName } = this.page;
-        const { showSelectedRows } = this.config;
+        const { showSelectedRows, showPagination } = this.config;
 
         this.page.addMethod(`
             ${dataDependenciesEffect.name}() {
                 actions.${pageName}.${dataDependenciesEffect.name}();
             }
         `);
-        this.page.addMethod(`
+        if (showPagination) {
+            this.page.addMethod(`
             onPageChange = (page, pageSize) => {
                 actions.${pageName}.setReducers({
                     ${this.stateName}: {
@@ -92,6 +94,7 @@ export class Table extends Component {
                 this.${dataDependenciesEffect.name}();
             }
         `);
+        }
         if (showSelectedRows) {
             this.page.addMethod(`onChange = (selectedRowKeys, selectedRows) => {
                 actions.${pageName}.setReducers({
@@ -126,6 +129,7 @@ export class Table extends Component {
     
     initRenderVariableDeclaration() {
         const { pageName } = this.page;
+        const { showPagination } = this.config;
         const renderVariables = [
             {
                 name: 'columns',
@@ -136,7 +140,7 @@ export class Table extends Component {
                 source: `this.props`
             },
             {
-                name: this.stateName,
+                name: 'list',
                 source: `this.props.${pageName}`
             },
             {
@@ -144,6 +148,12 @@ export class Table extends Component {
                 source: 'this.props'
             }
         ];
+        if (showPagination) {
+            renderVariables.push({
+                name: this.stateName,
+                source: `this.props.${pageName}`
+            });
+        }
         renderVariables.forEach((config) => {
             this.page.addRenderVariableDeclaration(config);
         });

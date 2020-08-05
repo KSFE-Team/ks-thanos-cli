@@ -31,10 +31,6 @@
     "bugs": {
         "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
     },
-    "ks-web-cli": {
-        "type": "pcweb",
-        "publicPath": "/"
-    },
     "dependencies": {
         "antd": "^3.26.12",
         "core-js": "^2.6.5",
@@ -52,6 +48,6 @@
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/webpack-tools": "^3.11.4"
+        "@ks-web-cli/plugin-pcweb": "^4.6.3"
     }
 }

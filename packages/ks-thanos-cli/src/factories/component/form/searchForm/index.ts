@@ -35,19 +35,17 @@ export class SearchFormDelegate extends FormDelegate {
     }
 
     getImports() {
-        const imports = [{
-            source: 'ks-cms-ui',
-            name: 'KSSearchForm',
-            defaultImport: false
-        }, {
-            source: 'ks-cms-utils',
-            name: 'goto',
-            defaultImport: false
-        },{
-            source: './model',
-            name: 'STATE',
-            defaultImport: false
-        }];
+        const imports = [
+            {
+                source: 'ks-cms-ui',
+                name: 'KSSearchForm',
+                defaultImport: false
+            }, {
+                source: 'ks-cms-utils',
+                name: 'goto',
+                defaultImport: false
+            }
+        ];
         return imports;
     }
 
@@ -60,10 +58,10 @@ export class SearchFormDelegate extends FormDelegate {
         }
     }
 
-    initPageLifeCycle() {
-        const { page } = this.form;
-        this.form.page.addDidMountStep(`actions.${page.pageName}.setReducers(STATE);`);
-    }
+    // initPageLifeCycle() {
+    //     const { page } = this.form;
+    //     this.form.page.addDidMountStep(`actions.${page.pageName}.setReducers(STATE);`);
+    // }
 
     initPageMethods() {
         const form = this.form;

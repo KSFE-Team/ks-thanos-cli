@@ -28,7 +28,6 @@ export default function async(context) {
         };
     });
 
-    console.log(JSON.stringify(items));
     context.body = {
         code: 0,
         result: items

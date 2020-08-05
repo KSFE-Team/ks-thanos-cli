@@ -39,13 +39,11 @@ async ${this.name}(payload) {
 
         if (response && response.code === 0) {
             actions.${namespace}.setReducers({
-                ${this.stateName}: response.data
+                info: response.data
             });
-        } else {
-            message.error(response.message);
         }
     } catch (error) {
-        console.error(error);
+        actions.login.commonError(error);
     }
 }`;
     }

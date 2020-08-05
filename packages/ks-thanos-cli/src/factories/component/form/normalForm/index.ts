@@ -86,7 +86,7 @@ export class NormalFormDelegate extends FormDelegate {
     initPageState() {
         const form = this.form;
         const pageModel = form.page.model;
-        pageModel.addInitialState(form.stateName, '');
+        pageModel.addInitialState(`info`, '{}');
     }
 
     initEffects() {
@@ -136,8 +136,7 @@ export class NormalFormDelegate extends FormDelegate {
                         ...${form.stateName},
                         ...fieldsValue
                     };
-                    const ${paramKey} = this.state.${paramKey};
-                    if (${paramKey} >= 0) {
+                    if (this.state.${paramKey} >= 0) {
                         actions.${form.page.pageName}.${this.updateEffect.name}(postData);
                     } else {
                         actions.${form.page.pageName}.${this.createEffect.name}(postData);
@@ -160,13 +159,18 @@ export class NormalFormDelegate extends FormDelegate {
                             type='primary'
                             className='mar-l-4'
                             loading={ this.props.requestLoading }
-                            onClick={this.handleSubmit}
-                        ><Icon type="form" />保存</Button>
+                            onClick={ this.handleSubmit }
+                        >
+                            <Icon type="form" />保存
+                        </Button>
                         <Button
                             className='mar-l-4'
                             onClick={() => {
                                 goto.go(-1);
-                            }}><Icon type="rollback" />返回</Button>
+                            }}
+                        >
+                            <Icon type="rollback" />返回
+                        </Button>
                     </Col>
                 </Row>
             </div>
@@ -193,14 +197,14 @@ export class NormalFormDelegate extends FormDelegate {
     }
 
     initRenderVariableDeclaration() {
-        const { page, stateName } = this.form;
+        const { page } = this.form;
         const { pageName } = page;
         this.form.page.addRenderVariableDeclaration({
             name: 'getFieldDecorator',
             source: 'this.props.form'
         });
         this.form.page.addRenderVariableDeclaration({
-            name: stateName,
+            name: 'info',
             source: `this.props.${pageName}`
         });
     }
@@ -214,7 +218,7 @@ export class NormalFormDelegate extends FormDelegate {
         }
 
         let fieldConfigCode = item.getDecoratorConfigCode()
-            .replace(/}$/, `\ninitialValue: ${this.form.stateName}.${item.config.key}\n}`);
+            .replace(/}$/, `\ninitialValue: info.${item.config.key}\n}`);
         return `<Form.Item
             label={${labelValue}}
             { ...FORM_LAYOUT }

@@ -7,6 +7,7 @@ import { EffectConfig } from 'Src/factories/model/effect';
 import { SearchFormDelegate } from './searchForm/index';
 import { NormalFormDelegate } from 'Src/factories/component/form/normalForm';
 import { FormDelegate } from './formDelegate/index';
+import File from '../relationTable/file';
 
 /**
  * 表单组件配置
@@ -30,7 +31,7 @@ export class Form extends Component {
     components: FormItem[] = [];
     delegate: FormDelegate;
 
-    constructor(page: Page, config: FormComponentConfig) {
+    constructor(page: Page | File, config: FormComponentConfig) {
         super(page, config);
         this.config = config;
 

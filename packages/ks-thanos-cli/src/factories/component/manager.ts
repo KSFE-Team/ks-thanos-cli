@@ -4,6 +4,7 @@ import { TableColumn } from './table/tableColumn';
 import { COMPONENT_TYPES_MAP } from 'Src/utils/constants/component';
 import { KMSCloudComponent } from 'Src/factories/component/cloudComponent';
 import { FormItemConfig } from './formItem';
+import File from './relationTable/file';
 
 export class ComponentManager {
     /**
@@ -17,7 +18,7 @@ export class ComponentManager {
     ) {
         let page: Page,
             componentInstance: Component | undefined;
-        if (target instanceof Page) {
+        if (target instanceof Page || target instanceof File) {
             page = target;
         } else {
             page = target.page;

@@ -38,12 +38,27 @@ const projectModel = {
             }
         },
         /**
+         * 执行NPM命令
+         */
+        runNpmCommand(payload, getState) {
+            const { currentPath } = getState().project;
+
+            return Api.getData({
+                api: 'runNpmCommand',
+                method: 'GET',
+                params: {
+                    command: payload,
+                    cwd: currentPath
+                }
+            });
+        },
+        /**
          * 执行命令
          */
         runCommand(payload, getState) {
             const { currentPath } = getState().project;
 
-            Api.getData({
+            return Api.getData({
                 api: 'runCommand',
                 method: 'GET',
                 params: {
@@ -55,8 +70,9 @@ const projectModel = {
         /**
          * 选择文件
          */
-        selectFolder(payload, getState) {
-            const { path } = payload;
+        selectFolder(payload = {}, getState) {
+            const { currentPath } = getState().project;
+            const { path = currentPath } = payload;
 
             Api.getData({
                 api: 'file',
@@ -65,8 +81,6 @@ const projectModel = {
                     path
                 }
             }).then((response) => {
-                console.log(response);
-
                 if (response.code === 0) {
                     actions.project.setReducers({
                         isShowFolder: true,
@@ -158,7 +172,7 @@ const projectModel = {
                     thanosModalVisible: false
                 });
             }
-        }
+        },
     }
 };
 

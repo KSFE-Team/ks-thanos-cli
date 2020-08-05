@@ -1,5 +1,6 @@
 // import logger from '../utils/logger/index';
 import file from './file';
+import runNpmCommand from './runNpmCommand';
 import runCommand from './runCommand';
 import thanos from './thanos';
 
@@ -12,6 +13,7 @@ export default function(context) {
 
 export {
     file,
+    runNpmCommand,
     runCommand,
-    thanos
+    thanos,
 };

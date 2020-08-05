@@ -8,6 +8,7 @@ import { getImportsCode } from 'Src/utils/getCode';
 import { ComponentManager } from './manager';
 import { Value } from 'Src/factories/value';
 import { BasicContainer } from 'Src/factories/basicElement';
+import { VariableDeclaration, VariableFromState } from 'Src/factories/page/types';
 
 const debug = Debug(__filename);
 
@@ -33,6 +34,9 @@ export default class File extends BasicContainer {
     propTypesCode: any[] = [
         'match: PropTypes.object'
     ]; // 默认的参数类型定义
+
+    renderVariableDeclaration: VariableDeclaration[] = []; // render前定义的变量
+    stateVariableDeclaration: VariableFromState[] = []; // state中的定义变量
     /**
      * 构造函数
      * @param name 页面名
@@ -160,6 +164,10 @@ export default class File extends BasicContainer {
     getPageCard = (codes: string) => {
         return codes;
     }
+
+    addStateVariableDeclaration = () => {}
+
+    addRenderVariableDeclaration = () => {}
 
     /**
      * 获取 import

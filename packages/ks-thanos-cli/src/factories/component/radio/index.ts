@@ -30,7 +30,7 @@ export class Radio extends FormItem {
             );
         });
         return `<Radio.Group>
-        ${code.join('\n')}
+            ${code.join('\n')}
         </Radio.Group>`;
     }
 }
