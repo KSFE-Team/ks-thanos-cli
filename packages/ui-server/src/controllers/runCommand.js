@@ -1,4 +1,4 @@
-import { sendLog } from '../socket';
+// import { sendLog } from '../socket';
 
 let spawns = {};
 
@@ -15,20 +15,20 @@ export default function(context) {
     const childProcess = require('child_process');
 
     const [CMD, ...ARGS] = context.query.command.split(' ');
-    const spawnObj = childProcess.spawn(CMD, ARGS, {cwd, encoding: 'utf-8'});
-    spawnObj.stdout.on('data', function(chunk) {
-        sendLog(chunk.toString());
-    });
-    spawnObj.stderr.on('data', (chunk) => {
-        sendLog(chunk.toString());
-    });
-    spawnObj.on('close', function(code) {
-        this.stdin.pause();
-        console.log('close code : ' + code);
-    });
-    spawnObj.on('exit', (code) => {
-        // sendLog(`stop ${cwd}`);
-    });
+    const spawnObj = childProcess.spawnSync(CMD, ARGS, {cwd, encoding: 'utf-8'});
+    // spawnObj.stdout.on('data', function(chunk) {
+    //     sendLog(chunk.toString());
+    // });
+    // spawnObj.stderr.on('data', (chunk) => {
+    //     sendLog(chunk.toString());
+    // });
+    // spawnObj.on('close', function(code) {
+    //     this.stdin.pause();
+    //     console.log('close code : ' + code);
+    // });
+    // spawnObj.on('exit', (code) => {
+    //     // sendLog(`stop ${cwd}`);
+    // });
     spawns[cwd] = spawnObj.pid;
 
     context.body = {

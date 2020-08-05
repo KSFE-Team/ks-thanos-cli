@@ -13,7 +13,7 @@ import '../index.scss';
  */
 const toogleModalVisible = (bool) => {
     actions.project.setReducers({
-        thanosModalVisible: bool
+        initModalVisible: bool
     });
 };
 
@@ -22,42 +22,22 @@ const toogleModalVisible = (bool) => {
  */
 const FORM_ITEM_CONFIGS = [
     {
-        title: '页面模版名称',
-        key: 'templateName',
-        component: <Input placeholder={'页面模版名称'}/>,
+        title: '项目名称',
+        key: 'projectName',
+        component: <Input placeholder={'项目名称'}/>,
         config: {
             rules: [
-                {required: true, message: requiredMessage('页面模版名称')}
+                {required: true, message: requiredMessage('项目名称')}
             ]
         }
     },
     {
-        title: '创建模块英文名称',
-        key: 'pageName',
-        component: <Input placeholder={'创建模块英文名称'}/>,
-        config: {
-            rules: [
-                {required: true, message: requiredMessage('创建模块英文名称')}
-            ]
-        }
-    },
-    {
-        title: '创建模块中文名称',
-        key: 'pageChineseName',
-        component: <Input placeholder={'创建模块中文名称'}/>,
-        config: {
-            rules: [
-                {required: true, message: requiredMessage('创建模块中文名称')}
-            ]
-        }
-    },
-    {
-        title: '页面路径（相对于 src/pages 的路径）',
+        title: '项目路径',
         key: 'pagePath',
         component: <SelectPathInput />,
         config: {
             rules: [
-                // {required: true, message: requiredMessage('页面路径（相对于 src/pages 的路径）')}
+                {required: true, message: requiredMessage('项目路径')}
             ]
         }
     }
@@ -66,26 +46,27 @@ const FORM_ITEM_CONFIGS = [
 /**
  * 灭霸配置弹窗
  */
-const thanosModal = (props) => {
+const initModal = (props) => {
     const { form, project, thanosLoading } = props;
-    const { thanosModalVisible, cwd } = project;
+    const { initModalVisible, currentPath } = project;
     /**
      * 校验方法
      */
     const handleSubmit = () => {
         form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
             if (!err) {
-                actions.project.thanos({
+                // actions.project.thanos();
+                console.log({
                     ...fieldsValue,
-                    cwd
+                    cwd: currentPath
                 });
             }
         });
     };
     return (
         <Modal
-            visible={thanosModalVisible}
-            title={'灭霸配置'}
+            visible={initModalVisible}
+            title={'项目初始化'}
             confirmLoading={thanosLoading}
             onCancel={toogleModalVisible.bind(this, false)}
             onOk={handleSubmit}
@@ -94,10 +75,10 @@ const thanosModal = (props) => {
         </Modal>
     );
 };
-thanosModal.propTypes = {
+initModal.propTypes = {
     project: PropTypes.object, // project redux
     form: PropTypes.object, // form表单
     thanosLoading: PropTypes.bool, // 接口状态
 };
 
-export default projectContainer(Form.create()(thanosModal));
+export default projectContainer(Form.create()(initModal));

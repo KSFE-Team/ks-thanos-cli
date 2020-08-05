@@ -5,8 +5,9 @@ import { Icon } from 'antd';
 import lottie from 'lottie-web';
 import { projectContainer } from 'Models/project';
 import { FitAddon } from 'xterm-addon-fit';
-import FolderListModal from './FolderListModal';
+import SelectPathModal from './SelectPathModal';
 import ThanosModal from './ThanosModal';
+import InitModal from './InitModal';
 import terminal from './terminal';
 import './index.scss';
 import 'xterm/css/xterm.css';
@@ -112,6 +113,15 @@ export default class Project extends Component {
     }
 
     /**
+     * 项目初始化
+     */
+    handleInit = () => {
+        actions.project.setReducers({
+            initModalVisible: true
+        });
+    }
+
+    /**
      * 获取操作
      */
     getActions = () => {
@@ -139,6 +149,11 @@ export default class Project extends Component {
                         className: 'btn-clear',
                         onClick: this.handleThanos,
                         text: '灭霸'
+                    },
+                    {
+                        className: 'btn-clear',
+                        onClick: this.handleInit,
+                        text: '项目初始化'
                     }
                 ];
                 break;
@@ -161,7 +176,7 @@ export default class Project extends Component {
     render() {
         const {
             projects, isShowFolder, currentIndex,
-            thanosModalVisible,
+            thanosModalVisible, initModalVisible
         } = this.props.project;
         return (
             <div
@@ -232,11 +247,27 @@ export default class Project extends Component {
                 </div>
                 {/* 设置文件目录弹框 */}
                 {
-                    isShowFolder && <FolderListModal/>
+                    isShowFolder && <SelectPathModal
+                        preCheckFunc={() => {
+                            const { fileList } = this.props.project;
+                            const pass = fileList.some(({name}) => name === 'package.json');
+                            return {
+                                pass,
+                                msg: pass ? '' : '请选择正确的项目根目录'
+                            };
+                        }}
+                        onSubmit={() => {
+                            actions.project.confirmFilePath();
+                        }}
+                    />
                 }
                 {/* 灭霸弹框 */}
                 {
                     thanosModalVisible && <ThanosModal/>
+                }
+                {/* 项目初始化弹框 */}
+                {
+                    initModalVisible && <InitModal/>
                 }
             </div>
         );

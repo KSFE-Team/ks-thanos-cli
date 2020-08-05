@@ -13,10 +13,12 @@ const projectModel = {
         isShowFolder: false,
         fileList: [],
         currentPath: '/Users',
+        cwd: '',
         projects: [],
         currentIndex: 0,
 
         thanosModalVisible: false, // 灭霸弹框 显|隐
+        initModalVisible: false, // 项目初始化弹框 显|隐
     },
 
     effects: {
@@ -30,9 +32,11 @@ const projectModel = {
                 let projects = JSON.parse(projectsStr);
 
                 if (projects && projects.length > 0) {
+                    const [INIT_PROJECT = {}] = projects;
                     actions.project.setReducers({
                         projects,
-                        currentPath: projects[0].path
+                        currentPath: INIT_PROJECT.path,
+                        cwd: INIT_PROJECT.path
                     });
                 }
             }
@@ -41,14 +45,14 @@ const projectModel = {
          * 执行NPM命令
          */
         runNpmCommand(payload, getState) {
-            const { currentPath } = getState().project;
+            const { cwd } = getState().project;
 
             return Api.getData({
                 api: 'runNpmCommand',
                 method: 'GET',
                 params: {
                     command: payload,
-                    cwd: currentPath
+                    cwd
                 }
             });
         },
@@ -56,14 +60,14 @@ const projectModel = {
          * 执行命令
          */
         runCommand(payload, getState) {
-            const { currentPath } = getState().project;
+            const { cwd } = getState().project;
 
             return Api.getData({
                 api: 'runCommand',
                 method: 'GET',
                 params: {
                     command: payload,
-                    cwd: currentPath
+                    cwd
                 }
             });
         },
@@ -94,28 +98,24 @@ const projectModel = {
          * 确认文件
          */
         confirmFilePath(payload, getState) {
-            const { fileList, projects, currentPath } = getState().project;
-            const length = fileList.filter((f) => f.name === 'package.json').length;
-
-            if (length === 1) {
-                const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-
+            let { projects, currentPath } = getState().project;
+            const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+            /* 没有重复路径 */
+            if (projects.every(({path}) => path !== currentPath)) {
                 projects.push({
                     path: currentPath,
                     name
                 });
-
-                actions.project.setReducers({
-                    isShowFolder: false,
-                    fileList: [],
-                    currentPath,
-                    projects
-                });
-
-                localStorage.setItem('projects', JSON.stringify(projects));
-            } else {
-                alert('请选择正确的项目根目录');
             }
+            actions.project.setReducers({
+                // isShowFolder: false,
+                // fileList: [],
+                currentPath,
+                cwd: currentPath,
+                projects
+            });
+
+            localStorage.setItem('projects', JSON.stringify(projects));
         },
         /**
          * 取消选择项目
@@ -134,7 +134,8 @@ const projectModel = {
             if (projects[payload]) {
                 actions.project.setReducers({
                     currentIndex: payload,
-                    currentPath: projects[payload].path
+                    currentPath: projects[payload].path,
+                    cwd: projects[payload].path
                 });
 
                 terminal.clear();
