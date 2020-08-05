@@ -4,9 +4,9 @@ import { actions } from 'kredux';
 import Modal from 'Components/Modal';
 import { projectContainer } from 'Models/project';
 import { Button, Icon, Input, message } from 'antd';
-import FileItem from './FileItem';
-import { FILE_TYPE } from './constants';
-import './index.scss';
+import FileItem from '../FileItem';
+import { FILE_TYPE } from '../constants';
+import '../index.scss';
 
 const DIR = FILE_TYPE[1];
 

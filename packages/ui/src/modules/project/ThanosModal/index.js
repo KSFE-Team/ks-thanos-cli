@@ -5,7 +5,7 @@ import { Modal, Form, Input } from 'antd';
 import FormItemRender from 'Components/FormItemRender';
 import { projectContainer } from 'Models/project';
 import { requiredMessage } from 'Utils';
-import './index.scss';
+import '../index.scss';
 
 /**
  * 关闭弹框

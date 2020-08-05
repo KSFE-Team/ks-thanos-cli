@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
-import { FILE_TYPE } from './constants';
+import { FILE_TYPE } from '../constants';
 const [FILE, DIR] = FILE_TYPE;
 
 export default class FileItem extends Component {

@@ -9,7 +9,7 @@ import FolderListModal from './FolderListModal';
 import ThanosModal from './ThanosModal';
 import terminal from './terminal';
 import './index.scss';
-import '../../../node_modules/xterm/css/xterm.css';
+import 'xterm/css/xterm.css';
 
 @projectContainer
 export default class Project extends Component {
