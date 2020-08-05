@@ -9,6 +9,7 @@ declare module '@ks-thanos/ui-server/output/ui' {
             env: string;
             uiEnv: string;
             serverEnv: string;
+            port: number;
         });
         init(): undefined;
         start(): undefined;

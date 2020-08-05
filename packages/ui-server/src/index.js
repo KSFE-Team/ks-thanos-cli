@@ -7,7 +7,6 @@ import cors from 'koa2-cors';
 // import logger from './utils/logger';
 import { createSocket } from './socket';
 
-const port = 3000;
 const app = new Koa();
 const server = createSocket(app);
 
@@ -76,7 +75,7 @@ app.use((context, next) => {
 //     });
 
 // startServer();
-export function startServer() {
+export function startServer(port = 3000) {
     server.listen(port, () => {
         // logger.info(`server listening on ${port}...`);
     });

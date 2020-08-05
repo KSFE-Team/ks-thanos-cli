@@ -13,7 +13,7 @@ const LOCAL_CONFIG_PATH = `${getYarnGlobalDir().data}/node_modules/@ks-thanos/ui
 export default class ThanosUi {
     constructor(config = {}) {
         this.config = {
-            port: 8001, // CLI可视化服务端口
+            port: config.uiPort || 8001, // CLI可视化服务端口
             ...config,
             initPath: '/project/'
         };
@@ -43,11 +43,11 @@ export default class ThanosUi {
     }
 
     async start() {
-        const { port, uiEnv, serverEnv, initPath } = this.config;
+        const { port, uiEnv, serverEnv, initPath, serverPort } = this.config;
         const url = `http://localhost:${port}${initPath}`;
         /* 生产模式将自动启服务 */
         if (serverEnv === ENV_PRODUCTION) {
-            startServer();
+            startServer(serverPort);
         }
         /* 生产环境启动端口监听 */
         if (uiEnv === ENV_PRODUCTION) {

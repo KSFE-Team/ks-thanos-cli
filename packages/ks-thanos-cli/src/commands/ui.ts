@@ -7,13 +7,15 @@ const { ENV_PRODUCTION } = constants;
  * @param options 参数
  */
 export async function runUi(config: any) {
-    let { env = ENV_PRODUCTION, uiEnv, serverEnv } = config;
+    let { env = ENV_PRODUCTION, uiEnv, serverEnv, serverPort, uiPort } = config;
     uiEnv = uiEnv || env;
     serverEnv = serverEnv || env;
     const thanosUi = await new ThanosUi({
         env,
         uiEnv,
-        serverEnv
+        serverEnv,
+        serverPort,
+        uiPort
     });
     await thanosUi.start();
 }
