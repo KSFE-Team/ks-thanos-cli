@@ -11,7 +11,7 @@ const debug = Debug(__filename);
 const ownPkgJSON = require('../../package.json');
 
 commander
-    .description(info('凯叔前端灭霸系统工具local'))
+    .description(info('凯叔前端灭霸系统工具'))
     .version(ownPkgJSON.version)
     .usage('<command> [command-options]');
 
