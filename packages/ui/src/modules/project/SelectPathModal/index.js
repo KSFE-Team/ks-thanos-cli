@@ -165,7 +165,17 @@ export default class SelectPathModal extends Component {
                 visible={isShowFolder}
                 title={
                     <Fragment>
-                        <span className="btn" onClick={this.handleBack}>{`<`}</span>
+                        <Icon
+                            onClick={() => {
+                                actions.project.selectFolder({
+                                    path: '/Users'
+                                });
+                            }}
+                            style={{margin: '0 6px', fontSize: '18px'}}
+                            type="home"
+                            theme="filled"
+                        />
+                        <span className='get-back-icon' onClick={this.handleBack}>{`<`}</span>
                         <span>当前路径：{currentPath}</span>
                     </Fragment>
                 }

@@ -75,9 +75,15 @@ const thanosModal = (props) => {
     const handleSubmit = () => {
         form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
             if (!err) {
-                actions.project.thanos({
-                    ...fieldsValue,
-                    cwd
+                actions.project.thanosSync({
+                    cwd,
+                    cmd: 'sync',
+                    args: JSON.stringify([
+                        {
+                            key: '--config',
+                            value: {...fieldsValue}
+                        }
+                    ])
                 });
             }
         });

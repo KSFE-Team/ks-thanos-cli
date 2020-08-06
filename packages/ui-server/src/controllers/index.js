@@ -3,6 +3,7 @@ import file from './file';
 import runNpmCommand from './runNpmCommand';
 import runCommand from './runCommand';
 import thanos from './thanos';
+import thanosSync from './thanosSync';
 
 export default function(context) {
     // logger.info('hello!');
@@ -16,4 +17,5 @@ export {
     runNpmCommand,
     runCommand,
     thanos,
+    thanosSync,
 };

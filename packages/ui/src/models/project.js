@@ -161,9 +161,9 @@ const projectModel = {
         /**
          * 执行灭霸命令
          */
-        thanos: async(payload) => {
+        thanosSync: async(payload) => {
             const response = await Api.getData({
-                api: 'thanos',
+                api: 'thanosSync',
                 method: 'GET',
                 params: payload
             });
@@ -174,6 +174,47 @@ const projectModel = {
                 });
             }
         },
+        /**
+         * 执行项目初始化
+         */
+        initProject: async(payload) => {
+            const response = await Api.getData({
+                api: 'thanos',
+                method: 'GET',
+                params: {
+                    ...payload,
+                    // cmd: '-V',
+                    // args: JSON.stringify([])
+                }
+            });
+            if (response.code === 0) {
+                message.success('项目初始化中请稍等');
+                actions.project.setReducers({
+                    initModalVisible: false
+                });
+            }
+        },
+        /**
+         * 更新项目列表
+         */
+        updateProjectList: (payload, getState) => {
+            const { replace, add } = payload;
+            let { projects } = getState().project;
+            if (replace) {
+                projects = replace;
+            } else if (add) {
+                projects = [
+                    ...projects,
+                    add
+                ];
+            }
+
+            actions.project.setReducers({
+                projects
+            });
+
+            localStorage.setItem('projects', JSON.stringify(projects));
+        },
     }
 };
 
@@ -182,7 +223,8 @@ const projectModel = {
  */
 export const projectContainer = connect(({ project, loading }) => ({
     project,
-    thanosLoading: loading.effects['project/thanos']
+    thanosLoading: loading.effects['project/thanos'],
+    initProjectLoading: loading.effects['project/initProject'],
 }));
 
 export default projectModel;

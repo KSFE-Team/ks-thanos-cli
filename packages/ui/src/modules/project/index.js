@@ -216,10 +216,9 @@ export default class Project extends Component {
                                                         const filterProjects = projects.filter((_, idx) => {
                                                             return idx !== index;
                                                         });
-                                                        actions.project.setReducers({
-                                                            projects: filterProjects
+                                                        actions.project.updateProjectList({
+                                                            replace: filterProjects
                                                         });
-                                                        localStorage.setItem('projects', JSON.stringify(filterProjects));
                                                     }}
                                                 />
                                             </li>

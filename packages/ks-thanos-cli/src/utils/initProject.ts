@@ -8,13 +8,13 @@ const debug = Debug(__filename);
 /**
  * 初始化项目文件夹
  */
-export function initProjectFolder(projectName: string) {
+export function initProjectFolder(projectName: string, cwd: string) {
     const branchName = 'master';
     const projectRepo = 'http://gitlab.devops.kaishustory.com/ks_h5_kms/ks-pcweb-thanos-base.git';
 
     debug(`Init project from git: ${projectRepo} —— ${branchName}`);
 
-    const cmdStr = `git clone ${projectRepo} ${projectName} && cd ${projectName} && git checkout ${branchName}`;
+    const cmdStr = `cd ${cwd} && git clone ${projectRepo} ${projectName} && cd ${projectName} && git checkout ${branchName}`;
 
     debug(`CMD str: ${cmdStr}`);
 
@@ -32,7 +32,6 @@ export function initProjectFolder(projectName: string) {
 
 export function installDependencies(projectPath: string) {
     debug(`Install dependencies`);
-
     const cmdStr = `cd ${projectPath} && npm install`;
 
     try {

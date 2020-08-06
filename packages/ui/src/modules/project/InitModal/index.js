@@ -33,7 +33,7 @@ const FORM_ITEM_CONFIGS = [
     },
     {
         title: '项目路径',
-        key: 'pagePath',
+        key: 'projectPath',
         component: <SelectPathInput />,
         config: {
             rules: [
@@ -47,18 +47,23 @@ const FORM_ITEM_CONFIGS = [
  * 灭霸配置弹窗
  */
 const initModal = (props) => {
-    const { form, project, thanosLoading } = props;
-    const { initModalVisible, currentPath } = project;
+    const { form, project, initProjectLoading } = props;
+    const { initModalVisible, cwd } = project;
     /**
      * 校验方法
      */
     const handleSubmit = () => {
         form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
             if (!err) {
-                // actions.project.thanos();
-                console.log({
-                    ...fieldsValue,
-                    cwd: currentPath
+                actions.project.initProject({
+                    cwd,
+                    cmd: 'init',
+                    args: JSON.stringify([
+                        {
+                            key: '--config',
+                            value: {...fieldsValue}
+                        }
+                    ])
                 });
             }
         });
@@ -67,7 +72,7 @@ const initModal = (props) => {
         <Modal
             visible={initModalVisible}
             title={'项目初始化'}
-            confirmLoading={thanosLoading}
+            confirmLoading={initProjectLoading}
             onCancel={toogleModalVisible.bind(this, false)}
             onOk={handleSubmit}
         >
@@ -78,7 +83,7 @@ const initModal = (props) => {
 initModal.propTypes = {
     project: PropTypes.object, // project redux
     form: PropTypes.object, // form表单
-    thanosLoading: PropTypes.bool, // 接口状态
+    initProjectLoading: PropTypes.bool, // 接口状态
 };
 
 export default projectContainer(Form.create()(initModal));

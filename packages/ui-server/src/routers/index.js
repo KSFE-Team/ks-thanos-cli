@@ -1,4 +1,4 @@
-import controller, { file, runNpmCommand, runCommand, thanos } from '../controllers';
+import controller, { file, runNpmCommand, runCommand, thanos, thanosSync } from '../controllers';
 import Router from 'koa-router';
 
 const VERSION = 'v1';
@@ -12,5 +12,6 @@ router.get('/runNpmCommand', runNpmCommand);
 router.get('/runCommand', runCommand);
 router.get('/file', file);
 router.get('/thanos', thanos);
+router.get('/thanosSync', thanosSync);
 
 export default router;

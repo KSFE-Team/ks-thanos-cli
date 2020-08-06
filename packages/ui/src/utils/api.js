@@ -4,5 +4,6 @@ export default {
     file: `${SERVER}/file`,
     runNpmCommand: `${SERVER}/runNpmCommand`,
     runCommand: `${SERVER}/runCommand`,
-    thanos: `${SERVER}/thanos`
+    thanos: `${SERVER}/thanos`,
+    thanosSync: `${SERVER}/thanosSync`,
 };
