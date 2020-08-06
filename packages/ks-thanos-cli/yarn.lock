@@ -25,10 +25,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@ks-thanos/ui-server@1.0.1":
-  version "1.0.1"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-1.0.1.tgz#c2264325276195cbdc74d6e8e8a722b0386747ec"
-  integrity sha512-BO9dtaa2zvtJOCGo9mguCH91gMlVo/SLpGW9BAyzwtmgVlhpOosNDo5/EEbfe96lpIzg58W99k53b9/wfUuIyQ==
+"@ks-thanos/ui-server@^1.0.2":
+  version "1.0.2"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-1.0.2.tgz#8f8c0b31ae2d1b2097d823896009cd15cd6bc53b"
+  integrity sha512-3IZK+d8gOGF7YpBu7Ydk2NJbqEA/rpLeTjg/NUgOinlRoSIKjUBrMSzcOhmkk33Yr5qOj66WjUdIQkrd4OiUAg==
   dependencies:
     "@ks-thanos/utils" "^1.0.1"
     axios "^0.19.2"
