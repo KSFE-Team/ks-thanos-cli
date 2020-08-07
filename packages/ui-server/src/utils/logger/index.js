@@ -1,17 +1,10 @@
 import { createLogger, format, transports } from 'winston';
-import DataBaseConfig from '../../models/config';
-import TransportMongoDB from './transportMongoDB';
 
 const { combine, timestamp, json, prettyPrint, colorize, simple } = format;
 
 const transportHelpers = [
     new transports.Console({
         format: simple()
-    }),
-    new TransportMongoDB({
-        host: DataBaseConfig.host,
-        port: DataBaseConfig.port,
-        dbName: DataBaseConfig.dbName
     }),
 ];
 
@@ -24,7 +17,7 @@ const logger = createLogger({
         timestamp({
             format: 'YY-MM-DD HH:mm:ss'
         }),
-        prettyPrint()
+        prettyPrint(),
     ),
     transports: transportHelpers,
     exceptionHandlers: transportHelpers.concat([

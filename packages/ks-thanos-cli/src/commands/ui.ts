@@ -1,4 +1,4 @@
-import ThanosUi from '@ks-thanos/ui-server/output/ui';
+import ThanosUi from '@ks-thanos/ui-server/ui';
 import { constants } from '@ks-thanos/utils';
 const { ENV_PRODUCTION } = constants;
 // const debug = Debug(__filename);

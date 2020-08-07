@@ -1,4 +1,4 @@
-declare module '@ks-thanos/ui-server/output/ui' {
+declare module '@ks-thanos/ui-server/ui' {
     export default class ThanosUi {
         env: string;
         uiEnv: string;

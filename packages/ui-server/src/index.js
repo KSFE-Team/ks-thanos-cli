@@ -4,7 +4,7 @@ import router from './routers';
 import bodyParser from 'koa-bodyparser';
 // import databaseConfig from './models/config';
 import cors from 'koa2-cors';
-// import logger from './utils/logger';
+import logger from './utils/logger';
 import { createSocket } from './socket';
 
 const app = new Koa();
@@ -75,8 +75,9 @@ app.use((context, next) => {
 //     });
 
 // startServer();
+
 export function startServer(port = 3000) {
     server.listen(port, () => {
-        // logger.info(`server listening on ${port}...`);
+        logger.info(`server listening on ${port}...`);
     });
 }

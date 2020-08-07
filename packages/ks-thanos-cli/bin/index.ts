@@ -55,11 +55,15 @@ commander
     .option('--env [env]', `运行环境`)
     .option('--uiEnv [env]', `ui运行环境`)
     .option('--serverEnv [env]', `server运行环境`)
+    .option('--uiPort [uiPort]', `ui界面端口`)
+    .option('--serverPort [serverPort]', `ui服务器端口`)
     .action(async(
         options: {
             env: string;
             uiEnv: string;
             serverEnv: string;
+            uiPort: string;
+            serverPort: string;
         }
     ) => {
         debug(`start ui`);

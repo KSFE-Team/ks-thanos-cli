@@ -1,4 +1,9 @@
-let SERVER = 'http://localhost:3000/api/ks-thanos-ui-server/v1';
+import { parseQueryString } from 'ks-utils';
+
+const queryString = parseQueryString(window.location.search);
+const serverPort = queryString.serverPort;
+
+const SERVER = `http://localhost:${serverPort}/api/ks-thanos-ui-server/v1`;
 export default {
     test: `${SERVER}/test`,
     file: `${SERVER}/file`,

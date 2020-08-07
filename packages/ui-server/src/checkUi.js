@@ -16,11 +16,12 @@ export default function({
             'info',
             '@ks-thanos/ui',
             '--json'
-        ], {encoding: 'utf-8'});
+        ], { encoding: 'utf-8' });
         if (!yarnInfoExec.status) {
             const yarnInfo = JSON.parse(yarnInfoExec.stdout).data;
             const distTags = yarnInfo['dist-tags'];
             const newVersion = distTags['latest'];
+            console.log(`newVersion: ${newVersion}, version: ${version}`);
             /* 版本比较 */
             if (checkVersion(newVersion, version)) {
                 installLatestVersion();
@@ -46,5 +47,5 @@ const installLatestVersion = () => {
         'global',
         'add',
         '@ks-thanos/ui'
-    ], {encoding: 'utf-8', stdio: 'inherit'});
+    ], { encoding: 'utf-8', stdio: 'inherit' });
 };

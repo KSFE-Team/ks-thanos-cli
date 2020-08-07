@@ -10,7 +10,8 @@
         "test": "__tests__"
     },
     "files": [
-        "output"
+        "output",
+        "./ui.js"
     ],
     "publishConfig": {
         "registry": "http://172.16.1.179:4873/"
