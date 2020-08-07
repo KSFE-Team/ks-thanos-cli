@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'antd';
+import { actions } from 'kredux';
+import { Icon, Menu, Dropdown, Modal } from 'antd';
 import { FILE_TYPE } from '../constants';
 const [FILE, DIR] = FILE_TYPE;
+const { Item: MenuItem } = Menu;
+const { confirm } = Modal;
 
 export default class FileItem extends Component {
     static propTypes = {
@@ -26,17 +29,41 @@ export default class FileItem extends Component {
         }
     }
 
+    getMenu = () => {
+        const { file } = this.props;
+        return <Menu>
+            <MenuItem
+                onClick={() => {
+                    confirm({
+                        title: '删除',
+                        content: `确认要删除${file.name}`,
+                        onOk: () => {
+                            actions.project.runCommand(`rm -rf ${file.name}`).then(() => {
+                                actions.project.selectFolder();
+                            });
+                        }
+                    });
+                }}
+            >删除</MenuItem>
+        </Menu>;
+    }
+
     render() {
         const { file } = this.props;
         const { name } = file;
         return (
-            <div
-                className={`file-item ${file.type}`}
-                onClick={this.handleClick}
+            <Dropdown
+                overlay={this.getMenu()}
+                trigger={['contextMenu']}
             >
-                {this.getIcon()}
-                {name}
-            </div>
+                <div
+                    className={`file-item ${file.type}`}
+                    onClick={this.handleClick}
+                >
+                    {this.getIcon()}
+                    {name}
+                </div>
+            </Dropdown>
         );
     }
 }

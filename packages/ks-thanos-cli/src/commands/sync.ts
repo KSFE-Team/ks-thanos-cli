@@ -69,9 +69,9 @@ export async function runSync(options: {
     }
 
     const { templateName, pageName, pageChineseName, pagePath } = config || await prompt(questions);
-
+    let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath;
     // 页面名称，首字母大写
-    let firstUpperPagePath = pagePath.split('/').map((path: string) => upperFirst(path)).join('/');
+    let firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
 
     const pageFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath, upperFirst(pageName));
 

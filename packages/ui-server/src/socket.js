@@ -29,3 +29,11 @@ export const createSocket = (app) => {
 export const sendLog = (data) => {
     socketIo.sockets.in(roomId).emit('log', data);
 };
+
+/**
+ * @desc 推送完成项目初始化
+ * @param data
+ */
+export const thanosCallback = (data) => {
+    socketIo.sockets.in(roomId).emit('thanosCallback', data);
+};

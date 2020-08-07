@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { actions } from 'kredux';
-import Modal from 'Components/Modal';
 import { projectContainer } from 'Models/project';
 import { Button, Icon, Input, message } from 'antd';
+import Modal from 'Components/Modal';
 import FileItem from '../FileItem';
 import { FILE_TYPE } from '../constants';
 import '../index.scss';
@@ -11,9 +11,11 @@ import '../index.scss';
 const DIR = FILE_TYPE[1];
 
 @projectContainer
-export default class FolderListModal extends Component {
+export default class SelectPathModal extends Component {
     static propTypes = {
-        project: PropTypes.object
+        project: PropTypes.object,
+        preCheckFunc: PropTypes.func,
+        onSubmit: PropTypes.func,
     }
 
     state = {
@@ -43,7 +45,17 @@ export default class FolderListModal extends Component {
      * 确认弹框
      */
     handleConfirm = () => {
-        actions.project.confirmFilePath();
+        const { preCheckFunc, onSubmit } = this.props;
+        const { currentPath } = this.props.project;
+        const {pass, msg} = preCheckFunc ? preCheckFunc(currentPath) : {pass: true};
+        if (pass) {
+            onSubmit && onSubmit(currentPath);
+            actions.project.setReducers({
+                isShowFolder: false
+            });
+        } else {
+            message.error(msg);
+        }
     }
 
     /**
@@ -81,6 +93,9 @@ export default class FolderListModal extends Component {
         />;
     }
 
+    /**
+     * 创建文件事件
+     */
     handleCreateFolder = (value) => {
         if (!value) {
             this.setState({
@@ -101,6 +116,9 @@ export default class FolderListModal extends Component {
         }
     }
 
+    /**
+     * 检查文件名称冲突
+     */
     checkFolderName = (folderName) => {
         const { fileList } = this.props.project;
         const isSame = fileList.some(({type, name}) => type === DIR.key && name === folderName);
@@ -110,6 +128,9 @@ export default class FolderListModal extends Component {
         };
     }
 
+    /**
+     * 自定义弹窗底部
+     */
     getFooter = () => {
         return <Fragment>
             <div className='file-modal-tools'>
@@ -144,7 +165,17 @@ export default class FolderListModal extends Component {
                 visible={isShowFolder}
                 title={
                     <Fragment>
-                        <span className="btn" onClick={this.handleBack}>{`<`}</span>
+                        <Icon
+                            onClick={() => {
+                                actions.project.selectFolder({
+                                    path: '/Users'
+                                });
+                            }}
+                            style={{margin: '0 6px', fontSize: '18px'}}
+                            type="home"
+                            theme="filled"
+                        />
+                        <span className='get-back-icon' onClick={this.handleBack}>{`<`}</span>
                         <span>当前路径：{currentPath}</span>
                     </Fragment>
                 }

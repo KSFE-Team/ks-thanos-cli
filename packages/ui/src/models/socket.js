@@ -40,10 +40,23 @@ const socketModel = {
                         });
                     }, 500);
                 });
+
+                socket.on('thanosCallback', (socketRes) => {
+                    const { cmd, args } = socketRes;
+                    if (cmd === 'init') {
+                        const [{value: config}] = args;
+                        actions.project.updateProjectList({
+                            add: {
+                                path: `${config.projectPath}/${config.projectName}`,
+                                name: config.projectName
+                            }
+                        });
+                    }
+                });
             }
 
             inited = true;
-        }
+        },
     }
 };
 

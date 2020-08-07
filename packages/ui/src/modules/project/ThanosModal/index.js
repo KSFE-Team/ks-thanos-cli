@@ -5,6 +5,7 @@ import { Modal, Form, Input } from 'antd';
 import FormItemRender from 'Components/FormItemRender';
 import { projectContainer } from 'Models/project';
 import { requiredMessage } from 'Utils';
+import SelectPathInput from '../SelectPathInput';
 import '../index.scss';
 
 /**
@@ -53,7 +54,7 @@ const FORM_ITEM_CONFIGS = [
     {
         title: '页面路径（相对于 src/pages 的路径）',
         key: 'pagePath',
-        component: <Input placeholder={'页面路径（相对于 src/pages 的路径）'}/>,
+        component: <SelectPathInput />,
         config: {
             rules: [
                 // {required: true, message: requiredMessage('页面路径（相对于 src/pages 的路径）')}
@@ -67,16 +68,22 @@ const FORM_ITEM_CONFIGS = [
  */
 const thanosModal = (props) => {
     const { form, project, thanosLoading } = props;
-    const { thanosModalVisible, currentPath } = project;
+    const { thanosModalVisible, cwd } = project;
     /**
      * 校验方法
      */
     const handleSubmit = () => {
         form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
             if (!err) {
-                actions.project.thanos({
-                    ...fieldsValue,
-                    cwd: currentPath
+                actions.project.thanosSync({
+                    cwd,
+                    cmd: 'sync',
+                    args: JSON.stringify([
+                        {
+                            key: '--config',
+                            value: {...fieldsValue}
+                        }
+                    ])
                 });
             }
         });

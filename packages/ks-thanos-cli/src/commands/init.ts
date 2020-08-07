@@ -8,15 +8,25 @@ import { prompt } from 'inquirer';
 
 const debug = Debug(__filename);
 
+interface InitConfig {
+    projectName: string;
+    projectPath: string;
+}
+
+interface AnswerConfig {
+    projectName: string;
+}
+
 /**
  * 运行项目初始化命令
  * @param options.isForce 是否强制删除已经存在的文件夹
  */
 export async function runInit(options: {
     isForce: boolean;
+    config?: string;
 }) {
-    const { isForce } = options;
-
+    const { isForce, config: mutipleConfig } = options;
+    const config: InitConfig = mutipleConfig && JSON.parse(mutipleConfig);
     const questions = [
         {
             type: 'input',
@@ -33,9 +43,17 @@ export async function runInit(options: {
             },
         },
     ];
-
-    const { projectName } = await prompt(questions);
-    const projectPath = path.join(process.cwd(), projectName);
+    let projectName: string, projectPath: string, cwd;
+    if (config) {
+        projectName = config.projectName;
+        projectPath = path.join(config.projectPath, projectName);
+        cwd = path.join('/', config.projectPath)
+    } else {
+        const answer: AnswerConfig = await prompt(questions);
+        projectName = answer.projectName;
+        projectPath = path.join(process.cwd(), projectName);
+        cwd = process.cwd()
+    }
 
     debug(`Run Init Command —— projectName: ${projectName}, projectPath: ${projectPath}, isForce: ${isForce}`);
 
@@ -49,7 +67,7 @@ export async function runInit(options: {
 
 
     console.log(infoText('\n开始生成...\n'));
-    initProjectFolder(projectName);
+    initProjectFolder(projectName, cwd);
     console.log(infoText('\n安装依赖中...\n'));
     installDependencies(projectPath);
 }

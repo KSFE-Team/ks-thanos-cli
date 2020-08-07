@@ -37,15 +37,18 @@ commander
     .command('init')
     .description('初始化项目')
     .option('--force', `强制删除并重新初始化模板目录[${errorText('DANGROUS')}]`)
+    .option('--config [config]', '初始化配置参数')
     .action(async(
         options: {
             force: boolean;
+            config: string;
         }
     ) => {
         debug(`Init project`);
-        const { force } = options;
+        const { force, config } = options;
         await runInit({
-            isForce: force
+            isForce: force,
+            config
         });
     });
 

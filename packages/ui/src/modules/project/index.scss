@@ -188,6 +188,7 @@
 
     .file-item {
         padding: 6px 12px;
+        line-height: 20px;
         // cursor: pointer;
         
         &:nth-child(2n - 1) {
@@ -226,4 +227,10 @@
     .anticon {
         cursor: pointer;
     }
+}
+
+.get-back-icon {
+    padding: 4px 8px;
+    outline: none;
+    cursor: pointer;
 }
