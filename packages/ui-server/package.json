@@ -21,9 +21,8 @@
         "url": "git+https://github.com/KSFE-Team/ks-thanos-cli.git"
     },
     "scripts": {
-        "complie": "ks start",
         "build": "ks build",
-        "start": "NODE_ENV=test node ./output/index.js",
+        "start": "NODE_ENV=test LOCAL_DEBUG=true ks start",
         "pm2-test": "pm2 start ./processes.json",
         "pm2": "pm2 start ./processes.pro.json"
     },
