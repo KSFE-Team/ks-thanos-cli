@@ -21,7 +21,6 @@ export default function({
             const yarnInfo = JSON.parse(yarnInfoExec.stdout).data;
             const distTags = yarnInfo['dist-tags'];
             const newVersion = distTags['latest'];
-            console.log(`newVersion: ${newVersion}, version: ${version}`);
             /* 版本比较 */
             if (checkVersion(newVersion, version)) {
                 installLatestVersion();
