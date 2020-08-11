@@ -16,7 +16,7 @@ const debug = Debug(__filename);
  * @param options 参数
  */
 export async function runSync(options: {
-    projectPath: string, // 项目根目录地址
+    projectPath: string; // 项目根目录地址
     config: string; // 一键配置参数
 }) {
     const questions = [
@@ -68,10 +68,10 @@ export async function runSync(options: {
         return;
     }
 
-    const { templateName, pageName, pageChineseName, pagePath } = config || await prompt(questions);
-    let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath;
-    // 页面名称，首字母大写
-    let firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
+    const { templateName = '', pageName = '', pageChineseName = '', pagePath = '' } = config || await prompt(questions);
+    let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath,
+        // 页面名称，首字母大写
+        firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
 
     const pageFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath, upperFirst(pageName));
 

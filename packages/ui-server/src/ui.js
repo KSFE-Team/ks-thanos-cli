@@ -53,7 +53,6 @@ export default class ThanosUi {
         if (uiEnv === ENV_PRODUCTION) {
             this.server = this.app.listen(port, () => {
                 createSplash('THANOS UI');
-                console.log(message.info(`server listening on ${port}...`));
                 console.log(message.info(`🚀 Starting thanos ui\n⛽️ Ready on ${url}`));
                 openBrowser(url);
             });

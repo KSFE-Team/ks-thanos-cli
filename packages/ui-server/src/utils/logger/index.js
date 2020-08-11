@@ -19,10 +19,7 @@ const logger = createLogger({
         }),
         prettyPrint(),
     ),
-    transports: transportHelpers,
-    exceptionHandlers: transportHelpers.concat([
-        new transports.File({ filename: 'log/exceptions.log' }),
-    ])
+    transports: transportHelpers
 });
 
 export default logger;

@@ -33,10 +33,13 @@ export class Table extends Component {
         super(page, config);
         this.effect = EffectManager.create(
             page.pageName,
-            this.stateName, page.model, {
+            this.stateName,
+            page.model,
+            {
                 ...config.dependencies,
                 showSelectedRows: !!config.showSelectedRows
-            });
+            }
+        );
         this.config = config;
     }
 

@@ -58,7 +58,8 @@ const FORM_ITEM_CONFIGS = [
         config: {
             rules: [
                 // {required: true, message: requiredMessage('页面路径（相对于 src/pages 的路径）')}
-            ]
+            ],
+            initialValue: ''
         }
     }
 ];

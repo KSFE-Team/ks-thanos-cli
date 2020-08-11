@@ -12,7 +12,7 @@ export function getPropValue(value: any) {
             propValue = `${value}`;
             break;
         case 'string':
-            propValue = `'${value}'`;
+            propValue = `'${Number(value) || value}'`;
             break;
         default:
             if (isArray(value)) {

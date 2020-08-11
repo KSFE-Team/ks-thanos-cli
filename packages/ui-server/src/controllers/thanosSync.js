@@ -10,6 +10,7 @@ export default function(context) {
     const ARGS = JSON.parse(context.query.args || []);
     const formatArgs = ARGS.map(({key, value}) => `${key} ${JSON.stringify(value)}`).join(' ');
     const cmd = `thanos ${CMD} ${formatArgs}`;
+    console.log(`cmd`, cmd);
     const [tools, ...args] = cmd.split(' ');
     const thanos = childProcess.spawnSync(tools, args, {cwd, encoding: 'utf-8', stdio: 'inherit'});
     if (thanos.error) {

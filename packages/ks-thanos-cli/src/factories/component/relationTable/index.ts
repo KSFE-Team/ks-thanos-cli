@@ -86,11 +86,11 @@ export class RelationTable extends Component {
                     paramKey: page.paramKey,
                 }
             }
-        ]
+        ];
     }
 
     initProps() {
-        
+
     }
 
     initEffects() {
@@ -143,7 +143,7 @@ export class RelationTable extends Component {
         return imports;
     }
 
-    toCode(item?:any) {
+    toCode() {
         this.childrenConfigs.forEach(async(config) => {
             await createFile({
                 ...config,

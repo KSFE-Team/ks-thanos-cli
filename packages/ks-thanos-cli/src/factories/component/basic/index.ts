@@ -127,7 +127,8 @@ export abstract class Component extends BasicContainer implements ComponentConfi
      */
     addProp(key: string, value: any) {
         debug(`add props: ${key}, ${JSON.stringify(value)}`);
-        if (typeof value === 'boolean') {
+        const propTypes = typeof value;
+        if (['boolean', 'number'].includes(propTypes)) {
             this.props[key] = value;
         } else {
             this.props[key] = `${value}`;

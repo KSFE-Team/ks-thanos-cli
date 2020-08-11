@@ -26,7 +26,7 @@ export class Radio extends FormItem {
         let code = this.config.options.map((item: any) => {
             let value = getPropValue(item.value);
             return (
-                `<Radio value={'${value}'} key={'${value}'}>${item.text}</Radio>`
+                `<Radio value={${value}} key={${value}}>${item.text}</Radio>`
             );
         });
         return `<Radio.Group>

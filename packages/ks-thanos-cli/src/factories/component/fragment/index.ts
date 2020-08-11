@@ -11,8 +11,8 @@ const debug = Debug(__filename);
  */
 export interface FragmentComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
-    showKey: string,
-    showValue: any,
+    showKey: string;
+    showValue: any;
 }
 
 
@@ -63,9 +63,9 @@ export class Fragment extends Component {
         </Form.Item>`;
     }
 
-    toCode(item?:any) {
+    toCode(item?: any) {
         const components = item ? item.components : this.components;
-        const componentsCode:any[] = components.map((item:any) => {
+        const componentsCode: any[] = components.map((item: any) => {
             if (item.componentName === 'Fragment') {
                 return this.toCode(item);
             }
@@ -73,7 +73,7 @@ export class Fragment extends Component {
             return formItemCode;
         });
         const showKey = (item || this).config.showKey;
-        const showValue = (item || this).config.showValue;
+        const showValue = getPropValue((item || this).config.showValue);
         return `
             {
                 this.props.form.getFieldValue('${showKey}') === ${showValue} && <Fragment>
