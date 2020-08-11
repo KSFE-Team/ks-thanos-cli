@@ -2,7 +2,7 @@ import Page from 'Src/factories/page';
 import path from 'path';
 import fsExtra, { writeJSON } from 'fs-extra';
 import { FormItemConfig, FormItem } from '../formItem';
-import { getPropValue } from 'Src/utils/getPropValue';
+import { getPropStr } from 'Src/utils/getPropValue';
 import { spawnSync } from 'child_process';
 
 /**
@@ -69,10 +69,7 @@ export class KMSCloudComponent extends FormItem {
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
-            const propValue = getPropValue(this.props[propKey]);
-            propsCode.push(
-                `${propKey}={${propValue}}`
-            );
+            propsCode.push(getPropStr(propKey, this.props[propKey]));
         }
         return `<${this.componentName}
         ${propsCode.join('\n')}

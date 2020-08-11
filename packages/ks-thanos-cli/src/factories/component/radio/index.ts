@@ -1,7 +1,7 @@
 import Page from 'Src/factories/page';
 import { FormItem } from 'Src/factories/component/formItem';
 import { FormItemConfig } from '../formItem';
-import { getPropValue } from 'Src/utils/getPropValue';
+import { getPropStr } from 'Src/utils/getPropValue';
 /**
  * Radio组件
  */
@@ -24,9 +24,13 @@ export class Radio extends FormItem {
 
     toCode() {
         let code = this.config.options.map((item: any) => {
-            let value = getPropValue(item.value);
+            const propsCode = [];
+
+            propsCode.push(getPropStr('value', item.value));
+            propsCode.push(getPropStr('key', item.value));
+
             return (
-                `<Radio value={${value}} key={${value}}>${item.text}</Radio>`
+                `<Radio ${propsCode.join(',').replace(/,/g, '\n')}>${item.text}</Radio>`
             );
         });
         return `<Radio.Group>

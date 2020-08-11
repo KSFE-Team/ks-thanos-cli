@@ -1,5 +1,6 @@
 import Page from 'Src/factories/page';
 import { FormItemConfig, FormItem } from '../formItem';
+import { getPropStr } from 'Src/utils/getPropValue';
 
 /**
  * Textarea组件
@@ -29,10 +30,7 @@ export class Textarea extends FormItem {
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
-            const propValue = this.props[propKey];
-            propsCode.push(
-                `${propKey}={'${propValue}'}`
-            );
+            propsCode.push(getPropStr(propKey, this.props[propKey]));
         }
         return `<Input.TextArea
         ${propsCode.join('\n')}

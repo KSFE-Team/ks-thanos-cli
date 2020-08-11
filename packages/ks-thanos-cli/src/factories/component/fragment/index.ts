@@ -50,9 +50,9 @@ export class Fragment extends Component {
 
     toFormItemCode(item: FormItem) {
         debug(`Fragment: toFormItemCode  ======  ${item.componentName}`);
-        const labelValue = getPropValue(item.config.label);
+        const labelValue = item.config.label;
         return `<Form.Item
-                label={${labelValue}}
+                label="${labelValue}"
                 { ...FORM_LAYOUT }
             >
             {

@@ -31,3 +31,13 @@ export function getPropValue(value: any) {
     }
     return propValue;
 }
+
+export function getPropStr(propKey: string, value: any) {
+    const propValue = getPropValue(value);
+    const valueType = typeof value;
+    if(valueType === 'string') {
+        return `${propKey}=${propValue.replace(/\'/g, '"')}`;
+    } else {
+        return `${propKey}={${propValue}}`;
+    }
+}

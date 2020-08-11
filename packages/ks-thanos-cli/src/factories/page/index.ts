@@ -52,7 +52,7 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
-        this.pageTitleCode = `title={'${this.pageChineseName}'}`;
+        this.pageTitleCode = `title="${this.pageChineseName}"`;
         this.className = upperFirst(name);
         this.paramKey = paramKey;
         this.pagePath = pagePath;

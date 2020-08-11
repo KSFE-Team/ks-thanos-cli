@@ -1,7 +1,7 @@
 import Page from 'Src/factories/page';
 import { SelectConfig, PropsConfig, OptionData } from './interface';
 import { FormItem } from 'Src/factories/component/formItem';
-import { getPropValue } from 'Src/utils/getPropValue';
+import { getPropStr } from 'Src/utils/getPropValue';
 /**
  * Select组件
  */
@@ -21,10 +21,7 @@ export class Select extends FormItem {
     getProps = (data: PropsConfig) => {
         const propsCode = [];
         for (let propKey in data) {
-            const propValue = getPropValue(data[propKey]);
-            propsCode.push(
-                `${propKey}={${propValue}}`
-            );
+            propsCode.push(getPropStr(propKey, data[propKey]));
         };
         return propsCode.join('\n');
     }

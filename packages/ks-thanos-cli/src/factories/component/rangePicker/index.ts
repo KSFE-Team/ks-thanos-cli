@@ -42,7 +42,7 @@ export class RangePicker extends FormItem {
                 case 'showTime':
                     return `${item}={${JSON.stringify(value)}}`;
                 case 'format':
-                    return `${item}='${value}'`;
+                    return `${item}="${value}"`;
             }
         });
         return `<DatePicker.RangePicker

@@ -37,11 +37,11 @@ export class DatePicker extends FormItem {
             let value: any = this.config.props[item];
             switch (item) {
                 case 'placeholder':
-                    return `${item}={'${value}'}`;
+                    return `${item}="${value}"`;
                 case 'showTime':
                     return `${item}={${JSON.stringify(value)}}`;
                 case 'format':
-                    return `${item}='${value}'`;
+                    return `${item}="${value}"`;
             }
         });
         return `<DatePicker

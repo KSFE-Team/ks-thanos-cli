@@ -1,6 +1,6 @@
 import Page from 'Src/factories/page';
 import { FormItemConfig, FormItem } from '../formItem';
-import { getPropValue } from 'Src/utils/getPropValue';
+import { getPropStr } from 'Src/utils/getPropValue';
 
 /**
  * Input组件
@@ -22,10 +22,7 @@ export class Input extends FormItem {
     toCode() {
         const propsCode = [];
         for (let propKey in this.props) {
-            const propValue = getPropValue(this.props[propKey]);
-            propsCode.push(
-                `${propKey}={${propValue}}`
-            );
+            propsCode.push(getPropStr(propKey, this.props[propKey]));
         }
         return `<Input
             ${propsCode.join('\n')}

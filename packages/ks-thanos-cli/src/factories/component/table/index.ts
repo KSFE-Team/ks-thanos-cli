@@ -37,7 +37,7 @@ export class Table extends Component {
 
     initProps() {
         const { showSelectedRows, showSelectedRowsType, showPagination } = this.config;
-        this.addProp('rowKey', `'id'`);
+        this.addProp('rowKey', `"id"`);
         this.addProp('dataSource', `list`);
         this.addProp('loading', `${this.effect.name}Loading`);
         this.addProp('pagination', showPagination ? `{
@@ -126,7 +126,7 @@ export class Table extends Component {
         );
     }
 
-    
+
     initRenderVariableDeclaration() {
         const { pageName } = this.page;
         const { showPagination } = this.config;
@@ -162,7 +162,7 @@ export class Table extends Component {
     initStateVariableDeclaration() {
         const columnsData = this.config.props.columns as TableColumnConfig[];
         this.columns = columnsData.map((columnData) => new TableColumn(this.page, columnData));
-        const columnsCode = this.columns.map((column) => column.toCode()).join(',\n');   
+        const columnsCode = this.columns.map((column) => column.toCode()).join(',\n');
         this.page.addStateVariableDeclaration({
             key: 'columns',
             value: `[${columnsCode}]`
@@ -212,9 +212,15 @@ export class Table extends Component {
             const propValue = this.props[propKey];
             debug(`propKey: ${propKey}`);
             debug(`propValue: ${propValue}`);
-            propsCode.push(
-                `${propKey}={${propValue}}`
-            );
+            if (propValue.startsWith('"')) {
+                propsCode.push(
+                    `${propKey}=${propValue}`
+                );
+            } else {
+                propsCode.push(
+                    `${propKey}={${propValue}}`
+                );
+            }
         }
         return `<KSTable
             ${propsCode.join('\n')}

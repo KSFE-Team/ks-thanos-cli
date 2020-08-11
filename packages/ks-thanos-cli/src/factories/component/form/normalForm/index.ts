@@ -1,4 +1,3 @@
-import { getPropValue } from 'Src/utils/getPropValue';
 import { FormItem } from 'Src/factories/component/formItem';
 import { FormDelegate } from '../formDelegate/index';
 import { Effect } from 'Src/factories/model/effect/index';
@@ -211,7 +210,7 @@ export class NormalFormDelegate extends FormDelegate {
 
     toFormItemCode(item: FormItem) {
         debug(`normalForm: toFormItemCode ---- ${item.componentName}`);
-        const labelValue = getPropValue(item.config.label);
+        const labelValue = item.config.label;
 
         if(item.componentName === 'Fragment') {
             return item.toCode();
@@ -220,7 +219,7 @@ export class NormalFormDelegate extends FormDelegate {
         let fieldConfigCode = item.getDecoratorConfigCode()
             .replace(/}$/, `\ninitialValue: info.${item.config.key}\n}`);
         return `<Form.Item
-            label={${labelValue}}
+            label="${labelValue}"
             { ...FORM_LAYOUT }
         >
             {
