@@ -6,12 +6,9 @@
     "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/ks-thanos-ui#readme",
     "license": "ISC",
     "main": "output/index.js",
-    "directories": {
-        "test": "__tests__"
-    },
     "files": [
         "output",
-        "./ui.js"
+        "ui.js"
     ],
     "publishConfig": {
         "registry": "http://172.16.1.179:4873/"
