@@ -27,7 +27,11 @@
     "start:cli": "cd packages/ks-thanos-cli && yarn run start",
     "start:ui": "cd packages/ui && yarn run start",
     "start:ui-server": "cd packages/ui-server && npm run pm2 && npm run complie",
-    "build": "lerna run build --sort --stream"
+    "build": "lerna run build --sort --stream",
+    "update-version": "lerna version --conventional-commits --no-push --no-changelog --no-git-tag-version",
+    "publish-to-npm": "lerna publish from-package",
+    "publish-beta": "lerna publish --no-git-tag-version --dist-tag beta",
+    "notify": "ks version --notify"
   },
   "bugs": {
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
