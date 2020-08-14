@@ -48,6 +48,6 @@
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-pcweb": "^4.6.3"
+        "@ks-web-cli/plugin-pcweb": "^4.7.0"
     }
 }

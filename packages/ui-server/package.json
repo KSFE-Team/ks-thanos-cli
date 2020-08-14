@@ -45,6 +45,6 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-server": "^4.6.3"
+        "@ks-web-cli/plugin-server": "^4.7.0"
     }
 }
