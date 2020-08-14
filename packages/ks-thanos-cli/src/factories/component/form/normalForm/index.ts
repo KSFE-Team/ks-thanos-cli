@@ -212,12 +212,28 @@ export class NormalFormDelegate extends FormDelegate {
         debug(`normalForm: toFormItemCode ---- ${item.componentName}`);
         const labelValue = item.config.label;
 
-        if(item.componentName === 'Fragment') {
+        const rules: Record<string, any>[] = [];
+        if (item.componentName === 'Fragment') {
             return item.toCode();
         }
 
+        if (item.config.isRequired) {
+            rules.push({
+                required: true,
+                message: `'请输入${item.config.label}！'`
+            });
+        }
+
         let fieldConfigCode = item.getDecoratorConfigCode()
-            .replace(/}$/, `\ninitialValue: info.${item.config.key}\n}`);
+            .replace(/}$/, `\ninitialValue: info.${item.config.key},\n}`);
+
+        const rulesCodes = FormItem.getRulesCode(rules);
+        if (rulesCodes) {
+            fieldConfigCode = fieldConfigCode.replace(/}$/, `rules: [
+                ${rulesCodes}
+            ],\n}`);
+        }
+
         return `<Form.Item
             label="${labelValue}"
             { ...FORM_LAYOUT }

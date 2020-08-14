@@ -20,6 +20,21 @@ export interface FormItemConfig extends ComponentConfig {
  */
 export abstract class FormItem extends Component {
 
+    static getRulesCode(rules: Record<string, any>[]) {
+        if (rules.length) {
+            const rulesCodes = rules
+                .map((rule) => {
+                    const ruleCodes = Object.entries(rule).map(([key, value]) => `${key}: ${value}`);
+                    return `{
+                        ${ruleCodes.join(', ')}
+                    }`;
+                })
+                .toString();
+            return rulesCodes;
+        }
+        return '';
+    }
+
     initPageState() {
         if (this.config.formType === 'search') {
             const stateValue = getPropValue(this.config.initialValue);
