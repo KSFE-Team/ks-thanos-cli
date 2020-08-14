@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.3.0...v1.3.1) (2020-08-14)
+
+
+### Bug Fixes
+
+* 修复isRequired问题 ([497e4ad](https://github.com/KSFE-Team/ks-thanos-cli/commit/497e4addb317b53cc38da49bfac4b5c97e339da8))
+
 ## [1.3.0](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.1.0...v1.3.0) (2020-08-12)
 
 
