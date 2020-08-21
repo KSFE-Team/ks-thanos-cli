@@ -6,18 +6,20 @@ const childProcess = require('child_process');
  * 获取全局yarn安装目录
  */
 const getYarnGlobalDir = () => {
-    const globalPathExec = childProcess.spawnSync('npm', [
-        'root',
-        '-g'
-    ]);
-    if (!globalPathExec.status) {
+    const yarnInfoExec = childProcess.spawnSync('yarn', [
+        'global',
+        'dir',
+        '--json'
+    ], {encoding: 'utf-8'});
+    if (!yarnInfoExec.status) {
+        const { data } = JSON.parse(yarnInfoExec.stdout);
         return {
             err: false,
-            data: globalPathExec.stdout.toString().trim()
+            data
         };
     } else {
         return {
-            err: globalPathExec.status,
+            err: yarnInfoExec.status,
             data: ''
         };
     }
