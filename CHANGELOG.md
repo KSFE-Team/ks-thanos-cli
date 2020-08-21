@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.3.1...v1.3.2) (2020-08-21)
+
+
+### Bug Fixes
+
+* 修复yarn全局地址问题 ([af0300b](https://github.com/KSFE-Team/ks-thanos-cli/commit/af0300b322e61141926274138227dad64abd9da6))
+
 ### [1.3.1](https://github.com/KSFE-Team/ks-thanos-cli/compare/v1.3.0...v1.3.1) (2020-08-14)
 
 
