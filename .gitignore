@@ -66,6 +66,7 @@ output
 
 .idea
 .DS_Store
+.vscode
 
 package-lock.json
 yarn.lock
