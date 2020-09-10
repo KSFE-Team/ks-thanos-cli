@@ -47,12 +47,12 @@ export async function runInit(options: {
     if (config) {
         projectName = config.projectName;
         projectPath = path.join(config.projectPath, projectName);
-        cwd = path.join('/', config.projectPath)
+        cwd = path.join('/', config.projectPath);
     } else {
         const answer: AnswerConfig = await prompt(questions);
         projectName = answer.projectName;
         projectPath = path.join(process.cwd(), projectName);
-        cwd = process.cwd()
+        cwd = process.cwd();
     }
 
     debug(`Run Init Command —— projectName: ${projectName}, projectPath: ${projectPath}, isForce: ${isForce}`);

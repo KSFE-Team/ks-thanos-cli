@@ -2,7 +2,7 @@
 
 import commander from 'commander';
 import Debug from '../src/utils/debugger';
-import { runSync, runInit, runUi } from '../src';
+import { runSync, runInit, runUi, runMergeNginx } from '../src';
 import { errorText } from '../src/utils/log';
 import { message } from '@ks-thanos/utils';
 
@@ -50,6 +50,14 @@ commander
             isForce: force,
             config
         });
+    });
+
+commander
+    .command('mergeNginx')
+    .description('拉取最新nginx配置')
+    .action(async() => {
+        debug(`merge nginx`);
+        await runMergeNginx();
     });
 
 commander

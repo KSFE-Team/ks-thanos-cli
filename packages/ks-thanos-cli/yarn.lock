@@ -25,12 +25,12 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@ks-thanos/ui-server@^1.0.2":
-  version "1.0.2"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-1.0.2.tgz#8f8c0b31ae2d1b2097d823896009cd15cd6bc53b"
-  integrity sha512-3IZK+d8gOGF7YpBu7Ydk2NJbqEA/rpLeTjg/NUgOinlRoSIKjUBrMSzcOhmkk33Yr5qOj66WjUdIQkrd4OiUAg==
+"@ks-thanos/ui-server@^1.3.2":
+  version "1.3.2"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-1.3.2.tgz#e7631e548602dc5fb569d85e9bc105b082a5d5ba"
+  integrity sha512-qmf/XEqyNcNMbQl7hsf0E0j96RFRyDAs+mMONOH2LxNhpFlLYhApqYnUlc+tXMLAqhJEk34ey31pJlBjqbnYXA==
   dependencies:
-    "@ks-thanos/utils" "^1.0.1"
+    "@ks-thanos/utils" "^1.3.2"
     axios "^0.19.2"
     chalk "^3.0.0"
     figlet "^1.2.4"
@@ -47,10 +47,10 @@
     user-home "^2.0.0"
     winston "^3.2.1"
 
-"@ks-thanos/utils@1.0.1", "@ks-thanos/utils@^1.0.1":
-  version "1.0.1"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2futils/-/utils-1.0.1.tgz#79771956e31a85218af5ca25eca39f7fdebc7d2e"
-  integrity sha512-e6TUVME8QQG8tE6hAhnb1/YyE53OMMFGB3ciluTjoHlrItT5OwPv3lU2V0BUvBMRec97rLBkajr4NqqqLlfWxA==
+"@ks-thanos/utils@^1.3.2":
+  version "1.3.2"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2futils/-/utils-1.3.2.tgz#806f74b55dd9d9cf1d20218e608a3cc8bde5a52f"
+  integrity sha512-wf+bmcVSbdJHBtuNfVC4USLGFL9V45s+8J1TJ+e30VZbbY7XzaydcYWMkh1c6c1nBv7Zmq5Y9NHrQ/rqJD7ohA==
   dependencies:
     chalk "^3.0.0"
 
