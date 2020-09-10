@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { actions } from 'kredux';
 import { projectContainer } from 'Models/project';
-import { Button, Icon, Input, message } from 'antd';
+import { FolderAddFilled, HomeFilled } from '@ant-design/icons';
+import { Button, Input, message } from 'antd';
 import Modal from 'Components/Modal';
 import FileItem from '../FileItem';
 import { FILE_TYPE } from '../constants';
@@ -134,7 +135,7 @@ export default class SelectPathModal extends Component {
     getFooter = () => {
         return <Fragment>
             <div className='file-modal-tools'>
-                <Icon
+                <FolderAddFilled
                     onClick={() => {
                         this.setState({
                             method: 'create'
@@ -143,8 +144,8 @@ export default class SelectPathModal extends Component {
                         });
                     }}
                     style={{fontSize: '22px'}}
-                    type="folder-add"
-                    theme="filled"
+                    // type="folder-add"
+                    // theme="filled"
                 />
             </div>
             <Button
@@ -165,15 +166,13 @@ export default class SelectPathModal extends Component {
                 visible={isShowFolder}
                 title={
                     <Fragment>
-                        <Icon
+                        <HomeFilled
                             onClick={() => {
                                 actions.project.selectFolder({
                                     path: '/Users'
                                 });
                             }}
                             style={{margin: '0 6px', fontSize: '18px'}}
-                            type="home"
-                            theme="filled"
                         />
                         <span className='get-back-icon' onClick={this.handleBack}>{`<`}</span>
                         <span>当前路径：{currentPath}</span>

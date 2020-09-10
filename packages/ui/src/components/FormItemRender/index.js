@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react';
-import { Form } from 'antd';
-const { Item: FormItem } = Form;
+import PropTypes from 'prop-types';
 
-export default (form, configs) => {
-    const { getFieldDecorator } = form;
+const FormItemRender = (props) => {
+    const { form, configs } = props;
+    const { Item: FormItem } = form;
     return (
         <Fragment>
             {
                 configs.map(({ key, title, config, component }) => {
                     return (
-                        <FormItem label={title} key={key}>
-                            {
-                                getFieldDecorator(key, config)(component)
-                            }
+                        <FormItem label={title} key={key} name={key} {...config}>
+                            {component}
                         </FormItem>
                     );
                 })
@@ -20,5 +18,11 @@ export default (form, configs) => {
         </Fragment>
 
     );
-}
-;
+};
+
+FormItemRender.propTypes = {
+    form: PropTypes.object,
+    configs: PropTypes.array
+};
+
+export default FormItemRender;

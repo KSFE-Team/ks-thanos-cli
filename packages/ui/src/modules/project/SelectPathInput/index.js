@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Icon } from 'antd';
+import { Input } from 'antd';
+import { FolderFilled } from '@ant-design/icons';
+
 import { actions } from 'kredux';
 import { projectContainer } from 'Models/project';
 import SelectPathModal from '../SelectPathModal';
@@ -38,9 +40,7 @@ export default class SelectPathInput extends Component {
                         const { value } = e.target;
                         this.onChange(value);
                     }}
-                    addonAfter={<Icon
-                        type={'folder'}
-                        theme={'filled'}
+                    addonAfter={<FolderFilled
                         // style={{color: 'rgba(135, 207, 246)'}}
                         style={{color: '#1890ff'}}
                         onClick={() => { this.handleSelectProject(); }}

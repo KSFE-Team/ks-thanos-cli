@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { actions } from 'kredux';
-import { Icon, Menu, Dropdown, Modal } from 'antd';
+import * as antdIcons from '@ant-design/icons';
+import { Menu, Dropdown, Modal } from 'antd';
 import { FILE_TYPE } from '../constants';
 const [FILE, DIR] = FILE_TYPE;
 const { Item: MenuItem } = Menu;
@@ -16,8 +17,9 @@ export default class FileItem extends Component {
     getIcon = () => {
         const { file } = this.props;
         const { type } = file;
-        let dict = FILE_TYPE.find(({key}) => key === type) || FILE;
-        return <Icon style={{fontSize: '18px', color: dict.color}} theme={'filled'} className='file-item-icon' type={dict.icon}/>;
+        const dict = FILE_TYPE.find(({key}) => key === type) || FILE;
+        const IconComponent = antdIcons[`${dict.icon}Filled`];
+        return <IconComponent style={{fontSize: '18px', color: dict.color}} className='file-item-icon' />;
     }
 
     handleClick = () => {

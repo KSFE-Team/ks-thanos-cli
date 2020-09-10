@@ -28,6 +28,9 @@
     background: #fff;
     display: flex;
     flex-direction: column;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
 
     .modal-title {
         display: flex;
@@ -37,6 +40,7 @@
         background: #343537;
         color: #fff;
         padding: 5px;
+        font-weight: bold;
     }
 
     .modal-content {

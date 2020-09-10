@@ -2,13 +2,13 @@ export const FILE_TYPE = [
     {
         key: 'file',
         name: '文件',
-        icon: 'file',
+        icon: 'File',
         color: ''
     },
     {
         key: 'dir',
         name: '文件夹',
-        icon: 'folder',
+        icon: 'Folder',
         color: 'rgba(135, 207, 246)'
     }
 ];

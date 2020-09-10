@@ -47,25 +47,24 @@ const FORM_ITEM_CONFIGS = [
  * 灭霸配置弹窗
  */
 const initModal = (props) => {
-    const { form, project, initProjectLoading } = props;
+    const { project, initProjectLoading } = props;
     const { initModalVisible, cwd } = project;
+    const [form] = Form.useForm();
     /**
      * 校验方法
      */
     const handleSubmit = () => {
-        form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
-            if (!err) {
-                actions.project.initProject({
-                    cwd,
-                    cmd: 'init',
-                    args: JSON.stringify([
-                        {
-                            key: '--config',
-                            value: {...fieldsValue}
-                        }
-                    ])
-                });
-            }
+        form.validateFields().then((values) => {
+            actions.project.initProject({
+                cwd,
+                cmd: 'init',
+                args: JSON.stringify([
+                    {
+                        key: '--config',
+                        value: {...values}
+                    }
+                ])
+            });
         });
     };
     return (
@@ -76,7 +75,15 @@ const initModal = (props) => {
             onCancel={toogleModalVisible.bind(this, false)}
             onOk={handleSubmit}
         >
-            {FormItemRender(form, FORM_ITEM_CONFIGS)}
+            <Form
+                form={form}
+            >
+                <FormItemRender
+                    form={Form}
+                    configs={FORM_ITEM_CONFIGS}
+                />
+            </Form>
+
         </Modal>
     );
 };
@@ -86,4 +93,4 @@ initModal.propTypes = {
     initProjectLoading: PropTypes.bool, // 接口状态
 };
 
-export default projectContainer(Form.create()(initModal));
+export default projectContainer(initModal);

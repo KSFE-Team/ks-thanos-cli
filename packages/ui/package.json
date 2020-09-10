@@ -32,9 +32,9 @@
         "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
     },
     "dependencies": {
-        "antd": "^3.26.12",
+        "antd": "^4.6.3",
         "core-js": "^2.6.5",
-        "kredux": "^1.0.0",
+        "kredux": "1.4.4-beta.1",
         "ks-libs": "1.1.9",
         "ks-utils": "2.3.9",
         "lottie-web": "^5.6.4",

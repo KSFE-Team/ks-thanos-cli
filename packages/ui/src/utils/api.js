@@ -1,8 +1,7 @@
-import { parseQueryString } from 'ks-utils';
+import { formatServerPort } from 'Src/utils';
 
-const queryString = parseQueryString(window.location.search);
-const serverPort = queryString.serverPort;
-export const SERVER_ORIGIN = `http://localhost:${serverPort || 3000}`;
+const serverPort = formatServerPort();
+export const SERVER_ORIGIN = `http://localhost:${serverPort}`;
 
 const SERVER = `${SERVER_ORIGIN}/api/ks-thanos-ui-server/v1`;
 export default {

@@ -6,8 +6,8 @@ import lottie from 'lottie-web';
 import { projectContainer } from 'Models/project';
 import { FitAddon } from 'xterm-addon-fit';
 import SelectPathModal from './SelectPathModal';
-import ThanosModal from './ThanosModal';
-import InitModal from './InitModal';
+// import ThanosModal from './ThanosModal';
+// import InitModal from './InitModal';
 import terminal from './terminal';
 import './index.scss';
 import 'xterm/css/xterm.css';
@@ -176,7 +176,7 @@ export default class Project extends Component {
     render() {
         const {
             projects, isShowFolder, currentIndex,
-            thanosModalVisible, initModalVisible
+            // thanosModalVisible, initModalVisible
         } = this.props.project;
         return (
             <div
@@ -261,13 +261,13 @@ export default class Project extends Component {
                     />
                 }
                 {/* 灭霸弹框 */}
-                {
+                {/* {
                     thanosModalVisible && <ThanosModal/>
-                }
+                } */}
                 {/* 项目初始化弹框 */}
-                {
+                {/* {
                     initModalVisible && <InitModal/>
-                }
+                } */}
             </div>
         );
     }

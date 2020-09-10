@@ -99,6 +99,7 @@ const projectModel = {
          */
         confirmFilePath(payload, getState) {
             let { projects, currentPath } = getState().project;
+            console.log('projects', projects);
             const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
             /* 没有重复路径 */
             if (projects.every(({path}) => path !== currentPath)) {
@@ -114,6 +115,7 @@ const projectModel = {
                 cwd: currentPath,
                 projects
             });
+            console.log('projects', projects);
 
             localStorage.setItem('projects', JSON.stringify(projects));
         },

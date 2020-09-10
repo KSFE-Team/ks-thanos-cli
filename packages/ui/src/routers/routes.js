@@ -3,7 +3,15 @@ const Routes = [
     {
         path: '/',
         exact: true,
-        component: () => import('Modules/homePage')
+        component: () => import('Modules/HomePage'),
+        modelList: [
+            () => import('Models/project')
+        ]
+    },
+    {
+        path: '/auth',
+        exact: true,
+        component: () => import('Modules/Auth')
     },
     {
         path: '/project',

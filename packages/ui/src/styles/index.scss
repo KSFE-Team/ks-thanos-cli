@@ -1,6 +1,9 @@
-p {
-    padding: 10px;
-}
+@import './reset.scss';
+
 .mar-l-4 {
     margin-left: 4px;
+}
+
+.mar-l-16 {
+    margin-left: 16px;
 }

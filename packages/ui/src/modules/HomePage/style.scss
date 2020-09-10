@@ -1,0 +1,58 @@
+@import 'Src/styles/common.scss';
+.homepage-background {
+    height: 100vh;
+    background-color: $bg-1;
+    color: $color-primary;
+    position: relative;
+
+    .homepage-title {
+        text-align: center;
+        font-size: 40px;
+        line-height: 60px;
+        height: 60px;
+        font-weight: bold;
+        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        position: relative;
+
+        .homepage-title-text {
+            &:hover {
+                background-image:-webkit-linear-gradient(bottom,red,#fd8403,yellow); 
+                background-clip:text; 
+                -webkit-text-fill-color:transparent; 
+            }
+        }
+
+        .homepage-title-actions {
+            position: absolute;
+            right: 0;
+            top: 0;
+            line-height: 40px;
+            margin-right: 10px;
+        }
+    }
+
+    .homepage-empty-project {
+        text-align: center;
+        margin-top: 40px;
+
+        .homepage-add-project {
+            margin-top: 40px;   
+        }
+    }
+
+    .homepage-projects {
+        // width: calc(100% - 30px);
+        // height: calc(100% - 94px);
+        // margin: 15px auto 0;
+        // background-color: $bg-3;
+        // border-radius: 5px;
+        // border: 1px solid rgba(0, 0, 0, .2);
+        // box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        max-height: calc(100% - 71px);
+        overflow: auto;
+    }
+}
