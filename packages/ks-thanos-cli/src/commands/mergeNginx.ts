@@ -1,19 +1,20 @@
+import { infoText, successText } from 'Src/utils/log';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+import { execSync } from 'child_process';
+
+const homePath = path.join(os.homedir());
+const thanosPath = path.join(homePath, '.thanos');
+const nginxConfigPath = path.join(thanosPath, 'nginxConf');
+const commonFilePath = path.join(nginxConfigPath, 'ks-pcweb-cms-common-file');
+const nginxPath = `/usr/local/etc/nginx`;
+const nginxConfDirPath = path.join(nginxPath, 'conf');
+const gitUrl = 'http://gitlab.devops.kaishustory.com/ks_h5_kms/ks-pcweb-cms-common-file.git';
 /**
  * 运行拉取nginx配置命令
  */
 export async function runMergeNginx() {
-    const path = require('path');
-    const fs = require('fs');
-    const os = require('os');
-    const { execSync } = require('child_process');
-    const homePath = path.join(os.homedir());
-    const thanosPath = path.join(homePath, '.thanos');
-    const nginxConfigPath = path.join(thanosPath, 'nginxConf');
-    const commonFilePath = path.join(nginxConfigPath, 'ks-pcweb-cms-common-file');
-    const nginxPath = `/usr/local/etc/nginx`;
-    const nginxConDirPath = path.join(nginxPath, 'conf');
-    const gitUrl = 'http://gitlab.devops.kaishustory.com/ks_h5_kms/ks-pcweb-cms-common-file.git';
-    
     /* 检测目录 */
     const checkDir = (path: string) => {
         let stat;
@@ -48,18 +49,21 @@ export async function runMergeNginx() {
     
     /* 拉去最新代码 */
     execSync(`cd ${commonFilePath} && git pull`);
-    console.log('拉取最新代码');
+    console.log(infoText(`拉取最新配置中`));
     
     /* 如果nginx目录没有创建其目录 */
-    if (!checkDir(nginxConDirPath)) {
-        createDir(nginxConDirPath);
+    if (!checkDir(nginxConfDirPath)) {
+        createDir(nginxConfDirPath);
     }
     
     /* 删除配置文件 */
-    execSync(`rm -rf ${nginxConDirPath}/*`);
+    execSync(`rm -rf ${nginxConfDirPath}/*`);
     /* 转移配置 */
-    execSync(`cp -r ${commonFilePath}/* ${nginxConDirPath}`);
+    execSync(`cp -r ${commonFilePath}/* ${nginxConfDirPath}`);
+    console.log(infoText('更新配置成功'));
+
+    console.log(infoText('正在重启nginx，请您输入密码'));
     /* 重启nginx */
     execSync(`sudo nginx -s reload`);
-    console.log('已重启nginx');
+    console.log(successText('nginx重启成功'));
 }

@@ -54,6 +54,7 @@ commander
 
 commander
     .command('mergeNginx')
+    .alias('mn')
     .description('拉取最新nginx配置')
     .action(async() => {
         debug(`merge nginx`);
