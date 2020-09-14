@@ -1,0 +1,8 @@
+@import 'Src/styles/common.scss';
+.worksapce-no-match {
+    height: calc(100vh - 47px);
+    text-align: center;
+    line-height: calc(100vh - 147px);
+    color: $color-sub-title;
+    user-select: none;
+}

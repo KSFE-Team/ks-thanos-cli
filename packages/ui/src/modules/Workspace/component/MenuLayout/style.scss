@@ -1,0 +1,36 @@
+@import 'Src/styles/common.scss';
+
+.menu {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    color: $color-primary;
+    height: 100%;
+
+    .menu-item {
+        background-color: $bg-2;
+        padding: 5px 15px;
+        cursor: pointer;
+        position: relative;
+        line-height: 36px;
+
+        &:hover {
+            background-color: $bg-3;
+        }
+
+        &.active {
+            background: $bg-3;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0px;
+                right: 0;
+                width: 100%;
+                height: 3px;
+                background: #1890ff;
+            }
+        }
+    }
+}

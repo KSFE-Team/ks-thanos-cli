@@ -21,6 +21,30 @@ const Routes = [
             () => import('Models/project')
         ]
     },
+    {
+        path: '/workspace',
+        // exact: false,
+        component: () => import('Modules/Workspace'),
+        // modelList: [
+        //     () => import('Models/project')
+        // ]
+    },
+    // {
+    //     path: '/workspace/a',
+    //     exact: false,
+    //     component: () => import('Modules/Workspace/routes/A'),
+    //     // modelList: [
+    //     //     () => import('Models/project')
+    //     // ]
+    // },
+    // {
+    //     path: '/workspace/b',
+    //     exact: false,
+    //     component: () => import('Modules/Workspace/routes/B'),
+    //     // modelList: [
+    //     //     () => import('Models/project')
+    //     // ]
+    // },
 ];
 
 export default Routes;

@@ -22,8 +22,8 @@ export default class ProjectCard extends React.Component {
             <div
                 className='homepage-project'
                 onClick={() => {
-                    setObjectStorage('', item);
-                    goto.push('/project/');
+                    setObjectStorage('currentProject', item);
+                    goto.push('/workspace/');
                 }}
             >
                 <div className='project-title'>
