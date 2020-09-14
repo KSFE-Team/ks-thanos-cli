@@ -4,7 +4,7 @@ import { RollbackOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import router from 'kredux/output/router';
 import { ROUTE_LIST } from './routes';
-import MenuLayout from './component/MenuLayout';
+import Menu from 'Src/components/Menu';
 import { goto, getObjectStorage } from 'Src/utils';
 import NoMatch from './component/NoMatch';
 import './style.scss';
@@ -51,7 +51,10 @@ export default class Workspace extends Component {
                     </span>
                 </div>
                 <div className='workspace-header-menu'>
-                    <MenuLayout match={match}/>
+                    <Menu
+                        match={match}
+                        dataSource={ROUTE_LIST}
+                    />
                 </div>
             </div>
             <Switch>

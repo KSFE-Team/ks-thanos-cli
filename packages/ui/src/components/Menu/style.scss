@@ -3,7 +3,6 @@
 .menu {
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
     color: $color-primary;
     height: 100%;
 
@@ -29,6 +28,25 @@
                 right: 0;
                 width: 100%;
                 height: 3px;
+                background: #1890ff;
+            }
+        }
+    }
+}
+
+.menu.column {
+    .menu-item {
+        &.active {
+            background: $bg-3;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0px;
+                right: 0;
+                width: 3px;
+                height: 100%;
                 background: #1890ff;
             }
         }

@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from './MenuItem';
-import { ROUTE_LIST } from '../../routes';
 import { goto } from 'Src/utils';
 export default class MenuLayout extends Component {
 
     static propTypes = {
-        match: PropTypes.object
+        match: PropTypes.object,
+        dataSource: PropTypes.array,
+        direction: PropTypes.string
+    }
+
+    static defaultProps = {
+        direction: 'row'
     }
 
     constructor(props) {
@@ -16,8 +21,6 @@ export default class MenuLayout extends Component {
             routePath: pathname
         };
     }
-
-    // baseUrl = '/workspace';
 
     handleLink = (url) => {
         this.setState({
@@ -29,12 +32,17 @@ export default class MenuLayout extends Component {
     getActionNode = (path) => this.state.routePath === path ? 'active' : '';
 
     render() {
+        const { dataSource, direction } = this.props;
         return (
             <div
-                className={'menu'}
+                className={`menu ${direction}`}
+                data-direction={direction}
+                style={{
+                    flexDirection: direction
+                }}
             >
                 {
-                    ROUTE_LIST.map(({path, name}) => {
+                    dataSource.map(({path, name}) => {
                         return (
                             <MenuItem
                                 key={path}

@@ -1,7 +1,7 @@
 import { actions, connect } from 'kredux';
 import { message } from 'antd';
 import Api from 'Utils/request';
-import terminal from 'Modules/project/terminal';
+import terminal from 'Src/components/Terminal';
 
 /**
  * 首页页面的业务模块
@@ -115,7 +115,6 @@ const projectModel = {
                 cwd: currentPath,
                 projects
             });
-            console.log('projects', projects);
 
             localStorage.setItem('projects', JSON.stringify(projects));
         },
