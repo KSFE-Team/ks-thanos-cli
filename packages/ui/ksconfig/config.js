@@ -1,5 +1,6 @@
-
 module.exports = {
     'type': 'pcweb',
-    'publicPath': '/'
+    'publicPath': '/',
+    'useTs': true,
+    'useTsCompt': true,
 };

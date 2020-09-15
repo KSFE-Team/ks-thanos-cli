@@ -1,0 +1,10 @@
+.fragment-container {
+    min-height: 150px;
+    background: #fff;
+
+    .fragment-container-background {
+        min-height: 250px;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 5%, transparent 0), linear-gradient(rgba(0, 0, 0, 0.1) 5%, transparent 0);
+        background-size: 15px 15px;
+    }
+}

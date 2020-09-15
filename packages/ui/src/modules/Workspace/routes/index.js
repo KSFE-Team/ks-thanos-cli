@@ -17,11 +17,11 @@ export const ROUTE_LIST = [
         })
     },
     {
-        path: '/workspace/template',
-        name: '物料库',
+        path: '/workspace/blocks',
+        name: '资产',
         // extra: true,
         component: dynamic({
-            component: () => import('./Template')
+            component: () => import('../../Blocks')
         })
     }
 ];

@@ -120,22 +120,22 @@ export class RelationTable extends Component {
                     defaultImport: false
                 },
                 {
-                    source: './components/ParentForm',
+                    source: './materials/ParentForm',
                     name: 'ParentForm',
                     defaultImport: true
                 },
                 {
-                    source: './components/ParentTable',
+                    source: './materials/ParentTable',
                     name: 'ParentTable',
                     defaultImport: true
                 },
                 {
-                    source: './components/ChildForm',
+                    source: './materials/ChildForm',
                     name: 'ChildForm',
                     defaultImport: true
                 },
                 {
-                    source: './components/ChildTable',
+                    source: './materials/ChildTable',
                     name: 'ChildTable',
                     defaultImport: true
                 },

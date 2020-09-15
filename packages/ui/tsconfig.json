@@ -1,0 +1,17 @@
+{
+    "extends": "./node_modules/@ks-web-cli/ts-tools/config",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": "./",
+        "outDir": "./output",
+        "paths": {
+            "Src/*": [
+                "./src/*"
+            ]
+        },
+        "jsx": "react"
+    },
+    "include": [
+        "./src"
+    ]
+}
