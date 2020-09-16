@@ -15,7 +15,7 @@ export const STATE = {
         }, // 模版名称
     },
     cuPageModalVisible: false
-};
+} as any;
 export default {
     namespace: 'existingPage',
     initialState: { ...STATE },

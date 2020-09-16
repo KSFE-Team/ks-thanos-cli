@@ -73,7 +73,7 @@ const ALL_TOOLS = {
     ...OTHER_COMPONENTS,
     ...RELATION_TABLE,
     ...CLOUD_COMPONENTS
-};
+} as any;
 
 export {
     DATA_DISPLAY,

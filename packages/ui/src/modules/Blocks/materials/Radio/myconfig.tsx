@@ -42,11 +42,9 @@ export default class RadioConfig extends Component<RadioConfigProps> {
     };
 
     state={
-        formData: {
-
-        },
+        formData: {} as any,
         isTouch: false,
-        choiceNodeList: [{ id: 1}, { id: 2}],
+        choiceNodeList: [{ id: 1}, { id: 2}] as any,
         choiceNodeId: 2,
         defaultValue: 1,
         isRequired: true,
@@ -99,7 +97,7 @@ export default class RadioConfig extends Component<RadioConfigProps> {
             return;
         }
         const array:Array<any> = [];
-        this.state.choiceNodeList.forEach((item, index) => {
+        this.state.choiceNodeList.forEach((item: any, index: any) => {
             array.push({
                 id: item.id,
                 label: this[`label${index}`].state.value,
@@ -107,7 +105,7 @@ export default class RadioConfig extends Component<RadioConfigProps> {
             });
         });
 
-        pageJSON.components = pageJSON.components.map((component) => {
+        pageJSON.components = pageJSON.components.map((component: any) => {
             if (component.configVisible) {
                 component = {
                     ...component,
@@ -140,8 +138,7 @@ export default class RadioConfig extends Component<RadioConfigProps> {
 
     handleChangeChoice = (key: any, index: any, e: any) => {
         const { choiceNodeList } = this.state;
-        const value = e.target.value;
-        choiceNodeList[index][key] = value;
+        choiceNodeList[index][key] = e.target.value;
         this.setState({
             choiceNodeList
         });
@@ -178,7 +175,7 @@ export default class RadioConfig extends Component<RadioConfigProps> {
             </FormItem>
             <div>
                 {
-                    choiceNodeList && choiceNodeList.map((item: any, index) => {
+                    choiceNodeList && choiceNodeList.map((item: any, index: any) => {
                         return (
                             <Row key={item.id} type='flex'>
                                 <Col span={10}>
@@ -239,14 +236,20 @@ export default class RadioConfig extends Component<RadioConfigProps> {
                                                 });
                                             }}/>
                                             {
-                                                choiceNodeList.length && choiceNodeList.length > 2 && <Button className='mar-l-4' shape='circle' size='small' icon='minus' onClick={() => {
-                                                    const tempNodeList = [...choiceNodeList];
-                                                    tempNodeList.splice(index, 1);
-                                                    this.setState({
-                                                        choiceNodeList: tempNodeList,
-                                                        isTouch: true
-                                                    });
-                                                }}/>
+                                                choiceNodeList.length && choiceNodeList.length > 2 && <Button
+                                                    className='mar-l-4'
+                                                    shape='circle'
+                                                    size='small'
+                                                    icon='minus'
+                                                    onClick={() => {
+                                                        const tempNodeList = [...choiceNodeList];
+                                                        tempNodeList.splice(index, 1);
+                                                        this.setState({
+                                                            choiceNodeList: tempNodeList,
+                                                            isTouch: true
+                                                        });
+                                                    }}
+                                                />
                                             }
                                         </Col>
                                     </React.Fragment>
@@ -258,7 +261,7 @@ export default class RadioConfig extends Component<RadioConfigProps> {
             </div>
             <FormItem
             >
-                <Row type='flex' align='middle'>
+                <Row align='middle'>
                     <Col>
                         <Button
                             onClick={this.handleSave}

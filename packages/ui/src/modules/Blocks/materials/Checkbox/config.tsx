@@ -40,7 +40,7 @@ export default class CheckboxConfig extends Component<CheckboxConfigProps> {
             }],
             [LABEL]: '',
             [KEY]: '',
-        },
+        } as any,
         isTouch: false,
         errMessage: '',
         current: {
@@ -259,9 +259,9 @@ export default class CheckboxConfig extends Component<CheckboxConfigProps> {
                     { ISREQUIRED_TYPE.map(({VALUE, LABEL}, index) => <Radio key={index} value={VALUE}>{LABEL}</Radio>) }
                 </Radio.Group>
             </Form.Item>
-            <Table rowKey='rowKey' dataSource={formData.options} columns={this.columns} bordered pagination={false} />
+            <Table rowKey={formData.options[ROW_KEY]} dataSource={formData.options} columns={this.columns} bordered pagination={false} />
             <br />
-            <Row type='flex' justify='space-between'>
+            <Row justify='space-between'>
                 <Col>
                     <Button onClick={this.handleAddCheck} type='primary' >添加项</Button>
                 </Col>

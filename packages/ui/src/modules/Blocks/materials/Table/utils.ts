@@ -44,4 +44,4 @@ export const initState = {
     showSelectedRowsType: 'radio',
     showPagination: true,
     isClear: false,
-};
+} as any;

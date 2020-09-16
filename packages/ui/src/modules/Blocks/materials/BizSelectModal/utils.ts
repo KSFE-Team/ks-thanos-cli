@@ -37,7 +37,7 @@ export const initState = {
         props: {}
     },
     inputType: ''
-};
+} as any;
 
 export const DEFAULT_OPTIONS = [
     {

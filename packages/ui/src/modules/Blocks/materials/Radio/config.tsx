@@ -58,13 +58,13 @@ export default class RadioConfig extends Component<RadioConfigProps> {
             key: 'fragmentName',
             width: 100,
             render: (item: any, record: any, index: any) => <Select
-                allowClear={true}
+                allowClear
                 style={{ width: '100%' }}
                 value={record[SELECT]}
                 onChange={this.handleChange.bind(this, SELECT, index)}
             >
                 {
-                    this.state.selectOption.length > 0 && this.state.selectOption.map((item:any, ind) => {
+                    this.state.selectOption.length > 0 && this.state.selectOption.map((item: any, ind: any) => {
                         return <Option key={ind} value={item.fragmentId}>{item.fragmentName}</Option>;
                     })
                 }
@@ -259,9 +259,9 @@ export default class RadioConfig extends Component<RadioConfigProps> {
                     onChange={this.handleChange.bind(this, DEFAULTVALUE, 0)}
                 />
             </Form.Item>}
-            <Table rowKey='rowKey' dataSource={formData.options} columns={this.columns} bordered pagination={false} />
+            <Table rowKey={formData.options[ROW_KEY]} dataSource={formData.options} columns={this.columns} bordered pagination={false} />
             <br />
-            <Row type='flex' justify='space-between'>
+            <Row justify='space-between'>
                 <Col>
                     <Button onClick={this.handleAddRadioItem} type='primary' >添加项</Button>
                 </Col>

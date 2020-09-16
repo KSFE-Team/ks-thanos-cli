@@ -42,4 +42,4 @@ export const initState = {
     [ISREQUIRED]: ISREQUIRED_TYPE[0].VALUE,
     [DEFAULTVALUE]: '',
     isTouch: false,
-};
+} as any;

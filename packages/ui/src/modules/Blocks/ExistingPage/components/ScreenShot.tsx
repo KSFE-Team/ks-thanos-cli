@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import Icon from '@ant-design/icons';
 import './style.scss';
 
 interface TextWithImgProps {

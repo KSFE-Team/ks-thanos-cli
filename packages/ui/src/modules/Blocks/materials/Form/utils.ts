@@ -51,4 +51,4 @@ export const initState = {
     formData: {
     },
     isTouch: false
-};
+} as any;

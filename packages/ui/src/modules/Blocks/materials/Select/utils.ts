@@ -54,4 +54,4 @@ export const initState = {
             showSearch: false
         }
     }
-};
+} as any;

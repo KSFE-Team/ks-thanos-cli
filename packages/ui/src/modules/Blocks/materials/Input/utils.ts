@@ -39,4 +39,4 @@ export const initState = {
         id: '',
         props: {}
     }
-};
+} as any;

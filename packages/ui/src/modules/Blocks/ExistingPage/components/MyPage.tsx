@@ -140,7 +140,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                 <Table
                     columns={this.state.columns}
                     dataSource={pageList}
-                    rowKey={'pageName'}
+                    rowKey='pageName'
                     loading={listLoading}
                     pagination={{
                         defaultCurrent: 1,

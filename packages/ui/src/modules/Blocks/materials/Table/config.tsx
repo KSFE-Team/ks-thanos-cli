@@ -463,10 +463,10 @@ export default class TableConfig extends Component<TableConfigProps> {
                      columns={columns}
                      pagination={false}
                  />
-                 {/* <Row style={{marginTop: '10px'}} type='flex' justify='end' gutter={1}>
+                 {/* <Row style={{marginTop: '10px'}} justify='end' gutter={1}>
                     <Checkbox checked={searchComponentChecked} onChange={this.addSearchComponent}>是否拥有条件搜索</Checkbox>
                 </Row> */}
-                 <Row style={{ marginTop: '20px' }} type='flex' justify='end' gutter={1}>
+                 <Row style={{ marginTop: '20px' }} justify='end' gutter={1}>
                      <Col>
                          <Button onClick={this.handleAdd} type='primary' style={{ marginBottom: 16 }}>
                             Add a row

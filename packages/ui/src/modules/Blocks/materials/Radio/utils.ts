@@ -62,4 +62,4 @@ export const initState = {
         props: {}
     },
     selectOption: []
-};
+} as any;

@@ -191,7 +191,7 @@ class Config extends Component<ConfigProps, ConfigState> {
                         this.setState({
                             formData: {
                                 ...formData,
-                                options: value.map((item) => {
+                                options: value.map((item: any) => {
                                     return {
                                         label: item.label,
                                         props: {
