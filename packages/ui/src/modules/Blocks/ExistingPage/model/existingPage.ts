@@ -43,7 +43,7 @@ export default {
                 });
             }
         },
-        async deletepageItem(payload: any) {
+        async deletePageItem(payload: any) {
             const { pageName } = payload;
             const response = await request(API.page.delete, {
                 method: 'POST',

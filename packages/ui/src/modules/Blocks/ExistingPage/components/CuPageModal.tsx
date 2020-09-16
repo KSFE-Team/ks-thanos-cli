@@ -55,7 +55,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
             type: '2'
         },
         templateId: '',
-    }
+    };
 
     componentDidMount() {
         // 初始化redux
@@ -70,7 +70,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
                 limit
             },
         });
-    }
+    };
 
     handlePageChange = (page: any) => {
         const {pageOrTempInfo} = this.state;
@@ -91,7 +91,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
         }
 
         this.loadList();
-    }
+    };
 
     loadList = () => {
         const {pageOrTempInfo} = this.state;
@@ -100,11 +100,11 @@ class CuTempLateModal extends Component<CuTemplateProps> {
         } else {
             actions.myTemplate.getTemplateList({...pageOrTempInfo});
         }
-    }
+    };
 
     resetPage = () => {
         this.handlePageChange(1);
-    }
+    };
 
     changeTabe=(idx: number) => {
         const { pageOrTempInfo } = this.state;
@@ -126,7 +126,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
             templateId: ''
         });
         this.loadList();
-    }
+    };
 
     gotoPage=() => {
         actions.existingPage.setReducers({
@@ -139,7 +139,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
             goto(`/generatePage/${templateId}?pageOrTemp=${pageOrTempInfo.pageOrTemp}`);
         }
         // templateName
-    }
+    };
 
     render() {
         const {tempTabs, tab, templateId, pageOrTempInfo} = this.state;

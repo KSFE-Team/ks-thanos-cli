@@ -37,14 +37,14 @@ class ExistingPage extends Component<ExistingPageProps> {
             {
                 title: '创建时间',
                 dataIndex: 'createTime',
-                render: (text) => {
+                render: (text: any) => {
                     return moment(text).format('YYYY-MM-DD HH:mm:ss');
                 }
             },
             {
                 title: '更新时间',
                 dataIndex: 'updateTime',
-                render: (text) => {
+                render: (text: any) => {
                     return moment(text).format('YYYY-MM-DD HH:mm:ss');
                 }
             },
@@ -58,12 +58,12 @@ class ExistingPage extends Component<ExistingPageProps> {
                         {
                             record.type && +record.type === 1 ? null : <Button
                                 className='mar-l-4'
-                                type='danger'
+                                danger
                                 onClick={() => {
                                     Modal.confirm({
                                         title: `确认删除${record.pageName}？`,
                                         onOk: () => {
-                                            actions.existingPage.deletepageItem({
+                                            actions.existingPage.deletePageItem({
                                                 pageName: record.pageName
                                             });
                                         }
@@ -76,7 +76,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                 )
             }
         ]
-    }
+    };
 
     handlePageChange = (page: any) => {
         actions.existingPage.setReducers({
@@ -86,15 +86,15 @@ class ExistingPage extends Component<ExistingPageProps> {
             }
         });
         this.loadList();
-    }
+    };
 
     loadList = () => {
         actions.existingPage.getPageList();
-    }
+    };
 
     resetPage = () => {
         this.handlePageChange(1);
-    }
+    };
 
     componentDidMount() {
         // 初始化redux
@@ -103,7 +103,7 @@ class ExistingPage extends Component<ExistingPageProps> {
             ...initialState,
         });
         this.loadList();
-    }
+    };
 
     render() {
         const { listLoading } = this.props;
@@ -159,7 +159,7 @@ class ExistingPage extends Component<ExistingPageProps> {
 export default connect(({
     existingPage,
     loading
-}) => ({
+}: any) => ({
     existingPage,
     listLoading: loading.effects['existingPage/getPageList']
 }))(Form.create({

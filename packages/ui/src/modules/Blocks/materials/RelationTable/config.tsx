@@ -265,7 +265,7 @@ export default class RelationTableConfig extends Component<RelationTableConfigPr
                 render: (text: string, record: any) => {
                     return this.state.dataSource.length >= 2 ? (
                         <div>
-                            <Button title='Sure to delete?' type='danger' onClick={() => this.handleTableRowDelete(record.key)}>
+                            <Button title='Sure to delete?' danger onClick={() => this.handleTableRowDelete(record.key)}>
                                 Delete
                             </Button>
                         </div>

@@ -103,7 +103,7 @@ export default class CheckboxConfig extends Component<CheckboxConfigProps> {
             render: (text: any, record: any, index: any) =>
                 this.state.formData.options.length > 1
                     ? <Col>
-                        <Icon type='close' onClick={() => { this.handleDeleteChekItem(index); }} />
+                        <Icon type='close' onClick={() => { this.handleDeleteCheckItem(index); }} />
                     </Col>
                     : <></>
 
@@ -205,7 +205,7 @@ export default class CheckboxConfig extends Component<CheckboxConfigProps> {
     /**
      * @desc 删除项
      */
-    handleDeleteChekItem = (index: any) => {
+    handleDeleteCheckItem = (index: any) => {
         const { formData } = this.state;
         formData.options.splice(index, 1);
         this.setState({
