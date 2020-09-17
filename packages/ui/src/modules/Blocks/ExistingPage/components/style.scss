@@ -1,0 +1,98 @@
+$file-mask: rgba(0, 0, 0, .5);
+
+.my-template-container {
+    margin: auto;
+
+    .my-template-title {
+        font-size: 30px;
+    }
+}
+
+.content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    font-size: 20px;
+
+    .temp-item-container {
+        width: 19%;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        height: 180px;
+    }
+
+    .temp-item-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .temp-item-screenshots-container {
+        padding: 0 10px 10px;
+
+        .temp-item-title {
+            height: 30px;
+            line-height: 30px;
+            padding: 0 5px;
+        }
+
+        .temp-item-screenshots {
+            width: 100%;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, .3);
+        }
+
+        .file-info {
+            width: 100%;
+            height: calc(100% - 30px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+
+            .file-mask {
+                position: absolute;
+                background-color: $file-mask;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                display: none;
+            }
+
+            .file-thumbnail {
+                width: 100%;
+            }
+
+            .file-action {
+                font-size: 16px;
+                position: absolute;
+                top: 50%;
+                color: rgba(255, 255, 255, .8);
+                left: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                display: none;
+
+                &:hover {
+                    color: rgba(255, 255, 255, 1);
+                }
+            }
+
+            &:hover .file-mask,
+            &:hover .file-action {
+                display: block;
+            }
+        }
+    }
+}
+
+.active {
+    background: #037cee !important;
+}
+
+.liborder {
+    border-color: #1890ff !important;
+}

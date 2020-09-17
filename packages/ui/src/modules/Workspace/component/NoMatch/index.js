@@ -12,8 +12,9 @@ export default class NoMatch extends Component {
         // goto.push('/');
     }
     render() {
+        const { children } = this.props;
         return <div className='worksapce-no-match'>
-            请选择上方菜单，配置或者运行项目
+            {children || '请选择上方菜单，配置或者运行项目'}
         </div>;
     }
 }

@@ -34,20 +34,26 @@
     "dependencies": {
         "antd": "^4.6.3",
         "core-js": "^2.6.5",
-        "kredux": "1.4.4-beta.1",
+        "html2canvas": "^1.0.0-rc.7",
+        "kredux": "^1.5.0",
         "ks-libs": "1.1.9",
         "ks-utils": "2.3.9",
         "lottie-web": "^5.6.4",
         "prop-types": "^15.6.1",
         "react": "^16.13.0",
+        "react-beautiful-dnd": "^13.0.0",
         "react-dom": "^16.6.0",
         "react-router": "^4.2.0",
         "socket.io-client": "^2.3.0",
+        "sortablejs": "^1.11.2-alpha.3",
         "terminal-in-react": "^4.3.1",
         "xterm": "^4.4.0",
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-pcweb": "^4.10.1"
+        "@ks-web-cli/plugin-pcweb": "^4.10.2",
+        "@ks-web-cli/ts-tools": "^4.7.0",
+        "@types/react": "^16.9.49",
+        "@types/react-beautiful-dnd": "^13.0.0"
     }
 }
