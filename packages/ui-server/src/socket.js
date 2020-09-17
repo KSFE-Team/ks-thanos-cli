@@ -37,3 +37,11 @@ export const sendLog = (data) => {
 export const thanosCallback = (data) => {
     socketIo.sockets.in(roomId).emit('thanosCallback', data);
 };
+
+/**
+ * @desc 更新项目运行状态
+ * @param data
+ */
+export const updateProjectProcess = (data) => {
+    socketIo.sockets.in(roomId).emit('updateProjectProcess', data);
+};

@@ -16,9 +16,10 @@ const projectModel = {
         cwd: '',
         projects: [],
         currentIndex: 0,
-
+        projectProcess: {},
         thanosModalVisible: false, // 灭霸弹框 显|隐
         initModalVisible: false, // 项目初始化弹框 显|隐
+        thanosGeneratorLoading: false, // 灭霸生成代码loading
     },
 
     effects: {
@@ -46,7 +47,6 @@ const projectModel = {
          */
         runNpmCommand(payload, getState) {
             const { cwd } = getState().project;
-
             return Api.getData({
                 api: 'runNpmCommand',
                 method: 'GET',
@@ -99,7 +99,6 @@ const projectModel = {
          */
         confirmFilePath(payload, getState) {
             let { projects, currentPath } = getState().project;
-            console.log('projects', projects);
             const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
             /* 没有重复路径 */
             if (projects.every(({path}) => path !== currentPath)) {
@@ -147,17 +146,17 @@ const projectModel = {
          * 清空日志
          */
         clear(payload, getState) {
-            const { projects, currentIndex } = getState().project;
+            // const { projects, currentIndex } = getState().project;
 
-            if (projects[currentIndex]) {
-                const project = projects[currentIndex];
-                project.log = '';
-                terminal.write('\r\n');
-                terminal.clear();
-                actions.project.setReducers({
-                    projects
-                });
-            }
+            // if (projects[currentIndex]) {
+            //     const project = projects[currentIndex];
+            //     project.log = '';
+            //     actions.project.setReducers({
+            //         projects
+            //     });
+            // }
+            terminal.write('\r\n');
+            terminal.clear();
         },
         /**
          * 执行灭霸命令
@@ -171,7 +170,8 @@ const projectModel = {
             if (response.code === 0) {
                 message.success('灭霸打响指了');
                 actions.project.setReducers({
-                    thanosModalVisible: false
+                    thanosModalVisible: false,
+                    // thanosGeneratorLoading: true
                 });
             }
         },
@@ -216,6 +216,26 @@ const projectModel = {
 
             localStorage.setItem('projects', JSON.stringify(projects));
         },
+        /**
+         * 获取项目就成状态
+         */
+        getProjectProcess: async(payload, getState) => {
+            let { cwd } = getState().project;
+
+            const response = await Api.getData({
+                api: 'getProjectProcess',
+                method: 'GET',
+                params: {
+                    cwd,
+                }
+            });
+
+            if (response && response.code === 0) {
+                actions.project.setReducers({
+                    projectProcess: response.result
+                });
+            }
+        }
     }
 };
 

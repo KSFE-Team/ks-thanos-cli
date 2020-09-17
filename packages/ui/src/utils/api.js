@@ -11,4 +11,5 @@ export default {
     runCommand: `${SERVER}/runCommand`,
     thanos: `${SERVER}/thanos`,
     thanosSync: `${SERVER}/thanosSync`,
+    getProjectProcess: `${SERVER}/getProjectProcess`,
 };

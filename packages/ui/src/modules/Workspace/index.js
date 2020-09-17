@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { RollbackOutlined } from '@ant-design/icons';
 import { message } from 'antd';
+import { actions } from 'kredux';
 import router from 'kredux/output/router';
 import { ROUTE_LIST } from './routes';
 import Menu from 'Src/components/Menu';
@@ -24,11 +25,14 @@ export default class Workspace extends Component {
         } else {
             this.project = project;
         }
+        actions.project.setReducers({
+            cwd: this.project.path
+        });
     }
 
-    componentDidMount() {
-        console.log('mount');
-    }
+    // componentDidMount() {
+
+    // }
     render() {
         const { match } = this.props;
         const { project } = this;

@@ -25,9 +25,9 @@ const Routes = [
         path: '/workspace',
         // exact: false,
         component: () => import('Modules/Workspace'),
-        // modelList: [
-        //     () => import('Models/project')
-        // ]
+        modelList: [
+            () => import('Models/project')
+        ]
     },
     // {
     //     path: '/workspace/a',
