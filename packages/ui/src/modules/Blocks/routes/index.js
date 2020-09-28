@@ -9,7 +9,7 @@ export const ROUTE_LIST = [
         })
     },
     {
-        path: '/blocks/existingPage',
+        path: '/blocks/existingPage1',
         name: '现有模版',
         // extra: true,
         component: dynamic({

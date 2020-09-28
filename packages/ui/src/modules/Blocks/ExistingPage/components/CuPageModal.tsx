@@ -183,7 +183,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
                             onClick={this.resetPage}
                         >查询</Button>
                         {
-                            tempTabs.map((item, idx) => {
+                            tempTabs.map((item: any, idx: any) => {
                                 return (
                                     <Button
                                         key={item.index}
@@ -201,7 +201,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
                     <ul className='content'>
                         {tab === 0 && <li key={-1} className = { templateId === '-1' ? 'liborder temp-item-container temp-item-text' : 'temp-item-container temp-item-text' } onClick={() => this.setState({templateId: '-1'})}>空白模版</li> }
                         {
-                            list.length && list.length > 0 ? list.map((item, ind) => {
+                            list.length && list.length > 0 ? list.map((item: any, ind: any) => {
                                 const { img = '' } = item;
                                 if (img) {
                                     return <ScreenShot
@@ -244,7 +244,7 @@ export default connect(({
     myTemplate,
     existingPage,
     loading
-}) => ({
+}: any) => ({
     myTemplate,
     existingPage,
     listLoading: loading.effects['myTemplate/getTemplateList'],

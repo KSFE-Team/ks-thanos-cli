@@ -54,10 +54,9 @@ export const tempTabs = [
     {name: '库模版', index: 0},
     {name: '共享模版', index: 1},
     {name: '现有页面', index: 2}
-];
+] as any;
 
 export const ISREQUIRED_TYPE = [
     {VALUE: true, LABEL: '必填'},
     {VALUE: false, LABEL: '非必填'},
-]
-;
+];

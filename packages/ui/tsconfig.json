@@ -4,6 +4,7 @@
         "baseUrl": ".",
         "rootDir": "./",
         "outDir": "./output",
+        "target": "ES2016",
         "paths": {
             "Src/*": [
                 "./src/*"
