@@ -1,9 +1,52 @@
 .workspace-running-container {
     padding: 30px;
 
+    .workspace-running-tools {
+        .workspace-running-badge {
+            margin-left: 16px;
+
+            .workspace-running-text-link {
+                text-decoration-line: underline;
+                margin-left: 4px;
+            }
+
+            .workspace-running-badge-processing {
+                .workspace-running-badge-processing-loading1 {
+                    animation: process-loading1 1s infinite;
+                }
+                .workspace-running-badge-processing-loading2 {
+                    animation: process-loading2 1s infinite;
+                }
+                .workspace-running-badge-processing-loading3 {
+                    animation: process-loading3 1s infinite;
+                }
+            }
+        }
+
+        .workspace-running-generator-loading {
+            margin-left: 16px;
+            color: #faad14;
+        }
+    }
+
     #terminal {
         margin-top: 10px;
         // padding: 5px;
         // border-radius: 5px;
+    }
+}
+
+@-webkit-keyframes process-loading2 {
+    0% {
+        color: transparent;
+    }
+}
+
+@-webkit-keyframes process-loading3 {
+    0% {
+        color: transparent;
+    }
+    50% {
+        color: transparent;
     }
 }

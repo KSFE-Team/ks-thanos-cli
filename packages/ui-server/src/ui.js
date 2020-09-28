@@ -45,7 +45,6 @@ export default class ThanosUi {
     async start() {
         const { port, uiEnv, serverEnv, initPath, serverPort } = this.config;
         const url = `http://localhost:${port}${initPath}${serverPort ? '?serverPort=' + serverPort : ''}`;
-        console.log('url');
         /* 生产模式将自动启服务 */
         if (serverEnv === ENV_PRODUCTION) {
             startServer(serverPort);

@@ -1,0 +1,42 @@
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    background: #30303d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    font-size: 34px;
+    user-select: none;
+
+    .loading-text {
+        animation: preloader-spin 1.6s infinite;
+    }
+}
+
+.overlay-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@-webkit-keyframes preloader-spin {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+

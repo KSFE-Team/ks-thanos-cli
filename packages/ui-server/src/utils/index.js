@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import chalk from 'chalk';
 import figlet from 'figlet';
 import open from 'open';
+import { getStore, setStore } from './store';
 
 export function openBrowser(url) {
     // If we're on OS X, the user hasn't specifically
@@ -46,3 +47,8 @@ export function createSplash(str) {
         verticalLayout: 'default',
     })));
 }
+
+export {
+    getStore,
+    setStore
+};

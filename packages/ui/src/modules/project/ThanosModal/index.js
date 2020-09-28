@@ -32,34 +32,35 @@ const FORM_ITEM_CONFIGS = [
         }
     },
     {
-        title: '创建模块英文名称',
+        title: '模块英文名称',
         key: 'pageName',
-        component: <Input placeholder={'创建模块英文名称'}/>,
+        component: <Input placeholder={'模块英文名称'}/>,
         config: {
             rules: [
-                {required: true, message: requiredMessage('创建模块英文名称')}
+                {required: true, message: requiredMessage('模块英文名称')}
             ]
         }
     },
     {
-        title: '创建模块中文名称',
+        title: '模块中文名称',
         key: 'pageChineseName',
-        component: <Input placeholder={'创建模块中文名称'}/>,
+        component: <Input placeholder={'模块中文名称'}/>,
         config: {
             rules: [
-                {required: true, message: requiredMessage('创建模块中文名称')}
+                {required: true, message: requiredMessage('模块中文名称')}
             ]
         }
     },
     {
-        title: '页面路径（相对于 src/pages 的路径）',
+        title: '页面路径',
         key: 'pagePath',
         component: <SelectPathInput />,
         config: {
             rules: [
-                // {required: true, message: requiredMessage('页面路径（相对于 src/pages 的路径）')}
+                {required: true, message: requiredMessage('页面路径')}
             ],
-            initialValue: ''
+            initialValue: '',
+            extra: '（相对于 src/pages 的路径）'
         }
     }
 ];
@@ -68,25 +69,24 @@ const FORM_ITEM_CONFIGS = [
  * 灭霸配置弹窗
  */
 const thanosModal = (props) => {
-    const { form, project, thanosLoading } = props;
+    const { project, thanosLoading } = props;
     const { thanosModalVisible, cwd } = project;
+    const [form] = Form.useForm();
     /**
      * 校验方法
      */
     const handleSubmit = () => {
-        form.validateFieldsAndScroll({force: true}, (err, fieldsValue) => {
-            if (!err) {
-                actions.project.thanosSync({
-                    cwd,
-                    cmd: 'sync',
-                    args: JSON.stringify([
-                        {
-                            key: '--config',
-                            value: {...fieldsValue}
-                        }
-                    ])
-                });
-            }
+        form.validateFields().then((fieldsValue) => {
+            actions.project.thanosSync({
+                cwd,
+                cmd: 'sync',
+                args: JSON.stringify([
+                    {
+                        key: '--config',
+                        value: {...fieldsValue}
+                    }
+                ])
+            });
         });
     };
     return (
@@ -97,7 +97,14 @@ const thanosModal = (props) => {
             onCancel={toogleModalVisible.bind(this, false)}
             onOk={handleSubmit}
         >
-            {FormItemRender(form, FORM_ITEM_CONFIGS)}
+            <Form
+                form={form}
+            >
+                <FormItemRender
+                    form={Form}
+                    configs={FORM_ITEM_CONFIGS}
+                />
+            </Form>
         </Modal>
     );
 };
@@ -107,4 +114,4 @@ thanosModal.propTypes = {
     thanosLoading: PropTypes.bool, // 接口状态
 };
 
-export default projectContainer(Form.create()(thanosModal));
+export default projectContainer(thanosModal);

@@ -1,6 +1,6 @@
 import IO from 'socket.io-client';
 import { actions } from 'kredux';
-import terminal from 'Modules/project/terminal';
+import terminal from 'Src/components/Terminal';
 import { SERVER_ORIGIN } from 'Utils/api';
 
 const socket = IO(SERVER_ORIGIN, {
@@ -31,7 +31,7 @@ const socketModel = {
                     clearTimeout(timeout);
                     timeout = setTimeout(() => {
                         const { projects, currentIndex } = getState().project;
-                        const project = projects[currentIndex];
+                        const project = projects[currentIndex] || {};
 
                         if (!project.log) project.log = '';
                         project.log += templog;
@@ -54,6 +54,12 @@ const socketModel = {
                             }
                         });
                     }
+                });
+
+                socket.on('updateProjectProcess', (socketRes) => {
+                    actions.project.setReducers({
+                        projectProcess: socketRes
+                    });
                 });
             }
 
