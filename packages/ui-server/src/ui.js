@@ -6,7 +6,7 @@ import checkUi from './checkUi';
 import { startServer } from './index';
 const staticServer = require('koa-static');
 const { ENV_PRODUCTION } = constants;
-const LOCAL_CONFIG_PATH = `${getYarnGlobalDir().data}/@ks-thanos/ui`; // 配置根目录
+const LOCAL_CONFIG_PATH = `${getYarnGlobalDir().data}/node_modules/@ks-thanos/ui`; // 配置根目录
 /**
  * ui界面的构造函数
  */
@@ -15,7 +15,7 @@ export default class ThanosUi {
         this.config = {
             port: config.uiPort || 8001, // CLI可视化服务端口
             ...config,
-            initPath: '/auth/'
+            initPath: '/'
         };
         this.init();
     }

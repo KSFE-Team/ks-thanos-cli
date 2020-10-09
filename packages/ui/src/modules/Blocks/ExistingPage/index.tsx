@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MyPage from './components/MyPage';
 // import BasicLayout from '../layout';
 
-export default class TempLateMgt extends Component {
+// export default class TempLateMgt extends Component {
+//     render() {
+//         return <MyPage />;
+//     }
+// }
 
-    render() {
-        return (
-            <MyPage/>
-        );
-    }
-}
+export default () => {
+    return <MyPage />;
+};

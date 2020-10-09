@@ -19,7 +19,13 @@ import Api from './api';
  * @param {RequestOptions} options 参数
  * @return {Promise<ResponseData>}
  */
-const getData = (options) => {
+interface XHROptions {
+    api: string;
+    method: string;
+    params: any;
+    headers: any;
+}
+const getData = (options: XHROptions): void => {
     return new Promise((resolve, reject) => {
         if (!options.api) {
             reject(new Error('api参数为空'));

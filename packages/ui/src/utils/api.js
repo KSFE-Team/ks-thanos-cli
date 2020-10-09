@@ -12,4 +12,5 @@ export default {
     thanos: `${SERVER}/thanos`,
     thanosSync: `${SERVER}/thanosSync`,
     getProjectProcess: `${SERVER}/getProjectProcess`,
+    getProjectConfig: `${SERVER}/getProjectConfig`
 };

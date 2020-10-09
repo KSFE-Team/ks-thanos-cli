@@ -1,0 +1,20 @@
+.thanos-config {
+    position: relative;
+
+    .thanos-config-form-loading {
+        text-align: center;
+    }
+
+    .thanos-config-form {
+        // color: red
+        width: 750px;
+        margin: 30px auto 0;
+    }
+    
+    .thanos-config-nav {
+        position: absolute;
+        width: 300px;
+        left: 100px;
+        top: 20px;
+    }
+}

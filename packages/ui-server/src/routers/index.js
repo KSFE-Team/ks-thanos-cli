@@ -1,6 +1,7 @@
 import controller, {
     file, runNpmCommand, runCommand,
-    thanos, thanosSync, getProjectProcess
+    thanos, thanosSync, getProjectProcess,
+    getProjectConfig
 } from '../controllers';
 import Router from 'koa-router';
 
@@ -17,4 +18,5 @@ router.get('/file', file);
 router.get('/thanos', thanos);
 router.get('/thanosSync', thanosSync);
 router.get('/getProjectProcess', getProjectProcess);
+router.get('/getProjectConfig', getProjectConfig);
 export default router;

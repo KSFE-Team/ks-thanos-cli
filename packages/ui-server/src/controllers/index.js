@@ -5,6 +5,7 @@ import runCommand from './runCommand';
 import thanos from './thanos';
 import thanosSync from './thanosSync';
 import getProjectProcess from './getProjectProcess';
+import getProjectConfig from './getProjectConfig';
 
 export default function(context) {
     // logger.info('hello!');
@@ -19,5 +20,6 @@ export {
     runCommand,
     thanos,
     thanosSync,
-    getProjectProcess
+    getProjectProcess,
+    getProjectConfig
 };

@@ -1,0 +1,21 @@
+.guide-bar {
+    .guide-group-title {
+        font-weight: bold;
+        line-height: 30px;
+        height: 30px;
+    }
+
+    .guide-link {
+        margin-left: 8px;
+        line-height: 24px;
+        height: 24px;
+
+        .ant-btn-link {
+            color: #fff;
+
+            &:hover {
+                color: #177ddc;
+            }
+        }
+    }
+}

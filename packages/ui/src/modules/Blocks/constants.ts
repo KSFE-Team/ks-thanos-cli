@@ -27,7 +27,7 @@ export const ALIAS = {
     TIME_FORMAT: '时间格式',
     TYPE: '类型',
     ISREQUIRED: '是否必填',
-    DEFAULTVALUE: '默认值'
+    DEFAULTVALUE: '默认值',
 };
 
 /**
@@ -51,12 +51,12 @@ export const FIELD_ARR = ['key', 'label'];
 export const FORM_MESSAGE = '请填写完整配置信息, * 号为必填项';
 
 export const tempTabs = [
-    {name: '库模版', index: 0},
-    {name: '共享模版', index: 1},
-    {name: '现有页面', index: 2}
-] as any;
+    { name: '库模版', index: 0 },
+    { name: '共享模版', index: 1 },
+    { name: '现有页面', index: 2 },
+];
 
 export const ISREQUIRED_TYPE = [
-    {VALUE: true, LABEL: '必填'},
-    {VALUE: false, LABEL: '非必填'},
+    { VALUE: true, LABEL: '必填' },
+    { VALUE: false, LABEL: '非必填' },
 ];

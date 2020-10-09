@@ -2,6 +2,8 @@ import { execSync } from 'child_process';
 import chalk from 'chalk';
 import figlet from 'figlet';
 import open from 'open';
+import net from 'net';
+import path from 'path';
 import { getStore, setStore } from './store';
 
 export function openBrowser(url) {
@@ -47,6 +49,31 @@ export function createSplash(str) {
         verticalLayout: 'default',
     })));
 }
+
+export function isUsedPort(port) {
+    return new Promise((resolve, reject) => {
+        let server = net.createServer().listen(port);
+        server.on('listening', function() {
+            server.close();
+            resolve(true);
+        });
+        server.on('error', function(err) {
+            if (err.code === 'EADDRINUSE') {
+                reject(new Error(false));
+            }
+        });
+    });
+}
+
+export const requireModule = (modulePath) => {
+    const module = require(modulePath);
+    const { __esModule: esModule, default: defaultExport } = module;
+    return esModule ? defaultExport : module;
+};
+
+export const getConfig = (cwd) => {
+    return requireModule(path.resolve(cwd, './ksconfig/config.js'));
+};
 
 export {
     getStore,

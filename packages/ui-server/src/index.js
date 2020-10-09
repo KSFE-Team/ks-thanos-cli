@@ -6,6 +6,7 @@ import bodyParser from 'koa-bodyparser';
 import cors from 'koa2-cors';
 import logger from './utils/logger';
 import { createSocket } from './socket';
+import { isUsedPort } from './utils';
 
 const app = new Koa();
 const server = createSocket(app);
@@ -79,7 +80,9 @@ if (process.env.LOCAL_DEBUG) {
 }
 
 export function startServer(port = 3000) {
-    server.listen(port, () => {
-        logger.info(`server listening on ${port}...`);
+    isUsedPort(port).then(() => {
+        server.listen(port, () => {
+            logger.info(`server listening on ${port}...`);
+        });
     });
 }

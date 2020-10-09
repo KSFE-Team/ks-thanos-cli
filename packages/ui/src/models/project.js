@@ -20,6 +20,8 @@ const projectModel = {
         thanosModalVisible: false, // 灭霸弹框 显|隐
         initModalVisible: false, // 项目初始化弹框 显|隐
         thanosGeneratorLoading: false, // 灭霸生成代码loading
+
+        projectConfig: {}
     },
 
     effects: {
@@ -101,7 +103,7 @@ const projectModel = {
             let { projects, currentPath } = getState().project;
             const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
             /* 没有重复路径 */
-            if (projects.every(({path}) => path !== currentPath)) {
+            if (projects.every(({ path }) => path !== currentPath)) {
                 projects.push({
                     path: currentPath,
                     name
@@ -235,7 +237,27 @@ const projectModel = {
                     projectProcess: response.result
                 });
             }
-        }
+        },
+        /**
+         * 获取项目配置
+         */
+        getProjectConfig: async(payload, getState) => {
+            let { cwd } = getState().project;
+
+            const response = await Api.getData({
+                api: 'getProjectConfig',
+                method: 'GET',
+                params: {
+                    cwd,
+                }
+            });
+
+            if (response && response.code === 0) {
+                actions.project.setReducers({
+                    projectConfig: response.result
+                });
+            }
+        },
     }
 };
 
@@ -244,7 +266,7 @@ const projectModel = {
  */
 export const projectContainer = connect(({ project, loading }) => ({
     project,
-    thanosLoading: loading.effects['project/thanos'],
+    thanosLoading: loading.effects['project/thanosSync'],
     initProjectLoading: loading.effects['project/initProject'],
 }));
 

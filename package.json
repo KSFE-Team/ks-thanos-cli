@@ -26,7 +26,7 @@
     "start": "concurrently \"yarn run start:cli\" \"yarn run start:ui\" \"yarn run start:ui-server\"",
     "start:cli": "cd packages/ks-thanos-cli && yarn run start",
     "start:ui": "cd packages/ui && yarn run start",
-    "start:ui-server": "cd packages/ui-server && npm run pm2 && npm run complie",
+    "start:ui-server": "cd packages/ui-server && yarn run start",
     "build": "lerna run build --sort --stream",
     "update-version": "lerna version --conventional-commits --no-push --no-changelog --no-git-tag-version",
     "publish-to-npm": "lerna publish from-package",
@@ -37,6 +37,10 @@
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "@ks-web-cli/eslint-tools": "^4.11.2",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "concurrently": "^5.1.0",
+    "eslint": "^7.10.0",
+    "typescript": "^4.0.3"
   }
 }

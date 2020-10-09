@@ -5,6 +5,7 @@
         "rootDir": "./",
         "outDir": "./output",
         "target": "ES2016",
+        "module": "esnext",
         "paths": {
             "Src/*": [
                 "./src/*"
@@ -13,6 +14,7 @@
         "jsx": "react"
     },
     "include": [
-        "./src"
+        "./src",
+        "./types"
     ]
 }

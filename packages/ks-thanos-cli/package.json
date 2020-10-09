@@ -1,6 +1,6 @@
 {
   "name": "ks-thanos-cli",
-  "version": "1.4.0-beta",
+  "version": "1.4.1-beta.2",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "@ks-thanos/ui-server": "^1.3.2",
+    "@ks-thanos/ui-server": "^1.3.3-beta.3",
     "@ks-thanos/utils": "^1.3.2",
     "@types/eslint": "^4.16.6",
     "axios": "^0.19.0",
@@ -62,5 +62,6 @@
   "homepage": "https://github.com/KSFE-Team/ks-thanos-cli#readme",
   "_moduleAliases": {
     "Src": "output/src"
-  }
+  },
+  "gitHead": "97f78bd2e3e67f9a7a51d4c4cc2662a4f3517d3e"
 }

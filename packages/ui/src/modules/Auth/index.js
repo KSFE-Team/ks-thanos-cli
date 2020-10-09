@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { goto } from 'Src/utils';
+// import { goto } from 'Src/utils';
 
 export default class Auth extends Component {
     static propTypes = {
@@ -9,7 +9,7 @@ export default class Auth extends Component {
 
     componentDidMount() {
         // const { match: { query = '' } } = this.props;
-        goto.push('/');
+        // goto.push('/');
     }
     render() {
         return <div>

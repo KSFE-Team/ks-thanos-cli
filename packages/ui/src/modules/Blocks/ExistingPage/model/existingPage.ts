@@ -11,10 +11,10 @@ export const STATE = {
         totalPage: 0,
         total: 0,
         pageName: {
-            value: ''
+            value: '',
         }, // 模版名称
     },
-    cuPageModalVisible: false
+    cuPageModalVisible: false,
 } as any;
 export default {
     namespace: 'existingPage',
@@ -25,21 +25,21 @@ export default {
             const postData = {
                 page: searchForm.page,
                 limit: searchForm.limit,
-                pageName: searchForm.pageName.value
+                pageName: searchForm.pageName.value,
             };
             const response = await request(API.page.query, {
                 method: 'GET',
-                body: postData
+                body: postData,
             });
             if (response && !response.errcode) {
-                const result = response.result;
+                const { result } = response;
                 actions.existingPage.setReducers({
                     pageList: result.list,
                     searchPageForm: {
                         ...searchForm,
                         totalPage: result.totalPage,
-                        total: result.total
-                    }
+                        total: result.total,
+                    },
                 });
             }
         },
@@ -48,14 +48,14 @@ export default {
             const response = await request(API.page.delete, {
                 method: 'POST',
                 body: {
-                    pageName
-                }
+                    pageName,
+                },
             });
 
             if (response && !response.errcode) {
                 message.success(`删除页面${pageName}成功`);
                 actions.existingPage.getPageList();
             }
-        }
-    }
+        },
+    },
 };
