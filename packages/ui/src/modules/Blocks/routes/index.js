@@ -1,7 +1,7 @@
 import { dynamic } from 'kredux';
 export const ROUTE_LIST = [
     {
-        path: '/blocks/existingPage',
+        path: '/workspace/blocks/existingPage',
         name: '现有页面',
         // extra: true,
         component: dynamic({
@@ -9,7 +9,7 @@ export const ROUTE_LIST = [
         })
     },
     {
-        path: '/blocks/existingPage1',
+        path: '/workspace/blocks/existingPage1',
         name: '现有模版',
         // extra: true,
         component: dynamic({
