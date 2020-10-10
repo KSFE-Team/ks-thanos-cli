@@ -16,3 +16,5 @@ export const PROJECT_PROCESS_TYPE = [
         name: '启动失败'
     },
 ];
+
+export const KSCONFIG_PATH = './ksconfig/config.js';
