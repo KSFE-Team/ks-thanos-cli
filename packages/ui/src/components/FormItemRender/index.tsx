@@ -1,8 +1,16 @@
 import React from 'react';
+import './style.scss';
 
+interface Config {
+    title: string | React.ReactNode;
+    key: string;
+    component: React.ReactNode;
+    config: any;
+    desc?: string;
+}
 interface FormItemProps {
     form: any;
-    configs: any[];
+    configs: Config[];
 }
 
 const FormItemRender = (props: FormItemProps) => {
@@ -10,9 +18,18 @@ const FormItemRender = (props: FormItemProps) => {
     const { Item: FormItem } = form;
     return (
         <>
-            {configs.map(({ key, title, config, component }) => {
+            {configs.map(({ key, title, config, component, desc }) => {
+                let label = title;
+                if (desc) {
+                    label = (
+                        <div>
+                            {title}
+                            <div className="form-item-desc">{desc}</div>
+                        </div>
+                    );
+                }
                 return (
-                    <FormItem label={title} key={key} name={key} {...config}>
+                    <FormItem label={label} key={key} name={key} {...config}>
                         {component}
                     </FormItem>
                 );

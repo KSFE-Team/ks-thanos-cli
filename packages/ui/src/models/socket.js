@@ -1,9 +1,9 @@
 import IO from 'socket.io-client';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { SERVER_ORIGIN } from 'Utils/api';
+import { LOCAL_SERVER_ORIGIN } from 'Src/api';
 
-const socket = IO(SERVER_ORIGIN, {
+const socket = IO(LOCAL_SERVER_ORIGIN, {
     path: '/api/ks-thanos-ui-server/v1/socket'
 });
 

@@ -242,6 +242,9 @@ const projectModel = {
          * 获取项目配置
          */
         getProjectConfig: async(payload, getState) => {
+            actions.project.setReducers({
+                projectConfigLoading: true
+            });
             let { cwd } = getState().project;
 
             const response = await Api.getData({
@@ -254,8 +257,30 @@ const projectModel = {
 
             if (response && response.code === 0) {
                 actions.project.setReducers({
-                    projectConfig: response.result
+                    projectConfig: response.result,
+                    projectConfigLoading: false
                 });
+            }
+        },
+        /**
+         * 获取项目配置
+         */
+        updateProjectConfig: async(payload, getState) => {
+            const { cwd } = getState().project;
+            const { form, ...OTHERS } = payload;
+            const response = await Api.getData({
+                api: 'updateProjectConfig',
+                method: 'post',
+                params: {
+                    cwd,
+                    ...OTHERS
+                }
+            });
+
+            if (response && response.code === 0) {
+                await actions.project.getProjectConfig();
+                const { projectConfig } = getState().project;
+                form.setFieldsValue(projectConfig);
             }
         },
     }

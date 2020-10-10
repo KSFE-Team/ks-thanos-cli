@@ -11,12 +11,13 @@ import './style.scss';
 
 const { Route, Switch } = router;
 
+let project: any = {};
+
 interface WorkSpaceProps {
     match: any;
 }
 
 export default ({ match }: WorkSpaceProps) => {
-    let project: any = {};
     useState(() => {
         project = getObjectStorage('currentProject') || {};
         if (!project) {
