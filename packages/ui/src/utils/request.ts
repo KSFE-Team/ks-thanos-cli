@@ -1,5 +1,5 @@
 import { isEmptyObject, serializeObject } from 'ks-utils';
-import Api from './api';
+import { API } from 'Src/api';
 
 /**
  * @typedef {Object} ResponseData
@@ -23,33 +23,33 @@ interface XHROptions {
     api: string;
     method: string;
     params: any;
-    headers: any;
+    headers?: any;
 }
-const getData = (options: XHROptions): void => {
+const getData = (options: XHROptions) => {
     return new Promise((resolve, reject) => {
         if (!options.api) {
             reject(new Error('api参数为空'));
         }
-        let xhr = new XMLHttpRequest(),
-            method = options.method || 'get',
-            url = getRequestUrl(method, options || {}),
-            reqParam = options.params;
+        const xhr = new XMLHttpRequest();
+        const method = options.method || 'get';
+        const url = getRequestUrl(method, options || {});
+        const reqParam = options.params;
         xhr.open(method, url);
         xhr.responseType = 'json';
         xhr.setRequestHeader('Content-Type', 'application/json');
         // 参数中有headers来重新设置请求头信息,headers为对象,且不为空
         if (options.headers && !isEmptyObject(options.headers)) {
-            for (const key in options.headers) {
-                if (options.headers.hasOwnProperty(key)) {
+            Object.keys(options.headers).forEach((key) => {
+                if (key in options.headers) {
                     xhr.setRequestHeader(key, options.headers[key]);
                 }
-            }
+            });
         }
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    let response = xhr.response;
-                    response = typeof (response) === 'object' ? response : JSON.parse(response);
+                    let { response } = xhr;
+                    response = typeof response === 'object' ? response : JSON.parse(response);
                     resolve(response);
                 } else if (xhr.status === 0) {
                     reject(new Error('No Network'));
@@ -62,22 +62,22 @@ const getData = (options: XHROptions): void => {
     });
 };
 
-const getRequestUrl = (method = 'get', options) => {
-    let api = Api[options.api] || options.api;
-    method = method.toLowerCase();
-    if (method === 'post' || method === 'put') {
+const getRequestUrl = (method: string = 'get', options: XHROptions) => {
+    let api = API.uiApi[options.api] || options.api;
+    const lowerMethod = method.toLowerCase();
+    if (lowerMethod === 'post' || lowerMethod === 'put') {
         return api;
-    } else if (method === 'get' || method === 'delete') {
+    }
+    if (lowerMethod === 'get' || lowerMethod === 'delete') {
         if (isEmptyObject(options.params)) {
             return api;
-        } else {
-            api += '?' + serializeObject(options.params);
-            return api;
         }
+        api += `?${serializeObject(options.params)}`;
+        return api;
     }
     return api;
 };
 
 export default {
-    getData
+    getData,
 };

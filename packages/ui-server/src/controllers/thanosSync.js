@@ -1,4 +1,26 @@
-export default function(context) {
+import { sendLog } from '../socket';
+
+const spawnSync = (...ARGS) => new Promise((resolve) => {
+    const childProcess = require('child_process');
+    const thanos = childProcess.spawn(...ARGS);
+    // tools, args, {cwd}
+    thanos.stdout.on('data', (data) => {
+        const webpackLog = data.toString();
+        sendLog(webpackLog);
+        console.log(`${data}`);
+    });
+    thanos.stderr.on('data', (data) => {
+        const webpackLog = data.toString();
+        sendLog(webpackLog);
+        console.log(`${data}`);
+    });
+    /* 进程结束 */
+    thanos.on('close', (code) => {
+        resolve();
+    });
+});
+
+export default async function(context) {
     const { cwd, cmd: CMD } = context.query;
     if (!cwd) {
         context.body = {
@@ -6,24 +28,28 @@ export default function(context) {
             message: '项目目录不正确'
         };
     }
-    const childProcess = require('child_process');
     const ARGS = JSON.parse(context.query.args || []);
     const formatArgs = ARGS.map(({key, value}) => `${key} ${JSON.stringify(value)}`).join(' ');
     const cmd = `thanos ${CMD} ${formatArgs}`;
-    console.log(`cmd`, cmd);
     const [tools, ...args] = cmd.split(' ');
-    const thanos = childProcess.spawnSync(tools, args, {cwd, encoding: 'utf-8', stdio: 'inherit'});
-    if (thanos.error) {
-        context.body = {
-            code: -1,
-            result: 'false'
-        };
-    }
+    await spawnSync(tools, args, {cwd});
+    context.body = {
+        code: 0,
+        result: 'success'
+    };
 
-    if (!thanos.status) {
-        context.body = {
-            code: 0,
-            result: 'success'
-        };
-    }
+    // const thanos = childProcess.spawnSync(tools, args, {cwd, encoding: 'utf-8', stdio: 'inherit'});
+    // if (thanos.error) {
+    //     context.body = {
+    //         code: -1,
+    //         result: 'false'
+    //     };
+    // }
+
+    // if (!thanos.status) {
+    //     context.body = {
+    //         code: 0,
+    //         result: 'success'
+    //     };
+    // }
 };

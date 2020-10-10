@@ -1,0 +1,22 @@
+.config-card-container {
+    border: 1px solid #434343;
+    padding: 0 10px 10px;
+    padding-bottom: 0px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    max-height: 600px;
+    overflow: auto;
+
+    .config-card-title {
+        display: inline-block;
+        color: #177ddc;
+        line-height: 30px;
+        height: 30px;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 0 10px;
+        margin-left: -10px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid #434343;
+    }
+}

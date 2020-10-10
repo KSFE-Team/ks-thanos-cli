@@ -31,6 +31,7 @@
         "axios": "^0.19.2",
         "chalk": "^3.0.0",
         "figlet": "^1.2.4",
+        "fs-extra": "^9.0.1",
         "koa": "^2.6.2",
         "koa-bodyparser": "^4.2.1",
         "koa-router": "^7.4.0",

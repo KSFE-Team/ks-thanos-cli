@@ -1,10 +1,11 @@
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import chalk from 'chalk';
 import figlet from 'figlet';
 import open from 'open';
 import net from 'net';
 import path from 'path';
 import { getStore, setStore } from './store';
+import { KSCONFIG_PATH } from './constants';
 
 export function openBrowser(url) {
     // If we're on OS X, the user hasn't specifically
@@ -66,14 +67,30 @@ export function isUsedPort(port) {
 }
 
 export const requireModule = (modulePath) => {
+    delete require.cache[modulePath];
     const module = require(modulePath);
     const { __esModule: esModule, default: defaultExport } = module;
     return esModule ? defaultExport : module;
 };
 
 export const getConfig = (cwd) => {
-    return requireModule(path.resolve(cwd, './ksconfig/config.js'));
+    return requireModule(path.resolve(cwd, KSCONFIG_PATH));
 };
+
+/**
+ * 使用项目的 eslint 格式化文件
+ * @param filePath 文件地址
+ */
+export function formatFile(filePath) {
+    spawnSync(
+        `npx`,
+        [
+            'eslint',
+            filePath,
+            '--fix'
+        ]
+    );
+}
 
 export {
     getStore,
