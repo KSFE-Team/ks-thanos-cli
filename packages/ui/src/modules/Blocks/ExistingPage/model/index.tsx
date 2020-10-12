@@ -1,4 +1,4 @@
-import request from 'Src/utils/request';
+import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
 import { actions } from 'kredux';
 import { message } from 'antd';
@@ -7,7 +7,7 @@ export const STATE = {
     pageList: [],
     searchPageForm: {
         page: 1,
-        limit: 10,
+        limit: 12,
         totalPage: 0,
         total: 0,
         pageName: {

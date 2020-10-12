@@ -9,11 +9,11 @@ export const ROUTE_LIST = [
         })
     },
     {
-        path: '/workspace/blocks/existingPage1',
+        path: '/workspace/blocks/tempLateMgt',
         name: '现有模版',
         // extra: true,
         component: dynamic({
-            component: () => import('../ExistingPage')
+            component: () => import('../TempLateMgt')
         })
     }
 ];

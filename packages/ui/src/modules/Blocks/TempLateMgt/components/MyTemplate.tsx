@@ -8,39 +8,38 @@ import styles from '../../Component/index.module.scss';
 
 const { Search } = Input;
 
-interface ExistingPageProps {
-    existingPage: {
-        pageList: any[];
-        searchPageForm: {
+interface MyTemplateProps {
+    myTemplate: {
+        templateList: any[];
+        searchTemplateForm: {
             limit: number;
             page: number;
             total: number;
             totalPage: number;
-            pageName: {
-                value: string;
-            };
-        };
-        cuPageModalVisible: boolean;
-    };
-    form: any;
-    listLoading: boolean;
+            templateName: {
+                value: string
+            },
+        }
+    },
+    form: any,
+    listLoading: boolean,
 }
 
-class ExistingPage extends Component<ExistingPageProps> {
+class MyTemplate extends Component<MyTemplateProps> {
 
     componentDidMount() {
         // 初始化redux
         const initialState = { ...STATE };
-        actions.existingPage.setReducers({
+        actions.myTemplate.setReducers({
             ...initialState,
         });
         this.loadList();
     }
 
     handlePageChange = (page: any) => {
-        actions.existingPage.setReducers({
+        actions.myTemplate.setReducers({
             searchPageForm: {
-                ...this.props.existingPage.searchPageForm,
+                ...this.props.myTemplate.searchTemplateForm,
                 page,
             },
         });
@@ -48,7 +47,7 @@ class ExistingPage extends Component<ExistingPageProps> {
     };
 
     loadList = () => {
-        actions.existingPage.getPageList();
+        actions.myTemplate.getTemplateList();
     };
 
     resetPage = () => {
@@ -57,7 +56,8 @@ class ExistingPage extends Component<ExistingPageProps> {
 
     render() {
         const { listLoading } = this.props;
-        const { pageList = [], searchPageForm } = this.props.existingPage;
+        console.log('actions====>', actions)
+        const { templateList = [], searchTemplateForm } = this.props.myTemplate;
         const contents = (
             <div
                 style={{
@@ -68,7 +68,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                 }}
             >
                 <Row gutter={[20, 20]} type="flex">
-                    {pageList.map((item, index) => {
+                    {templateList.map((item, index) => {
                         return (
                             <BlockItem
                                 key={index}
@@ -91,17 +91,16 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 style={{ width: 200, marginRight: 10 }}
                             />
                             <Button>刷新</Button>
-                            <Button>新增</Button>
                         </Col>
                     </Row>
                     {contents}
                     <Row className={styles.pagination} type="flex" justify="end">
                         <Pagination
                             size={'small'}
-                            current={searchPageForm.page}
+                            current={searchTemplateForm.page}
                             onChange={this.handlePageChange}
-                            total={searchPageForm.total}
-                            pageSize={searchPageForm.limit}
+                            total={searchTemplateForm.total}
+                            pageSize={searchTemplateForm.limit}
                         />
                     </Row>
                 </Spin>
@@ -110,9 +109,9 @@ class ExistingPage extends Component<ExistingPageProps> {
     }
 }
 
-export default connect(({ existingPage, loading }: any) => ({
-    existingPage,
-    listLoading: loading.effects['existingPage/getPageList'],
+export default connect(({ myTemplate, loading }: any) => ({
+    myTemplate,
+    listLoading: loading.effects['myTemplate/getTemplateList'],
 }))(
-    (ExistingPage),
+    (MyTemplate),
 );

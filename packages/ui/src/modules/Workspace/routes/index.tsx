@@ -30,6 +30,10 @@ export const ROUTE_LIST: RouteConfig[] = [
         // extra: true,
         component: dynamic({
             component: () => import('../../Blocks'),
+            modelList: [
+                () => import('../../Blocks/ExistingPage/model/index'),
+                ()=>import('../../Blocks/TempLateMgt/model/index')
+            ]
         }),
     },
 ];
