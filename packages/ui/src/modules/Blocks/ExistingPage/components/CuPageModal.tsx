@@ -5,7 +5,7 @@ import { Button, Modal, Form, Input, Pagination, message, Spin } from 'antd';
 import { goto } from 'Src/utils';
 import SearchForm from 'Src/components/SearchForm';
 import { tempTabs as TEMP_TABS } from '../../constants';
-import { STATE } from '../model/existingPage';
+import { STATE } from '../model/index';
 import ScreenShot from './ScreenShot';
 // import './style.scss';
 
