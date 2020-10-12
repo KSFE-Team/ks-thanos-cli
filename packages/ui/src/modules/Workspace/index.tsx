@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { RollbackOutlined } from '@ant-design/icons';
+import { EnterOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { actions } from 'kredux';
 import router from 'kredux/output/router';
 import Menu from 'Src/components/Menu';
+import Logo from 'Src/components/Logo';
+import Button from 'Src/components/Button';
+
 import { goto, getObjectStorage } from 'Src/utils';
 import { ROUTE_LIST } from './routes';
 import NoMatch from './component/NoMatch';
@@ -31,17 +34,17 @@ export default ({ match }: WorkSpaceProps) => {
     return (
         <div className="workspace">
             <div className="workspace-header">
-                <div
+                <Button
                     className="workspace-header-tools"
                     onClick={() => {
                         goto.push('/');
                     }}
                 >
-                    <RollbackOutlined />
-                </div>
+                    <EnterOutlined />
+                </Button>
                 <div className="workspace-header-project-name">{project.name}</div>
-                <div className="workspace-header-title">
-                    <span className="workspace-header-title-text">Thanos</span>
+                <div className="workspace-header-logo">
+                    <Logo />
                 </div>
                 <div className="workspace-header-menu">
                     <Menu match={match} dataSource={ROUTE_LIST} />

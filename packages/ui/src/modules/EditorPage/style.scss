@@ -1,0 +1,54 @@
+@import '../../styles/common.scss';
+.thanos-editor-container {
+    .thanos-editor-header {
+        height: 50px;
+        background: $bg-1;
+        
+        .thanos-editor-logo {
+            float: left;
+            line-height: 50px;
+            height: 50px;
+        }
+
+        .thanos-editor-actions {
+            float: right;
+
+            .thanos-editor-primary {
+                background: #1890ff;
+
+                &:hover {
+                    background: #40a9ff;
+                }
+            }
+        }
+        
+        .thanos-editor-back {
+            float: left;
+            padding: 0 10px;
+        }
+    }
+    .thanos-editor-content {
+        display: flex;
+        flex-direction: row;
+        height: calc(100vh - 50px);
+        overflow: auto;
+
+        .thanos-editor-bar {
+            width: 30px;
+            background: red;
+            height: 100%;
+        }
+
+        .thanos-editor-page {
+            flex: 1;
+            background: green;
+            height: 100%;
+        }
+
+        .thanos-editor-form {
+            width: 300px;
+            background: blue;
+            height: 100%;
+        }
+    }
+}
