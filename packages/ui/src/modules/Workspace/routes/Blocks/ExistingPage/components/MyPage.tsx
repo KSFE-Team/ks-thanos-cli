@@ -56,6 +56,7 @@ class ExistingPage extends Component<ExistingPageProps> {
     };
 
     render() {
+        console.log('props====>', this.props)
         const { listLoading } = this.props;
         const { pageList = [], searchPageForm } = this.props.existingPage;
         const contents = (
@@ -89,21 +90,17 @@ class ExistingPage extends Component<ExistingPageProps> {
                             <Button className='mar-l-4'>新增</Button>
                         </Col>
                     </Row>
-                    {pageList.length > 0 ?
-                        <div> 
-                            {contents}
-                            <Row className={styles.pagination} type="flex" justify="end">
-                                <Pagination
-                                    size={'small'}
-                                    current={searchPageForm.page}
-                                    onChange={this.handlePageChange}
-                                    total={searchPageForm.total}
-                                    pageSize={searchPageForm.limit}
-                                />
-                            </Row>
-                        </div> : <Empty description={"未搜索到任何数据"}></Empty>
-                    }
-
+                    {contents}
+                    <Row className={styles.pagination} type="flex" justify="end">
+                        <Pagination
+                            size={'small'}
+                            current={searchPageForm.page}
+                            onChange={this.handlePageChange}
+                            total={searchPageForm.total}
+                            pageSize={searchPageForm.limit}
+                        />
+                    </Row>
+                    {pageList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>}></Empty> : ''}
                 </Spin>
             </div>
         );

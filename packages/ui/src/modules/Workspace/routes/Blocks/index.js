@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 import Menu from 'Src/components/Menu';
 import { ROUTE_LIST } from './routes';
-import NoMatch from '../../../../Workspace/component/NoMatch';
+import NoMatch from '../../component/NoMatch';
 import router from 'kredux/output/router';
 
 const { Sider, Content } = Layout;

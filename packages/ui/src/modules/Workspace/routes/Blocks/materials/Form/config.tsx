@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { actions, connect } from 'kredux';
 import { FORM_TYPES } from './constants';
 import { Form, Input, Button, Row, Col, Radio, Tabs, message } from 'antd';
-import { getDataEntry, getCloudComponents, ALL_TOOLS } from '../../materials';
+import { getDataEntry, getCloudComponents, ALL_TOOLS } from '..';
 import { getTools, checkFieldData } from '../../utils';
 import ComponentType from 'Src/pages/GeneratePage/materials/Config/ComponentType';
 import { CHARACTER_REG, CHARACTER_MESSAGE, FORM_MESSAGE } from '../../constants';

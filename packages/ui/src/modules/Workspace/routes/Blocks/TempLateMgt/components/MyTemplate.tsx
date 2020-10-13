@@ -49,7 +49,7 @@ class MyTemplate extends Component<MyTemplateProps> {
         actions.myTemplate.getTemplateList();
     };
 
-    resetPage = (val:any) => {
+    resetPage = (val: any) => {
         this.props.myTemplate.searchTemplateForm.templateName.value = val;
         this.handlePageChange(1);
     };
@@ -84,22 +84,20 @@ class MyTemplate extends Component<MyTemplateProps> {
                                 style={{ width: 200, marginRight: 10 }}
                                 onSearch={this.resetPage}
                             />
-                            <Button onClick={this.resetPage}>刷新</Button>
+                            <Button>刷新</Button>
                         </Col>
                     </Row>
-                    {templateList.length > 0 ?
-                        <div>
-                            {contents}
-                            <Row className={styles.pagination} type="flex" justify="end">
-                                <Pagination
-                                    size={'small'}
-                                    current={searchTemplateForm.page}
-                                    onChange={this.handlePageChange}
-                                    total={searchTemplateForm.total}
-                                    pageSize={searchTemplateForm.limit}
-                                />
-                            </Row>
-                        </div> : <Empty description={"未搜索到任何数据"}></Empty>
+                    {contents}
+                    <Row className={styles.pagination} type="flex" justify="end">
+                        <Pagination
+                            size={'small'}
+                            current={searchTemplateForm.page}
+                            onChange={this.handlePageChange}
+                            total={searchTemplateForm.total}
+                            pageSize={searchTemplateForm.limit}
+                        />
+                    </Row>
+                    {templateList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>}></Empty> : ''}
                     }
                 </Spin>
             </div>

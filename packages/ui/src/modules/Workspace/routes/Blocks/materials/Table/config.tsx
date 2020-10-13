@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { actions } from 'kredux';
 import { Form, Input, Table, Button, Row, Col, Select, message, Radio } from 'antd';
 import { TABLE_TYPE, CHARACTER_REG, CHARACTER_MESSAGE, FORM_MESSAGE } from '../../constants';
-import { DATA_ENTRY } from '../../materials';
+import { DATA_ENTRY } from '..';
 import ClearButton from '../ClearButton';
 import { initState, getInitJson} from './utils';
 import { getUniqueID, checkFieldData } from '../../utils';

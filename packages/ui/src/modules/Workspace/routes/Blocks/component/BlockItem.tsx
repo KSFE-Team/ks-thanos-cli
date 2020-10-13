@@ -42,20 +42,13 @@ const BlockItem = ({ item }) => {
                 </Spin>
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        <HighlightedText text={item.pageName} />
+                        <HighlightedText text={item.pageName||item.templateName} />
                     </div>
-                    {item.createTime && (
+                    {item.updateTime && (
                         <Typography.Paragraph className={styles.description} ellipsis={{ rows: 2, expandable: false }}>
-                            <HighlightedText text={moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} />
+                            <HighlightedText text={moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss')} />
                         </Typography.Paragraph>
                     )}
-                    <div className={styles.meats}>
-                        <span className={styles.tags}>
-                            <span className={styles.tagInCard}>
-                                <HighlightedText text={moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss')} />
-                            </span>
-                        </span>
-                    </div>
                 </div>
             </div>
         </Col>

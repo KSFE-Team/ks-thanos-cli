@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { actions } from 'kredux';
 import { Form, Input, Button, Row, Col } from 'antd';
-import { getDataEntry, ALL_TOOLS } from '../../materials';
+import { getDataEntry, ALL_TOOLS } from '..';
 import {findComponent, getTools, getUniqueID, saveComponent} from '../../utils';
 import ComponentType from 'Src/pages/GeneratePage/materials/Config/ComponentType';
 

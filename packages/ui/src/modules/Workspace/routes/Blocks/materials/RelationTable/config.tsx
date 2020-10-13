@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { actions } from 'kredux';
-import { DATA_ENTRY } from '../../materials';
+import { DATA_ENTRY } from '..';
 import { Form, Input, Table, Button, Row, Col, Select, message } from 'antd';
 import { getUniqueID } from '../../utils';
 
