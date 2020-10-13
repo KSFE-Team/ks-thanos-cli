@@ -55,8 +55,11 @@ class ExistingPage extends Component<ExistingPageProps> {
         this.handlePageChange(1);
     };
 
+    reload=()=>{
+        this.handlePageChange(1);
+    }
+
     render() {
-        console.log('props====>', this.props)
         const { listLoading } = this.props;
         const { pageList = [], searchPageForm } = this.props.existingPage;
         const contents = (
@@ -68,7 +71,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                     padding: 24,
                 }}
             >
-                <Row gutter={[20, 20]} type="flex">
+                <Row gutter={[20, 20]}>
                     {pageList.map((item, index) => {
                         return <BlockItem key={index} item={item} />;
                     })}
@@ -86,12 +89,12 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 style={{ width: 200, marginRight: 10 }}
                                 onSearch={this.resetPage}
                             />
-                            <Button onClick={this.resetPage}>刷新</Button>
+                            <Button onClick={this.reload}>刷新</Button>
                             <Button className='mar-l-4'>新增</Button>
                         </Col>
                     </Row>
                     {contents}
-                    <Row className={styles.pagination} type="flex" justify="end">
+                    <Row className={styles.pagination} justify="end">
                         <Pagination
                             size={'small'}
                             current={searchPageForm.page}

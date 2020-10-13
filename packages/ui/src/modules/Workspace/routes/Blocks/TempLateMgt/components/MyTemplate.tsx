@@ -54,6 +54,10 @@ class MyTemplate extends Component<MyTemplateProps> {
         this.handlePageChange(1);
     };
 
+    reload=()=>{
+        this.handlePageChange(1);
+    }
+
     render() {
         const { listLoading } = this.props;
         const { templateList = [], searchTemplateForm } = this.props.myTemplate;
@@ -66,7 +70,7 @@ class MyTemplate extends Component<MyTemplateProps> {
                     padding: 24,
                 }}
             >
-                <Row gutter={[20, 20]} type="flex">
+                <Row gutter={[20, 20]}>
                     {templateList.map((item, index) => {
                         return <BlockItem key={index} item={item} />;
                     })}
@@ -84,11 +88,11 @@ class MyTemplate extends Component<MyTemplateProps> {
                                 style={{ width: 200, marginRight: 10 }}
                                 onSearch={this.resetPage}
                             />
-                            <Button>刷新</Button>
+                            <Button onClick={this.reload}>刷新</Button>
                         </Col>
                     </Row>
                     {contents}
-                    <Row className={styles.pagination} type="flex" justify="end">
+                    <Row className={styles.pagination} justify="end">
                         <Pagination
                             size={'small'}
                             current={searchTemplateForm.page}
@@ -98,7 +102,6 @@ class MyTemplate extends Component<MyTemplateProps> {
                         />
                     </Row>
                     {templateList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>}></Empty> : ''}
-                    }
                 </Spin>
             </div>
         );

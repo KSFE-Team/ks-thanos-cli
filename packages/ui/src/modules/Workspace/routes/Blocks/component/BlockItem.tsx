@@ -54,12 +54,5 @@ const BlockItem = ({ item }) => {
         </Col>
     );
 };
-// class BlockItem extends Component {
-//     render() {
-//         const { item } = this.props;
-//         return (
 
-//         );
-//     }
-// }
 export default BlockItem;
