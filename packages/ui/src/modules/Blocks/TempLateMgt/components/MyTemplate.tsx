@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
-import { Row, Button, Col, Input, Pagination, Spin } from 'antd';
+import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
 import { STATE } from '../model/index';
 import BlockItem from '../../Component/BlockItem';
 import styles from '../../Component/index.module.scss';
@@ -50,13 +50,13 @@ class MyTemplate extends Component<MyTemplateProps> {
         actions.myTemplate.getTemplateList();
     };
 
-    resetPage = () => {
+    resetPage = (val:any) => {
+        this.props.myTemplate.searchTemplateForm.templateName.value = val;
         this.handlePageChange(1);
     };
 
     render() {
         const { listLoading } = this.props;
-        console.log('actions====>', actions)
         const { templateList = [], searchTemplateForm } = this.props.myTemplate;
         const contents = (
             <div
@@ -87,22 +87,27 @@ class MyTemplate extends Component<MyTemplateProps> {
                         </Col>
                         <Col span={16} style={{ textAlign: 'right' }}>
                             <Search
-                                placeholder="input search text"
+                                placeholder="请输入模版名称"
                                 style={{ width: 200, marginRight: 10 }}
+                                onSearch={this.resetPage}
                             />
-                            <Button>刷新</Button>
+                            <Button onClick={this.resetPage}>刷新</Button>
                         </Col>
                     </Row>
-                    {contents}
-                    <Row className={styles.pagination} type="flex" justify="end">
-                        <Pagination
-                            size={'small'}
-                            current={searchTemplateForm.page}
-                            onChange={this.handlePageChange}
-                            total={searchTemplateForm.total}
-                            pageSize={searchTemplateForm.limit}
-                        />
-                    </Row>
+                    {templateList.length > 0 ?
+                        <div>
+                            {contents}
+                            <Row className={styles.pagination} type="flex" justify="end">
+                                <Pagination
+                                    size={'small'}
+                                    current={searchTemplateForm.page}
+                                    onChange={this.handlePageChange}
+                                    total={searchTemplateForm.total}
+                                    pageSize={searchTemplateForm.limit}
+                                />
+                            </Row>
+                        </div> : <Empty description={"未搜索到任何数据"}></Empty>
+                    }
                 </Spin>
             </div>
         );

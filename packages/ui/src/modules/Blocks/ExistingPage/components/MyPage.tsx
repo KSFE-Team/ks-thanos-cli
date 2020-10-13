@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
-import { Row, Button, Col, Input, Pagination, Spin } from 'antd';
+import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
 import { STATE } from '../model/index';
 import BlockItem from '../../Component/BlockItem';
 import styles from '../../Component/index.module.scss';
@@ -51,7 +51,8 @@ class ExistingPage extends Component<ExistingPageProps> {
         actions.existingPage.getPageList();
     };
 
-    resetPage = () => {
+    resetPage = (val: any) => {
+        this.props.existingPage.searchPageForm.pageName.value = val;
         this.handlePageChange(1);
     };
 
@@ -87,23 +88,29 @@ class ExistingPage extends Component<ExistingPageProps> {
                         </Col>
                         <Col span={16} style={{ textAlign: 'right' }}>
                             <Search
-                                placeholder="input search text"
+                                placeholder="请输入页面名称"
                                 style={{ width: 200, marginRight: 10 }}
+                                onSearch={this.resetPage}
                             />
-                            <Button>刷新</Button>
-                            <Button>新增</Button>
+                            <Button onClick={this.resetPage}>刷新</Button>
+                            <Button className='mar-l-4'>新增</Button>
                         </Col>
                     </Row>
-                    {contents}
-                    <Row className={styles.pagination} type="flex" justify="end">
-                        <Pagination
-                            size={'small'}
-                            current={searchPageForm.page}
-                            onChange={this.handlePageChange}
-                            total={searchPageForm.total}
-                            pageSize={searchPageForm.limit}
-                        />
-                    </Row>
+                    {pageList.length > 0 ?
+                        <div> 
+                            {contents}
+                            <Row className={styles.pagination} type="flex" justify="end">
+                                <Pagination
+                                    size={'small'}
+                                    current={searchPageForm.page}
+                                    onChange={this.handlePageChange}
+                                    total={searchPageForm.total}
+                                    pageSize={searchPageForm.limit}
+                                />
+                            </Row>
+                        </div> : <Empty description={"未搜索到任何数据"}></Empty>
+                    }
+
                 </Spin>
             </div>
         );
