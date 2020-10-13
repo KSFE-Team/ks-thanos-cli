@@ -29,11 +29,11 @@ export const ROUTE_LIST: RouteConfig[] = [
         name: '资产',
         // extra: true,
         component: dynamic({
-            component: () => import('../../Blocks'),
+            component: () => import('./Template/Blocks'),
             modelList: [
-                () => import('../../Blocks/ExistingPage/model/index'),
-                ()=>import('../../Blocks/TempLateMgt/model/index')
-            ]
+                () => import('./Template/Blocks/ExistingPage/model/index'),
+                () => import('./Template/Blocks/TempLateMgt/model/index'),
+            ],
         }),
     },
 ];

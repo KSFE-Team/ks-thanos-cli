@@ -29,6 +29,13 @@ const Routes = [
             () => import('Models/project')
         ]
     },
+    {
+        path: '/editor',
+        name: '编辑器',
+        extra: true,
+        // hide: true,
+        component: () => import('Modules/EditorPage')
+    },
     // {
     //     path: '/workspace/a',
     //     exact: false,

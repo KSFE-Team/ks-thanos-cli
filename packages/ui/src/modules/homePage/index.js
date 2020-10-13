@@ -2,6 +2,7 @@ import React from 'react';
 import { connect, actions } from 'kredux';
 import AddProjectBtn from './components/AddProjectBtn';
 import ProjectCard from './components/ProjectCard';
+import Logo from 'Src/components/Logo';
 import { getObjectStorage } from 'Src/utils';
 import './style.scss';
 
@@ -53,7 +54,7 @@ export default class Homepage extends React.Component {
         return (
             <div className={'homepage-background'}>
                 <div className={'homepage-title'}>
-                    <span className='homepage-title-text'>Thanos</span>
+                    <Logo className={'homepage-logo'} />
                     {this.getActions()}
                 </div>
                 {this.getContent()}

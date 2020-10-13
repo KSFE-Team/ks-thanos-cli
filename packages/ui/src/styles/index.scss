@@ -1,4 +1,9 @@
 @import './reset.scss';
+@import './common.scss';
+
+body {
+    background: $bg-1;
+}
 
 .mar-l-4 {
     margin-left: 4px;

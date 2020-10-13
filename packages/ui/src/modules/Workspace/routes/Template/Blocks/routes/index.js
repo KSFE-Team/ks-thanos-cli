@@ -15,5 +15,5 @@ export const ROUTE_LIST = [
         component: dynamic({
             component: () => import('../TempLateMgt')
         })
-    }
+    },
 ];

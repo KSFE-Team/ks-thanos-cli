@@ -11,10 +11,10 @@ export const STATE = {
         totalPage: 0,
         total: 0,
         templateName: {
-            value: ''
+            value: '',
         }, // 模版名称
         type: {
-            value: ''
+            value: '',
         },
     },
 };
@@ -28,21 +28,21 @@ export default {
                 page: searchForm.page,
                 limit: searchForm.limit,
                 type: payload && payload.type,
-                templateName: searchForm.templateName.value
+                templateName: searchForm.templateName.value,
             };
             const response = await request(API.template.query, {
                 method: 'GET',
-                body: postData
+                body: postData,
             });
             if (response && !response.errcode) {
-                const result = response.result;
+                const { result } = response;
                 actions.myTemplate.setReducers({
                     templateList: result.list,
                     searchTemplateForm: {
                         ...searchForm,
                         totalPage: result.totalPage,
-                        total: result.total
-                    }
+                        total: result.total,
+                    },
                 });
             }
         },
@@ -51,14 +51,14 @@ export default {
             const response = await request(API.template.delete, {
                 method: 'POST',
                 body: {
-                    templateName
-                }
+                    templateName,
+                },
             });
 
             if (response && !response.errcode) {
                 message.success(`删除模板${templateName}成功`);
                 actions.myTemplate.getTemplateList();
             }
-        }
-    }
+        },
+    },
 };

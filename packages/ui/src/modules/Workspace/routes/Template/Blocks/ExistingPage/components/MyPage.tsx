@@ -3,43 +3,43 @@ import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
 import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
 import { STATE } from '../model/index';
-import BlockItem from '../../Component/BlockItem';
-import styles from '../../Component/index.module.scss';
+import BlockItem from '../../component/BlockItem';
+import styles from '../../component/index.module.scss';
 
 const { Search } = Input;
 
-interface MyTemplateProps {
-    myTemplate: {
-        templateList: any[];
-        searchTemplateForm: {
+interface ExistingPageProps {
+    existingPage: {
+        pageList: any[];
+        searchPageForm: {
             limit: number;
             page: number;
             total: number;
             totalPage: number;
-            templateName: {
-                value: string
-            },
-        }
-    },
-    form: any,
-    listLoading: boolean,
+            pageName: {
+                value: string;
+            };
+        };
+        cuPageModalVisible: boolean;
+    };
+    form: any;
+    listLoading: boolean;
 }
 
-class MyTemplate extends Component<MyTemplateProps> {
-
+class ExistingPage extends Component<ExistingPageProps> {
     componentDidMount() {
         // 初始化redux
         const initialState = { ...STATE };
-        actions.myTemplate.setReducers({
+        actions.existingPage.setReducers({
             ...initialState,
         });
         this.loadList();
     }
 
     handlePageChange = (page: any) => {
-        actions.myTemplate.setReducers({
+        actions.existingPage.setReducers({
             searchPageForm: {
-                ...this.props.myTemplate.searchTemplateForm,
+                ...this.props.existingPage.searchPageForm,
                 page,
             },
         });
@@ -47,34 +47,29 @@ class MyTemplate extends Component<MyTemplateProps> {
     };
 
     loadList = () => {
-        actions.myTemplate.getTemplateList();
+        actions.existingPage.getPageList();
     };
 
-    resetPage = (val:any) => {
-        this.props.myTemplate.searchTemplateForm.templateName.value = val;
+    resetPage = (val: any) => {
+        this.props.existingPage.searchPageForm.pageName.value = val;
         this.handlePageChange(1);
     };
 
     render() {
         const { listLoading } = this.props;
-        const { templateList = [], searchTemplateForm } = this.props.myTemplate;
+        const { pageList = [], searchPageForm } = this.props.existingPage;
         const contents = (
             <div
                 style={{
                     display: 'flex',
                     height: '100%',
                     flexDirection: 'column',
-                    padding: 24
+                    padding: 24,
                 }}
             >
                 <Row gutter={[20, 20]} type="flex">
-                    {templateList.map((item, index) => {
-                        return (
-                            <BlockItem
-                                key={index}
-                                item={item}
-                            />
-                        );
+                    {pageList.map((item, index) => {
+                        return <BlockItem key={index} item={item} />;
                     })}
                 </Row>
             </div>
@@ -83,40 +78,39 @@ class MyTemplate extends Component<MyTemplateProps> {
             <div className="my-page-container">
                 <Spin spinning={listLoading}>
                     <Row>
-                        <Col span={8} style={{ lineHeight: '32px' }} >
-                        </Col>
+                        <Col span={8} style={{ lineHeight: '32px' }} />
                         <Col span={16} style={{ textAlign: 'right' }}>
                             <Search
-                                placeholder="请输入模版名称"
+                                placeholder="请输入页面名称"
                                 style={{ width: 200, marginRight: 10 }}
                                 onSearch={this.resetPage}
                             />
                             <Button onClick={this.resetPage}>刷新</Button>
+                            <Button className='mar-l-4'>新增</Button>
                         </Col>
                     </Row>
-                    {templateList.length > 0 ?
-                        <div>
+                    {pageList.length > 0 ?
+                        <div> 
                             {contents}
                             <Row className={styles.pagination} type="flex" justify="end">
                                 <Pagination
                                     size={'small'}
-                                    current={searchTemplateForm.page}
+                                    current={searchPageForm.page}
                                     onChange={this.handlePageChange}
-                                    total={searchTemplateForm.total}
-                                    pageSize={searchTemplateForm.limit}
+                                    total={searchPageForm.total}
+                                    pageSize={searchPageForm.limit}
                                 />
                             </Row>
                         </div> : <Empty description={"未搜索到任何数据"}></Empty>
                     }
+
                 </Spin>
             </div>
         );
     }
 }
 
-export default connect(({ myTemplate, loading }: any) => ({
-    myTemplate,
-    listLoading: loading.effects['myTemplate/getTemplateList'],
-}))(
-    (MyTemplate),
-);
+export default connect(({ existingPage, loading }: any) => ({
+    existingPage,
+    listLoading: loading.effects['existingPage/getPageList'],
+}))(ExistingPage);

@@ -1,0 +1,21 @@
+@import '../../styles/common.scss';
+.header-button {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    cursor: pointer;
+
+    &:hover {
+        background: $bg-2;
+    }
+
+    &.disabled {
+        color: $color-desc;
+    }
+    
+    &.disabled:hover {
+        background: inherit;
+        cursor: inherit;
+    }
+}
