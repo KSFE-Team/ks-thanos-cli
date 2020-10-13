@@ -1,5 +1,6 @@
 import { stringify } from 'qs';
 import { notification } from 'antd';
+
 const fetch = require('isomorphic-fetch');
 
 // import Humps from 'ks-module-humps';
@@ -21,28 +22,40 @@ const codeMessage = {
     504: '网关超时。',
 };
 
+interface Resoponse {
+    status?: number;
+    errcode?: number;
+    code?: number;
+    statusText?: string;
+    result?: {
+        message: string;
+    };
+    json?(): void;
+}
+
 /**
  * 检查返回值状态码
  *
  * @param {response||response.json()} 状态码和返回code的双重判断
  * @return {response||error}
  */
-function checkStatus(response, customerError) {
+function checkStatus(response: Resoponse, customerError: boolean) {
     /**
-    * status 可能是状态码 可能是返回code
-    * @type {number}
-    */
-    let status;
+     * status 可能是状态码 可能是返回code
+     * @type {number}
+     */
+    let status: number;
     if ('status' in response) {
         status = response.status;
     } else if ('errcode' in response) {
         status = response.errcode;
-    } else if ('code' in response) {
+    } else {
         status = response.code;
     }
     if ((status >= 200 && status < 300) || status === 0) {
         return response;
-    } else if (customerError) {
+    }
+    if (customerError) {
         return response;
     }
     // const errortext = codeMessage[status] || response.statusText || response.msg;
@@ -69,13 +82,21 @@ function checkStatus(response, customerError) {
  * @property {String} method // 请求方式  默认不传为get
  * @property {Object} body // 请求体
  */
-export default function request(url, options, customerError = false) {
+export default function request(
+    url: string,
+    options: {
+        method?: string;
+        body?: string | any;
+    },
+    customerError = false,
+) {
     const defaultOptions = {
         mode: 'cors',
         // credentials: 'include',
-        headers: {}
+        headers: {},
     };
     let newOptions = { ...defaultOptions, ...options };
+    let parseUrl = url;
     switch (`${newOptions.method}`) {
         case 'post':
         case 'POST':
@@ -101,16 +122,18 @@ export default function request(url, options, customerError = false) {
         }
     } else if (newOptions.method === 'GET') {
         if (newOptions.body) {
-            url = `${url}?${stringify(newOptions.body)}`;
+            parseUrl = `${url}?${stringify(newOptions.body)}`;
         }
         newOptions = null;
     }
-    return fetch(url, newOptions)
-        .then((response) => checkStatus(response, customerError))
-        .then((response) => response.json())
-        .then((response) => checkStatus(response, customerError))
-        // .then((response) => Humps.parse(response))
-        .catch((e) => {
-            console.warn(e);
-        }); ;
+    return (
+        fetch(parseUrl, newOptions)
+            .then((response: Resoponse) => checkStatus(response, customerError))
+            .then((response: Resoponse) => response.json())
+            .then((response: Resoponse) => checkStatus(response, customerError))
+            // .then((response) => Humps.parse(response))
+            .catch((e: string) => {
+                // console.warn(e);
+            })
+    );
 }

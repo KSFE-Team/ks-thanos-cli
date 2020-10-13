@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
 import { Row, Button, Col, Input, Pagination, Spin } from 'antd';
 import { STATE } from '../model/index';
-import BlockItem from '../../Component/BlockItem';
-import styles from '../../Component/index.module.scss';
+import BlockItem from '../../component/BlockItem';
+import styles from '../../component/index.module.scss';
 
 const { Search } = Input;
 
@@ -27,7 +27,6 @@ interface ExistingPageProps {
 }
 
 class ExistingPage extends Component<ExistingPageProps> {
-
     componentDidMount() {
         // 初始化redux
         const initialState = { ...STATE };
@@ -64,17 +63,12 @@ class ExistingPage extends Component<ExistingPageProps> {
                     display: 'flex',
                     height: '100%',
                     flexDirection: 'column',
-                    padding: 24
+                    padding: 24,
                 }}
             >
                 <Row gutter={[20, 20]} type="flex">
                     {pageList.map((item, index) => {
-                        return (
-                            <BlockItem
-                                key={index}
-                                item={item}
-                            />
-                        );
+                        return <BlockItem key={index} item={item} />;
                     })}
                 </Row>
             </div>
@@ -83,13 +77,9 @@ class ExistingPage extends Component<ExistingPageProps> {
             <div className="my-page-container">
                 <Spin spinning={listLoading}>
                     <Row>
-                        <Col span={8} style={{ lineHeight: '32px' }} >
-                        </Col>
+                        <Col span={8} style={{ lineHeight: '32px' }} />
                         <Col span={16} style={{ textAlign: 'right' }}>
-                            <Search
-                                placeholder="input search text"
-                                style={{ width: 200, marginRight: 10 }}
-                            />
+                            <Search placeholder="input search text" style={{ width: 200, marginRight: 10 }} />
                             <Button>刷新</Button>
                             <Button>新增</Button>
                         </Col>
@@ -97,7 +87,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                     {contents}
                     <Row className={styles.pagination} type="flex" justify="end">
                         <Pagination
-                            size={'small'}
+                            size="small"
                             current={searchPageForm.page}
                             onChange={this.handlePageChange}
                             total={searchPageForm.total}
@@ -113,6 +103,4 @@ class ExistingPage extends Component<ExistingPageProps> {
 export default connect(({ existingPage, loading }: any) => ({
     existingPage,
     listLoading: loading.effects['existingPage/getPageList'],
-}))(
-    (ExistingPage),
-);
+}))(ExistingPage);

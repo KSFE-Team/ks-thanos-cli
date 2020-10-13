@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
 import { Row, Button, Col, Input, Pagination, Spin } from 'antd';
 import { STATE } from '../model/index';
-import BlockItem from '../../Component/BlockItem';
-import styles from '../../Component/index.module.scss';
+import BlockItem from '../../component/BlockItem';
+import styles from '../../component/index.module.scss';
 
 const { Search } = Input;
 
@@ -17,16 +17,15 @@ interface MyTemplateProps {
             total: number;
             totalPage: number;
             templateName: {
-                value: string
-            },
-        }
-    },
-    form: any,
-    listLoading: boolean,
+                value: string;
+            };
+        };
+    };
+    form: any;
+    listLoading: boolean;
 }
 
 class MyTemplate extends Component<MyTemplateProps> {
-
     componentDidMount() {
         // 初始化redux
         const initialState = { ...STATE };
@@ -56,7 +55,6 @@ class MyTemplate extends Component<MyTemplateProps> {
 
     render() {
         const { listLoading } = this.props;
-        console.log('actions====>', actions)
         const { templateList = [], searchTemplateForm } = this.props.myTemplate;
         const contents = (
             <div
@@ -64,17 +62,12 @@ class MyTemplate extends Component<MyTemplateProps> {
                     display: 'flex',
                     height: '100%',
                     flexDirection: 'column',
-                    padding: 24
+                    padding: 24,
                 }}
             >
                 <Row gutter={[20, 20]} type="flex">
                     {templateList.map((item, index) => {
-                        return (
-                            <BlockItem
-                                key={index}
-                                item={item}
-                            />
-                        );
+                        return <BlockItem key={index} item={item} />;
                     })}
                 </Row>
             </div>
@@ -83,20 +76,16 @@ class MyTemplate extends Component<MyTemplateProps> {
             <div className="my-page-container">
                 <Spin spinning={listLoading}>
                     <Row>
-                        <Col span={8} style={{ lineHeight: '32px' }} >
-                        </Col>
+                        <Col span={8} style={{ lineHeight: '32px' }} />
                         <Col span={16} style={{ textAlign: 'right' }}>
-                            <Search
-                                placeholder="input search text"
-                                style={{ width: 200, marginRight: 10 }}
-                            />
+                            <Search placeholder="input search text" style={{ width: 200, marginRight: 10 }} />
                             <Button>刷新</Button>
                         </Col>
                     </Row>
                     {contents}
                     <Row className={styles.pagination} type="flex" justify="end">
                         <Pagination
-                            size={'small'}
+                            size="small"
                             current={searchTemplateForm.page}
                             onChange={this.handlePageChange}
                             total={searchTemplateForm.total}
@@ -112,6 +101,4 @@ class MyTemplate extends Component<MyTemplateProps> {
 export default connect(({ myTemplate, loading }: any) => ({
     myTemplate,
     listLoading: loading.effects['myTemplate/getTemplateList'],
-}))(
-    (MyTemplate),
-);
+}))(MyTemplate);
