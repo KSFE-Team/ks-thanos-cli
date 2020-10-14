@@ -42,7 +42,7 @@ const BlockItem = ({ item }) => {
                 </Spin>
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        <HighlightedText text={item.pageName||item.templateName} />
+                        <HighlightedText text={item.pageName || item.templateName} />
                     </div>
                     {item.updateTime && (
                         <Typography.Paragraph className={styles.description} ellipsis={{ rows: 2, expandable: false }}>

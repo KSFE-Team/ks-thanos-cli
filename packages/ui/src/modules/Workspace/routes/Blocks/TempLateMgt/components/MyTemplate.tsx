@@ -54,9 +54,9 @@ class MyTemplate extends Component<MyTemplateProps> {
         this.handlePageChange(1);
     };
 
-    reload=()=>{
+    reload = () => {
         this.handlePageChange(1);
-    }
+    };
 
     render() {
         const { listLoading } = this.props;
@@ -94,14 +94,18 @@ class MyTemplate extends Component<MyTemplateProps> {
                     {contents}
                     <Row className={styles.pagination} justify="end">
                         <Pagination
-                            size={'small'}
+                            size="small"
                             current={searchTemplateForm.page}
                             onChange={this.handlePageChange}
                             total={searchTemplateForm.total}
                             pageSize={searchTemplateForm.limit}
                         />
                     </Row>
-                    {templateList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>}></Empty> : ''}
+                    {templateList.length === 0 && !listLoading ? (
+                        <Empty description={<span>未搜索到任何数据</span>} />
+                    ) : (
+                        ''
+                    )}
                 </Spin>
             </div>
         );
