@@ -55,9 +55,9 @@ class ExistingPage extends Component<ExistingPageProps> {
         this.handlePageChange(1);
     };
 
-    reload=()=>{
+    reload = () => {
         this.handlePageChange(1);
-    }
+    };
 
     render() {
         const { listLoading } = this.props;
@@ -90,20 +90,20 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 onSearch={this.resetPage}
                             />
                             <Button onClick={this.reload}>刷新</Button>
-                            <Button className='mar-l-4'>新增</Button>
+                            <Button className="mar-l-4">新增</Button>
                         </Col>
                     </Row>
                     {contents}
                     <Row className={styles.pagination} justify="end">
                         <Pagination
-                            size={'small'}
+                            size="small"
                             current={searchPageForm.page}
                             onChange={this.handlePageChange}
                             total={searchPageForm.total}
                             pageSize={searchPageForm.limit}
                         />
                     </Row>
-                    {pageList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>}></Empty> : ''}
+                    {pageList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>} /> : ''}
                 </Spin>
             </div>
         );

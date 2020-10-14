@@ -9,7 +9,14 @@ import styles from './index.module.scss';
 
 export interface BlockItemProps {
     loading?: boolean;
-    item: Object;
+    item: {
+        url: string;
+        previewUrl?: string;
+        img: string;
+        pageName?: string;
+        templateName?: string;
+        updateTime?: string;
+    };
 }
 
 interface ToolTipAddButtonProps extends ButtonProps {
@@ -24,7 +31,7 @@ const ToolTipAddButton: React.FC<ToolTipAddButtonProps> = ({ disabledTitle, disa
     );
 };
 
-const BlockItem = ({ item }) => {
+const BlockItem = ({ item }: BlockItemProps) => {
     return (
         <Col key={item.url} className={styles.col}>
             <div id={item.url} className={styles.templateCard}>
@@ -42,7 +49,7 @@ const BlockItem = ({ item }) => {
                 </Spin>
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        <HighlightedText text={item.pageName||item.templateName} />
+                        <HighlightedText text={item.pageName || item.templateName} />
                     </div>
                     {item.updateTime && (
                         <Typography.Paragraph className={styles.description} ellipsis={{ rows: 2, expandable: false }}>
