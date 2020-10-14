@@ -70,3 +70,8 @@ export const formatServerPort = () => {
         return 3000;
     }
 };
+
+// 生成随机码
+export const getUniqueID = () => {
+    return Math.random().toString(36).substring(2);
+};
