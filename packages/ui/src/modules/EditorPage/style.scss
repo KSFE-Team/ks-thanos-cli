@@ -3,6 +3,8 @@
     .thanos-editor-header {
         height: 50px;
         background: $bg-1;
+        border-bottom: 1px solid #000;
+        box-sizing: border-box;
         
         .thanos-editor-logo {
             float: left;
@@ -33,21 +35,17 @@
         height: calc(100vh - 50px);
         overflow: auto;
 
-        .thanos-editor-bar {
-            width: 30px;
-            background: red;
-            height: 100%;
-        }
-
         .thanos-editor-page {
             flex: 1;
-            background: green;
+            background: #ffffff;
             height: 100%;
+            border: 1px solid #000;
+            box-sizing: border-box;
         }
 
         .thanos-editor-form {
             width: 300px;
-            background: blue;
+            background: $bg-1;
             height: 100%;
         }
     }

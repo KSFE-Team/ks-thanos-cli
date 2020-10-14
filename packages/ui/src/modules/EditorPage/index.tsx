@@ -3,6 +3,7 @@ import { RollbackOutlined, SaveOutlined, EnterOutlined } from '@ant-design/icons
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
 import { goto } from 'Src/utils';
+import Bar from './components/Bar';
 import './style.scss';
 
 export default () => {
@@ -35,7 +36,7 @@ export default () => {
                 </div>
             </div>
             <div className="thanos-editor-content">
-                <div className="thanos-editor-bar">111</div>
+                <Bar />
                 <div className="thanos-editor-page">111</div>
                 <div className="thanos-editor-form">111</div>
             </div>
