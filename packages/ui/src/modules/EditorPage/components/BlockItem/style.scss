@@ -1,0 +1,14 @@
+.thanos-editor-block-item {
+    flex: 1;
+    min-width: 40%;
+    padding: 5px;
+
+    .thanos-editor-block-shortscreen {
+        border: 1px solid #000;
+        cursor: pointer;
+    }
+
+    .thanos-editor-block-title {
+        margin-top: 5px;
+    }
+}

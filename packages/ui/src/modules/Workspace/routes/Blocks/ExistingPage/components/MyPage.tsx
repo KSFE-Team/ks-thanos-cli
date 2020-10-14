@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
 import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
+import { goto } from 'Src/utils';
 import { STATE } from '../model/index';
 import BlockItem from '../../component/BlockItem';
 import styles from '../../component/index.module.scss';
@@ -90,7 +91,19 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 onSearch={this.resetPage}
                             />
                             <Button onClick={this.reload}>刷新</Button>
+<<<<<<< HEAD
                             <Button className="mar-l-4">新增</Button>
+=======
+                            <Button
+                                className="mar-l-4"
+                                type="primary"
+                                onClick={() => {
+                                    goto.push('/editor/');
+                                }}
+                            >
+                                新增
+                            </Button>
+>>>>>>> 554c3836f9b2db3755252734b5d1f267fd94fcaa
                         </Col>
                     </Row>
                     {contents}
