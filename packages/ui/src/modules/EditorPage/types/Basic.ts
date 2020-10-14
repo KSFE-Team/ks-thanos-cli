@@ -1,7 +1,9 @@
 import { getUniqueID } from 'Src/utils';
+import { ComponentConfig } from './Page';
 
 interface ElementConfig {
     accpet: string[];
+    component: any[];
     componentType: string;
     id?: string;
     validator(): Promise<any> | boolean;
@@ -10,6 +12,7 @@ interface ElementConfig {
 
 export default abstract class BasicElement {
     accpet: string[] = [];
+    components: any[] = [];
 
     groupType: string = '';
 
@@ -28,6 +31,13 @@ export default abstract class BasicElement {
     }
 
     /**
+     * 添加组件
+     */
+    abstract addComponent(
+        component: ComponentConfig, // 组件配置
+    ): void;
+
+    /**
      * 校验相关数据是否必填
      */
     abstract validator(): Promise<any> | boolean;
@@ -35,7 +45,7 @@ export default abstract class BasicElement {
     /**
      * 获取json
      */
-    abstract toCode(): string;
+    abstract toCode(...args: any[]): string;
 
     /**
      * 打开配置

@@ -4,20 +4,20 @@ export default abstract class Interactive extends Basic {
     /**
      * 拖拽事件
      */
-    dnd(): void;
+    abstract dnd(): void;
 
     /**
      * 删除事件
      */
-    remove(): void;
+    abstract remove(): void;
 
     /**
      * 排序事件
      */
-    sort(): void;
+    abstract sort(): void;
 
     /**
      * 选中事件
      */
-    active(): void;
+    abstract active(): void;
 }
