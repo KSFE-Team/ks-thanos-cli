@@ -2,7 +2,7 @@ import { getUniqueID } from 'Src/utils';
 
 // eslint-disable-next-line import/named
 // eslint-disable-next-line import/no-cycle
-import { ComponentConfig } from './Interactive';
+import { ComponentConfig } from './ComponentBase';
 
 interface ElementConfig {
     accpet: string[];
