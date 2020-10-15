@@ -1,0 +1,18 @@
+@import '../../../../styles/common.scss';
+.thanos-editor-form {
+    width: 300px;
+    background: $bg-1;
+    height: 100%;
+
+    .editor-form-container {
+        padding: 8px;
+    
+        .editor-form-title {
+            font-weight: bold;
+        }
+    
+        .editor-form-content {
+            margin-top: 8px;
+        }
+    }
+}

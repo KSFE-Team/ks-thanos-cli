@@ -4,6 +4,9 @@ import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
 import { goto } from 'Src/utils';
 import Bar from './components/Bar';
+import Form from './components/Form';
+import ComponentsRender from './components/ComponentsRender';
+
 import './style.scss';
 
 export default () => {
@@ -37,8 +40,8 @@ export default () => {
             </div>
             <div className="thanos-editor-content">
                 <Bar />
-                <div className="thanos-editor-page">111</div>
-                <div className="thanos-editor-form">111</div>
+                <ComponentsRender />
+                <Form />
             </div>
         </div>
     );

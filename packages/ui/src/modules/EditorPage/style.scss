@@ -34,19 +34,5 @@
         flex-direction: row;
         height: calc(100vh - 50px);
         overflow: auto;
-
-        .thanos-editor-page {
-            flex: 1;
-            background: #ffffff;
-            height: 100%;
-            border: 1px solid #000;
-            box-sizing: border-box;
-        }
-
-        .thanos-editor-form {
-            width: 300px;
-            background: $bg-1;
-            height: 100%;
-        }
     }
 }

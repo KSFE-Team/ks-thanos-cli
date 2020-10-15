@@ -1,11 +1,11 @@
 import { getUniqueID } from 'Src/utils';
 
 interface ElementConfig {
-    accpet: string[];
-    componentType: string;
+    // accpet: string[];
+    // componentType: string;
     id?: string;
-    validator(): Promise<any> | boolean;
-    toCode(): string;
+    // validator(): Promise<any> | boolean;
+    // toCode(): string;
 }
 
 export default abstract class BasicElement {
@@ -19,7 +19,7 @@ export default abstract class BasicElement {
         [name: string]: any;
     } = {};
 
-    constructor(config: ElementConfig) {
+    constructor(config: ElementConfig = {}) {
         if ('id' in config && config.id) {
             this.id = config.id;
         } else {
