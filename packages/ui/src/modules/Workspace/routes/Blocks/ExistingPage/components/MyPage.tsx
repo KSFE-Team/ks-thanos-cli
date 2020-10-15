@@ -91,9 +91,6 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 onSearch={this.resetPage}
                             />
                             <Button onClick={this.reload}>刷新</Button>
-<<<<<<< HEAD
-                            <Button className="mar-l-4">新增</Button>
-=======
                             <Button
                                 className="mar-l-4"
                                 type="primary"
@@ -103,7 +100,6 @@ class ExistingPage extends Component<ExistingPageProps> {
                             >
                                 新增
                             </Button>
->>>>>>> 554c3836f9b2db3755252734b5d1f267fd94fcaa
                         </Col>
                     </Row>
                     {contents}

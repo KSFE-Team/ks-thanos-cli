@@ -1,9 +1,12 @@
 import { getUniqueID } from 'Src/utils';
-import { ComponentConfig } from './Page';
+
+// eslint-disable-next-line import/named
+// eslint-disable-next-line import/no-cycle
+import { ComponentConfig } from './Interactive';
 
 interface ElementConfig {
     accpet: string[];
-    component: any[];
+    components: any[];
     componentType: string;
     id?: string;
     validator(): Promise<any> | boolean;
@@ -12,6 +15,7 @@ interface ElementConfig {
 
 export default abstract class BasicElement {
     accpet: string[] = [];
+
     components: any[] = [];
 
     groupType: string = '';

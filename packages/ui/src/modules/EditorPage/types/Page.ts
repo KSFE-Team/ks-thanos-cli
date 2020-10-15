@@ -1,12 +1,18 @@
+// eslint-disable-next-line import/no-cycle
 import Basic from './Basic';
 import { GROUP_TYPE_DICT } from './constants';
 
-export interface ComponentConfig {
-    componentName: string; // 组件名称
-    componentPrevirwImg: string; // 组件预览图
-    componentType: string; // 组件类型
+export default abstract class Page extends Basic {
+    groupType: string = GROUP_TYPE_DICT.PAGE;
+
+    pageName: string = ''; // 页面名称
+
+    components: any[] = []; // 页面中的子组件
+
+    /**
+     * 发布
+     */
+    abstract publish(): void;
 }
 
-export abstract class Page extends Basic implements ComponentConfig {
-    groupType: string = GROUP_TYPE_DICT.PAGE;
-}
+export const getPage = () => Page;
