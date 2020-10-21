@@ -1,27 +1,6 @@
-import Basic from '../../../types/Basic';
+import React from 'react';
+import { Input } from 'antd';
 
-export default class Input extends Basic {
-    groupType: string = 'component';
-
-    components: any[] = [];
-
-    path: number[] = [0];
-
-    name: string = 'input';
-
-    configProps: {
-        [name: string]: any;
-    } = {
-        value: 'hahaha',
-    };
-
-    openConfig = () => {};
-
-    validator = () => {
-        return false;
-    };
-
-    toCode = () => {
-        return '1';
-    };
-}
+export default () => {
+    return <Input />;
+};

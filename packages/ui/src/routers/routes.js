@@ -34,7 +34,10 @@ const Routes = [
         name: '编辑器',
         extra: true,
         // hide: true,
-        component: () => import('Modules/EditorPage')
+        component: () => import('Modules/EditorPage'),
+        modelList: [
+            () => import('Modules/EditorPage/components/Page/model')
+        ]
     },
     // {
     //     path: '/workspace/a',

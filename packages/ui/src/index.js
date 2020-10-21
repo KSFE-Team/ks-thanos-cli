@@ -2,7 +2,6 @@ import React from 'react';
 import kredux, { dynamic, actions } from 'kredux';
 import getRouteList from './routers/getRouteList';
 import { browserHistory } from './routers/utils';
-import { RecoilRoot } from 'recoil';
 import Loading from './components/Loading';
 import './entry';
 
@@ -14,14 +13,6 @@ dynamic.setDefaultLoadingComponent(Loading);
 
 const app = kredux({
     history: browserHistory,
-    getContainer: (app, route) => {
-        return (
-            <RecoilRoot>
-                {app}
-                {route}
-            </RecoilRoot>
-        );
-    }
 });
 
 app.router(getRouteList());

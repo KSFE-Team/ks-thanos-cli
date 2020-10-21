@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RollbackOutlined, SaveOutlined, EnterOutlined } from '@ant-design/icons';
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
 import { goto } from 'Src/utils';
 import Bar from './components/Bar';
 import Form from './components/Form';
-import ComponentsRender from './components/ComponentsRender';
-
+import Page from './components/Page';
+import * as CONSTANTS from './components/Blocks/constants';
+import { setComponent } from './components/Blocks/components';
 import './style.scss';
 
 export default () => {
+    useState(() => {
+        Object.keys(CONSTANTS)
+            .filter((key) => key !== 'default')
+            .forEach((key) => {
+                setComponent({
+                    [key]: CONSTANTS[key],
+                });
+            });
+    });
     return (
         <div className="thanos-editor-container">
             <div className="thanos-editor-header">
@@ -40,7 +50,7 @@ export default () => {
             </div>
             <div className="thanos-editor-content">
                 <Bar />
-                <ComponentsRender />
+                <Page />
                 <Form />
             </div>
         </div>
