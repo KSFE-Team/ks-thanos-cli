@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import BlockGroup from '../BlockGroup';
+import BlockGroup from './ContentBlock';
 import './style.scss';
 
 export default () => {
