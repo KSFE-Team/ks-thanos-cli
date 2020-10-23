@@ -30,11 +30,14 @@ const Routes = [
         ]
     },
     {
-        path: '/editor',
+        path: '/editor/:id',
         name: '编辑器',
         extra: true,
         // hide: true,
-        component: () => import('Modules/EditorPage')
+        component: () => import('Modules/EditorPage'),
+        modelList: [
+            () => import('Src/modules/EditorPage/model')
+        ]
     },
     // {
     //     path: '/workspace/a',

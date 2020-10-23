@@ -1,4 +1,4 @@
-import { ISREQUIRED_TYPE } from 'Src/utils/constants';
+// const ISREQUIRED_TYPE = [{}, {}];
 
 /**
  * 获取初始化JSON
@@ -10,8 +10,8 @@ export const getInitJson = () => ({
     default: false,
     key: '',
     label: '',
-    isRequired: ISREQUIRED_TYPE[0].VALUE,
-    defaultValue: ''
+    // isRequired: ISREQUIRED_TYPE[0].VALUE,
+    defaultValue: '',
 });
 
 /**
@@ -20,10 +20,10 @@ export const getInitJson = () => ({
 export const getTools = () => ({
     name: 'Input',
     icon: 'edit',
-    componentName: 'Input'
+    componentName: 'Input',
 });
 
-const ISREQUIRED = 'isRequired';
+// const ISREQUIRED = 'isRequired';
 const DEFAULTVALUE = 'defaultValue';
 
 /**
@@ -31,12 +31,12 @@ const DEFAULTVALUE = 'defaultValue';
  */
 export const initState = {
     formData: {
-        [ISREQUIRED]: ISREQUIRED_TYPE[0].VALUE,
-        [DEFAULTVALUE]: ''
+        // [ISREQUIRED]: ISREQUIRED_TYPE[0].VALUE,
+        [DEFAULTVALUE]: '',
     },
     isTouch: false,
     current: {
         id: '',
-        props: {}
-    }
+        props: {},
+    },
 };

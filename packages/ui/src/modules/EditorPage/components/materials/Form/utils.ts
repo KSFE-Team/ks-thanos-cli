@@ -5,17 +5,19 @@ const [{ key: NORMAL_FORM }] = FORM_TYPES;
  * 获取初始化JSON
  */
 export const getInitJson = () => ({
-    stateName: '',
     componentName: 'Form',
     source: 'antd',
     default: false,
-    type: NORMAL_FORM,
-    key: '',
-    label: '',
-    saveApi: '',
-    updateApi: '',
-    getApi: '',
-    paramKey: '',
+    config: {
+        stateName: '',
+        type: NORMAL_FORM,
+        key: '',
+        label: '',
+        saveApi: '',
+        updateApi: '',
+        getApi: '',
+        paramKey: '',
+    },
 });
 
 /**
@@ -32,15 +34,14 @@ export const getTools = () => ({
  */
 export const filterCloudComponents = (serverList: any[], localCloudConfig: any) => {
     return Object.keys(localCloudConfig).reduce((prev: any, key: string) => {
-        const { getTools } = localCloudConfig[key];
-        const { cloudName = '' } = getTools();
+        const temp = prev;
+        // const { getTools } = localCloudConfig[key];
+        // const { cloudName = '' } = getTools();
+        const cloudName = '';
         if (cloudName && serverList.some(({ name }) => `${name}` === `${cloudName}`)) {
-            prev = {
-                ...prev,
-                [key]: localCloudConfig[key],
-            };
+            temp[key] = localCloudConfig[key];
         }
-        return prev;
+        return temp;
     }, {});
 };
 

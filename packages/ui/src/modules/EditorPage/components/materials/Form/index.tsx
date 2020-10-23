@@ -1,54 +1,36 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { getInitJson, getTools } from './utils';
 import FormConfig from './config';
-import PageRender from 'Src/pages/GeneratePage/components/PageRender';
+import ComponentRender from '../../ComponentRender';
 import './index.scss';
 
 interface KFormProps {
-    config: any,
+    config: any;
     generatePage: {
         pageJSON: any;
         pageName: string;
-    }
+    };
 }
 
 class KForm extends Component<KFormProps> {
-    static propTypes = {
-        props: PropTypes.object
+    renderChildren = (props: any) => {
+        const { components = [] } = this.props;
+        return components.map((itemProps: any) => {
+            return <ComponentRender {...itemProps} />;
+        });
     };
 
-    renderChildren = () => {
-        const { config } = this.props;
-        if (config.components && config.components.length) {
-            return <PageRender
-                dataSource={config.components}
-                generatePage={this.props.generatePage}
-                parentComponent={config}
-            />;
-        } else {
-            return null;
-        }
-    }
-
     render() {
-        const { generatePage: { pageName = '' } } = this.props;
+        // const {
+        //     // generatePage: { pageName = '' },
+        // } = this.props;
         return (
-            <div
-                className={'form-container'}
-            >
-                <div className={'form-title'}>{pageName || '表单'}</div>
-                <div className='form-container-background'>
-                    {this.renderChildren()}
-                </div>
+            <div className="form-container">
+                <div className="form-title">表单</div>
+                <div className="form-container-background">{this.renderChildren(this.props)}</div>
             </div>
         );
     }
 }
 
-export {
-    KForm as component,
-    getInitJson,
-    getTools,
-    FormConfig as config
-};
+export { KForm as component, getInitJson, getTools, FormConfig as config };
