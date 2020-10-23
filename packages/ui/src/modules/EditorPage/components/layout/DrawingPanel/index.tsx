@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import RouteProps from 'Src/types/route';
-import ComponentRender from 'Src/components/ComponentRender';
+import ComponentRender from '../../ComponentRender';
 
 interface DrawingProps extends RouteProps {}
 
