@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import ComponentRender from '../../ComponentRender';
 import { getInitJson, getTools } from './utils';
 import FormConfig from './config';
-import ComponentRender from '../../ComponentRender';
 import './index.scss';
 
 interface KFormProps {
