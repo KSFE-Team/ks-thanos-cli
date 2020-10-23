@@ -223,7 +223,6 @@ export class NormalFormDelegate extends FormDelegate {
                 message: `'请输入${item.config.label}！'`
             });
         }
-
         let fieldConfigCode = item.getDecoratorConfigCode()
             .replace(/}$/, `\ninitialValue: info.${item.config.key},\n}`);
 
