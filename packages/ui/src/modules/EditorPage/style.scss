@@ -35,15 +35,15 @@
         height: calc(100vh - 50px);
         overflow: auto;
 
-        .thanos-editor-page {
+        .thanos-editor-draw {
             flex: 1;
-            background: #ffffff;
+            background: $bg-1;
             height: 100%;
             border: 1px solid #000;
             box-sizing: border-box;
         }
 
-        .thanos-editor-form {
+        .thanos-editor-property {
             width: 300px;
             background: $bg-1;
             height: 100%;
