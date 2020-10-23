@@ -8,6 +8,7 @@ import './entry';
 // 导入样式文件
 import './styles/index.scss';
 import socket from 'Models/socket';
+import { setApp } from './app';
 
 dynamic.setDefaultLoadingComponent(Loading);
 
@@ -21,3 +22,5 @@ app.render(
     <div />,
     '#app'
 );
+setApp(app);
+window.APP = app;

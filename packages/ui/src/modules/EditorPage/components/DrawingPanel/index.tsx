@@ -1,31 +1,18 @@
 import React from 'react';
-import { renderComponent } from '../../utils/index';
+import { useSelector } from 'react-redux';
+import RouteProps from 'Src/types/route';
+import ComponentRender from 'Src/components/ComponentRender';
 
-const componentData = [
-    {
-        componentId: 1,
-        componentName: 'Form',
-        config: {},
-        children: [
-            {
-                componentId: 2,
-                componentName: 'Input',
-                config: { label: '姓名', key: 'name' },
-            },
-            {
-                componentId: 3,
-                componentName: 'Input',
-                config: { label: '年龄', key: 'age' },
-            },
-        ],
-    },
-];
+interface DrawingProps extends RouteProps {}
 
-export default () => {
+export default (props: DrawingProps) => {
+    const page = useSelector((store: any) => store.page);
+    const { components } = page.pageJson;
     return (
         <div className="thanos-editor-draw">
-            hi,我是视图区域
-            {renderComponent(componentData)}
+            {components.map((itemConfig: any) => {
+                return <ComponentRender key={itemConfig.id} {...itemConfig} />;
+            })}
         </div>
     );
 };
