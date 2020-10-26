@@ -1,39 +1,24 @@
 import React from 'react';
 import { Input, Form } from 'antd';
-import { getInitJson, getTools } from './utils';
+import { ComponentConfig } from 'Src/types/componentConfig';
+import { FORMITEM_LAYOUT } from '../../../utils/constants';
+import { getInitJson, getTools, validator } from './utils';
 import InputConfig from './config';
-// import { FORMITEM_LAYOUT } from 'Src/utils/constants';
 
-interface KInputProps {
+interface MaterialInputProps extends ComponentConfig {
     config: any;
-    generatePage: {
-        pageJSON: any;
-    };
+    props: any;
+    id: string;
 }
 
-// class KInput extends Component<KInputProps> {
-//     render() {
-//         const { config, generatePage, ...OtherProps } = this.props;
-//         const { label = '' } = config;
-//         return (
-//             <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: 0 }} label={label}>
-//                 <Input
-//                     {...OtherProps}
-//                     style={{
-//                         width: '300px',
-//                     }}
-//                 />
-//             </Form.Item>
-//         );
-//     }
-// }
-const KInput = (props: any) => {
-    const { config = {}, generatePage, ...OtherProps } = props;
-    const { label = '' } = config;
+const MaterialInput = (props: MaterialInputProps) => {
+    const { config = {}, id, props: configProps } = props;
+    const formConfig = props[id];
+    const { label = '' } = Object.keys(formConfig).length ? formConfig : config;
     return (
-        <Form.Item {...{}} style={{ marginBottom: 0 }} label={label}>
+        <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             <Input
-                {...OtherProps}
+                {...configProps}
                 style={{
                     width: '300px',
                 }}
@@ -42,4 +27,4 @@ const KInput = (props: any) => {
     );
 };
 
-export { KInput as component, getInitJson, getTools, InputConfig as config };
+export { MaterialInput as component, getInitJson, validator, getTools, InputConfig as config };

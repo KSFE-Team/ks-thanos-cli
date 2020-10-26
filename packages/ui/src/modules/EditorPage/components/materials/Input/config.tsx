@@ -1,114 +1,52 @@
-import React, { Component } from 'react';
-import { Form, Input, Button, Row, Col, Radio } from 'antd';
+import React from 'react';
+import { Form, Input, Radio } from 'antd';
+import { actions } from 'kredux';
+import { ComponentConfig } from 'Src/types/componentConfig';
 // import { ALIAS, FORMITEM_LAYOUT, FORM_MESSAGE, ISREQUIRED_TYPE } from 'Src/utils/constants';
+import { ISREQUIRED_TYPE, ALIAS } from '../../../utils/constants';
 // import { findComponent, saveComponent } from 'Src/utils';
 // import { checkFieldData } from 'Src/utils/utils';
 // import ClearButton from 'Src/components/ClearButton';
-import { initState } from './utils';
 
 const FormItem = Form.Item;
 const KEY = 'key';
 const LABEL = 'label';
 const ISREQUIRED = 'isRequired';
 
-interface InputConfigProps {
-    pageJSON: any;
-    onSave(pageJSON: any): void;
-}
+interface InputConfigProps extends ComponentConfig {}
 
-export default class InputConfig extends Component<InputConfigProps> {
-    state = initState;
-
-    static getDerivedStateFromProps(props, state) {
-        if (!state.isTouch) {
-            // const { pageJSON } = props;
-            // const { components } = pageJSON;
-            const current = {};
-            return {
-                formData: {
-                    [KEY]: current[KEY],
-                    [LABEL]: current[LABEL],
-                    [ISREQUIRED]: current[ISREQUIRED],
-                },
-                current,
-            };
-        }
-        return state;
-    }
-
-    handleSave = (): void => {
-        // const { formData, current } = this.state;
-        // const { pageJSON, onSave } = this.props;
-        // const { error } = checkFieldData('Input', formData);
-        // // 提交检验
-        // if (error) {
-        //     message.error(FORM_MESSAGE);
-        //     return false;
-        // }
-        // pageJSON.components = saveComponent(current.id, pageJSON.components, {
-        //     ...formData,
-        //     props: {
-        //         ...current.props,
-        //         placeholder: formData[LABEL],
-        //     },
-        // });
-        // onSave && onSave(pageJSON);
-    };
-
-    handleChange = (key: string, e: any) => {
-        const { formData } = this.state;
-        const { value } = e.target;
-        this.setState({
-            formData: {
-                ...formData,
-                [key]: value,
-            },
-            isTouch: true,
-        });
-    };
-
-    render() {
-        const { formData } = this.state;
-        return (
-            <div>
-                <FormItem label="" {...{}} required>
-                    <Input
-                        // value={formData[KEY]}
-                        placeholder="例如： name"
-                        // onChange={this.handleChange.bind(this, KEY)}
-                    />
+export default (props: InputConfigProps) => {
+    const { id } = props;
+    const config = props[id] || {};
+    return (
+        <div>
+            <Form
+                layout="vertical"
+                onValuesChange={(_, allFields) => {
+                    actions[id].setReducers(allFields);
+                }}
+                fields={Object.keys(config).map((key) => ({
+                    name: [key],
+                    value: config[key],
+                }))}
+            >
+                <FormItem name={LABEL} label={ALIAS.LABEL} required>
+                    <Input placeholder="例如： 姓名" />
                 </FormItem>
-                <FormItem label="" {...{}} required>
-                    <Input
-                        // value={formData[LABEL]}
-                        placeholder="例如： 姓名"
-                        // onChange={this.handleChange.bind(this, LABEL)}
-                    />
+                <FormItem name={KEY} label={ALIAS.KEY} required>
+                    <Input placeholder="例如： name" />
                 </FormItem>
                 {/* 是否必填/选 */}
-                <Form.Item {...{}} label="" required>
-                    <Radio.Group
-                        defaultValue={formData[ISREQUIRED]}
-                        // onChange={this.handleChange.bind(this, ISREQUIRED)}
-                    >
-                        {[].map(({ VALUE, LABEL: label }, index) => (
+                <Form.Item name={ISREQUIRED} label={ALIAS.ISREQUIRED} required>
+                    <Radio.Group>
+                        {ISREQUIRED_TYPE.map(({ VALUE, LABEL: label }, index) => (
                             <Radio key={index} value={VALUE}>
                                 {label}
                             </Radio>
                         ))}
                     </Radio.Group>
                 </Form.Item>
-                <FormItem>
-                    <Row>
-                        <Col>
-                            <Button onClick={this.handleSave} type="primary">
-                                确定
-                            </Button>
-                        </Col>
-                        {/* <ClearButton initState={initState} that={this} /> */}
-                    </Row>
-                </FormItem>
-            </div>
-        );
-    }
-}
+            </Form>
+        </div>
+    );
+};

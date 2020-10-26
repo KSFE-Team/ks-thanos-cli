@@ -29,6 +29,18 @@ export const getTools = () => ({
     componentName: 'Form',
 });
 
+// eslint-disable-next-line consistent-return
+export const validator = (item: any): undefined | Error => {
+    if (!item.type) {
+        return new Error('请选择表单类型');
+    }
+    if (item.type === 'normal') {
+        if (['saveApi', 'updateApi', 'getApi', 'paramKey'].some((key) => !item[key])) {
+            return new Error('请填写表单信息');
+        }
+    }
+};
+
 /**
  * 过滤云组件
  */
