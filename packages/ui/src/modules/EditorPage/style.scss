@@ -42,12 +42,18 @@
             border: 1px solid #000;
             border-top: none;
             box-sizing: border-box;
+            padding: 2px;
         }
 
         .thanos-editor-property {
             width: 300px;
             background: $bg-1;
+            padding: 8px;
             height: 100%;
+
+            .ant-row.ant-form-item {
+                margin-bottom: 8px;
+            }
         }
     }
 }

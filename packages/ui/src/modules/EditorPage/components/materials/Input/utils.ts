@@ -1,5 +1,3 @@
-// const ISREQUIRED_TYPE = [{}, {}];
-
 /**
  * 获取初始化JSON
  */
@@ -23,20 +21,36 @@ export const getTools = () => ({
     componentName: 'Input',
 });
 
-// const ISREQUIRED = 'isRequired';
-const DEFAULTVALUE = 'defaultValue';
+interface CheckTypes {
+    key: string;
+    name: string;
+    componentName: string;
+}
 
-/**
- * 初始化state
- */
-export const initState = {
-    formData: {
-        // [ISREQUIRED]: ISREQUIRED_TYPE[0].VALUE,
-        [DEFAULTVALUE]: '',
-    },
-    isTouch: false,
-    current: {
-        id: '',
-        props: {},
-    },
-};
+/* 检查属性 */
+const checkFields = (config: any, keys: CheckTypes[]) =>
+    new Promise((resolve, reject) => {
+        keys.forEach(({ key, name, componentName }) => {
+            if (!config[key]) {
+                resolve(`${componentName}请填写${name}`);
+            }
+        });
+        resolve();
+    });
+
+/* 检查基础 key、label属性 */
+const baseValidator = (config: any) =>
+    checkFields(config, [
+        {
+            key: 'label',
+            name: '表单展示字段',
+            componentName: config.componentName,
+        },
+        {
+            key: 'key',
+            name: '表单绑定字段',
+            componentName: config.componentName,
+        },
+    ]);
+
+export const validator = (config: any) => baseValidator(config);
