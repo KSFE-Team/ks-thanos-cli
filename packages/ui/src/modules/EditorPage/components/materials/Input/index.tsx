@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
-import { getInitJson, getTools, validator } from './utils';
+import * as tools from './utils';
 import InputConfig from './config';
 
 interface MaterialInputProps extends ComponentConfig {
@@ -27,4 +27,4 @@ const MaterialInput = (props: MaterialInputProps) => {
     );
 };
 
-export { MaterialInput as component, getInitJson, validator, getTools, InputConfig as config };
+export { MaterialInput as component, InputConfig as config, tools };

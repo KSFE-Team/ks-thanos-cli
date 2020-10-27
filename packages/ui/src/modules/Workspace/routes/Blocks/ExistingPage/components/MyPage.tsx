@@ -95,7 +95,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 className="mar-l-4"
                                 type="primary"
                                 onClick={() => {
-                                    goto.push('/editor/');
+                                    goto.push('/editor/-1');
                                 }}
                             >
                                 新增
