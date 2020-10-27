@@ -2,8 +2,8 @@ import { Component, ComponentConfig } from 'Src/factories/component/basic';
 import Page from 'Src/factories/page';
 import { TableColumn } from './table/tableColumn';
 import { COMPONENT_TYPES_MAP } from 'Src/utils/constants/component';
-import { KMSCloudComponent } from 'Src/factories/component/cloudComponent';
-import { FormItemConfig } from './formItem';
+// import { BizSelectModal } from 'Src/factories/component/cloudComponent';
+// import { FormItemConfig } from './formItem';
 import File from './relationTable/file';
 
 export class ComponentManager {
@@ -28,11 +28,12 @@ export class ComponentManager {
         if (TargetComponentClass) {
             componentInstance = new TargetComponentClass(page, config);
             target.addComponent(componentInstance);
-        } else if (config.componentType === 'cloud') {
-            // kms云组件
-            componentInstance = new KMSCloudComponent(page, config as FormItemConfig);
-            target.addComponent(componentInstance);
         }
+        // else if (config.componentType === 'cloud') {
+        //     // kms云组件
+        //     componentInstance = new BizSelectModal(page, config as FormItemConfig);
+        //     target.addComponent(componentInstance);
+        // }
 
         if (componentInstance) {
             if (config.components && config.componentName !== 'RelationTable') {

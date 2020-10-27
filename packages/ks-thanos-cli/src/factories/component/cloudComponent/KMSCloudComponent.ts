@@ -8,7 +8,7 @@ import { spawnSync } from 'child_process';
 /**
  * Input组件
  */
-export class KMSCloudComponent extends FormItem {
+export default class KMSCloudComponent extends FormItem {
 
     config: FormItemConfig
 

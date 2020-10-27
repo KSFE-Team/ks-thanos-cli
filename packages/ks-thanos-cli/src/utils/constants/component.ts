@@ -13,7 +13,10 @@ import { Form } from 'Src/factories/component/form/index';
 import { Fragment } from 'Src/factories/component/fragment';
 import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
-
+import {
+    BizSelectModal,
+    BizSelectTags
+} from 'Src/factories/component/cloudComponent'; // 云组件
 
 export const COMPONENT_TYPES_MAP: {
     [name: string]: typeof BasicComponent;
@@ -33,5 +36,7 @@ export const COMPONENT_TYPES_MAP: {
     DatePicker: DatePicker,
     Fragment: Fragment,
     RelationTable: RelationTable,
-    ExtendContainer: ExtendContainer
+    ExtendContainer: ExtendContainer,
+    BizSelectModal: BizSelectModal,
+    BizSelectTags: BizSelectTags,
 };
