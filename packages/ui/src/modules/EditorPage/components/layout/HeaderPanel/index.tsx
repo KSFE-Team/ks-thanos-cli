@@ -42,10 +42,6 @@ export default () => {
                             message.error('请填写页面名称');
                             return;
                         }
-                        if (!pageName) {
-                            message.error('请填写页面名称');
-                            return;
-                        }
                         getValidator(components)
                             .then(() => {
                                 const pageJSON = getPageData(components);

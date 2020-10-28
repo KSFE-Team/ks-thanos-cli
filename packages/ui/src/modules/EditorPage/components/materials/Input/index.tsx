@@ -6,19 +6,21 @@ import * as tools from './utils';
 import InputConfig from './config';
 
 interface MaterialInputProps extends ComponentConfig {
-    config: any;
     props: any;
     id: string;
 }
 
+const DEFAULT_LABEL = '输入框';
+
 const MaterialInput = (props: MaterialInputProps) => {
-    const { config = {}, id, props: configProps } = props;
+    const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = '' } = Object.keys(formConfig).length ? formConfig : config;
+    const { label = DEFAULT_LABEL } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             <Input
                 {...configProps}
+                placeholder={label}
                 style={{
                     width: '300px',
                 }}

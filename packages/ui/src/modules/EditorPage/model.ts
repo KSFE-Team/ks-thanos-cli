@@ -23,6 +23,13 @@ export const STATE = {
                         default: false,
                         props: {},
                     },
+                    {
+                        id: 'kqzwrhm1nr323p',
+                        componentName: 'Checkbox',
+                        source: 'antd',
+                        default: false,
+                        props: {},
+                    },
                     // {
                     //     id: 'kqzwrhho4nq7bxgk91nrp',
                     //     componentName: 'Input',

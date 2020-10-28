@@ -49,3 +49,10 @@ export const ALIAS = {
     ISREQUIRED: '是否必填',
     DEFAULTVALUE: '默认值',
 };
+
+/* 表单常用绑定字段 */
+export const FIELD_DICT = {
+    KEY: 'key',
+    LABEL: 'label',
+    ISREQUIRED: 'isRequired',
+};

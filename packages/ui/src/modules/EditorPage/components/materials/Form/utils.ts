@@ -1,11 +1,9 @@
+import { ComponentJSON } from 'Src/types/ComponentJSON';
 import { FORM_TYPES } from './constants';
 
 const [{ key: NORMAL_FORM }] = FORM_TYPES;
 
-interface FormConfig {
-    componentName: string;
-    source: string;
-    default: boolean;
+interface FormConfig extends ComponentJSON {
     stateName: string;
     type: string;
     saveApi?: string;
