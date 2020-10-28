@@ -1,3 +1,5 @@
+import { handlePageJson } from 'Src/modules/EditorPage/utils'
+
 export const STATE = {
     selectedId: '',
     pageJson: {
@@ -33,4 +35,10 @@ export const STATE = {
 export default {
     namespace: 'page',
     initialState: STATE,
+    reducers: {
+        handlePageJson(state: any, { payload }: any) {
+            console.log('state====>', {...state});
+            console.log('payload=====>', payload);
+        }
+    }
 };

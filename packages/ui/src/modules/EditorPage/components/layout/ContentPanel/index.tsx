@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import BlockGroup from './ContentBlock';
 import './style.scss';
 
-const componentList = [
+export const componentList = [
     {
         groupTitle: '基础组件',
         components: [

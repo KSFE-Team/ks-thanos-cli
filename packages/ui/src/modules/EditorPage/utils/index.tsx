@@ -13,29 +13,39 @@ export const handlePageJson = (params: {
     const { id, parentId, newComponent, oldPageData, startIndex, endIndex } = params;
     let newPageData = oldPageData;
     if (parentId) {
+        console.log('新增了')
         newPageData = addComponent(parentId, newComponent, endIndex, oldPageData);
     } else if (startIndex) {
+        console.log('排序了')
         newPageData = dragComponent(id, startIndex, endIndex, oldPageData);
     } else if (newComponent) {
+        console.log('修改了')
         // 修改组件(组件ID，组件数据，页面json数据)
         newPageData = changeComponent(id, newComponent, oldPageData);
     } else {
+        console.log('删除了')
         // 删除组件(组件id,页面json数据)
         newPageData = deleteComponent(id, oldPageData);
     }
     return newPageData;
 };
 // 添加组件
-const addComponent = (parentId: any, newComponent: any, endIndex: any, oldPageData: any[]) => {
+export const addComponent = (parentId: any, newComponent: any, endIndex: any, oldPageData: any[]) => {
     // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
-        const { id: currentId, components: children } = item;
-        if (currentId === parentId) {
-            children.splice(endIndex, 0, newComponent);
-        } else if (children && children.length) {
-            addComponent(currentId, newComponent, endIndex, children);
-        }
-    });
+    console.log(parentId, newComponent, endIndex, oldPageData)
+    switch (parentId) {
+        case 'draw':
+            return oldPageData.splice(endIndex, 0, newComponent);
+        default:
+            return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
+                const { id: currentId, components: children } = item;
+                if (currentId === parentId) {
+                    children.splice(endIndex, 0, newComponent);
+                } else if (children && children.length) {
+                    addComponent(currentId, newComponent, endIndex, children);
+                }
+            });
+    }
 };
 
 // 拖拽组件
