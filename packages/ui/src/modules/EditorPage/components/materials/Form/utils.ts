@@ -1,23 +1,27 @@
+import { ComponentJSON } from 'Src/types/ComponentJSON';
 import { FORM_TYPES } from './constants';
 
 const [{ key: NORMAL_FORM }] = FORM_TYPES;
+
+interface FormConfig extends ComponentJSON {
+    stateName: string;
+    type: string;
+    saveApi?: string;
+    updateApi?: string;
+    getApi?: string;
+}
 /**
  * 获取初始化JSON
  */
-export const getInitJson = () => ({
+export const getInitJson = (): FormConfig => ({
     componentName: 'Form',
     source: 'antd',
     default: false,
-    config: {
-        stateName: '',
-        type: NORMAL_FORM,
-        key: '',
-        label: '',
-        saveApi: '',
-        updateApi: '',
-        getApi: '',
-        paramKey: '',
-    },
+    stateName: '',
+    type: NORMAL_FORM,
+    saveApi: '',
+    updateApi: '',
+    getApi: '',
 });
 
 /**
@@ -30,7 +34,11 @@ export const getTools = () => ({
 });
 
 // eslint-disable-next-line consistent-return
+/* form组件配置校验 */
 export const validator = (item: any): undefined | Error => {
+    if (!item.stateName) {
+        return new Error('请填写表单存储key');
+    }
     if (!item.type) {
         return new Error('请选择表单类型');
     }
@@ -39,28 +47,13 @@ export const validator = (item: any): undefined | Error => {
             return new Error('请填写表单信息');
         }
     }
+    return undefined;
 };
 
-/**
- * 过滤云组件
- */
-export const filterCloudComponents = (serverList: any[], localCloudConfig: any) => {
-    return Object.keys(localCloudConfig).reduce((prev: any, key: string) => {
-        const temp = prev;
-        // const { getTools } = localCloudConfig[key];
-        // const { cloudName = '' } = getTools();
-        const cloudName = '';
-        if (cloudName && serverList.some(({ name }) => `${name}` === `${cloudName}`)) {
-            temp[key] = localCloudConfig[key];
-        }
-        return temp;
-    }, {});
-};
-
-/**
- * 初始化state
- */
-export const initState = {
-    formData: {},
-    isTouch: false,
+/* 组件转换JSON */
+export const toCode = (config: FormConfig, formConfig: FormConfig): FormConfig => {
+    return {
+        ...config,
+        ...formConfig,
+    };
 };

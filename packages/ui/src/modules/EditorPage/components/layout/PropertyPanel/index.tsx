@@ -32,9 +32,16 @@ export default () => {
                             name: ['pageName'],
                             value: pageJson.pageName,
                         },
+                        {
+                            name: ['paramKey'],
+                            value: pageJson.paramKey,
+                        },
                     ]}
                 >
                     <FormItem label="页面名称(英文)" name="pageName" required>
+                        <Input />
+                    </FormItem>
+                    <FormItem label="页面路由参数" name="paramKey">
                         <Input />
                     </FormItem>
                 </Form>
