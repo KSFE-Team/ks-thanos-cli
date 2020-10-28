@@ -129,7 +129,12 @@ export default function request(
     return (
         fetch(parseUrl, newOptions)
             .then((response: Resoponse) => checkStatus(response, customerError))
-            .then((response: Resoponse) => response.json())
+            .then((response: Resoponse) => {
+                if (response && response.json) {
+                    return response.json();
+                }
+                return {};
+            })
             .then((response: Resoponse) => checkStatus(response, customerError))
             // .then((response) => Humps.parse(response))
             .catch((e: string) => {

@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import { handlePageJson } from 'Src/modules/EditorPage/utils'
+=======
+import request from 'Src/utils/requestExtend';
+import { API } from 'Src/api';
+import { message } from 'antd';
+import { goto } from 'Src/utils';
+>>>>>>> f397ad183f4eff83621e370dc7fd54f864da8fc0
 
 export const STATE = {
     selectedId: '',
     pageJson: {
         pageName: '',
+        paramKey: '',
         components: [
             {
                 componentName: 'Form',
@@ -20,12 +28,19 @@ export const STATE = {
                         props: {},
                     },
                     {
-                        id: 'kqzwrhho4nq7bxgk91nrp',
-                        componentName: 'Input',
+                        id: 'kqzwrhm1nr323p',
+                        componentName: 'Checkbox',
                         source: 'antd',
                         default: false,
                         props: {},
                     },
+                    // {
+                    //     id: 'kqzwrhho4nq7bxgk91nrp',
+                    //     componentName: 'Input',
+                    //     source: 'antd',
+                    //     default: false,
+                    //     props: {},
+                    // },
                 ],
             },
         ],
@@ -35,10 +50,29 @@ export const STATE = {
 export default {
     namespace: 'page',
     initialState: STATE,
+<<<<<<< HEAD
     reducers: {
         handlePageJson(state: any, { payload }: any) {
             console.log('state====>', {...state});
             console.log('payload=====>', payload);
         }
     }
+=======
+    effects: {
+        save: async (payload: any) => {
+            try {
+                const response = await request(API.page.addOrUpdate, {
+                    method: 'post',
+                    body: payload,
+                });
+                if (response && response.code === 0) {
+                    message.success('创建页面成功');
+                    goto.go(-1);
+                }
+            } catch (err) {
+                message.error(err);
+            }
+        },
+    },
+>>>>>>> f397ad183f4eff83621e370dc7fd54f864da8fc0
 };

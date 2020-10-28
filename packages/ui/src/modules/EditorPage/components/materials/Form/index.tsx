@@ -1,6 +1,6 @@
 import React from 'react';
 import ComponentRender from '../../ComponentRender';
-import { getInitJson, getTools, validator } from './utils';
+import * as tools from './utils';
 import FormConfig from './config';
 import './index.scss';
 
@@ -27,4 +27,4 @@ const MaterialForm = (props: MaterialFormProps) => {
     );
 };
 
-export { MaterialForm as component, getInitJson, validator, getTools, FormConfig as config };
+export { MaterialForm as component, FormConfig as config, tools };
