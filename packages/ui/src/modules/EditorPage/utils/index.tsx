@@ -1,83 +1,53 @@
 import { getApp } from 'Src/app';
 import { getComponents } from './constants';
+import uuid from 'uuid/v4';
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (params: {
-    [x: string]: any;
-    id: any;
-    newComponent: any;
-    oldPageData: any;
-    parentId?: any;
-    startIndex?: any;
-    endIndex?: any;
-}) => {
-    const { id, parentId, newComponent, oldPageData, startIndex, endIndex } = params;
-    let newPageData = oldPageData;
-    if (parentId) {
-        console.log('新增了')
-        newPageData = addComponent(parentId, newComponent, endIndex, oldPageData);
-    } else if (startIndex) {
-        console.log('排序了')
-        newPageData = dragComponent(id, startIndex, endIndex, oldPageData);
-    } else if (newComponent) {
-        console.log('修改了')
-        // 修改组件(组件ID，组件数据，页面json数据)
-        newPageData = changeComponent(id, newComponent, oldPageData);
-    } else {
-        console.log('删除了')
-        // 删除组件(组件id,页面json数据)
-        newPageData = deleteComponent(id, oldPageData);
-    }
-    return newPageData;
-};
-// 添加组件
-export const addComponent = (parentId: any, newComponent: any, endIndex: any, oldPageData: any[]) => {
-    // eslint-disable-next-line array-callback-return
-    console.log(parentId, newComponent, endIndex, oldPageData);
-    switch (parentId) {
-        case 'draw':
-            oldPageData.components.splice(endIndex, 0, newComponent);
-            return oldPageData;
+export const handlePageJson = (source, destination, draggableId, droppableSource, droppableDestination) => {
+    switch (droppableSource.droppableId) {
+        // 排序
+        case droppableDestination.droppableId:
+            const list = destination.components;
+            const startIndex = droppableSource.index;
+            const endIndex = droppableDestination.index;
+            dragComponent(list, startIndex, endIndex);
+            break;
+        // 添加
+        case 'ITEMS':
+            addComponent(source, destination, draggableId, droppableSource, droppableDestination);
+            break;
         default:
-            console.log('222222')
-            return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
-                const { id: currentId, components: children } = item;
-                if (currentId === parentId) {
-                    children.splice(endIndex, 0, newComponent);
-                } else if (children && children.length) {
-                    addComponent(currentId, newComponent, endIndex, children);
-                }
-            });
+            break;
     }
+}
+
+//查找源组件
+const findComponent = (componentList: any[], id: any) => {
+    let component;
+    componentList.map(item => {
+        const { components: componentArr } = item;
+        component = componentArr.filter((item: { id: any; }) => item.id === id)
+    })
+    return component[0];
+}
+
+// 添加组件
+export const addComponent = (source, destination, draggableId, droppableSource, droppableDestination) => {
+    let item = findComponent(source, draggableId);
+    destination.components.splice(droppableDestination.index, 0, { ...item, id: uuid() });
+    return destination;
 };
 
-// 拖拽组件
-const dragComponent = (
-    id: any,
-    startIndex: any,
-    endIndex: any,
-    oldPageData: {
-        map: (arg0: (item: any, index: any) => void) => any;
-        splice: (arg0: any, arg1: number, arg2: undefined) => [any];
-    },
-) => {
-    // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: any) => {
-        const { id: currentId, components: children } = item;
-        if (id === currentId) {
-            // 删除并记录 删除元素
-            const [removed] = oldPageData.splice(startIndex, 1, undefined);
-            // 将原来的元素添加进数组
-            oldPageData.splice(endIndex, 0, removed);
-        } else if (children && children.length) {
-            dragComponent(id, startIndex, endIndex, children);
-        }
-    });
+// 拖拽排序
+export const dragComponent = (list, startIndex, endIndex) => {
+    const [removed] = list.splice(startIndex, 1);
+    list.splice(endIndex, 0, removed);
+    return list;
 };
 
 // 修改组件
-const changeComponent = (id: any, newComponent: any, oldPageData: any[]) => {
+export const changeComponent = (id: any, newComponent: any, oldPageData: any[]) => {
     // eslint-disable-next-line array-callback-return
     return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
         const { id: currentId, components: children } = item;
@@ -91,17 +61,19 @@ const changeComponent = (id: any, newComponent: any, oldPageData: any[]) => {
 };
 
 // 删除组件
-const deleteComponent = (id: any, oldPageData: any[]) => {
-    return oldPageData.filter((item: { id: any; components: any }) => {
-        if (id === item.id) {
-            return false;
+export const deleteComponent = (id: any, oldPageData: any[]) => {
+    for (let item in oldPageData) {
+        if (oldPageData[item].id === id) {
+            oldPageData.splice(item, 1);
+            return oldPageData;
         }
-        if (item.components) {
-            // eslint-disable-next-line no-param-reassign
-            item.components = deleteComponent(id, item.components);
+        else {
+            if (oldPageData[item].hasOwnProperty('components') && oldPageData[item].components.length != 0) {
+                let m = JSON.parse(JSON.stringify(oldPageData[item].components));
+                deleteComponent(id, m);
+            }
         }
-        return true;
-    });
+    }
 };
 
 interface CheckTypes {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import uuid from 'uuid/v4';
 import BlockGroup from './ContentBlock';
 import './style.scss';
 
@@ -8,7 +9,7 @@ export const componentList = [
         groupTitle: '基础组件',
         components: [
             {
-                id: 'wl1cuuzftp',
+                id: uuid(),
                 componentName: 'Form',
                 source: 'antd',
                 default: false,
@@ -16,7 +17,7 @@ export const componentList = [
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
-                id: 'kqzwrhm1nrp',
+                id: uuid(),
                 componentName: 'Input',
                 source: 'antd',
                 default: false,
@@ -24,7 +25,7 @@ export const componentList = [
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
-                id: 'kqzwrhm1nr323p',
+                id: uuid(),
                 componentName: 'Checkbox',
                 source: 'antd',
                 default: false,
@@ -32,7 +33,7 @@ export const componentList = [
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
-                id: 'kqzwrhm1nr323p(1)',
+                id: uuid(),
                 componentName: 'Checkbox(充数的)',
                 source: 'antd',
                 default: false,
@@ -45,7 +46,7 @@ export const componentList = [
 
 export default () => {
     return (
-        <Droppable droppableId="droppableid" isDropDisabled>
+        <Droppable droppableId="ITEMS" isDropDisabled>
             {(provided, snapshot) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                     <div className="thanos-editor-bar-drawar">
