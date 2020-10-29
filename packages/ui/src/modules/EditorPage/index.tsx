@@ -12,7 +12,7 @@ import { setComponents } from './utils/constants';
 import { handlePageJson } from './utils/index';
 import { componentList } from './components/layout/ContentPanel';
 import './style.scss';
-import { object } from 'prop-types';
+import { component } from './components/materials/Checkbox';
 
 export default (props: RouteProps) => {
     useState(() => {
@@ -21,34 +21,34 @@ export default (props: RouteProps) => {
         });
     });
     const page = useSelector((store: any) => store.page);
-    const { components } = page.pageJson;
 
     // 查找组件
     const findComponent = (componentList: any[], id: any) => {
+        let component;
         componentList.map(item => {
-            const { components } = item;
-            const component = components.filter((item: { id: any; }) => item.id === id)
-            return component;
+            const { components: componentArr } = item;
+            component = componentArr.filter((item: { id: any; }) => item.id === id)
         })
+        return component;
     }
 
     // 拖拽结束
     const onDragEnd = (result: any) => {
-        console.log('拖拽结束===>', result);
         if (!result.destination) {
             return;
         }
+        console.log('拖拽结束====>',result)
         const { destination, draggableId } = result;
-        console.log('components====>', components)
+        const newComponent = findComponent(componentList, draggableId);
         const params = {
             parentId: destination.droppableId,
-            newComponent: findComponent(componentList, draggableId),
+            newComponent: newComponent[0],
             endIndex: destination.index,
-            oldPageData: components
+            oldPageData: page.pageJson
         }
         const dataSource = handlePageJson(params);
         console.log('dataSource====>', dataSource)
-        actions.page.handlePageJson();
+        //actions.page.handlePageJson();
     };
 
     return (

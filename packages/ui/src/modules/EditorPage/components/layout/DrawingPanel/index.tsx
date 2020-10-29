@@ -23,14 +23,14 @@ export default (props: DrawingProps) => {
         >
             <Droppable droppableId='draw'>
                 {(provided, snapshot) => (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                        {components.map((itemConfig: any) => {
-                            return <ComponentRender key={itemConfig.id} {...itemConfig} />;
+                    <div ref={provided.innerRef} {...provided.droppableProps} style={{height:'100%'}}>
+                        {components.map((itemConfig: any,index:any) => {
+                            return <ComponentRender key={itemConfig.id} {...itemConfig} index={index}/>;
                         })}
+                        {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
                     </div>
                 )}
             </Droppable>
-            {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
         </div>
     );
 };

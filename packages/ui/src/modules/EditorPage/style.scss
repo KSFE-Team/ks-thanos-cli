@@ -45,6 +45,14 @@
             padding: 2px;
         }
 
+        .thanos-editor-empty{
+            border:1px dashed #fff;
+            border-radius: 5px;
+            color:#fff;
+            padding: 10px;
+            text-align: center;
+        }
+
         .thanos-editor-property {
             width: 300px;
             background: $bg-1;

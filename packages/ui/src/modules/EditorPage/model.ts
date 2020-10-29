@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-import { handlePageJson } from 'Src/modules/EditorPage/utils'
-=======
 import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
 import { message } from 'antd';
 import { goto } from 'Src/utils';
->>>>>>> f397ad183f4eff83621e370dc7fd54f864da8fc0
 
 export const STATE = {
     selectedId: '',
@@ -13,36 +9,36 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
-            {
-                componentName: 'Form',
-                source: 'antd',
-                default: false,
-                props: {},
-                id: 'wl1cuuzftp',
-                components: [
-                    {
-                        id: 'kqzwrhm1nrp',
-                        componentName: 'Input',
-                        source: 'antd',
-                        default: false,
-                        props: {},
-                    },
-                    {
-                        id: 'kqzwrhm1nr323p',
-                        componentName: 'Checkbox',
-                        source: 'antd',
-                        default: false,
-                        props: {},
-                    },
-                    // {
-                    //     id: 'kqzwrhho4nq7bxgk91nrp',
-                    //     componentName: 'Input',
-                    //     source: 'antd',
-                    //     default: false,
-                    //     props: {},
-                    // },
-                ],
-            },
+            // {
+            //     componentName: 'Form',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            //     id: 'wl1cuuzftp',
+            //     components: [
+            //         {
+            //             id: 'kqzwrhm1nrp',
+            //             componentName: 'Input',
+            //             source: 'antd',
+            //             default: false,
+            //             props: {},
+            //         },
+            //         {
+            //             id: 'kqzwrhm1nr323p',
+            //             componentName: 'Checkbox', 
+            //             source: 'antd',
+            //             default: false,
+            //             props: {},
+            //         },
+            //         // {
+            //         //     id: 'kqzwrhho4nq7bxgk91nrp',
+            //         //     componentName: 'Input',
+            //         //     source: 'antd',
+            //         //     default: false,
+            //         //     props: {},
+            //         // },
+            //     ],
+            // },
         ],
     },
 };
@@ -50,14 +46,6 @@ export const STATE = {
 export default {
     namespace: 'page',
     initialState: STATE,
-<<<<<<< HEAD
-    reducers: {
-        handlePageJson(state: any, { payload }: any) {
-            console.log('state====>', {...state});
-            console.log('payload=====>', payload);
-        }
-    }
-=======
     effects: {
         save: async (payload: any) => {
             try {
@@ -74,5 +62,4 @@ export default {
             }
         },
     },
->>>>>>> f397ad183f4eff83621e370dc7fd54f864da8fc0
 };

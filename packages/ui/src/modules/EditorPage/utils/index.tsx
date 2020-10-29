@@ -34,11 +34,13 @@ export const handlePageJson = (params: {
 // 添加组件
 export const addComponent = (parentId: any, newComponent: any, endIndex: any, oldPageData: any[]) => {
     // eslint-disable-next-line array-callback-return
-    console.log(parentId, newComponent, endIndex, oldPageData)
+    console.log(parentId, newComponent, endIndex, oldPageData);
     switch (parentId) {
         case 'draw':
-            return oldPageData.splice(endIndex, 0, newComponent);
+            oldPageData.components.splice(endIndex, 0, newComponent);
+            return oldPageData;
         default:
+            console.log('222222')
             return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
                 const { id: currentId, components: children } = item;
                 if (currentId === parentId) {
