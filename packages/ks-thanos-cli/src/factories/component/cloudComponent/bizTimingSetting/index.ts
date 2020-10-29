@@ -4,19 +4,23 @@ import KMSCloudComponent from '../KMSCloudComponent';
 /**
  * bizTimingSetting组件
  */
-export default class BizSelectTags extends KMSCloudComponent {
+export default class BizTimingSetting extends KMSCloudComponent {
 
     getDecoratorConfigCode() {
         return '{}';
     }
 
     toCode() {
-        const propsCode = [];
+        let propsCode: String[] = [];
         for (let propKey in this.props) {
-            propsCode.push(getPropStr(propKey, this.props[propKey]));
+            if (propKey === 'formFields') {
+                propsCode.push(`${propKey}={${this.props[propKey]}}`);
+            } else {
+                propsCode.push(getPropStr(propKey, this.props[propKey]));
+            }
         }
         return `<${this.componentName}
-        ${propsCode.join('\n')}
-    />`;
+            ${propsCode.join('\n')}
+        />`;
     }
 }
