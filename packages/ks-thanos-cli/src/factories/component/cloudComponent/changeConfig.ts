@@ -1,5 +1,5 @@
-import acorn from 'acorn';
-import escodegen from 'escodegen';
+const acorn = require('acorn');
+const escodegen = require('escodegen');
 
 const isObject = (obj: any) => {
     return Object.prototype.toString.call(obj) === '[object Object]';
@@ -7,7 +7,6 @@ const isObject = (obj: any) => {
 const isArray = (obj: any) => {
     return Object.prototype.toString.call(obj) === '[object Array]';
 };
-
 interface childrenKeys {
     type: string;
     key: string;
@@ -28,13 +27,10 @@ const CHILDREN_KEYS: childrenKeys[] = [
 
 // js转ast
 const parseTree = (config: any) => {
-    console.log('config', config);
-    let parseData = acorn.parse(config, {
+    return acorn.parse(config, {
         ecmaVersion: 2020,
         sourceType: 'module'
     })
-    console.log('parseData', parseData);
-    return parseData;
 };
 // ast转js
 const escodegenTree = (parseTree: any) => {
@@ -70,7 +66,7 @@ const handleFunc = (nodeValue: any, insertData: any) => {
                 raw: insertData
             }
         };
-        currTreeChildrenValue.push(newValue);
+    currTreeChildrenValue.push(newValue);
 }
 
 // 寻找目标节点
@@ -85,22 +81,19 @@ const recursionTree = (tree: any, insertData?: any) => {
     } else {
         if (isArray(tree)) {
             tree.forEach((tr: any) => {
-                recursionTree(tr)
+                recursionTree(tr, insertData)
             })
         } else if (isObject(tree)) {
             if (treeValueKey) {
-                recursionTree(treeValue);
+                recursionTree(treeValue, insertData);
             }
         }
     }
 }
 
 export const changeConfig = (config: any, insertData: any) => {
-    console.log('111');
     let asTree = parseTree(config); // js转ast
-    console.log('asTree', asTree);
     recursionTree(asTree, insertData); // 处理ast
     let handleData = escodegenTree(asTree); // ast转js
-    console.log('handleData', handleData);
     return handleData;
 }

@@ -4,6 +4,8 @@ import fs from 'fs';
 import { FormItemConfig, FormItem } from '../formItem';
 import { spawnSync } from 'child_process';
 import { changeConfig } from './changeConfig';
+import { successText } from 'Src/utils/log';
+
 /**
  * Input组件
  */
@@ -20,7 +22,6 @@ export default class KMSCloudComponent extends FormItem {
         this.config = config;
         this.install();
         this.registerComponent();
-        // this.updateCloudModel();
     }
 
     install() {
@@ -38,12 +39,11 @@ export default class KMSCloudComponent extends FormItem {
     registerComponent = async () => {
         const registerPath = path.join(process.cwd(), 'src/default.js');
         const defaultConfig = fs.readFileSync(registerPath, { encoding: 'utf-8' });
-        const insertData = `Src/components/@ks/kms-condition/src/model`; // 暂时写死
-        // console.log('defaultConfig', defaultConfig);
-        let handleConfig = changeConfig(defaultConfig, insertData);
-        console.log('handleConfig', handleConfig);
-        // registerJSON[`${this.componentName}`] = `Src/components/${this.packageName}/src/index`;
-        // await writeJSON(registerPath, registerJSON);
+        const insertData = `Src/components/@ks/kms-${this.componentName.toLowerCase()}/src/model`; // 暂时写死
+        let handleData = changeConfig(defaultConfig, insertData);
+        fs.writeFile(registerPath, handleData, () => {
+            console.log(successText(`default.js 更新成功！`));
+        });
     }
 
     getDecoratorConfigCode() {
