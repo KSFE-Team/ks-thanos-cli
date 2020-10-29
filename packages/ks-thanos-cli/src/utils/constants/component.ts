@@ -15,7 +15,8 @@ import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import {
     BizSelectModal,
-    BizSelectTags
+    BizSelectTags,
+    BizTimingSetting,
 } from 'Src/factories/component/cloudComponent'; // 云组件
 
 export const COMPONENT_TYPES_MAP: {
@@ -39,4 +40,5 @@ export const COMPONENT_TYPES_MAP: {
     ExtendContainer: ExtendContainer,
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
+    BizTimingSetting: BizTimingSetting
 };
