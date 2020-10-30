@@ -12,36 +12,37 @@ export default (props: any) => {
 
     const page = useSelector((store: any) => store.page);
     return (
-        // <Droppable droppableId={`componentItem${props.id}`} isDropDisabled={false}>
-        //     {(provided, snapshot) => (
-        //         <div
-        //             ref={provided.innerRef}
-        //             {...provided.droppableProps}>
-                    <Draggable
-                        key={props.index}
-                        draggableId={props.id}
-                        index={props.index}
-                    >
-                        {(provided, _snapshot) => (
+        <Draggable
+            key={props.index}
+            draggableId={props.id}
+            index={props.index}
+        >
+            {(provided, _snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="component-container"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        actions.page.setReducers({
+                            selectedId: `${props.id}_${props.componentName}`,
+                        });
+                    }}
+                >
+                    <Droppable droppableId={`componentItem${props.id}`}>
+                        {(provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="component-container"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    actions.page.setReducers({
-                                        selectedId: `${props.id}_${props.componentName}`,
-                                    });
-                                }}
-                            >
+                                {...provided.droppableProps}>
                                 <ComponentByName {...props} />
-                                <span className="close_item" onClick={()=>{deleteComponent(props.id,page.pageJson.components)}}>X</span>
+                                <span className="close_item" onClick={() => { deleteComponent(props.id, page.pageJson.components) }}>X</span>
+                                {provided.placeholder}
                             </div>
                         )}
-                    </Draggable>
-        //         </div>
-        //     )}
-        // </Droppable>
+                    </Droppable>
+                </div>
+            )}
+        </Draggable>
     );
 };

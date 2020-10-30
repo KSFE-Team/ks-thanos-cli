@@ -1,10 +1,11 @@
 import { getApp } from 'Src/app';
-import { getComponents } from './constants';
 import uuid from 'uuid/v4';
+import { getComponents } from './constants';
+
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (source, destination, draggableId, droppableSource, droppableDestination) => {
+export const handlePageJson = (source: { groupTitle: string; components: { id: any; componentName: string; source: string; default: boolean; props: {}; img: string; }[]; }[], destination: { components: any; }, draggableId: any, droppableSource: { droppableId: any; index: any; }, droppableDestination: { droppableId: any; index: any; }) => {
     switch (droppableSource.droppableId) {
         // 排序
         case droppableDestination.droppableId:
@@ -20,27 +21,28 @@ export const handlePageJson = (source, destination, draggableId, droppableSource
         default:
             break;
     }
-}
+};
 
-//查找源组件
+// 查找源组件
 const findComponent = (componentList: any[], id: any) => {
     let component;
-    componentList.map(item => {
+    componentList.map((item) => {
         const { components: componentArr } = item;
-        component = componentArr.filter((item: { id: any; }) => item.id === id)
-    })
-    return component[0];
-}
+        component = componentArr.filter((value: { id: any }) => value.id === id);
+    });
+    component = component[0];
+    return component;
+};
 
 // 添加组件
-export const addComponent = (source, destination, draggableId, droppableSource, droppableDestination) => {
+export const addComponent = (source: any[], destination: { components: any; }, draggableId: any, droppableSource: { droppableId: any; index: any; }, droppableDestination: { droppableId?: any; index: any; }) => {
     let item = findComponent(source, draggableId);
     destination.components.splice(droppableDestination.index, 0, { ...item, id: uuid() });
     return destination;
 };
 
 // 拖拽排序
-export const dragComponent = (list, startIndex, endIndex) => {
+export const dragComponent = (list: { splice: (arg0: any, arg1: number, arg2: undefined) => [any]; }, startIndex: any, endIndex: any) => {
     const [removed] = list.splice(startIndex, 1);
     list.splice(endIndex, 0, removed);
     return list;

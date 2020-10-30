@@ -28,6 +28,7 @@ export default (props: DrawingProps) => {
                             return <ComponentRender key={itemConfig.id} {...itemConfig} index={index}/>;
                         })}
                         {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
+                        {provided.placeholder}
                     </div>
                 )}
             </Droppable>

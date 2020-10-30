@@ -26,7 +26,7 @@ export default (props: any) => {
                             <div className="thanos-editor-block-title">{data.componentName}</div>
                         </div>
                         {snapshot.isDragging && (
-                            <div style={{transform: 'none !important;'}}>
+                            <div style={{transform: 'none !important'}}>
                                 <div className="thanos-editor-block-shortscreen">
                                     <img style={{ maxWidth: '100%' }} src={data.img} />
                                 </div>

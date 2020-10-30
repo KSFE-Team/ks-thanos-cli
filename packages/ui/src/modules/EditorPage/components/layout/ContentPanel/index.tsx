@@ -58,6 +58,7 @@ export default () => {
                             </div>
                         </div>
                     </div>
+                    {provided.placeholder}
                 </div>
             )}
         </Droppable>
