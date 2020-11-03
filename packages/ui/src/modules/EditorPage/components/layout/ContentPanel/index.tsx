@@ -14,6 +14,7 @@ export const componentList = [
                 source: 'antd',
                 default: false,
                 props: {},
+                components:[],
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {

@@ -1,22 +1,40 @@
 import { getApp } from 'Src/app';
 import uuid from 'uuid/v4';
+import { actions } from 'kredux';
+import { message } from 'antd';
 import { getComponents } from './constants';
+
+const Basic = ['Input', 'Checkbox'];
 
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (source: { groupTitle: string; components: { id: any; componentName: string; source: string; default: boolean; props: {}; img: string; }[]; }[], destination: { components: any; }, draggableId: any, droppableSource: { droppableId: any; index: any; }, droppableDestination: { droppableId: any; index: any; }) => {
-    switch (droppableSource.droppableId) {
+export const handlePageJson = (
+    source: any,
+    destination: any,
+    draggableId: any,
+    droppableSource: any,
+    droppableDestination: any,
+) => {
+    const list = destination.components;
+    const startIndex = droppableSource.index;
+    const endIndex = droppableDestination.index;
+    const item = findComponent(source, draggableId);
+    if (Basic.indexOf(item.componentName) > -1 && droppableDestination.droppableId !== 1) {
+        message.warning(`${item.componentName}只能添加在容器组件中`);
+        return;
+    }
+    switch (droppableDestination.droppableId) {
         // 排序
-        case droppableDestination.droppableId:
-            const list = destination.components;
-            const startIndex = droppableSource.index;
-            const endIndex = droppableDestination.index;
-            dragComponent(list, startIndex, endIndex);
+        case droppableSource.droppableId:
+            dragComponent(destination, startIndex, endIndex);
             break;
         // 添加
-        case 'ITEMS':
-            addComponent(source, destination, draggableId, droppableSource, droppableDestination);
+        case 'draw':
+            addComponent(list, endIndex, item, destination);
+            break;
+        case '1':
+            nestedComponent(list, endIndex, item, destination);
             break;
         default:
             break;
@@ -30,50 +48,50 @@ const findComponent = (componentList: any[], id: any) => {
         const { components: componentArr } = item;
         component = componentArr.filter((value: { id: any }) => value.id === id);
     });
-    component = component[0];
-    return component;
+    const [componentItem] = component;
+    return componentItem;
 };
 
 // 添加组件
-export const addComponent = (source: any[], destination: { components: any; }, draggableId: any, droppableSource: { droppableId: any; index: any; }, droppableDestination: { droppableId?: any; index: any; }) => {
-    let item = findComponent(source, draggableId);
-    destination.components.splice(droppableDestination.index, 0, { ...item, id: uuid() });
-    return destination;
+export const addComponent = (list: any[], endIndex: any, item: any, destination: any) => {
+    list.splice(endIndex, 0, { ...item, id: uuid() });
+    actions.page.setReducers({
+        pageJson: { ...destination, components: list },
+    });
+};
+
+// 嵌套添加组件
+export const nestedComponent = (list: any, endIndex: any, item: any, destination: any) => {
+    list[0].components.splice(endIndex, 0, { ...item, id: uuid() });
+    actions.page.setReducers({
+        pageJson: { ...destination, components: list },
+    });
 };
 
 // 拖拽排序
-export const dragComponent = (list: { splice: (arg0: any, arg1: number, arg2: undefined) => [any]; }, startIndex: any, endIndex: any) => {
+export const dragComponent = (destination: any, startIndex: any, endIndex: any) => {
+    const list = destination.components;
     const [removed] = list.splice(startIndex, 1);
     list.splice(endIndex, 0, removed);
-    return list;
-};
-
-// 修改组件
-export const changeComponent = (id: any, newComponent: any, oldPageData: any[]) => {
-    // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
-        const { id: currentId, components: children } = item;
-        if (currentId === id) {
-            // eslint-disable-next-line no-param-reassign
-            oldPageData[index] = newComponent;
-        } else if (children && children.length) {
-            changeComponent(id, newComponent, children);
-        }
+    actions.page.setReducers({
+        pageJson: { ...destination },
     });
 };
 
 // 删除组件
-export const deleteComponent = (id: any, oldPageData: any[]) => {
-    for (let item in oldPageData) {
-        if (oldPageData[item].id === id) {
-            oldPageData.splice(item, 1);
-            return oldPageData;
-        }
-        else {
-            if (oldPageData[item].hasOwnProperty('components') && oldPageData[item].components.length != 0) {
-                let m = JSON.parse(JSON.stringify(oldPageData[item].components));
-                deleteComponent(id, m);
-            }
+export const deleteComponent = (id: any, pageJson: any) => {
+    const list = pageJson.components || [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item in list) {
+        if (list[item].id === id) {
+            list.splice(item, 1);
+            actions.page.setReducers({
+                pageJson: { ...pageJson, components: list },
+            });
+            // eslint-disable-next-line no-prototype-builtins
+        } else if (list[item].hasOwnProperty('components') && list[item].components.length !== 0) {
+            const m = JSON.parse(JSON.stringify(list[item]));
+            deleteComponent(id, m);
         }
     }
 };
