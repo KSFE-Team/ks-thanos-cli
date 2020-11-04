@@ -1,95 +1,99 @@
 import { getApp } from 'Src/app';
+import uuid from 'uuid/v4';
+import { actions } from 'kredux';
+import { message } from 'antd';
 import { getComponents } from './constants';
+
+const Basic = ['Input', 'Checkbox'];
+
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (params: {
-    [x: string]: any;
-    id: any;
-    newComponent: any;
-    oldPageData: any;
-    parentId?: any;
-    startIndex?: any;
-    endIndex?: any;
-}) => {
-    const { id, parentId, newComponent, oldPageData, startIndex, endIndex } = params;
-    let newPageData = oldPageData;
-    if (parentId) {
-        newPageData = addComponent(parentId, newComponent, endIndex, oldPageData);
-    } else if (startIndex) {
-        newPageData = dragComponent(id, startIndex, endIndex, oldPageData);
-    } else if (newComponent) {
-        // 修改组件(组件ID，组件数据，页面json数据)
-        newPageData = changeComponent(id, newComponent, oldPageData);
-    } else {
-        // 删除组件(组件id,页面json数据)
-        newPageData = deleteComponent(id, oldPageData);
-    }
-    return newPageData;
-};
-// 添加组件
-const addComponent = (parentId: any, newComponent: any, endIndex: any, oldPageData: any[]) => {
-    // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
-        const { id: currentId, components: children } = item;
-        if (currentId === parentId) {
-            children.splice(endIndex, 0, newComponent);
-        } else if (children && children.length) {
-            addComponent(currentId, newComponent, endIndex, children);
-        }
-    });
-};
-
-// 拖拽组件
-const dragComponent = (
-    id: any,
-    startIndex: any,
-    endIndex: any,
-    oldPageData: {
-        map: (arg0: (item: any, index: any) => void) => any;
-        splice: (arg0: any, arg1: number, arg2: undefined) => [any];
-    },
+export const handlePageJson = (
+    source: any,
+    destination: any,
+    draggableId: any,
+    droppableSource: any,
+    droppableDestination: any,
 ) => {
-    // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: any) => {
-        const { id: currentId, components: children } = item;
-        if (id === currentId) {
-            // 删除并记录 删除元素
-            const [removed] = oldPageData.splice(startIndex, 1, undefined);
-            // 将原来的元素添加进数组
-            oldPageData.splice(endIndex, 0, removed);
-        } else if (children && children.length) {
-            dragComponent(id, startIndex, endIndex, children);
-        }
+    const list = destination.components;
+    const startIndex = droppableSource.index;
+    const endIndex = droppableDestination.index;
+    const item = findComponent(source, draggableId);
+    if (Basic.indexOf(item.componentName) > -1 && droppableDestination.droppableId !== 1) {
+        message.warning(`${item.componentName}只能添加在容器组件中`);
+        return;
+    }
+    switch (droppableDestination.droppableId) {
+        // 排序
+        case droppableSource.droppableId:
+            dragComponent(destination, startIndex, endIndex);
+            break;
+        // 添加
+        case 'draw':
+            addComponent(list, endIndex, item, destination);
+            break;
+        case '1':
+            nestedComponent(list, endIndex, item, destination);
+            break;
+        default:
+            break;
+    }
+};
+
+// 查找源组件
+const findComponent = (componentList: any[], id: any) => {
+    let component;
+    componentList.map((item) => {
+        const { components: componentArr } = item;
+        component = componentArr.filter((value: { id: any }) => value.id === id);
+    });
+    const [componentItem] = component;
+    return componentItem;
+};
+
+// 添加组件
+export const addComponent = (list: any[], endIndex: any, item: any, destination: any) => {
+    list.splice(endIndex, 0, { ...item, id: uuid() });
+    actions.page.setReducers({
+        pageJson: { ...destination, components: list },
     });
 };
 
-// 修改组件
-const changeComponent = (id: any, newComponent: any, oldPageData: any[]) => {
-    // eslint-disable-next-line array-callback-return
-    return oldPageData.map((item: { id: any; components: any }, index: string | number) => {
-        const { id: currentId, components: children } = item;
-        if (currentId === id) {
-            // eslint-disable-next-line no-param-reassign
-            oldPageData[index] = newComponent;
-        } else if (children && children.length) {
-            changeComponent(id, newComponent, children);
-        }
+// 嵌套添加组件
+export const nestedComponent = (list: any, endIndex: any, item: any, destination: any) => {
+    list[0].components.splice(endIndex, 0, { ...item, id: uuid() });
+    actions.page.setReducers({
+        pageJson: { ...destination, components: list },
+    });
+};
+
+// 拖拽排序
+export const dragComponent = (destination: any, startIndex: any, endIndex: any) => {
+    const list = destination.components;
+    const [removed] = list.splice(startIndex, 1);
+    list.splice(endIndex, 0, removed);
+    actions.page.setReducers({
+        pageJson: { ...destination },
     });
 };
 
 // 删除组件
-const deleteComponent = (id: any, oldPageData: any[]) => {
-    return oldPageData.filter((item: { id: any; components: any }) => {
-        if (id === item.id) {
-            return false;
+export const deleteComponent = (id: any, pageJson: any) => {
+    const list = pageJson.components || [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item in list) {
+        if (list[item].id === id) {
+            list.splice(item, 1);
+            actions.page.setReducers({
+                pageJson: { ...pageJson, components: list },
+            });
+            // eslint-disable-next-line no-prototype-builtins
+        } else if (list[item].hasOwnProperty('components') && list[item].components.length !== 0) {
+            const m = JSON.parse(JSON.stringify(list[item]));
+            deleteComponent(id, m);
         }
-        if (item.components) {
-            // eslint-disable-next-line no-param-reassign
-            item.components = deleteComponent(id, item.components);
-        }
-        return true;
-    });
+    }
 };
 
 interface CheckTypes {

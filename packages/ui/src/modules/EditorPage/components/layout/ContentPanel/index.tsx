@@ -1,22 +1,44 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import uuid from 'uuid/v4';
 import BlockGroup from './ContentBlock';
 import './style.scss';
 
-const componentList = [
+export const componentList = [
     {
         groupTitle: '基础组件',
         components: [
             {
-                id: '1',
-                componentName: '输入框',
-                componentCode: 'Input',
+                id: uuid(),
+                componentName: 'Form',
+                source: 'antd',
+                default: false,
+                props: {},
+                components:[],
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
-                id: '2',
-                componentName: '表单',
-                componentCode: 'Form',
+                id: uuid(),
+                componentName: 'Input',
+                source: 'antd',
+                default: false,
+                props: {},
+                img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
+            },
+            {
+                id: uuid(),
+                componentName: 'Checkbox',
+                source: 'antd',
+                default: false,
+                props: {},
+                img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
+            },
+            {
+                id: uuid(),
+                componentName: 'Checkbox(充数的)',
+                source: 'antd',
+                default: false,
+                props: {},
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
         ],
@@ -25,7 +47,7 @@ const componentList = [
 
 export default () => {
     return (
-        <Droppable droppableId="droppableid" isDropDisabled>
+        <Droppable droppableId="ITEMS" isDropDisabled>
             {(provided, snapshot) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                     <div className="thanos-editor-bar-drawar">
@@ -37,6 +59,7 @@ export default () => {
                             </div>
                         </div>
                     </div>
+                    {provided.placeholder}
                 </div>
             )}
         </Droppable>
