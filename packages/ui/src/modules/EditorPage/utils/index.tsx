@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { getApp } from 'Src/app';
 import uuid from 'uuid/v4';
 import { actions } from 'kredux';
@@ -9,36 +10,88 @@ const Basic = ['Input', 'Checkbox'];
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (
-    source: any,
-    destination: any,
-    draggableId: any,
-    droppableSource: any,
-    droppableDestination: any,
-) => {
-    const list = destination.components;
-    const startIndex = droppableSource.index;
-    const endIndex = droppableDestination.index;
-    const item = findComponent(source, draggableId);
-    if (Basic.indexOf(item.componentName) > -1 && droppableDestination.droppableId !== 1) {
+export const handlePageJson = (sourceComponents: any, pageJson: any, result: any) => {
+    const list = pageJson.components;
+    const { draggableId, source, destination } = result;
+    const startIndex = source.index;
+    const endIndex = destination.index;
+    const item = findComponent(sourceComponents, draggableId);
+    if (Basic.indexOf(item.componentName) > -1 && destination.droppableId !== '1') {
         message.warning(`${item.componentName}只能添加在容器组件中`);
         return;
     }
-    switch (droppableDestination.droppableId) {
+    switch (destination.droppableId) {
         // 排序
-        case droppableSource.droppableId:
-            dragComponent(destination, startIndex, endIndex);
+        case source.droppableId:
+            const dataSource = reorder(list, startIndex, endIndex);
+            if (source.droppableId === 'draw') {
+                setTree({ components: dataSource }, pageJson);
+            } else {
+                dragComponent(list, dataSource, draggableId);
+            }
             break;
         // 添加
         case 'draw':
-            addComponent(list, endIndex, item, destination);
+            const newComponents = addComponent(list, endIndex, item);
+            setTree({ components: newComponents }, pageJson);
             break;
         case '1':
-            nestedComponent(list, endIndex, item, destination);
+            const newJson = nestedComponent(list, endIndex, item, pageJson);
+            setTree({ components: newJson }, pageJson);
             break;
         default:
             break;
     }
+};
+
+export const setTree = (components: any, pageJson: any) => {
+    actions.page.setReducers({
+        pageJson: {
+            ...pageJson,
+            ...components,
+        },
+    });
+};
+
+// 删除组件
+export const deleteComponent = (id: any, components: any) => {
+    return components.filter((item: any) => {
+        if (id === item.id) {
+            return false;
+            // eslint-disable-next-line no-else-return
+        } else if (item.components) {
+            // eslint-disable-next-line no-param-reassign
+            item.components = deleteComponent(id, item.components);
+        }
+        return true;
+    });
+};
+
+/**
+ * 重新排序
+ * @param {Array} list 需要重新排序的数组
+ * @param {number} startIndex 旧的位置index
+ * @param {number} endIndex 新的位置index
+ */
+const reorder = (list: any, startIndex: any, endIndex: any) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
+
+// 拖拽排序
+export const dragComponent = (components: any, dataSource: any, id: any) => {
+    components.map((item: any) => {
+        if (item.id === id) {
+            item.components = dataSource;
+        } else if (item.components) {
+            // 区域块
+            item.components = dragComponent(item.components, dataSource, id);
+        }
+        return item;
+    });
 };
 
 // 查找源组件
@@ -52,48 +105,23 @@ const findComponent = (componentList: any[], id: any) => {
     return componentItem;
 };
 
-// 添加组件
-export const addComponent = (list: any[], endIndex: any, item: any, destination: any) => {
+// 一级添加组件
+export const addComponent = (list: any[], endIndex: any, item: any) => {
     list.splice(endIndex, 0, { ...item, id: uuid() });
-    actions.page.setReducers({
-        pageJson: { ...destination, components: list },
-    });
+    return list;
 };
 
 // 嵌套添加组件
 export const nestedComponent = (list: any, endIndex: any, item: any, destination: any) => {
-    list[0].components.splice(endIndex, 0, { ...item, id: uuid() });
-    actions.page.setReducers({
-        pageJson: { ...destination, components: list },
-    });
-};
-
-// 拖拽排序
-export const dragComponent = (destination: any, startIndex: any, endIndex: any) => {
-    const list = destination.components;
-    const [removed] = list.splice(startIndex, 1);
-    list.splice(endIndex, 0, removed);
-    actions.page.setReducers({
-        pageJson: { ...destination },
-    });
-};
-
-// 删除组件
-export const deleteComponent = (id: any, pageJson: any) => {
-    const list = pageJson.components || [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const item in list) {
-        if (list[item].id === id) {
-            list.splice(item, 1);
-            actions.page.setReducers({
-                pageJson: { ...pageJson, components: list },
-            });
-            // eslint-disable-next-line no-prototype-builtins
-        } else if (list[item].hasOwnProperty('components') && list[item].components.length !== 0) {
-            const m = JSON.parse(JSON.stringify(list[item]));
-            deleteComponent(id, m);
+    let index;
+    // eslint-disable-next-line array-callback-return
+    list.map((val: any, idx: any) => {
+        if (val.componentName === 'Form') {
+            index = idx;
         }
-    }
+    });
+    list[index].components.splice(endIndex, 0, { ...item, id: uuid() });
+    return list;
 };
 
 interface CheckTypes {

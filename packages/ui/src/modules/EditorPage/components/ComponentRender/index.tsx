@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { getComponents } from 'Src/modules/EditorPage/utils/constants';
 import './style.scss';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { deleteComponent } from '../../utils/index';
+import { deleteComponent, setTree } from '../../utils/index';
 
 const Confirm = Modal.confirm;
 
@@ -42,7 +42,10 @@ export default (props: any) => {
                                             title: '请确认删除组件',
                                             content: '删除后其配置会消失，请谨慎操作',
                                             onOk: () => {
-                                                deleteComponent(props.id, page.pageJson);
+                                                setTree(
+                                                    { components: deleteComponent(props.id, page.pageJson.components) },
+                                                    page.pageJson,
+                                                );
                                             },
                                         });
                                     }}
