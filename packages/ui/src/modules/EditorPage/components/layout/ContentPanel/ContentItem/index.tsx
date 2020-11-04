@@ -2,10 +2,21 @@ import React from 'react';
 import { Draggable, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd';
 import './style.scss';
 
-const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | NotDraggingStyle | undefined) => ({
-    background: isDragging ? 'lightgreen' : '#1d1c2a',
-    ...draggableStyle,
-});
+const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | NotDraggingStyle | undefined) => {
+    const { transform, transition, ...OTHER_STYLES } = draggableStyle;
+    let dragStyle = {};
+    if (isDragging) {
+        dragStyle = {
+            transform,
+            transition,
+        };
+    }
+    return {
+        background: isDragging ? 'lightgreen' : '#1d1c2a',
+        ...OTHER_STYLES,
+        ...dragStyle,
+    };
+};
 
 export default (props: any) => {
     const { data, index } = props;
@@ -26,7 +37,7 @@ export default (props: any) => {
                             <div className="thanos-editor-block-title">{data.componentName}</div>
                         </div>
                         {snapshot.isDragging && (
-                            <div style={{transform: 'none !important'}}>
+                            <div style={{ transform: 'none !important' }}>
                                 <div className="thanos-editor-block-shortscreen">
                                     <img style={{ maxWidth: '100%' }} src={data.img} />
                                 </div>

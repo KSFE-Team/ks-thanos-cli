@@ -97,7 +97,7 @@ export const dragComponent = (components: any, dataSource: any, id: any) => {
 // 查找源组件
 const findComponent = (componentList: any[], id: any) => {
     let component;
-    componentList.map((item) => {
+    componentList.forEach((item) => {
         const { components: componentArr } = item;
         component = componentArr.filter((value: { id: any }) => value.id === id);
     });

@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { actions } from 'kredux';
 import RouteProps from 'Src/types/route';
-import ComponentRender from '../../ComponentRender';
 import { Droppable } from 'react-beautiful-dnd';
+import ComponentRender from '../../ComponentRender';
 
-interface DrawingProps extends RouteProps { }
+interface DrawingProps extends RouteProps {}
 
 export default (props: DrawingProps) => {
     const page = useSelector((store: any) => store.page);
@@ -22,11 +22,11 @@ export default (props: DrawingProps) => {
                 });
             }}
         >
-            <Droppable droppableId='draw'>
+            <Droppable droppableId="draw">
                 {(provided, snapshot) => (
                     <div ref={provided.innerRef}>
-                        {components.map((itemConfig: any, index: any) => {                         
-                                return <ComponentRender key={itemConfig.id} {...itemConfig} index={index} />;
+                        {components.map((itemConfig: any, index: any) => {
+                            return <ComponentRender key={itemConfig.id} {...itemConfig} index={index} />;
                         })}
                         {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
                         {provided.placeholder}

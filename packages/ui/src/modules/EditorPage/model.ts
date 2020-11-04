@@ -25,7 +25,7 @@ export const STATE = {
             //         },
             //         {
             //             id: 'kqzwrhm1nr323p',
-            //             componentName: 'Checkbox', 
+            //             componentName: 'Checkbox',
             //             source: 'antd',
             //             default: false,
             //             props: {},
