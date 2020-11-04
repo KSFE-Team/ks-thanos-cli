@@ -47,6 +47,7 @@
         "socket.io-client": "^2.3.0",
         "sortablejs": "^1.11.2-alpha.3",
         "terminal-in-react": "^4.3.1",
+        "uuid": "^8.3.1",
         "xterm": "^4.4.0",
         "xterm-addon-fit": "^0.3.0"
     },
@@ -54,7 +55,8 @@
         "@ks-web-cli/plugin-pcweb": "^4.14.1",
         "@ks-web-cli/ts-tools": "^4.12.0",
         "@types/react": "^16.9.49",
-        "@types/react-beautiful-dnd": "^13.0.0"
+        "@types/react-beautiful-dnd": "^13.0.0",
+        "@types/uuid": "^8.3.0"
     },
     "gitHead": "97f78bd2e3e67f9a7a51d4c4cc2662a4f3517d3e"
 }
