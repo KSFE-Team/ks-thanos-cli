@@ -17,6 +17,7 @@ import {
     BizSelectModal,
     BizSelectTags,
     BizTimingSetting,
+    BizSelectTypeContent
 } from 'Src/factories/component/cloudComponent'; // 云组件
 
 export const COMPONENT_TYPES_MAP: {
@@ -40,5 +41,7 @@ export const COMPONENT_TYPES_MAP: {
     ExtendContainer: ExtendContainer,
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
-    BizTimingSetting: BizTimingSetting
+    BizTimingSetting: BizTimingSetting,
+    BizSelectTypeContent: BizSelectTypeContent
+
 };
