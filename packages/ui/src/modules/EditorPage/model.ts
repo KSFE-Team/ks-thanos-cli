@@ -25,7 +25,7 @@ export const STATE = {
                     // },
                     {
                         id: 'kqzwrhm1nr323p',
-                        componentName: 'RangePicker',
+                        componentName: 'InputNumber',
                         source: 'antd',
                         default: false,
                         props: {},

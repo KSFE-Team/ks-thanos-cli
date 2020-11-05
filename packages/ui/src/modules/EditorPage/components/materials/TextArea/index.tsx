@@ -1,26 +1,26 @@
 import React from 'react';
-import { DatePicker, Form } from 'antd';
+import { Input, Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
-import RangePickerConfig from './config';
+import TextAreaConfig from './config';
 
-interface RangePickerConfigProps extends ComponentConfig {
+const { TextArea } = Input;
+
+interface TextAreaConfigProps extends ComponentConfig {
     props: any;
     id: string;
 }
 
-const { RangePicker } = DatePicker;
-const DEFAULT_LABEL = ['开始时间', '截止时间'];
+const DEFAULT_LABEL = '备注信息';
 
-const MaterialRangePicker = (props: RangePickerConfigProps) => {
+const MaterialTextArea = (props: TextAreaConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL.join('') } = formConfig;
-    const placeholder = (formConfig.placeholder && formConfig.placeholder.split('/')) || DEFAULT_LABEL;
+    const { label = DEFAULT_LABEL, placeholder = DEFAULT_LABEL } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            <RangePicker
+            <TextArea
                 {...configProps}
                 placeholder={placeholder}
                 style={{
@@ -31,4 +31,4 @@ const MaterialRangePicker = (props: RangePickerConfigProps) => {
     );
 };
 
-export { MaterialRangePicker as component, RangePickerConfig as config, tools };
+export { MaterialTextArea as component, TextAreaConfig as config, tools };

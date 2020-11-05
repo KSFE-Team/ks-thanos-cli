@@ -4,7 +4,7 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-interface DatePickerConfig extends ComponentJSON {
+interface InputNumberConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
@@ -14,11 +14,11 @@ interface DatePickerConfig extends ComponentJSON {
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): DatePickerConfig => ({
-    componentName: 'DatePicker',
+export const getInitJson = (): InputNumberConfig => ({
+    componentName: 'InputNumber',
     source: 'antd',
     default: false,
-    placeholder: '请选择时间',
+    placeholder: '请输入',
     key: '',
     label: '',
     isRequired: REQUIRED,
@@ -28,14 +28,14 @@ export const getInitJson = (): DatePickerConfig => ({
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'DatePicker',
+    name: 'InputNumber',
     icon: 'calendar',
-    componentName: 'DatePicker',
+    componentName: 'InputNumber',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: DatePickerConfig, formConfig: DatePickerConfig): DatePickerConfig => {
+export const toCode = (config: InputNumberConfig, formConfig: InputNumberConfig): InputNumberConfig => {
     const formObject = {
         ...config,
         ...formConfig,

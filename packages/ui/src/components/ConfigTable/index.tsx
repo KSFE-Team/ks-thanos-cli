@@ -26,7 +26,7 @@ export default (props: ConfigTable) => {
         <div className="config-table">
             <div className="config-table-header">
                 <Row>
-                    {columns.map(({ title, col = DEFAULT_COL }: ConfigTableColumn, index: number) => {
+                    {columns.map(({ title, col = DEFAULT_COL }, index) => {
                         return (
                             <Col className="config-table-cell" span={col} key={`${title}_${index}`}>
                                 {title}
@@ -36,20 +36,18 @@ export default (props: ConfigTable) => {
                 </Row>
             </div>
             <div className="config-table-content">
-                {dataSource.map((data: TableData, index: number) => {
+                {dataSource.map((data: TableData, index) => {
                     return (
                         <Row className="config-table-data-row" key={index}>
-                            {columns.map(
-                                ({ dataIndex, title, render, col = DEFAULT_COL }: ConfigTableColumn, idx: number) => {
-                                    const text: any = dataIndex ? data[dataIndex] : undefined;
-                                    const content: ReactNode | string = render ? render(text, data, index) : text;
-                                    return (
-                                        <Col className="config-table-cell" span={col} key={`${title}_${index}_${idx}`}>
-                                            {content}
-                                        </Col>
-                                    );
-                                },
-                            )}
+                            {columns.map(({ dataIndex, title, render, col = DEFAULT_COL }, idx) => {
+                                const text = dataIndex ? data[dataIndex] : undefined;
+                                const content = render ? render(text, data, index) : text;
+                                return (
+                                    <Col className="config-table-cell" span={col} key={`${title}_${index}_${idx}`}>
+                                        {content}
+                                    </Col>
+                                );
+                            })}
                         </Row>
                     );
                 })}

@@ -4,45 +4,49 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-interface DatePickerConfig extends ComponentJSON {
+export interface Option {
+    label: string;
+    props: {
+        value: string;
+    };
+}
+
+export interface RadioConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
-    placeholder: string;
+    options: Option[];
 }
-
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): DatePickerConfig => ({
-    componentName: 'DatePicker',
+export const getInitJson = (): RadioConfig => ({
+    componentName: 'Radio',
     source: 'antd',
     default: false,
-    placeholder: '请选择时间',
     key: '',
     label: '',
     isRequired: REQUIRED,
+    options: [],
 });
 
 /**
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'DatePicker',
-    icon: 'calendar',
-    componentName: 'DatePicker',
+    name: 'Radio',
+    icon: 'edit',
+    componentName: 'Radio',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: DatePickerConfig, formConfig: DatePickerConfig): DatePickerConfig => {
-    const formObject = {
+export const toCode = (config: RadioConfig, formConfig: RadioConfig): RadioConfig => {
+    return {
         ...config,
         ...formConfig,
         props: {
-            placeholder: formConfig.placeholder,
+            placeholder: formConfig.label,
         },
     };
-    delete formObject.placeholder;
-    return { ...formObject };
 };

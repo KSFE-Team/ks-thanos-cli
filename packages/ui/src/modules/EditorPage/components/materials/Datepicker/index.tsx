@@ -12,7 +12,7 @@ interface DatePickerConfigProps extends ComponentConfig {
 
 const DEFAULT_LABEL = '日期';
 
-const MaterialInput = (props: DatePickerConfigProps) => {
+const MaterialDatepicker = (props: DatePickerConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
     const { label = DEFAULT_LABEL } = formConfig;
@@ -29,4 +29,4 @@ const MaterialInput = (props: DatePickerConfigProps) => {
     );
 };
 
-export { MaterialInput as component, DatepickerConfig as config, tools };
+export { MaterialDatepicker as component, DatepickerConfig as config, tools };

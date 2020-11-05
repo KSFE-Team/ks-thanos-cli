@@ -14,7 +14,7 @@ export const componentList = [
                 source: 'antd',
                 default: false,
                 props: {},
-                components:[],
+                components: [],
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
@@ -35,7 +35,7 @@ export const componentList = [
             },
             {
                 id: uuid(),
-                componentName: 'Checkbox(充数的)',
+                componentName: 'Radio',
                 source: 'antd',
                 default: false,
                 props: {},

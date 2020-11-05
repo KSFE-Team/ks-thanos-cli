@@ -1,26 +1,24 @@
 import React from 'react';
-import { DatePicker, Form } from 'antd';
+import { InputNumber, Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
-import RangePickerConfig from './config';
+import InputNumberConfig from './config';
 
-interface RangePickerConfigProps extends ComponentConfig {
+interface InputNumberConfigProps extends ComponentConfig {
     props: any;
     id: string;
 }
 
-const { RangePicker } = DatePicker;
-const DEFAULT_LABEL = ['开始时间', '截止时间'];
+const DEFAULT_LABEL = '数字框';
 
-const MaterialRangePicker = (props: RangePickerConfigProps) => {
+const MaterialInputNumber = (props: InputNumberConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL.join('') } = formConfig;
-    const placeholder = (formConfig.placeholder && formConfig.placeholder.split('/')) || DEFAULT_LABEL;
+    const { label = DEFAULT_LABEL, placeholder = DEFAULT_LABEL } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            <RangePicker
+            <InputNumber
                 {...configProps}
                 placeholder={placeholder}
                 style={{
@@ -31,4 +29,4 @@ const MaterialRangePicker = (props: RangePickerConfigProps) => {
     );
 };
 
-export { MaterialRangePicker as component, RangePickerConfig as config, tools };
+export { MaterialInputNumber as component, InputNumberConfig as config, tools };

@@ -24,8 +24,7 @@ export default (props: RouteProps) => {
         if (!result.destination) {
             return;
         }
-        const { source, destination, draggableId } = result;
-        handlePageJson(componentList, page.pageJson, draggableId, source, destination);
+        handlePageJson(componentList, page.pageJson, result);
     };
 
     return (
