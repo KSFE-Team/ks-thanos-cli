@@ -9,36 +9,36 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
-            // {
-            //     componentName: 'Form',
-            //     source: 'antd',
-            //     default: false,
-            //     props: {},
-            //     id: 'wl1cuuzftp',
-            //     components: [
-            //         {
-            //             id: 'kqzwrhm1nrp',
-            //             componentName: 'Input',
-            //             source: 'antd',
-            //             default: false,
-            //             props: {},
-            //         },
-            //         {
-            //             id: 'kqzwrhm1nr323p',
-            //             componentName: 'Checkbox', 
-            //             source: 'antd',
-            //             default: false,
-            //             props: {},
-            //         },
-            //         // {
-            //         //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //         //     componentName: 'Input',
-            //         //     source: 'antd',
-            //         //     default: false,
-            //         //     props: {},
-            //         // },
-            //     ],
-            // },
+            {
+                componentName: 'Form',
+                source: 'antd',
+                default: false,
+                props: {},
+                id: 'wl1cuuzftp',
+                components: [
+                    // {
+                    //     id: 'kqzwrhm1nrp',
+                    //     componentName: 'Input',
+                    //     source: 'antd',
+                    //     default: false,
+                    //     props: {},
+                    // },
+                    {
+                        id: 'kqzwrhm1nr323p',
+                        componentName: 'RangePicker',
+                        source: 'antd',
+                        default: false,
+                        props: {},
+                    },
+                    // {
+                    //     id: 'kqzwrhho4nq7bxgk91nrp',
+                    //     componentName: 'Input',
+                    //     source: 'antd',
+                    //     default: false,
+                    //     props: {},
+                    // },
+                ],
+            },
         ],
     },
 };

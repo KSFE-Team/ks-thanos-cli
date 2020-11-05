@@ -46,9 +46,10 @@ export default () => {
                             .then(() => {
                                 const pageJSON = getPageData(components);
                                 console.log('pageJSON', pageJSON);
-                                actions.page.save();
+                                // actions.page.save();
                             })
                             .catch((err) => {
+                                console.log('err', err);
                                 message.error(err.message);
                             });
                     }}
