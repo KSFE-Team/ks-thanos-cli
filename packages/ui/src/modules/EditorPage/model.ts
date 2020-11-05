@@ -9,6 +9,20 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
+            {
+                id: 'kqzwrhho4nq7bxgk91nrp',
+                componentName: 'Select',
+                source: 'antd',
+                default: false,
+                props: {},
+            },
+            // {
+            //     id: 'kqzwrhho4nq7bxgk91n22rp',
+            //     componentName: 'Checkbox',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            // },
             // {
             //     componentName: 'Form',
             //     source: 'antd',
@@ -25,7 +39,7 @@ export const STATE = {
             //         },
             //         {
             //             id: 'kqzwrhm1nr323p',
-            //             componentName: 'Checkbox', 
+            //             componentName: 'Checkbox',
             //             source: 'antd',
             //             default: false,
             //             props: {},

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { getApp } from 'Src/app';
-import uuid from 'uuid/v4';
+import uuid from 'uuid/dist/v4';
 import { actions } from 'kredux';
 import { message } from 'antd';
 import { getComponents } from './constants';

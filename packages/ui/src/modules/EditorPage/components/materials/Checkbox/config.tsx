@@ -17,7 +17,7 @@ export default (props: CheckboxConfigProps) => {
     const [columns] = useState([
         {
             title: '选项名称',
-            dataIndex: 'text',
+            dataIndex: 'label',
             col: 11,
             render: (item: any, record: any, index: any) => (
                 <Input
@@ -29,7 +29,7 @@ export default (props: CheckboxConfigProps) => {
         },
         {
             title: '选项值',
-            dataIndex: 'text',
+            dataIndex: 'value',
             col: 11,
             render: (item: any, record: any, index: any) => (
                 <Input

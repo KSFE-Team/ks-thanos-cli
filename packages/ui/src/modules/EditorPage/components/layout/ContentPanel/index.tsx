@@ -1,6 +1,6 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import uuid from 'uuid/v4';
+import uuid from 'uuid/dist/v4';
 import BlockGroup from './ContentBlock';
 import './style.scss';
 
@@ -14,7 +14,7 @@ export const componentList = [
                 source: 'antd',
                 default: false,
                 props: {},
-                components:[],
+                components: [],
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
             },
             {
@@ -40,6 +40,15 @@ export const componentList = [
                 default: false,
                 props: {},
                 img: 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg',
+            },
+            {
+                id: uuid(),
+                componentName: 'Select',
+                source: 'antd',
+                default: false,
+                props: {},
+                img:
+                    'https://tcdn.kaishustory.com/image/593e43d3-e615-44de-8d02-a08967a92c73_info_w=120_h=120_s=7982.png',
             },
         ],
     },
