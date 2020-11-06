@@ -6,9 +6,10 @@ const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
 export interface Option {
     label: string;
-    props: {
-        value: string;
-    };
+    value: any;
+    // props: {
+    //     value: string;
+    // };
 }
 
 export interface CheckboxConfig extends ComponentJSON {

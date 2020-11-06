@@ -38,18 +38,9 @@ export const getTools = () => ({
     componentName: 'Select',
 });
 
-export const validator = async (config: any) => {
-    const { options = [] } = config;
-    if (!options.length) {
-        return new Error('请至少添加一个Option');
-    }
-    const result: any = await baseValidator(config);
-    return new Error(result);
-};
+export const validator = (config: any) => baseValidator(config);
 
 export const toCode = (config: SelectConfig, formConfig: SelectConfig): SelectConfig => {
-    console.log('config', config);
-    console.log('formConfig', formConfig);
     const { allowClear = false, disabled = false, showSearch = false } = formConfig;
     const result: any = {
         ...config,
@@ -61,6 +52,5 @@ export const toCode = (config: SelectConfig, formConfig: SelectConfig): SelectCo
             showSearch,
         },
     };
-    console.log('result', result);
     return result;
 };
