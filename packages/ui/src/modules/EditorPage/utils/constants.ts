@@ -7,8 +7,8 @@ const componentsMap: {
 export const setComponents = (key: string, value: any) => {
     const result = {
         ...value,
-        component: Dynamicnect(value.component),
-        config: Dynamicnect(value.config),
+        component: Dynamicnect(value.component, true),
+        config: Dynamicnect(value.config, false),
     };
     componentsMap[key] = result;
 };

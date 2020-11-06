@@ -5,12 +5,13 @@ import { actions } from 'kredux';
 import { message } from 'antd';
 import { getComponents } from './constants';
 
-const Basic = ['Input', 'Checkbox'];
+const Basic = ['Input', 'Checkbox', 'Radio'];
 
 /**
  * 处理渲染数据
  */
 export const handlePageJson = (sourceComponents: any, pageJson: any, result: any) => {
+    console.log('result', result);
     const list = pageJson.components;
     const { draggableId, source, destination } = result;
     const startIndex = source.index;
@@ -18,6 +19,14 @@ export const handlePageJson = (sourceComponents: any, pageJson: any, result: any
     const item = findComponent(sourceComponents, draggableId);
     if (Basic.indexOf(item.componentName) > -1 && destination.droppableId !== '1') {
         message.warning(`${item.componentName}只能添加在容器组件中`);
+        return;
+    }
+    if (
+        item.componentName === 'Form' &&
+        // eslint-disable-next-line no-shadow
+        list.filter((item: { componentName: string }) => item.componentName === 'Form').length > 0
+    ) {
+        message.warning(`${item.componentName}只能配置一次`);
         return;
     }
     switch (destination.droppableId) {
@@ -36,7 +45,7 @@ export const handlePageJson = (sourceComponents: any, pageJson: any, result: any
             setTree({ components: newComponents }, pageJson);
             break;
         case '1':
-            const newJson = nestedComponent(list, endIndex, item, pageJson);
+            const newJson = nestedComponent(list, endIndex, item);
             setTree({ components: newJson }, pageJson);
             break;
         default:
@@ -112,7 +121,7 @@ export const addComponent = (list: any[], endIndex: any, item: any) => {
 };
 
 // 嵌套添加组件
-export const nestedComponent = (list: any, endIndex: any, item: any, destination: any) => {
+export const nestedComponent = (list: any, endIndex: any, item: any) => {
     let index;
     // eslint-disable-next-line array-callback-return
     list.map((val: any, idx: any) => {

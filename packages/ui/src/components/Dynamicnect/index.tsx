@@ -18,23 +18,29 @@ const regsisterModelById = (id: string) => {
 };
 
 /* 根据ID获取connect后的组件 */
-const getConnectComponent = (id: string, OriginComponent: any) => {
+const getConnectComponent = (id: string, OriginComponent: any, Boolean: any) => {
     regsisterModelById(id);
     return {
-        [id]: connect((store: any) => ({ [id]: store[id] }))(OriginComponent),
+        [id]: connect((store: any) => {
+            let params = { [id]: store[id] };
+            if (Boolean) {
+                params = { ...params, page: store.page };
+            }
+            return params;
+        })(OriginComponent),
     };
 };
 
-export default (OriginComponent: any) => {
+export default (OriginComponent: any, Boolean: any) => {
     return (props: HOCProps) => {
         const { id } = props;
         const [state, setState] = useState(() => {
-            return getConnectComponent(id, OriginComponent);
+            return getConnectComponent(id, OriginComponent, Boolean);
         });
         useEffect((): void => {
             setState((prevState) => ({
                 ...prevState,
-                ...getConnectComponent(id, OriginComponent),
+                ...getConnectComponent(id, OriginComponent, Boolean),
             }));
         }, [id]);
         if (id) {
