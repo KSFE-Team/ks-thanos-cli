@@ -6,6 +6,8 @@ import * as RangePicker from './RangePicker/index';
 import * as Radio from './Radio/index';
 import * as TextArea from './TextArea/index';
 import * as InputNumber from './InputNumber/index';
+import * as BizSelectModal from './BizSelectModal/index';
+import * as BizTimingSetting from './BizTimingSetting/index';
 
 export default {
     Form,
@@ -16,4 +18,6 @@ export default {
     Radio,
     TextArea,
     InputNumber,
+    BizSelectModal,
+    BizTimingSetting,
 };

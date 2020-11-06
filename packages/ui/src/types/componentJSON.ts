@@ -3,6 +3,6 @@ export interface ComponentJSON {
     source: string;
     default: boolean;
     props?: {
-        [key: string]: string;
+        [key: string]: any;
     };
 }
