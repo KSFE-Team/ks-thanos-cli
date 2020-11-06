@@ -43,14 +43,18 @@
             border-top: none;
             box-sizing: border-box;
             padding: 8px 10px;
-        }
+            position: relative;
 
-        .thanos-editor-empty{
-            border:1px dashed #fff;
-            border-radius: 5px;
-            color:#fff;
-            padding: 10px;
-            text-align: center;
+            .thanos-editor-empty{
+                position: absolute;
+                width: calc(100% - 20px);
+                top: 8px;
+                left: 10px;
+                border-radius: 5px;
+                color:#fff;
+                padding: 10px;
+                text-align: center;
+            }
         }
 
         .thanos-editor-property {

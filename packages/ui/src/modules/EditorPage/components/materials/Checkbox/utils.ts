@@ -37,6 +37,7 @@ export const getTools = () => ({
     name: 'Checkbox',
     icon: 'check-circle',
     componentName: 'Checkbox',
+    componentType: 'entry',
 });
 
 export const validator = (config: any) => baseValidator(config);

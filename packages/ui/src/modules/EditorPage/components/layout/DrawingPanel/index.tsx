@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ReactSortable } from 'react-sortablejs';
 import { actions } from 'kredux';
 import RouteProps from 'Src/types/route';
-import { Droppable } from 'react-beautiful-dnd';
 import ComponentRender from '../../ComponentRender';
+import { handlePageJson } from '../../../utils';
+import { ACTION } from '../../../utils/constants';
 
 interface DrawingProps extends RouteProps {}
 
@@ -17,22 +19,43 @@ export default (props: DrawingProps) => {
             className="thanos-editor-draw"
             onClick={(e) => {
                 e.stopPropagation();
-                actions.page.setReducers({
-                    selectedId: '',
-                });
+                if (page.selectedId !== '') {
+                    actions.page.setReducers({
+                        selectedId: '',
+                    });
+                }
             }}
         >
-            <Droppable droppableId="draw">
-                {(provided, snapshot) => (
-                    <div ref={provided.innerRef}>
-                        {components.map((itemConfig: any, index: any) => {
-                            return <ComponentRender key={itemConfig.id} {...itemConfig} index={index} />;
-                        })}
-                        {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
+            <ReactSortable
+                className="react-sortable-drop-container"
+                id="draw"
+                list={components}
+                setList={() => {}}
+                group={{
+                    name: 'materials',
+                    pull: 'clone',
+                }}
+                animation={150}
+                onAdd={(eva) => {
+                    const { clone, newIndex, path } = eva;
+                    const [parent] = path;
+                    handlePageJson({
+                        type: ACTION.ADD,
+                        componentName: clone.dataset.name,
+                        index: newIndex,
+                        parentId: parent.id,
+                        pageJson: page.pageJson,
+                    });
+                }}
+                onUpdate={(eva) => {
+                    console.log('page update eva', eva);
+                }}
+            >
+                {components.map((itemConfig: any, index: any) => {
+                    return <ComponentRender key={itemConfig.id} {...itemConfig} />;
+                })}
+            </ReactSortable>
+            {!components.length && <div className="thanos-editor-empty">没得东西，赶紧整</div>}
         </div>
     );
 };

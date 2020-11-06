@@ -1,94 +1,89 @@
 /* eslint-disable no-param-reassign */
 import { getApp } from 'Src/app';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { actions } from 'kredux';
-import { message } from 'antd';
-import { getComponents } from './constants';
+// import { message } from 'antd';
+import { getComponents, ACTION } from './constants';
 
-const Basic = ['Input', 'Checkbox', 'Radio'];
+// const Basic = ['Input', 'Checkbox', 'Radio'];
+
+interface HandlePageJson {
+    type: string;
+    componentName?: string;
+    id?: string;
+    index?: number;
+    oldIndex?: number;
+    parentId?: string;
+    oldParentId?: string;
+    pageJson: any;
+}
 
 /**
  * 处理渲染数据
  */
-export const handlePageJson = (sourceComponents: any, pageJson: any, result: any) => {
-    console.log('result', result);
-    const list = pageJson.components;
-    const { draggableId, source, destination } = result;
-    const startIndex = source.index;
-    const endIndex = destination.index;
-    const item = findComponent(sourceComponents, draggableId);
-    if (Basic.indexOf(item.componentName) > -1 && destination.droppableId !== '1') {
-        message.warning(`${item.componentName}只能添加在容器组件中`);
-        return;
-    }
-    if (
-        item.componentName === 'Form' &&
-        // eslint-disable-next-line no-shadow
-        list.filter((item: { componentName: string }) => item.componentName === 'Form').length > 0
-    ) {
-        message.warning(`${item.componentName}只能配置一次`);
-        return;
-    }
-    switch (destination.droppableId) {
-        // 排序
-        case source.droppableId:
-            const dataSource = reorder(list, startIndex, endIndex);
-            if (source.droppableId === 'draw') {
-                setTree({ components: dataSource }, pageJson);
-            } else {
-                dragComponent(list, dataSource, draggableId);
-            }
+export const handlePageJson = (config: HandlePageJson) => {
+    const { type, componentName, index, id, parentId, pageJson } = config;
+    let newJson: any;
+    switch (type) {
+        case ACTION.ADD:
+            if (!componentName || (!index && index !== 0) || !parentId) return;
+            const initJson = getComponents()[componentName].tools.getInitJson();
+            newJson = addComponent(pageJson, index, parentId, {
+                ...initJson,
+                id: uuid(),
+            });
+            setTree(newJson);
+            return;
+        case ACTION.DELETE:
+            newJson = deleteComponent(id, pageJson);
+            setTree(newJson);
             break;
-        // 添加
-        case 'draw':
-            const newComponents = addComponent(list, endIndex, item);
-            setTree({ components: newComponents }, pageJson);
-            break;
-        case '1':
-            const newJson = nestedComponent(list, endIndex, item);
-            setTree({ components: newJson }, pageJson);
+        case ACTION.UPDATE:
+            if ((!index && index !== 0) || !parentId) return;
+            const tempNode = findComponent(id, pageJson);
+            newJson = deleteComponent(id, pageJson);
+            newJson = addComponent(newJson, index, parentId, tempNode);
+            setTree(newJson);
             break;
         default:
-            break;
     }
 };
 
-export const setTree = (components: any, pageJson: any) => {
+export const setTree = (pageJson: any) => {
     actions.page.setReducers({
-        pageJson: {
-            ...pageJson,
-            ...components,
-        },
+        pageJson,
     });
 };
 
 // 删除组件
-export const deleteComponent = (id: any, components: any) => {
-    return components.filter((item: any) => {
+export const deleteComponent = (id: any, pageJson: any) => {
+    if (!pageJson.components) {
+        return pageJson;
+    }
+    pageJson.components = pageJson.components.filter((item: any) => {
         if (id === item.id) {
             return false;
-            // eslint-disable-next-line no-else-return
-        } else if (item.components) {
-            // eslint-disable-next-line no-param-reassign
-            item.components = deleteComponent(id, item.components);
+        }
+        if (item.components) {
+            item = deleteComponent(id, item);
         }
         return true;
     });
+    return pageJson;
 };
 
-/**
- * 重新排序
- * @param {Array} list 需要重新排序的数组
- * @param {number} startIndex 旧的位置index
- * @param {number} endIndex 新的位置index
- */
-const reorder = (list: any, startIndex: any, endIndex: any) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-};
+// /**
+//  * 重新排序
+//  * @param {Array} list 需要重新排序的数组
+//  * @param {number} startIndex 旧的位置index
+//  * @param {number} endIndex 新的位置index
+//  */
+// const reorder = (list: any, startIndex: any, endIndex: any) => {
+//     const result = Array.from(list);
+//     const [removed] = result.splice(startIndex, 1);
+//     result.splice(endIndex, 0, removed);
+//     return result;
+// };
 
 // 拖拽排序
 export const dragComponent = (components: any, dataSource: any, id: any) => {
@@ -104,20 +99,45 @@ export const dragComponent = (components: any, dataSource: any, id: any) => {
 };
 
 // 查找源组件
-const findComponent = (componentList: any[], id: any) => {
-    let component;
-    componentList.forEach((item) => {
-        const { components: componentArr } = item;
-        component = componentArr.filter((value: { id: any }) => value.id === id);
-    });
-    const [componentItem] = component;
-    return componentItem;
+const findComponent = (id: any, pageJson: any): any => {
+    if (pageJson.id === id) {
+        return pageJson;
+    }
+    if (pageJson.components) {
+        let component;
+        pageJson.components.forEach((item: any) => {
+            const result = findComponent(id, item);
+            if (result) {
+                component = result;
+            }
+        });
+        return component;
+    }
+    return undefined;
 };
 
 // 一级添加组件
-export const addComponent = (list: any[], endIndex: any, item: any) => {
-    list.splice(endIndex, 0, { ...item, id: uuid() });
-    return list;
+export const addComponent = (pageJson: any, newIndex: number, parentId: string, initJson: any) => {
+    // list.splice(endIndex, 0, { ...item, id: uuid() });
+    /* root节点不用遍历 */
+    if (parentId === 'draw') {
+        pageJson.components.splice(newIndex, 0, initJson);
+        return pageJson;
+    }
+
+    const { components } = pageJson;
+    pageJson.components = components.map((item: any): any => {
+        if (item.id === parentId) {
+            item.components = item.components || [];
+            item.components.splice(newIndex, 0, initJson);
+            return item;
+        }
+        if (item.components) {
+            item = addComponent(item, newIndex, parentId, initJson);
+        }
+        return item;
+    });
+    return pageJson;
 };
 
 // 嵌套添加组件

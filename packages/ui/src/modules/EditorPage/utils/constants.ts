@@ -15,6 +15,27 @@ export const setComponents = (key: string, value: any) => {
 
 export const getComponents = () => componentsMap;
 
+export const getLayoutComponents = () => filterComponentsByType('layout');
+
+export const getEntryComponents = () => filterComponentsByType('entry');
+
+const filterComponentsByType = (type: string) =>
+    Object.keys(componentsMap).reduce((prev: any[], key: string) => {
+        const { tools } = componentsMap[key];
+        const { getTools } = tools;
+        const componentTools = getTools();
+        if (componentTools.componentType === type) {
+            return [...prev, componentTools];
+        }
+        return prev;
+    }, []);
+
+export const ACTION = {
+    ADD: 'ADD',
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE',
+};
+
 /**
  * 表单布局
  */

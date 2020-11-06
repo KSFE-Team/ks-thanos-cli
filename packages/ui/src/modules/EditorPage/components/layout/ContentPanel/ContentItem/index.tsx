@@ -1,52 +1,17 @@
 import React from 'react';
-import { Draggable, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd';
 import './style.scss';
 
-const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | NotDraggingStyle | undefined) => {
-    const { transform, transition, ...OTHER_STYLES } = draggableStyle;
-    let dragStyle = {};
-    if (isDragging) {
-        dragStyle = {
-            transform,
-            transition,
-        };
-    }
-    return {
-        background: isDragging ? 'lightgreen' : '#1d1c2a',
-        ...OTHER_STYLES,
-        ...dragStyle,
-    };
-};
-
 export default (props: any) => {
-    const { data, index } = props;
+    const { data } = props;
     return (
-        <div className="thanos-editor-block-item">
-            <Draggable key={data.id} draggableId={data.id} index={index}>
-                {(provided, snapshot) => (
-                    <>
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                        >
-                            <div className="thanos-editor-block-shortscreen">
-                                <img style={{ maxWidth: '100%' }} src={data.img} />
-                            </div>
-                            <div className="thanos-editor-block-title">{data.componentName}</div>
-                        </div>
-                        {snapshot.isDragging && (
-                            <div style={{ transform: 'none !important' }}>
-                                <div className="thanos-editor-block-shortscreen">
-                                    <img style={{ maxWidth: '100%' }} src={data.img} />
-                                </div>
-                                <div className="thanos-editor-block-title">{data.componentName}</div>
-                            </div>
-                        )}
-                    </>
-                )}
-            </Draggable>
+        <div className="thanos-editor-block-item" data-name={data.componentName}>
+            <div className="thanos-editor-block-shortscreen">
+                <img
+                    style={{ maxWidth: '100%' }}
+                    src={data.img || 'https://zos.alipayobjects.com/rmsportal/ndmJrWwkQloTtKg.jpg'}
+                />
+            </div>
+            <div className="thanos-editor-block-title">{data.name}</div>
         </div>
     );
 };

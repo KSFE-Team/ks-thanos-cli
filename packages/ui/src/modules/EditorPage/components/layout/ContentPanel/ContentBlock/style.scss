@@ -7,4 +7,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    .thanos-editor-blocks-group-drop {
+        display: flex;
+    }
 }
