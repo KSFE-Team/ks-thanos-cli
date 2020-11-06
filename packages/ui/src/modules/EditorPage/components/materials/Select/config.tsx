@@ -33,10 +33,12 @@ export default (props: SelectConfigProps) => {
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
                 }}
-                fields={Object.keys(config).map((key) => ({
-                    name: [key],
-                    value: config[key],
-                }))}
+                fields={Object.keys(config).map((key) => {
+                    return {
+                        name: [key],
+                        value: config[key],
+                    };
+                })}
             >
                 <Card title="基础配置" style={{ background: '#1d1c2a' }}>
                     <FormItem name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
@@ -71,6 +73,10 @@ export default (props: SelectConfigProps) => {
                     })}
                 </Card>
                 <Card title="Option 配置" style={{ background: '#1d1c2a', marginTop: '4px' }}>
+                    <Row justify="space-around" style={{ marginBottom: '4px' }}>
+                        <Col span={10}>选项名称</Col>
+                        <Col span={10}>选项值</Col>
+                    </Row>
                     <Form.List name="options">
                         {(fields, { add, remove, move }) => {
                             return (
@@ -79,15 +85,17 @@ export default (props: SelectConfigProps) => {
                                         <Row key={field.key} justify="space-around">
                                             <Col span={10}>
                                                 <FormItem
+                                                    {...field}
                                                     name={[field.name, 'label']}
                                                     fieldKey={[field.fieldKey, 'label']}
-                                                    // rules={rules}
+                                                    // rules={[{ required: true, message: 'Missing first name' }]}
                                                 >
                                                     <Input placeholder="label" />
                                                 </FormItem>
                                             </Col>
                                             <Col span={10}>
                                                 <FormItem
+                                                    {...field}
                                                     name={[field.name, 'value']}
                                                     fieldKey={[field.fieldKey, 'value']}
                                                     // rules={rules}
@@ -95,23 +103,30 @@ export default (props: SelectConfigProps) => {
                                                     <Input placeholder="value" />
                                                 </FormItem>
                                             </Col>
-                                            <Col
-                                                flex="none"
-                                                span={2}
-                                                style={{
-                                                    lineHeight: '32px',
-                                                }}
-                                            >
-                                                <MinusCircleOutlined
-                                                    className="dynamic-delete-button"
+                                            {fields.length > 1 && (
+                                                <Col
+                                                    flex="none"
+                                                    span={2}
                                                     style={{
-                                                        color: '#f50',
+                                                        lineHeight: '32px',
                                                     }}
-                                                    onClick={() => {
-                                                        remove(field.name);
-                                                    }}
-                                                />
-                                            </Col>
+                                                >
+                                                    <MinusCircleOutlined
+                                                        style={{
+                                                            color: '#f50',
+                                                        }}
+                                                        onClick={() => {
+                                                            remove(field.name);
+                                                            const newOptions = config.options;
+                                                            newOptions.splice(index, 1);
+                                                            actions[id].setReducers({
+                                                                ...config,
+                                                                options: newOptions,
+                                                            });
+                                                        }}
+                                                    />
+                                                </Col>
+                                            )}
                                         </Row>
                                     ))}
                                     <FormItem>

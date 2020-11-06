@@ -27,14 +27,7 @@ export const getInitJson = (): CheckboxConfig => ({
     key: '',
     label: '',
     isRequired: REQUIRED,
-    options: [
-        {
-            label: 'ttt',
-            props: {
-                value: '2',
-            },
-        },
-    ],
+    options: [],
 });
 
 /**

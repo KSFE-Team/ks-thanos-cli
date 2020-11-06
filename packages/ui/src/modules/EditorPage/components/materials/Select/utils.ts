@@ -48,7 +48,9 @@ export const validator = async (config: any) => {
 };
 
 export const toCode = (config: SelectConfig, formConfig: SelectConfig): SelectConfig => {
-    const { allowClear, disabled, showSearch } = formConfig;
+    console.log('config', config);
+    console.log('formConfig', formConfig);
+    const { allowClear = false, disabled = false, showSearch = false } = formConfig;
     const result: any = {
         ...config,
         ...formConfig,
@@ -59,5 +61,6 @@ export const toCode = (config: SelectConfig, formConfig: SelectConfig): SelectCo
             showSearch,
         },
     };
+    console.log('result', result);
     return result;
 };

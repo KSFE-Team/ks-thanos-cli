@@ -34,9 +34,9 @@ const MaterialSelect = (props: MaterialSelectProps) => {
                     );
                 }}
             >
-                {options.map((opt: any) => {
+                {options.map((opt: any, index: number) => {
                     return (
-                        <Option value={opt.value} key={opt.value}>
+                        <Option value={opt.value} key={index}>
                             {opt.label}
                         </Option>
                     );
