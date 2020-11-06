@@ -1,8 +1,9 @@
 import React from 'react';
-import { Form, Input, Radio, Card, Button, Row, Col } from 'antd';
+import { Form, Input, Radio, Button, Row, Col } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import Card from 'Src/components/Card';
 import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT, BOOLEAN_TYPE } from '../../../utils/constants';
 
 const FormItem = Form.Item;

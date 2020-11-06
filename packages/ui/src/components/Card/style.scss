@@ -1,0 +1,14 @@
+.Card-container {
+    position: relative;
+    border: 1px solid #434343;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+
+    .Card-title {
+        text-align: center;
+        border-bottom: 1px solid #434343;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+}
