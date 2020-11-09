@@ -36,6 +36,7 @@ export const getTools = () => ({
     name: 'Select',
     icon: 'edit',
     componentName: 'Select',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);

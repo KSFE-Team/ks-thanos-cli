@@ -19,9 +19,9 @@ export const getContainerComponents = () => filterComponentsByType('container');
 
 export const getBasicComponents = () => filterComponentsByType('basic');
 
-export const getContentComponents = () => filterComponentsByType('entry');
+export const getContentComponents = () => filterComponentsByType('content');
 
-export const getBizComponents = () => filterComponentsByType('entry');
+export const getBizComponents = () => filterComponentsByType('biz');
 
 const filterComponentsByType = (type: string) =>
     Object.keys(componentsMap).reduce((prev: any[], key: string) => {

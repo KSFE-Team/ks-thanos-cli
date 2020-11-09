@@ -34,6 +34,7 @@ export const getTools = () => ({
     name: 'RangePicker',
     icon: 'calendar',
     componentName: 'RangePicker',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) =>

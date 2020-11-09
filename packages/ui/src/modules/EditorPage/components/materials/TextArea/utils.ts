@@ -33,6 +33,7 @@ export const getTools = () => ({
     name: 'TextArea',
     icon: 'calendar',
     componentName: 'TextArea',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);

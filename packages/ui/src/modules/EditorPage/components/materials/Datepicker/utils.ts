@@ -31,6 +31,7 @@ export const getTools = () => ({
     name: 'DatePicker',
     icon: 'calendar',
     componentName: 'DatePicker',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);
