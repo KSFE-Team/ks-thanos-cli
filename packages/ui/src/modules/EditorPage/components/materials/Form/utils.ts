@@ -31,7 +31,7 @@ export const getTools = () => ({
     name: 'Form',
     icon: 'form',
     componentName: 'Form',
-    componentType: 'layout',
+    groupType: 'container',
 });
 
 // eslint-disable-next-line consistent-return

@@ -15,16 +15,20 @@ export const setComponents = (key: string, value: any) => {
 
 export const getComponents = () => componentsMap;
 
-export const getLayoutComponents = () => filterComponentsByType('layout');
+export const getContainerComponents = () => filterComponentsByType('container');
 
-export const getEntryComponents = () => filterComponentsByType('entry');
+export const getBasicComponents = () => filterComponentsByType('basic');
+
+export const getContentComponents = () => filterComponentsByType('entry');
+
+export const getBizComponents = () => filterComponentsByType('entry');
 
 const filterComponentsByType = (type: string) =>
     Object.keys(componentsMap).reduce((prev: any[], key: string) => {
         const { tools } = componentsMap[key];
         const { getTools } = tools;
         const componentTools = getTools();
-        if (componentTools.componentType === type) {
+        if (componentTools.groupType === type) {
             return [...prev, componentTools];
         }
         return prev;

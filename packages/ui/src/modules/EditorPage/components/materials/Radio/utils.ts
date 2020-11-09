@@ -37,6 +37,7 @@ export const getTools = () => ({
     name: 'Radio',
     icon: 'edit',
     componentName: 'Radio',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);
