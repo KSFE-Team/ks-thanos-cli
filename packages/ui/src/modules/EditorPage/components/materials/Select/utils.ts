@@ -4,51 +4,53 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-export interface Option {
-    label: string;
-    value: any;
-    // props: {
-    //     value: string;
-    // };
-}
-
-export interface CheckboxConfig extends ComponentJSON {
+interface SelectConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
-    options: Option[];
+    allowClear: boolean;
+    disabled: boolean;
+    showSearch: boolean;
 }
+
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): CheckboxConfig => ({
-    componentName: 'Checkbox',
+export const getInitJson = (): SelectConfig => ({
+    componentName: 'Select',
     source: 'antd',
     default: false,
     key: '',
     label: '',
     isRequired: REQUIRED,
-    options: [],
+    allowClear: false,
+    disabled: false,
+    showSearch: false,
+    props: {},
 });
 
 /**
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'Checkbox',
-    icon: 'check-circle',
-    componentName: 'Checkbox',
-    componentType: 'entry',
+    name: 'Select',
+    icon: 'edit',
+    componentName: 'Select',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: CheckboxConfig, formConfig: CheckboxConfig): CheckboxConfig => {
-    return {
+export const toCode = (config: SelectConfig, formConfig: SelectConfig): SelectConfig => {
+    const { allowClear = false, disabled = false, showSearch = false } = formConfig;
+    const result: any = {
         ...config,
         ...formConfig,
         props: {
             placeholder: formConfig.label,
+            allowClear,
+            disabled,
+            showSearch,
         },
     };
+    return result;
 };

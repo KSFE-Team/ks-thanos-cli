@@ -38,6 +38,7 @@ export default () => {
                     className="thanos-editor-primary"
                     onClick={() => {
                         const { components, pageName } = pageJson;
+                        console.log('components', components);
                         if (!pageName) {
                             message.error('请填写页面名称');
                             return;

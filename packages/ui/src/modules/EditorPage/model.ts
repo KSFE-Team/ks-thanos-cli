@@ -10,6 +10,20 @@ export const STATE = {
         paramKey: '',
         components: [
             // {
+            //     id: 'kqzwrhho4nq7bxgk91nrp',
+            //     componentName: 'Select',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            // },
+            // {
+            //     id: 'kqzwrhho4nq7bxgk91n22rp',
+            //     componentName: 'Checkbox',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            // },
+            // {
             //     componentName: 'Form',
             //     source: 'antd',
             //     default: false,
@@ -29,7 +43,7 @@ export const STATE = {
             //             source: 'antd',
             //             default: false,
             //             props: {},
-            //         },
+            //         },s
             //         {
             //             id: 'kqzwrhho4nq7bxgk91nrp',
             //             componentName: 'Input',

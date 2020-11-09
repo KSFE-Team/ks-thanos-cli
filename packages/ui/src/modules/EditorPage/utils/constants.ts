@@ -56,6 +56,12 @@ export const ISREQUIRED_TYPE = [
     { VALUE: false, LABEL: '非必填' },
 ];
 
+/* 配置 - true false - 常量 */
+export const BOOLEAN_TYPE = [
+    { VALUE: true, LABEL: 'true' },
+    { VALUE: false, LABEL: 'false' },
+];
+
 /**
  * 表单配置常量定义
  */
