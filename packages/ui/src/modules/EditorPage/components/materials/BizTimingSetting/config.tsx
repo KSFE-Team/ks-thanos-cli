@@ -46,16 +46,15 @@ export default (props: BizTimingSettingConfigProps) => {
             </Form>
             <div style={{ marginBottom: '10px', color: '', marginLeft: '10px' }}>
                 <p>以上字段均有默认值，支持单独修改字段。</p>
-                具体字段参数请参考
+                <span>具体字段参数请参考:</span>
                 <a
                     target="_blank"
                     onClick={(e) => {
                         e.stopPropagation();
                         window.open(url);
                     }}
-                >
-                    {url}
-                </a>
+                />
+                {url}
             </div>
         </div>
     );
