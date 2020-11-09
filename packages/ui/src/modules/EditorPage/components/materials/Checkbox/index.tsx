@@ -13,9 +13,7 @@ interface MaterialCheckboxProps extends ComponentConfig {
 
 const DEFAULT_VALUE = {
     label: '演示',
-    props: {
-        value: '1',
-    },
+    value: 1,
 };
 
 const DEFAULT_LABEL = '复选框';
@@ -24,11 +22,16 @@ const MaterialCheckbox = (props: MaterialCheckboxProps) => {
     const { id } = props;
     const formConfig = props[id];
     const { label = DEFAULT_LABEL, options = [DEFAULT_VALUE] } = formConfig;
+    console.log('option11s', options);
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            {options.map((option: Option) => {
-                const { label: optionLabel, props: optionProps } = option;
-                return <Checkbox key={optionProps.value}>{optionLabel}</Checkbox>;
+            {options.map((option: Option, index: number) => {
+                const { label: optionLabel, value } = option;
+                return (
+                    <Checkbox key={index} value={value}>
+                        {optionLabel}
+                    </Checkbox>
+                );
             })}
         </Form.Item>
     );

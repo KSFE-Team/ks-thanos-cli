@@ -38,6 +38,7 @@ export default () => {
                     className="thanos-editor-primary"
                     onClick={() => {
                         const { components, pageName } = pageJson;
+                        console.log('components', components);
                         if (!pageName) {
                             message.error('请填写页面名称');
                             return;
@@ -46,9 +47,10 @@ export default () => {
                             .then(() => {
                                 const pageJSON = getPageData(components);
                                 console.log('pageJSON', pageJSON);
-                                actions.page.save();
+                                // actions.page.save();
                             })
                             .catch((err) => {
+                                console.log('err', err);
                                 message.error(err.message);
                             });
                     }}

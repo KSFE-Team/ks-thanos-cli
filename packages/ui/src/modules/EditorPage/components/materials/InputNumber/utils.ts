@@ -4,51 +4,45 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-export interface Option {
-    label: string;
-    value: any;
-    // props: {
-    //     value: string;
-    // };
-}
-
-export interface CheckboxConfig extends ComponentJSON {
+interface InputNumberConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
-    options: Option[];
+    placeholder: string;
 }
+
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): CheckboxConfig => ({
-    componentName: 'Checkbox',
+export const getInitJson = (): InputNumberConfig => ({
+    componentName: 'InputNumber',
     source: 'antd',
     default: false,
+    placeholder: '请输入',
     key: '',
     label: '',
     isRequired: REQUIRED,
-    options: [],
 });
 
 /**
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'Checkbox',
-    icon: 'check-circle',
-    componentName: 'Checkbox',
-    groupType: 'basic',
+    name: 'InputNumber',
+    icon: 'calendar',
+    componentName: 'InputNumber',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: CheckboxConfig, formConfig: CheckboxConfig): CheckboxConfig => {
-    return {
+export const toCode = (config: InputNumberConfig, formConfig: InputNumberConfig): InputNumberConfig => {
+    const formObject = {
         ...config,
         ...formConfig,
         props: {
-            placeholder: formConfig.label,
+            placeholder: formConfig.placeholder,
         },
     };
+    delete formObject.placeholder;
+    return { ...formObject };
 };

@@ -4,51 +4,48 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-export interface Option {
-    label: string;
-    value: any;
-    // props: {
-    //     value: string;
-    // };
-}
-
-export interface CheckboxConfig extends ComponentJSON {
+interface TextAreaConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
-    options: Option[];
+    placeholder: string;
+    parentComponentName: string;
 }
+
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): CheckboxConfig => ({
-    componentName: 'Checkbox',
+export const getInitJson = (): TextAreaConfig => ({
+    componentName: 'TextArea',
     source: 'antd',
     default: false,
+    placeholder: '请选择时间',
+    parentComponentName: 'Input',
     key: '',
     label: '',
     isRequired: REQUIRED,
-    options: [],
 });
 
 /**
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'Checkbox',
-    icon: 'check-circle',
-    componentName: 'Checkbox',
-    groupType: 'basic',
+    name: 'TextArea',
+    icon: 'calendar',
+    componentName: 'TextArea',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: CheckboxConfig, formConfig: CheckboxConfig): CheckboxConfig => {
-    return {
+export const toCode = (config: TextAreaConfig, formConfig: TextAreaConfig): TextAreaConfig => {
+    const formObject = {
         ...config,
         ...formConfig,
+        parentComponentName: 'Input',
         props: {
-            placeholder: formConfig.label,
+            placeholder: formConfig.placeholder,
         },
     };
+    delete formObject.placeholder;
+    return { ...formObject };
 };
