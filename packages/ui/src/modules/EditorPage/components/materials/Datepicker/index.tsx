@@ -1,24 +1,24 @@
 import React from 'react';
-import { Input, Form } from 'antd';
+import { DatePicker, Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
-import InputConfig from './config';
+import DatepickerConfig from './config';
 
-interface MaterialDatePickerProps extends ComponentConfig {
+interface DatePickerConfigProps extends ComponentConfig {
     props: any;
     id: string;
 }
 
-const DEFAULT_LABEL = '输入框';
+const DEFAULT_LABEL = '日期';
 
-const MaterialDatePicker = (props: MaterialDatePickerProps) => {
+const MaterialDatepicker = (props: DatePickerConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
     const { label = DEFAULT_LABEL } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            <Input
+            <DatePicker
                 {...configProps}
                 placeholder={label}
                 style={{
@@ -29,4 +29,4 @@ const MaterialDatePicker = (props: MaterialDatePickerProps) => {
     );
 };
 
-export { MaterialDatePicker as component, InputConfig as config, tools };
+export { MaterialDatepicker as component, DatepickerConfig as config, tools };

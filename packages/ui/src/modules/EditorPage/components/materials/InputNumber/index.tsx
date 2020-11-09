@@ -1,26 +1,26 @@
 import React from 'react';
-import { Input, Form } from 'antd';
+import { InputNumber, Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
-import InputConfig from './config';
+import InputNumberConfig from './config';
 
-interface MaterialDatePickerProps extends ComponentConfig {
+interface InputNumberConfigProps extends ComponentConfig {
     props: any;
     id: string;
 }
 
-const DEFAULT_LABEL = '输入框';
+const DEFAULT_LABEL = '数字框';
 
-const MaterialDatePicker = (props: MaterialDatePickerProps) => {
+const MaterialInputNumber = (props: InputNumberConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL } = formConfig;
+    const { label = DEFAULT_LABEL, placeholder = DEFAULT_LABEL } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            <Input
+            <InputNumber
                 {...configProps}
-                placeholder={label}
+                placeholder={placeholder}
                 style={{
                     width: '300px',
                 }}
@@ -29,4 +29,4 @@ const MaterialDatePicker = (props: MaterialDatePickerProps) => {
     );
 };
 
-export { MaterialDatePicker as component, InputConfig as config, tools };
+export { MaterialInputNumber as component, InputNumberConfig as config, tools };

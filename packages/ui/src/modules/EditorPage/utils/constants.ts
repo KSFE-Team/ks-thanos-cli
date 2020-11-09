@@ -82,4 +82,5 @@ export const FIELD_DICT = {
     KEY: 'key',
     LABEL: 'label',
     ISREQUIRED: 'isRequired',
+    TYPE: 'type',
 };
