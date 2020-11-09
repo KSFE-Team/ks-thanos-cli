@@ -1,6 +1,6 @@
 import Dynamicnect from 'Src/components/Dynamicnect';
 
-const componentsMap: {
+export const componentsMap: {
     [key: string]: any;
 } = {};
 
@@ -39,6 +39,8 @@ export const ACTION = {
     UPDATE: 'UPDATE',
     DELETE: 'DELETE',
 };
+
+export const ONLYCOMPONENT = ['Form', 'Table', 'relationTable'];
 
 /**
  * 表单布局

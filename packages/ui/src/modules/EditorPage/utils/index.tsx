@@ -1,11 +1,9 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { getApp } from 'Src/app';
 import { v4 as uuid } from 'uuid';
 import { actions } from 'kredux';
-// import { message } from 'antd';
-import { getComponents, ACTION } from './constants';
-
-// const Basic = ['Input', 'Checkbox', 'Radio'];
+import { getComponents, ACTION, ONLYCOMPONENT } from './constants';
 
 export interface HandlePageJson {
     type: string;
@@ -140,17 +138,78 @@ export const addComponent = (pageJson: any, newIndex: number, parentId: string, 
     return pageJson;
 };
 
-// 嵌套添加组件
-export const nestedComponent = (list: any, endIndex: any, item: any) => {
-    let index;
+/**
+ * 添加组件校验
+ * 1、基础组件,云组件必须放在容器组件中
+ * 2、其余组件可以一级添加，也可以放在容器组件中
+ * 3、table，relationTable，form全局唯一
+ */
+export const checkAddComponent = (pageJson: any, component: any, parentId: string) => {
+    let isOnly = true;
+    let componentName;
+    if (component.name) {
+        componentName = component.name;
+    } else if (component.id) {
+        const childrenComponent = findComponentById(pageJson, component.id);
+        componentName = childrenComponent.componentName;
+    }
+    isOnly = checkOnly(pageJson, componentName);
+    const isInContainer = checkContainer(pageJson, componentName, parentId);
+    if (!isOnly) {
+        return `${component.name}只能添加一次`;
+    }
+    if (!isInContainer) {
+        return `${componentName}组件需放在容器组件中`;
+    }
+    return true;
+};
+
+// 基础组件,云组件必须放在容器组件中
+const checkContainer = (pageJson: any, componentName: string, parentId: string) => {
+    const childrenTools = getComponents()[componentName].tools.getTools();
+    const childrenGroupType = childrenTools.groupType;
+    if (parentId === 'draw') {
+        if (childrenGroupType === 'basic' || childrenGroupType === 'biz') {
+            return false;
+        }
+    } else {
+        const parentComponent = findComponentById(pageJson, parentId);
+        const { componentName: parentComponentName } = parentComponent;
+        const parentTools = getComponents()[parentComponentName].tools.getTools();
+        const parentGroupType = parentTools.groupType;
+        if ((childrenGroupType === 'basic' || childrenGroupType === 'biz') && parentGroupType !== 'container') {
+            return false;
+        }
+    }
+    return true;
+};
+
+// 根据组件id查找组件
+const findComponentById = (pageJson: any, parentId: string) => {
+    let result;
+    const { components } = pageJson;
     // eslint-disable-next-line array-callback-return
-    list.map((val: any, idx: any) => {
-        if (val.componentName === 'Form') {
-            index = idx;
+    components.map((item: any) => {
+        if (parentId === item.id) {
+            result = item;
+        } else if (item.components) {
+            result = findComponentById(item, parentId);
         }
     });
-    list[index].components.splice(endIndex, 0, { ...item, id: uuid() });
-    return list;
+
+    return result;
+};
+
+// 全局唯一
+const checkOnly = (pageJson: any, componentName: string) => {
+    const { components } = pageJson;
+    if (
+        ONLYCOMPONENT.includes(componentName) &&
+        components.filter((item: { componentName: string }) => item.componentName === componentName).length > 0
+    ) {
+        return false;
+    }
+    return true;
 };
 
 interface CheckTypes {
