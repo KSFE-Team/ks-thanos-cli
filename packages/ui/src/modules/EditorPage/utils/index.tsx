@@ -7,7 +7,7 @@ import { getComponents, ACTION } from './constants';
 
 // const Basic = ['Input', 'Checkbox', 'Radio'];
 
-interface HandlePageJson {
+export interface HandlePageJson {
     type: string;
     componentName?: string;
     id?: string;
@@ -162,7 +162,7 @@ interface CheckTypes {
 export const checkFields = (config: any, keys: CheckTypes[]) =>
     new Promise((resolve, reject) => {
         keys.forEach(({ key, name, componentName }) => {
-            if (!config[key]) {
+            if (!config[key] && config[key] !== 0 && config[key] !== false) {
                 resolve(`${componentName}请填写${name}`);
             }
         });
