@@ -1,6 +1,6 @@
 import Dynamicnect from 'Src/components/Dynamicnect';
 
-const componentsMap: {
+export const componentsMap: {
     [key: string]: any;
 } = {};
 
@@ -15,16 +15,20 @@ export const setComponents = (key: string, value: any) => {
 
 export const getComponents = () => componentsMap;
 
-export const getLayoutComponents = () => filterComponentsByType('layout');
+export const getContainerComponents = () => filterComponentsByType('container');
 
-export const getEntryComponents = () => filterComponentsByType('entry');
+export const getBasicComponents = () => filterComponentsByType('basic');
+
+export const getContentComponents = () => filterComponentsByType('content');
+
+export const getBizComponents = () => filterComponentsByType('biz');
 
 const filterComponentsByType = (type: string) =>
     Object.keys(componentsMap).reduce((prev: any[], key: string) => {
         const { tools } = componentsMap[key];
         const { getTools } = tools;
         const componentTools = getTools();
-        if (componentTools.componentType === type) {
+        if (componentTools.groupType === type) {
             return [...prev, componentTools];
         }
         return prev;
@@ -35,6 +39,8 @@ export const ACTION = {
     UPDATE: 'UPDATE',
     DELETE: 'DELETE',
 };
+
+export const ONLYCOMPONENT = ['Form', 'Table', 'relationTable'];
 
 /**
  * 表单布局

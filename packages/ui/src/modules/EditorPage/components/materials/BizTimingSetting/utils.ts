@@ -67,6 +67,7 @@ export const getTools = () => ({
     name: 'BizTimingSetting',
     icon: 'calendar',
     componentName: 'BizTimingSetting',
+    groupType: 'biz',
 });
 
 export const validator = (config: any) => {

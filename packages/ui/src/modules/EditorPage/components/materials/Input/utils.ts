@@ -29,7 +29,7 @@ export const getTools = () => ({
     name: 'Input',
     icon: 'edit',
     componentName: 'Input',
-    componentType: 'entry',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);

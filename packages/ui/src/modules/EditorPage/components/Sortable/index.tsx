@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { handlePageJson, HandlePageJson } from '../../utils';
+import { message } from 'antd';
+import { handlePageJson, HandlePageJson, checkAddComponent } from '../../utils';
 import { ACTION } from '../../utils/constants';
 
 interface NextStep {
@@ -27,18 +28,22 @@ export default (props: any) => {
             }}
             onAdd={(eva) => {
                 const { clone, newIndex, oldIndex, from, path } = eva;
+                const [parent] = path;
+                const checkResult = checkAddComponent(page.pageJson, clone.dataset, parent.id);
                 /* 从物料区过来则是添加节点，否则为更新节点 */
                 if (clone.className.includes('thanos-editor-block-item')) {
-                    const [parent] = path;
-                    handlePageJson({
-                        type: ACTION.ADD,
-                        componentName: clone.dataset.name,
-                        index: newIndex,
-                        parentId: parent.id,
-                        pageJson: page.pageJson,
-                    });
-                } else {
-                    const [parent] = path;
+                    if (checkResult === true) {
+                        handlePageJson({
+                            type: ACTION.ADD,
+                            componentName: clone.dataset.name,
+                            index: newIndex,
+                            parentId: parent.id,
+                            pageJson: page.pageJson,
+                        });
+                    } else {
+                        message.warning(checkResult);
+                    }
+                } else if (checkResult === true) {
                     setTimeout(() => {
                         handlePageJson({
                             type: ACTION.UPDATE,
@@ -50,6 +55,8 @@ export default (props: any) => {
                             id: clone.dataset.id,
                         });
                     }, 100);
+                } else {
+                    message.warning(checkResult);
                 }
             }}
             onUpdate={(eva) => {

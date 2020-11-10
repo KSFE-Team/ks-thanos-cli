@@ -31,6 +31,7 @@ export const getTools = () => ({
     name: 'InputNumber',
     icon: 'calendar',
     componentName: 'InputNumber',
+    groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);
