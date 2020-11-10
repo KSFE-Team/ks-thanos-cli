@@ -13,15 +13,11 @@ interface MaterialRadioProps extends ComponentConfig {
 const DEFAULT_VALUE = [
     {
         label: '启用',
-        props: {
-            value: '1',
-        },
+        value: '1',
     },
     {
         label: '禁用',
-        props: {
-            value: '2',
-        },
+        value: '2',
     },
 ];
 
@@ -33,9 +29,13 @@ const MaterialRadio = (props: MaterialRadioProps) => {
     const { label = DEFAULT_LABEL, options = DEFAULT_VALUE } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            {options.map((option: Option) => {
-                const { label: optionLabel, props: optionProps } = option;
-                return <Radio key={optionProps.value}>{optionLabel}</Radio>;
+            {options.map((option: Option, index: number) => {
+                const { label: optionLabel, value } = option;
+                return (
+                    <Radio key={index} value={value}>
+                        {optionLabel}
+                    </Radio>
+                );
             })}
         </Form.Item>
     );
