@@ -35,6 +35,7 @@ export const getTools = () => ({
     icon: 'calendar',
     componentName: 'BizSelectTypeContent',
     cloudName: '@ks/kms-BizSelectTypeContent',
+    groupType: 'biz',
 });
 
 export const validator = (config: any) =>
