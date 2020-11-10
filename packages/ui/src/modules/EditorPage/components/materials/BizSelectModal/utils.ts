@@ -18,7 +18,7 @@ interface BizSelectModalConfig extends ComponentJSON {
  * 获取初始化JSON
  */
 export const getInitJson = (): BizSelectModalConfig => ({
-    componentName: ' BizSelectModal',
+    componentName: 'BizSelectModal',
     source: 'Src/components/@ks/kms-bizselectmodal',
     default: false,
     placeholder: '请选择对应内容',
@@ -37,6 +37,7 @@ export const getTools = () => ({
     icon: 'calendar',
     componentName: 'BizSelectModal',
     cloudName: '@ks/kms-bizselectmodal',
+    groupType: 'biz',
 });
 
 export const validator = (config: any) =>
@@ -50,7 +51,6 @@ export const validator = (config: any) =>
 export const toCode = (config: BizSelectModalConfig, formConfig: BizSelectModalConfig): BizSelectModalConfig => {
     const formObject = {
         ...config,
-        ...formConfig,
         componentType: 'cloud',
         source: 'Src/components/@ks/kms-bizselectmodal',
         props: {
@@ -58,8 +58,6 @@ export const toCode = (config: BizSelectModalConfig, formConfig: BizSelectModalC
             type: formConfig.type,
         },
     };
-    delete formObject.type;
-    delete formObject.placeholder;
     return { ...formObject };
 };
 // 类型
