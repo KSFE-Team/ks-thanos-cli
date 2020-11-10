@@ -9,6 +9,7 @@ import * as TextArea from './TextArea/index';
 import * as InputNumber from './InputNumber/index';
 import * as BizSelectModal from './BizSelectModal/index';
 import * as BizTimingSetting from './BizTimingSetting/index';
+import * as BizSelectTypeContent from './BizSelectTypeContent/index';
 
 export default {
     Form,
@@ -22,4 +23,5 @@ export default {
     InputNumber,
     BizSelectModal,
     BizTimingSetting,
+    BizSelectTypeContent,
 };
