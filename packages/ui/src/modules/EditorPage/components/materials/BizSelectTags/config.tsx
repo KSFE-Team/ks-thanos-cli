@@ -7,12 +7,12 @@ import { ALIAS, FIELD_DICT, ISREQUIRED_TYPE, DEFAULT_OPTIONS } from '../../../ut
 const FormItem = Form.Item;
 const { Option } = Select;
 
-interface BizSelectModalProps extends ComponentConfig {}
+interface BizSelectTagsProps extends ComponentConfig {}
 
-export default (props: BizSelectModalProps) => {
+export default (props: BizSelectTagsProps) => {
     const { id } = props;
     const config = props[id] || {};
-    const children = DEFAULT_OPTIONS.map(({ value, name }, index) => {
+    const children = DEFAULT_OPTIONS.map(({ value, name }: any, index: string | number | undefined) => {
         return <Option key={index} value={value}>{`${name}(${value})`}</Option>;
     });
     return (
@@ -28,24 +28,32 @@ export default (props: BizSelectModalProps) => {
                 }))}
             >
                 <Form.Item name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
-                    <Input placeholder="例如：专辑" />
+                    <Input placeholder="例如：故事" />
                 </Form.Item>
                 <FormItem name={FIELD_DICT.KEY} label={ALIAS.KEY} required>
-                    <Input placeholder="例如： contentId" />
+                    <Input placeholder="例如： story" />
                 </FormItem>
                 <Form.Item name={FIELD_DICT.TYPE} label={ALIAS.TYPE} required>
                     <Select
                         placeholder="请选择"
                         style={{ width: '100%' }}
                         showSearch
-                        label={ALIAS.TYPE}
-                        filterOption={(input, option) =>
-                            String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
+                        filterOption={(input, option: any) => {
+                            return (
+                                option.value.toLowerCase().indexOf(input.toLowerCase()) > -1 ||
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) > -1
+                            );
+                        }}
                     >
                         {children}
                     </Select>
                 </Form.Item>
+                <Form.Item name="showTagKey" label="tag展示字段" required>
+                    <Input placeholder="例如：name" />
+                </Form.Item>
+                <FormItem name="buttonText" label="添加按钮文案" required>
+                    <Input placeholder="例如： 添加一个" />
+                </FormItem>
                 <Form.Item name={FIELD_DICT.ISREQUIRED} label={ALIAS.ISREQUIRED} required>
                     <Radio.Group>
                         {ISREQUIRED_TYPE.map(({ VALUE, LABEL }, index) => (

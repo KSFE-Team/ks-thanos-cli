@@ -18,7 +18,7 @@ interface BizSelectModalConfig extends ComponentJSON {
  * 获取初始化JSON
  */
 export const getInitJson = (): BizSelectModalConfig => ({
-    componentName: ' BizSelectModal',
+    componentName: 'BizSelectModal',
     source: 'Src/components/@ks/kms-bizselectmodal',
     default: false,
     placeholder: '请选择对应内容',

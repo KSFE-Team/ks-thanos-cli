@@ -12,14 +12,14 @@ const KEY = 'key';
 const LABEL = 'label';
 const ISREQUIRED = 'isRequired';
 
-interface InputConfigProps{
+interface InputConfigProps {
     pageJSON: any;
     onSave(pageJSON: any): void;
 }
 
 export default class InputConfig extends Component<InputConfigProps> {
     static propTypes = {
-        onSave: PropTypes.func
+        onSave: PropTypes.func,
     };
 
     state = initState;
@@ -35,11 +35,10 @@ export default class InputConfig extends Component<InputConfigProps> {
                     [LABEL]: current[LABEL],
                     [ISREQUIRED]: current[ISREQUIRED],
                 },
-                current
+                current,
             };
-        } else {
-            return state;
         }
+        return state;
     }
 
     handleSave = () => {
@@ -55,72 +54,66 @@ export default class InputConfig extends Component<InputConfigProps> {
             ...formData,
             props: {
                 ...current.props,
-                placeholder: formData[LABEL]
-            }
+                placeholder: formData[LABEL],
+            },
         });
         onSave && onSave(pageJSON);
     };
 
     handleChange = (key: string, e: any) => {
         const { formData } = this.state;
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({
             formData: {
                 ...formData,
-                [key]: value
+                [key]: value,
             },
-            isTouch: true
+            isTouch: true,
         });
     };
 
     render() {
         const { formData } = this.state;
-        return <div>
-            <FormItem
-                label={ALIAS.KEY}
-                {...FORMITEM_LAYOUT}
-                required={true}
-            >
-                <Input
-                    value={formData[KEY]}
-                    placeholder='例如： name'
-                    onChange={this.handleChange.bind(this, KEY)}
-                />
-            </FormItem>
-            <FormItem
-                label={ALIAS.LABEL}
-                {...FORMITEM_LAYOUT}
-                required={true}
-            >
-                <Input
-                    value={formData[LABEL]}
-                    placeholder='例如： 姓名'
-                    onChange={this.handleChange.bind(this, LABEL)}
-                />
-            </FormItem>
-            {/* 是否必填/选 */}
-            <Form.Item
-                {...FORMITEM_LAYOUT}
-                label={ALIAS.ISREQUIRED}
-                required={true}
-            >
-                <Radio.Group defaultValue={formData[ISREQUIRED]}
-                    onChange={this.handleChange.bind(this, ISREQUIRED)}
-                >
-                    { ISREQUIRED_TYPE.map(({VALUE, LABEL}, index) => <Radio key={index} value={VALUE}>{LABEL}</Radio>) }
-                </Radio.Group>
-            </Form.Item>
-            <FormItem>
-                <Row>
-                    <Col>
-                        <Button
-                            onClick={this.handleSave}
-                            type='primary'
-                        >确定</Button>
-                    </Col>
-                    <ClearButton initState={initState} that={this}/>
-                </Row>
-            </FormItem>
-        </div>;
+        return (
+            <div>
+                <FormItem label={ALIAS.KEY} {...FORMITEM_LAYOUT} required>
+                    <Input
+                        value={formData[KEY]}
+                        placeholder="例如： name"
+                        onChange={this.handleChange.bind(this, KEY)}
+                    />
+                </FormItem>
+                <FormItem label={ALIAS.LABEL} {...FORMITEM_LAYOUT} required>
+                    <Input
+                        value={formData[LABEL]}
+                        placeholder="例如： 姓名"
+                        onChange={this.handleChange.bind(this, LABEL)}
+                    />
+                </FormItem>
+                {/* 是否必填/选 */}
+                <Form.Item {...FORMITEM_LAYOUT} label={ALIAS.ISREQUIRED} required>
+                    <Radio.Group
+                        defaultValue={formData[ISREQUIRED]}
+                        onChange={this.handleChange.bind(this, ISREQUIRED)}
+                    >
+                        {ISREQUIRED_TYPE.map(({ VALUE, LABEL }, index) => (
+                            <Radio key={index} value={VALUE}>
+                                {LABEL}
+                            </Radio>
+                        ))}
+                    </Radio.Group>
+                </Form.Item>
+                <FormItem>
+                    <Row>
+                        <Col>
+                            <Button onClick={this.handleSave} type="primary">
+                                确定
+                            </Button>
+                        </Col>
+                        <ClearButton initState={initState} that={this} />
+                    </Row>
+                </FormItem>
+            </div>
+        );
     }
 }

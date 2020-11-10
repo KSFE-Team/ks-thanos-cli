@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { actions, connect } from 'kredux';
-import { FORM_TYPES } from './constants';
 import { Form, Input, Button, Row, Col, Radio, Tabs, message } from 'antd';
+import { FORM_TYPES } from './constants';
 import { getDataEntry, getCloudComponents, ALL_TOOLS } from '..';
 import { getTools, checkFieldData } from '../../utils';
 import ComponentType from 'Src/pages/GeneratePage/materials/Config/ComponentType';
@@ -12,7 +12,7 @@ import ClearButton from '../ClearButton';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const TabPane = Tabs.TabPane;
+const {TabPane} = Tabs;
 
 const [{ key: NORMAL }, { key: SEARCH }] = FORM_TYPES;
 
@@ -24,7 +24,7 @@ const formItemLayout = {
     wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 },
-    }
+    },
 };
 
 const STATE_NAME = 'stateName';
@@ -36,17 +36,17 @@ const GET_API = 'getApi';
 const PARAM_KEY = 'paramKey';
 
 interface FormConfigProps {
-    onSave(pageJSON: any): void,
-    pageJSON: any,
-    generatePage: any,
+    onSave(pageJSON: any): void;
+    pageJSON: any;
+    generatePage: any;
 }
 
 @connect(({ generatePage }: any) => ({
-    generatePage
+    generatePage,
 }))
 export default class FormConfig extends Component<FormConfigProps> {
     static propTypes = {
-        onSave: PropTypes.func
+        onSave: PropTypes.func,
     };
 
     state = initState;
@@ -68,9 +68,9 @@ export default class FormConfig extends Component<FormConfigProps> {
                 },
                 current
             };
-        } else {
+        } 
             return state;
-        }
+        
     }
 
     componentDidMount() {
@@ -83,7 +83,7 @@ export default class FormConfig extends Component<FormConfigProps> {
     handleClick = (componentName: string) => {
         const insertComponent = ALL_TOOLS[componentName].getInitJson();
         const current = this.props.pageJSON.components.find(({ configVisible }: any) => configVisible);
-        actions.generatePage.insertFormComponent({insertComponent, targetId: current.id});
+        actions.generatePage.insertFormComponent({ insertComponent, targetId: current.id });
     };
 
     /**
@@ -105,7 +105,7 @@ export default class FormConfig extends Component<FormConfigProps> {
                     ...formData,
                     props: {
                         ...component.props,
-                    }
+                    },
                 };
             }
             return component;
@@ -128,9 +128,9 @@ export default class FormConfig extends Component<FormConfigProps> {
         this.setState({
             formData: {
                 ...formData,
-                [key]: current
+                [key]: current,
             },
-            isTouch: true
+            isTouch: true,
         });
     };
 
@@ -141,7 +141,8 @@ export default class FormConfig extends Component<FormConfigProps> {
         const { formData } = this.state;
         switch (formData[TYPE]) {
             case SEARCH:
-                return <Fragment>
+                return (
+                    <>
                     {/* <FormItem
                         label={'新增/修改跳转地址'}
                         {...formItemLayout}
@@ -155,66 +156,52 @@ export default class FormConfig extends Component<FormConfigProps> {
                             }}
                         />
                     </FormItem> */}
-                </Fragment>;
+                </>;
             case NORMAL:
-                return <Fragment>
-                    <FormItem
-                        label='新增API'
-                        {...formItemLayout}
-                        required={true}
-                    >
-                        <Input
-                            placeholder='新增API'
-                            value={formData[SAVE_API]}
-                            onChange={(e) => {
-                                const { value } = e.target;
-                                this.handleChange(SAVE_API, value);
-                            }}
-                        />
-                    </FormItem>
-                    <FormItem
-                        label='修改API'
-                        {...formItemLayout}
-                        required={true}
-                    >
-                        <Input
-                            placeholder='修改API'
-                            value={formData[UPDATE_API]}
-                            onChange={(e) => {
-                                const { value } = e.target;
-                                this.handleChange(UPDATE_API, value);
-                            }}
-                        />
-                    </FormItem>
-                    <FormItem
-                        label='查询API'
-                        {...formItemLayout}
-                        required={true}
-                    >
-                        <Input
-                            placeholder='查询API'
-                            value={formData[GET_API]}
-                            onChange={(e) => {
-                                const { value } = e.target;
-                                this.handleChange(GET_API, value);
-                            }}
-                        />
-                    </FormItem>
-                    <FormItem
-                        label='路由参数'
-                        {...formItemLayout}
-                        required={true}
-                    >
-                        <Input
-                            placeholder='路由参数'
-                            value={formData[PARAM_KEY]}
-                            onChange={(e) => {
-                                const { value } = e.target;
-                                this.handleChange(PARAM_KEY, value);
-                            }}
-                        />
-                    </FormItem>
-                </Fragment>;
+                return (
+                    <Fragment>
+                        <FormItem label="新增API" {...formItemLayout} required={true}>
+                            <Input
+                                placeholder="新增API"
+                                value={formData[SAVE_API]}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    this.handleChange(SAVE_API, value);
+                                }}
+                            />
+                        </FormItem>
+                        <FormItem label="修改API" {...formItemLayout} required={true}>
+                            <Input
+                                placeholder="修改API"
+                                value={formData[UPDATE_API]}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    this.handleChange(UPDATE_API, value);
+                                }}
+                            />
+                        </FormItem>
+                        <FormItem label="查询API" {...formItemLayout} required={true}>
+                            <Input
+                                placeholder="查询API"
+                                value={formData[GET_API]}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    this.handleChange(GET_API, value);
+                                }}
+                            />
+                        </FormItem>
+                        <FormItem label="路由参数" {...formItemLayout} required={true}>
+                            <Input
+                                placeholder="路由参数"
+                                value={formData[PARAM_KEY]}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    this.handleChange(PARAM_KEY, value);
+                                }}
+                            />
+                        </FormItem>
+                    </Fragment>
+                );
         }
     };
 
@@ -224,86 +211,69 @@ export default class FormConfig extends Component<FormConfigProps> {
         const { cloudComponentList } = generatePage;
         const dataSource = getTools(getDataEntry());
         const cloudDataSource = getTools(filterCloudComponents(cloudComponentList, getCloudComponents()));
-        return <div>
-            <Tabs
-                defaultActiveKey='1'
-                tabPosition='left'
-            >
-                <TabPane tab='组件配置' key='1'>
-                    <FormItem
-                        label='绑定redux的Key'
-                        {...formItemLayout}
-                    >
-                        <Input
-                            value={formData[STATE_NAME]}
-                            placeholder='例如： userSearchForm | userInfo'
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                this.handleChange(STATE_NAME, value, 'filter');
-                            }}
-                        />
-                    </FormItem>
-                    <FormItem
-                        label='是否选中'
-                        {...formItemLayout}
-                    >
-                        <RadioGroup
-                            value={formData[TYPE]}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                this.handleChange(TYPE, value);
-                            }}
-                        >
-                            {
-                                FORM_TYPES.map(({ key, name }) => {
+        return (
+            <div>
+                <Tabs defaultActiveKey="1" tabPosition="left">
+                    <TabPane tab="组件配置" key="1">
+                        <FormItem label="绑定redux的Key" {...formItemLayout}>
+                            <Input
+                                value={formData[STATE_NAME]}
+                                placeholder="例如： userSearchForm | userInfo"
+                                onChange={(e) => {
+                                    const {value} = e.target;
+                                    this.handleChange(STATE_NAME, value, 'filter');
+                                }}
+                            />
+                        </FormItem>
+                        <FormItem label="是否选中" {...formItemLayout}>
+                            <RadioGroup
+                                value={formData[TYPE]}
+                                onChange={(e) => {
+                                    const {value} = e.target;
+                                    this.handleChange(TYPE, value);
+                                }}
+                            >
+                                {FORM_TYPES.map(({ key, name }) => {
                                     return (
-                                        <Radio key={key} value={key}>{name}</Radio>
+                                        <Radio key={key} value={key}>
+                                            {name}
+                                        </Radio>
                                     );
-                                })
-                            }
-                        </RadioGroup>
-                    </FormItem>
-                    {
-                        this.getTypeForm()
-                    }
-                    <FormItem>
-                        <Row>
-                            <Col>
-                                <Button
-                                    onClick={this.handleSave}
-                                    type='primary'
-                                >确定</Button>
-                            </Col>
-                            <ClearButton initState={initState} that={this}/>
-                        </Row>
-                    </FormItem>
-                </TabPane>
-                <TabPane tab='子组件' key='2'>
-                    <FormItem
-                        label='可配置组件'
-                        {...formItemLayout}
-                        style={{marginBottom: 0}}
-                    >
-                        <ComponentType
-                            dataSource={[dataSource] || []}
-                            span={12}
-                            onClick={this.handleClick}
-                            title=''
-                        />
-                    </FormItem>
-                    <FormItem
-                        label='云组件'
-                        {...formItemLayout}
-                    >
-                        <ComponentType
-                            dataSource={[cloudDataSource] || []}
-                            span={12}
-                            onClick={this.handleClick}
-                            title=''
-                        />
-                    </FormItem>
-                </TabPane>
-            </Tabs>
-        </div>;
+                                })}
+                            </RadioGroup>
+                        </FormItem>
+                        {this.getTypeForm()}
+                        <FormItem>
+                            <Row>
+                                <Col>
+                                    <Button onClick={this.handleSave} type="primary">
+                                        确定
+                                    </Button>
+                                </Col>
+                                <ClearButton initState={initState} that={this} />
+                            </Row>
+                        </FormItem>
+                    </TabPane>
+                    <TabPane tab="子组件" key="2">
+                        <FormItem label="可配置组件" {...formItemLayout} style={{ marginBottom: 0 }}>
+                            <ComponentType
+                                dataSource={[dataSource] || []}
+                                span={12}
+                                onClick={this.handleClick}
+                                title=""
+                            />
+                        </FormItem>
+                        <FormItem label="云组件" {...formItemLayout}>
+                            <ComponentType
+                                dataSource={[cloudDataSource] || []}
+                                span={12}
+                                onClick={this.handleClick}
+                                title=""
+                            />
+                        </FormItem>
+                    </TabPane>
+                </Tabs>
+            </div>
+        );
     }
 }

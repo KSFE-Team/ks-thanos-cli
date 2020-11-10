@@ -15,7 +15,7 @@ export const getInitJson = () => ({
     saveApi: '',
     updateApi: '',
     getApi: '',
-    paramKey: ''
+    paramKey: '',
 });
 
 /**
@@ -24,7 +24,7 @@ export const getInitJson = () => ({
 export const getTools = () => ({
     name: 'Form',
     icon: 'form',
-    componentName: 'Form'
+    componentName: 'Form',
 });
 
 /**
@@ -37,7 +37,7 @@ export const filterCloudComponents = (serverList: any[], localCloudConfig: any) 
         if (cloudName && serverList.some(({ name }) => `${name}` === `${cloudName}`)) {
             prev = {
                 ...prev,
-                [key]: localCloudConfig[key]
+                [key]: localCloudConfig[key],
             };
         }
         return prev;
@@ -48,7 +48,6 @@ export const filterCloudComponents = (serverList: any[], localCloudConfig: any) 
  * 初始化state
  */
 export const initState = {
-    formData: {
-    },
-    isTouch: false
+    formData: {},
+    isTouch: false,
 } as any;
