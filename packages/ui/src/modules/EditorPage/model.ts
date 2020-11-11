@@ -1,6 +1,6 @@
 import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import { goto } from 'Src/utils';
 
 export const STATE = {
@@ -62,14 +62,30 @@ export default {
     initialState: STATE,
     effects: {
         save: async (payload: any) => {
+            const { pageOrTemp, postDate } = payload;
             try {
-                const response = await request(API.page.addOrUpdate, {
+                const response = await request(API[pageOrTemp].addOrUpdate, {
                     method: 'post',
-                    body: payload,
+                    body: {
+                        ...postDate,
+                    },
                 });
-                if (response && response.code === 0) {
-                    message.success('创建页面成功');
-                    goto.go(-1);
+                if (response && response.errcode === 0) {
+                    const text = postDate.id ? '修改' : '新增';
+                    if (pageOrTemp === 'template') {
+                        message.success(`${text}模板配置成功`);
+                        Modal.confirm({
+                            title: '是否前往模板列表查看',
+                            okText: '确定',
+                            cancelText: '取消',
+                            onOk: () => {
+                                goto.go('/workspace/blocks/tempLateMgt');
+                            },
+                        });
+                    } else {
+                        message.success(`${text}页面配置成功`);
+                        goto.go(-1);
+                    }
                 }
             } catch (err) {
                 message.error(err);

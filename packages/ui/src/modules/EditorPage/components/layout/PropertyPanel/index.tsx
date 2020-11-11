@@ -9,8 +9,10 @@ const { Item: FormItem } = Form;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson } = page;
+    console.log('page==>',page)
     const [id, componentName] = page.selectedId.split('_');
     let configContent;
+    console.log('属性配置更新了');
     if (id) {
         const ConfigForm = getComponents()[componentName].config;
         configContent = <ConfigForm id={id} />;
