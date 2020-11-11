@@ -2,6 +2,8 @@ import React from 'react';
 import { Form, Input, Radio } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
+import Card from 'Src/components/Card';
+import ExtendOptions from 'Src/components/ExtendOptions';
 import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT } from '../../../utils/constants';
 
 const FormItem = Form.Item;
@@ -38,6 +40,9 @@ export default (props: InputConfigProps) => {
                         ))}
                     </Radio.Group>
                 </Form.Item>
+                <Card title="Option 配置">
+                    <ExtendOptions labelText="选项名称" valueText="选项值" config={config} id={id} />
+                </Card>
             </Form>
         </div>
     );

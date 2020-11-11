@@ -10,6 +10,7 @@ import * as InputNumber from './InputNumber/index';
 import * as BizSelectModal from './BizSelectModal/index';
 import * as BizTimingSetting from './BizTimingSetting/index';
 import * as BizSelectTags from './BizSelectTags/index';
+import * as ExtendContainer from './ExtendContainer/index';
 
 export default {
     Form,
@@ -24,4 +25,5 @@ export default {
     BizSelectModal,
     BizTimingSetting,
     BizSelectTags,
+    ExtendContainer,
 };

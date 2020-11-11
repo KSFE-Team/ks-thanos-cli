@@ -9,13 +9,13 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
-            {
-                id: 'kqzwrhho4nq7bxgk91nrp',
-                componentName: 'BizSelectTags',
-                source: 'antd',
-                default: false,
-                props: {},
-            },
+            // {
+            //     id: 'kqzwrhho4nq7bxgk91nrp',
+            //     componentName: 'ExtendContainer',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            // },
             // {
             //     id: 'kqzwrhho4nq7bxgk91n22rp',
             //     componentName: 'Checkbox',

@@ -30,13 +30,19 @@ const DEFAULT_LABEL = '单选框';
 const MaterialRadio = (props: MaterialRadioProps) => {
     const { id } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, options = DEFAULT_VALUE } = formConfig;
+    const { label = DEFAULT_LABEL, options = DEFAULT_VALUE, isRequired } = formConfig;
     return (
-        <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-            {options.map((option: Option) => {
-                const { label: optionLabel, props: optionProps } = option;
-                return <Radio key={optionProps.value}>{optionLabel}</Radio>;
-            })}
+        <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>
+            <Radio.Group>
+                {options.map((option: Option, index: number) => {
+                    const { label: optionLabel, value: optionValue } = option;
+                    return (
+                        <Radio key={index} value={optionValue}>
+                            {optionLabel}
+                        </Radio>
+                    );
+                })}
+            </Radio.Group>
         </Form.Item>
     );
 };
