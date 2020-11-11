@@ -1,5 +1,7 @@
 import Dynamicnect from 'Src/components/Dynamicnect';
 
+export const initialState = {};
+
 export const componentsMap: {
     [key: string]: any;
 } = {};

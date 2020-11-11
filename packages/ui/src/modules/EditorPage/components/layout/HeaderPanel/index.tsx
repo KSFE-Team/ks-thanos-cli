@@ -74,7 +74,14 @@ export default () => {
             title: '清空全部配置',
             content: '确认是否清空全部配置，谨慎操作',
             onOk: () => {
-                clearAllData(pageJson);
+                actions.page.setReducers({
+                    pageJson: {
+                        ...pageJson,
+                        pageName: '',
+                        paramKey: '',
+                    },
+                });
+                clearAllData(pageJson.components);
             },
         });
     };
@@ -102,21 +109,25 @@ export default () => {
                     />
                 </Button>
                 <Button
+                    className="thanos-editor-primary mar-l-4"
                     onClick={() => {
                         clearData();
                     }}
                 >
                     清空全部配置
                 </Button>
-                <Button onClick={() => handleSubmit('template')}>生成模板</Button>
+                <Button className="thanos-editor-primary mar-l-4" onClick={() => handleSubmit('template')}>
+                    生成模板
+                </Button>
                 <Button
                     title="发布"
-                    className="thanos-editor-primary"
+                    className="thanos-editor-primary mar-l-4"
                     onClick={() => {
                         handleSubmit('page');
                     }}
                 >
-                    <SaveOutlined />
+                    发布
+                    {/* <SaveOutlined /> */}
                 </Button>
             </div>
         </div>

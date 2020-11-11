@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import { getApp } from 'Src/app';
 import { v4 as uuid } from 'uuid';
 import { actions } from 'kredux';
-import { getComponents, ACTION, ONLYCOMPONENT } from './constants';
+import { getComponents, ACTION, ONLYCOMPONENT, initialState } from './constants';
 
 export interface HandlePageJson {
     type: string;
@@ -347,11 +347,15 @@ export const getComponent = (components: any[], id = '') => {
 /**
  * 清空所有配置
  */
-export const clearAllData = (pageJson: any) => {
-    const newComponents = getComponent(pageJson.components);
-    console.log('清空配置', newComponents);
-    const newJson = { ...pageJson, components: newComponents };
-    setTree(newJson);
+export const clearAllData = (components: any) => {
+    // eslint-disable-next-line array-callback-return
+    components.forEach((item: any) => {
+        const { id, components: children } = item;
+        actions[id].setReducers(initialState);
+        if (children && children.length > 0) {
+            clearAllData(children);
+        }
+    });
 };
 
 /* 灭霸水印 */
@@ -359,7 +363,7 @@ const WATERMARK = '灭霸预览图';
 /* 截图+水印 */
 export const getScreenShotByCanvas = async () => {
     /* 获取截屏 */
-    const container: HTMLElement = document.querySelector('.thanos-generate-page-container') || document.body;
+    const container: HTMLElement = document.querySelector('.thanos-editor-draw') || document.body;
     const canvas = await html2canvas(container);
     const ctx: any = canvas.getContext('2d');
     ctx.save();

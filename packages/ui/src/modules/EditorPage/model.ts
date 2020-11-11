@@ -79,7 +79,7 @@ export default {
                             okText: '确定',
                             cancelText: '取消',
                             onOk: () => {
-                                goto.go('/workspace/blocks/tempLateMgt');
+                                goto.push('/workspace/blocks/tempLateMgt');
                             },
                         });
                     } else {
