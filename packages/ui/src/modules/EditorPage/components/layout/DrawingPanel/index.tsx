@@ -1,11 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import { ReactSortable } from 'react-sortablejs';
 import { actions } from 'kredux';
 import RouteProps from 'Src/types/route';
 import ComponentRender from '../../ComponentRender';
-// import { handlePageJson } from '../../../utils';
-// import { ACTION } from '../../../utils/constants';
 import Sortable from '../../Sortable';
 
 interface DrawingProps extends RouteProps {}
@@ -13,6 +10,7 @@ interface DrawingProps extends RouteProps {}
 export default (props: DrawingProps) => {
     const page = useSelector((store: any) => store.page);
     const { components } = page.pageJson;
+    console.log('components===>', components);
 
     return (
         <div

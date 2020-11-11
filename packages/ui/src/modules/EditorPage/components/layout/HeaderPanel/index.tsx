@@ -7,7 +7,14 @@ import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
 import { parse } from 'qs';
 import { goto } from 'Src/utils';
-import { getValidator, clearAllData, getComponent, getScreenShotByCanvas, findParamKey } from '../../../utils';
+import {
+    getValidator,
+    clearAllData,
+    getComponent,
+    getScreenShotByCanvas,
+    findParamKey,
+    getPageData,
+} from '../../../utils';
 
 const { confirm } = Modal;
 
@@ -44,7 +51,9 @@ export default () => {
             title: `确认提交${pageOrTempText}的所写配置吗？`,
             onOk: async () => {
                 const componentsData =
-                    pageOrTemp === 'page' ? components : getComponent(JSON.parse(JSON.stringify(components)));
+                    pageOrTemp === 'page'
+                        ? getPageData(components)
+                        : getComponent(JSON.parse(JSON.stringify(components)));
                 let id: number;
                 if (queryString.pageOrTemp === 'page' || pageOrTemp === 'template') {
                     id = 0;
@@ -91,7 +100,7 @@ export default () => {
             <Button
                 className="thanos-editor-back"
                 onClick={() => {
-                    goto.go(-1);
+                    goto.push('/workspace/blocks/existingPage');
                 }}
             >
                 <EnterOutlined />

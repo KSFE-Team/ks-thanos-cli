@@ -74,7 +74,7 @@ class ExistingPage extends Component<ExistingPageProps> {
             >
                 <Row gutter={[20, 20]}>
                     {pageList.map((item, index) => {
-                        return <BlockItem key={index} item={item} />;
+                        return <BlockItem key={index} item={item} type="page" />;
                     })}
                 </Row>
             </div>

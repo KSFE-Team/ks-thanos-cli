@@ -1,5 +1,6 @@
 import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
+import { actions } from 'kredux';
 import { message, Modal } from 'antd';
 import { goto } from 'Src/utils';
 
@@ -90,6 +91,44 @@ export default {
             } catch (err) {
                 message.error(err);
             }
+        },
+        /**
+         * 获取模版
+         */
+        getTemplateItem: async (payload: any) => {
+            const { pageOrTemp, pageName } = payload;
+            const response = await request(API[pageOrTemp].get, {
+                method: 'GET',
+                body: {
+                    [`${pageOrTemp}Name`]: pageName,
+                },
+            });
+            if (response && !response.errcode) {
+                const { result } = response;
+                const { components } = JSON.parse(result[`${pageOrTemp}Data`]);
+                actions.page.setReducers({
+                    pageJson: {
+                        pageName: result[`${pageOrTemp}Name`],
+                        components:
+                            components[0].componentName === 'RelationTable' ? components[0].components : components,
+                    },
+                });
+                actions.page.setItemProperty(JSON.parse(result[`${pageOrTemp}Data`]));
+            }
+        },
+
+        /**
+         * 设置组件配置属性
+         */
+        setItemProperty: (payload: any) => {
+            const { components } = payload;
+            components.forEach((item: any) => {
+                const { id, components: children } = item;
+                actions[id].setReducers(item);
+                if (children && children.length > 0) {
+                    actions.page.setItemProperty(item);
+                }
+            });
         },
     },
 };
