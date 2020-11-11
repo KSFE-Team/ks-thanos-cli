@@ -8,7 +8,6 @@ import { CONFIG_TYPE, ALAS_FiELDS } from './utils';
 interface BizTimingSettingConfigProps extends ComponentConfig {}
 
 export default (props: BizTimingSettingConfigProps) => {
-    console.log(props, 'props');
     const { id } = props;
     const config = props[id] || {};
     const url = 'https://kaishu.yuque.com/nbdzm5/kms/ggklfp';

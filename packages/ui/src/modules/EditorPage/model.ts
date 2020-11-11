@@ -10,13 +10,13 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
-            // {
-            //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //     componentName: 'Select',
-            //     source: 'antd',
-            //     default: false,
-            //     props: {},
-            // },
+            {
+                id: 'kqzwrhho4nq7bxgk91nrp',
+                componentName: 'BizSelectModal',
+                source: 'antd',
+                default: false,
+                props: {},
+            },
             // {
             //     id: 'kqzwrhho4nq7bxgk91n22rp',
             //     componentName: 'Checkbox',

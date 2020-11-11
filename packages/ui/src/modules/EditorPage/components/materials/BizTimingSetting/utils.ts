@@ -102,7 +102,6 @@ export const toCode = (config: BizTimingSettingConfig, formConfig: BizTimingSett
     });
     const formObject = {
         ...config,
-        ...formConfig,
         source: 'Src/components/@ks/kms-biztimingsetting',
         props: {
             type,
@@ -110,10 +109,5 @@ export const toCode = (config: BizTimingSettingConfig, formConfig: BizTimingSett
             formFields: JSON.stringify(formFields),
         },
     };
-    delete formObject.type;
-    delete formObject.isRequired;
-    ALAS_FiELDS.forEach((item) => {
-        delete formObject[item.name];
-    });
     return { ...formObject };
 };

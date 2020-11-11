@@ -1,35 +1,46 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Form, Radio, Input } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
-import { CONTENT_ARR } from './utils';
+import * as tools from './utils';
+import BizSelectTypeContentConfig from './config';
 
 const RadioGroup = Radio.Group;
 const DEFAULT_LABEL = '内容类型';
-interface BizTimingSettingConfigProps extends ComponentConfig {
+export const CONTENT_ARR = [
+    {
+        label: '专辑',
+        value: 'album',
+    },
+    {
+        label: '故事',
+        value: 'story',
+    },
+];
+interface BizSelectTypeContentConfigProps extends ComponentConfig {
     props: any;
     id: string;
 }
 
-const MaterialBizTimingSetting = (props: BizTimingSettingConfigProps) => {
+const MaterialBizSelectTypeContent = (props: BizSelectTypeContentConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
     const { label = DEFAULT_LABEL } = formConfig;
     return (
         <div>
             <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-                <RadioGroup>
-                    {CONTENT_ARR.map(({ label, value }) => {
+                <RadioGroup value="album">
+                    {CONTENT_ARR.map(({ label: name, value }) => {
                         return (
                             <Radio value={value} key={value}>
-                                {label}
+                                {name}
                             </Radio>
                         );
                     })}
                 </RadioGroup>
             </Form.Item>
             <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
-                <Input
+                <Input.Search
                     {...configProps}
                     placeholder={label}
                     style={{
@@ -41,4 +52,4 @@ const MaterialBizTimingSetting = (props: BizTimingSettingConfigProps) => {
     );
 };
 
-export { MaterialBizTimingSetting as component, BizTimingSettingConfig as config, tools };
+export { MaterialBizSelectTypeContent as component, BizSelectTypeContentConfig as config, tools };
