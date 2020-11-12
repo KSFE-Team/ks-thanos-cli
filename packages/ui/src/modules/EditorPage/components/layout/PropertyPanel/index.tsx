@@ -11,7 +11,6 @@ export default () => {
     const { pageJson } = page;
     const [id, componentName] = page.selectedId.split('_');
     let configContent;
-    console.log('属性配置更新了');
     if (id) {
         const ConfigForm = getComponents()[componentName].config;
         configContent = <ConfigForm id={id} />;

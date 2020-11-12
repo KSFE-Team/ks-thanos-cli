@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
-import { Button, Modal, Form, Input, Pagination, message, Spin } from 'antd';
+import { Button, Modal, Input, Pagination, message, Spin } from 'antd';
 import { goto } from 'Src/utils';
-import SearchForm from 'Src/components/SearchForm';
 import { tempTabs as TEMP_TABS } from '../../constants';
 import { STATE } from '../model/index';
 import ScreenShot from './ScreenShot';
 // import './style.scss';
+const { Search } = Input;
 
 interface CuTemplateProps {
     existingPage: {
@@ -55,7 +55,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
 
     componentDidMount() {
         // 初始化redux
-        this.changeLimit(10);
+        // this.changeLimit(10);
         this.loadList();
     }
 
@@ -98,7 +98,12 @@ class CuTempLateModal extends Component<CuTemplateProps> {
         }
     };
 
-    resetPage = () => {
+    resetPage = (val: any) => {
+        if (this.state.tab === 2) {
+            this.props.existingPage.searchPageForm.pageName.value = val;
+        } else {
+            this.props.myTemplate.searchTemplateForm.templateName.value = val;
+        }
         this.handlePageChange(1);
     };
 
@@ -108,12 +113,10 @@ class CuTempLateModal extends Component<CuTemplateProps> {
             // 库模版
             pageOrTempInfo.pageOrTemp = 'template';
             pageOrTempInfo.type = '2';
-            this.changeLimit(10);
         } else if (idx === 1) {
             // 共享模版
             pageOrTempInfo.pageOrTemp = 'template';
             pageOrTempInfo.type = '1';
-            this.changeLimit(10);
         } else if (idx === 2) {
             // 现有页面
             pageOrTempInfo.pageOrTemp = 'page';
@@ -134,9 +137,9 @@ class CuTempLateModal extends Component<CuTemplateProps> {
         const { pageOrTempInfo, templateId } = this.state;
         if (templateId === '-1') {
             // 新增空白页面
-            goto.push(`/generatePage/${templateId}`);
+            goto.push(`/editor/${templateId}`);
         } else {
-            goto.push(`/generatePage/${templateId}?pageOrTemp=${pageOrTempInfo.pageOrTemp}`);
+            goto.push(`/editor/${templateId}?pageOrTemp=${pageOrTempInfo.pageOrTemp}`);
         }
         // templateName
     };
@@ -168,35 +171,28 @@ class CuTempLateModal extends Component<CuTemplateProps> {
                     }
                 }}
             >
-                <SearchForm
-                    form={this.props.form}
-                    components={[
-                        {
-                            title: pageOrTemp === 'page' ? '页面名称' : '模版名称',
-                            key: pageOrTemp === 'page' ? 'pageName' : 'templateName',
-                            component: <Input placeholder="请输入模版名称" onPressEnter={this.resetPage} />,
-                        },
-                    ]}
-                    actions={
-                        <>
-                            <Button onClick={this.resetPage}>查询</Button>
-                            {tempTabs.map((item: any, idx: any) => {
-                                return (
-                                    <Button
-                                        key={item.index}
-                                        type="primary"
-                                        className={tab === idx ? 'active mar-l-4' : 'mar-l-4'}
-                                        onClick={() => {
-                                            this.changeTabe(idx);
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Button>
-                                );
-                            })}
-                        </>
-                    }
-                />
+                <div style={{ marginBottom: '20px' }}>
+                    <Search
+                        placeholder={`请输入${tab === 2 ? '页面名称' : '模版名称'}`}
+                        style={{ width: 300, marginRight: 10 }}
+                        onSearch={this.resetPage}
+                        addonBefore={tab === 2 ? '页面名称' : '模版名称'}
+                    />
+                    {tempTabs.map((item, idx) => {
+                        return (
+                            <Button
+                                key={item.index}
+                                // type="primary"
+                                className={tab === idx ? 'active mar-l-4' : 'mar-l-4'}
+                                onClick={() => {
+                                    this.changeTabe(idx);
+                                }}
+                            >
+                                {item.name}
+                            </Button>
+                        );
+                    })}
+                </div>
                 <Spin spinning={!!listLoading || !!getPageListLoading}>
                     <ul className="content">
                         {tab === 0 && (
@@ -266,33 +262,4 @@ export default connect(({ myTemplate, existingPage, loading }: any) => ({
     existingPage,
     listLoading: loading.effects['myTemplate/getTemplateList'],
     getPageListLoading: loading.effects['existingPage/getPageList'],
-}))(
-    Form.create({
-        mapPropsToFields(props: CuTemplateProps) {
-            return {
-                pageName: Form.createFormField({
-                    ...props.existingPage.searchPageForm.pageName,
-                    value: props.existingPage.searchPageForm.pageName.value,
-                }),
-                templateName: Form.createFormField({
-                    ...props.myTemplate.searchTemplateForm.templateName,
-                    value: props.myTemplate.searchTemplateForm.templateName.value,
-                }),
-            };
-        },
-        onFieldsChange(props: CuTemplateProps, fields) {
-            actions.existingPage.setReducers({
-                searchPageForm: {
-                    ...props.existingPage.searchPageForm,
-                    ...fields,
-                },
-            });
-            actions.myTemplate.setReducers({
-                searchTemplateForm: {
-                    ...props.myTemplate.searchTemplateForm,
-                    ...fields,
-                },
-            });
-        },
-    })(CuTempLateModal),
-);
+}))(CuTempLateModal);
