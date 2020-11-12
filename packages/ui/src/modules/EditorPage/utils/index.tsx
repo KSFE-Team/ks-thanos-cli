@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import { getApp } from 'Src/app';
 import { v4 as uuid } from 'uuid';
 import { actions } from 'kredux';
-import { getComponents, ACTION, ONLYCOMPONENT, initialState } from './constants';
+import { getComponents, ACTION, ONLYCOMPONENT } from './constants';
 
 export interface HandlePageJson {
     type: string;
@@ -348,10 +348,10 @@ export const getComponent = (components: any[], id = '') => {
  * 清空所有配置
  */
 export const clearAllData = (components: any) => {
-    // eslint-disable-next-line array-callback-return
     components.forEach((item: any) => {
-        const { id, components: children } = item;
-        actions[id].setReducers(initialState);
+        const { id, components: children, componentName } = item;
+        const initJson = getComponents()[componentName].tools.getInitJson();
+        actions[id].setReducers(initJson);
         if (children && children.length > 0) {
             clearAllData(children);
         }
