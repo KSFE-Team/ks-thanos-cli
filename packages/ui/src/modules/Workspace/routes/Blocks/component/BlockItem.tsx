@@ -41,17 +41,6 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                 <Spin tip="添加中..." spinning={false}>
                     <div className={styles.demo}>
                         <div className={styles.addProject}>
-                            <Button
-                                type="primary"
-                                className="ant-btn ant-btn-primary addBtn--hFmha"
-                                style={{ marginBottom: '5px' }}
-                                onClick={() => {
-                                    const name = type === 'page' ? item.pageName : item.templateName;
-                                    goto.push(`/editor/${name}?pageOrTemp=${type}&id=${item.id}`);
-                                }}
-                            >
-                                编辑
-                            </Button>
                             <ToolTipAddButton type="primary">添加到项目</ToolTipAddButton>
 
                             <div className={`${styles.btnGroup} ${item.previewUrl ? styles.hasPreview : ''}`}>
@@ -62,14 +51,32 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                     </div>
                 </Spin>
                 <div className={styles.content}>
-                    <div className={styles.title}>
-                        <HighlightedText text={item.pageName || item.templateName} />
+                    <div>
+                        <div className={styles.title}>
+                            <HighlightedText text={item.pageName || item.templateName} />
+                        </div>
+                        {item.updateTime && (
+                            <Typography.Paragraph
+                                className={styles.description}
+                                ellipsis={{ rows: 2, expandable: false }}
+                            >
+                                <HighlightedText text={moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss')} />
+                            </Typography.Paragraph>
+                        )}
                     </div>
-                    {item.updateTime && (
-                        <Typography.Paragraph className={styles.description} ellipsis={{ rows: 2, expandable: false }}>
-                            <HighlightedText text={moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss')} />
-                        </Typography.Paragraph>
-                    )}
+                    <div style={{ flex: '1', textAlign: 'right', lineHeight: '55px' }}>
+                        <Button
+                            type="primary"
+                            className="ant-btn ant-btn-primary addBtn--hFmha"
+                            style={{ marginBottom: '5px' }}
+                            onClick={() => {
+                                const name = type === 'page' ? item.pageName : item.templateName;
+                                goto.push(`/editor/${name}?pageOrTemp=${type}&id=${item.id}`);
+                            }}
+                        >
+                            编辑
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Col>
