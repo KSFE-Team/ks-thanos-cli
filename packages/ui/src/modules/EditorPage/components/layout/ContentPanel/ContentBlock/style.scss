@@ -1,6 +1,8 @@
 .thanos-editor-blocks-group-title {
     font-weight: bold;
     font-size: 16px;
+    color: rgba(255,255,255,.75);
+    margin-bottom: 5px;
 }
 
 .thanos-editor-blocks-group-content {
@@ -9,6 +11,7 @@
     flex-wrap: wrap;
 
     .thanos-editor-blocks-group-drop {
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
     }

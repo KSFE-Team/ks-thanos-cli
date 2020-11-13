@@ -1,15 +1,21 @@
 .thanos-editor-block-item {
     // flex: 1;
-    width: 50%;
+    width: 48%;
     padding: 5px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.6);
+    margin-right: 5px;
+    margin-bottom: 5px;
 
     .thanos-editor-block-shortscreen {
-        border: 1px solid #000;
-        cursor: pointer;
+        border: 1px solid #000;    
     }
 
     .thanos-editor-block-title {
-        margin-top: 5px;
         text-align: center;
+        color:rgba(255,255,255,.6);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
