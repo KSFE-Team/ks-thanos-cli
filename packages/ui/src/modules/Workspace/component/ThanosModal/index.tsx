@@ -55,8 +55,11 @@ export default () => {
         loading: store.loading.effects['workspace/thanosSync'],
     }));
     // thanosLoading
-    const { thanosModalVisible, cwd } = workspace;
+    const { thanosModalVisible, initPageName, cwd } = workspace;
     const [form] = Form.useForm();
+    const initialValues = {
+        templateName: initPageName,
+    };
     /**
      * 校验方法
      */
@@ -86,7 +89,7 @@ export default () => {
             }}
             onOk={handleSubmit}
         >
-            <Form form={form}>
+            <Form form={form} initialValues={initialValues}>
                 <FormItemRender form={Form} configs={FORM_ITEM_CONFIGS} />
             </Form>
         </Modal>

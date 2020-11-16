@@ -63,7 +63,10 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                             <ToolTipAddButton
                                 type="primary"
                                 onClick={() => {
-                                    console.log(1);
+                                    actions.workspace.setReducers({
+                                        thanosModalVisible: true,
+                                        initPageName: item.pageName,
+                                    });
                                 }}
                             >
                                 添加到项目

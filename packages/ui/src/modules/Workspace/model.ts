@@ -12,6 +12,7 @@ export const STATE = {
     cwd: '',
     projectConfig: {},
     thanosModalVisible: false,
+    initPageName: '',
     thanosGeneratorLoading: false,
 };
 
@@ -58,7 +59,7 @@ export default {
          * 执行项目初始化
          */
         initProject: async (payload: { cwd: string; cmd: string; args: string }) => {
-            const response = await Api.getData({
+            const response: any = await Api.getData({
                 api: 'thanos',
                 method: 'GET',
                 params: payload,
@@ -73,10 +74,10 @@ export default {
         /**
          * 获取项目就成状态
          */
-        getProjectProcess: async (payload: any, getState: void) => {
+        getProjectProcess: async (payload: any, getState: any) => {
             const { cwd } = getState().workspace;
 
-            const response = await Api.getData({
+            const response: any = await Api.getData({
                 api: 'getProjectProcess',
                 method: 'GET',
                 params: {
@@ -93,10 +94,10 @@ export default {
         /**
          * 获取项目配置
          */
-        getProjectConfig: async (payload: any, getState) => {
+        getProjectConfig: async (payload: any, getState: any) => {
             const { cwd } = getState().workspace;
 
-            const response = await Api.getData({
+            const response: any = await Api.getData({
                 api: 'getProjectConfig',
                 method: 'GET',
                 params: {
@@ -113,10 +114,10 @@ export default {
         /**
          * 获取项目配置
          */
-        updateProjectConfig: async (payload: any, getState) => {
+        updateProjectConfig: async (payload: any, getState: any) => {
             const { cwd } = getState().workspace;
             const { form, ...OTHERS } = payload;
-            const response = await Api.getData({
+            const response: any = await Api.getData({
                 api: 'updateProjectConfig',
                 method: 'post',
                 params: {
@@ -136,7 +137,7 @@ export default {
          * 执行灭霸命令
          */
         thanosSync: async (payload: any) => {
-            const response = await Api.getData({
+            const response: any = await Api.getData({
                 api: 'thanosSync',
                 method: 'post',
                 params: payload,
