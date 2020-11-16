@@ -38,7 +38,14 @@ const BlockItem = ({ item }: BlockItemProps) => {
                 <Spin tip="添加中..." spinning={false}>
                     <div className={styles.demo}>
                         <div className={styles.addProject}>
-                            <ToolTipAddButton type="primary">添加到项目</ToolTipAddButton>
+                            <ToolTipAddButton
+                                type="primary"
+                                onClick={() => {
+                                    console.log(1);
+                                }}
+                            >
+                                添加到项目
+                            </ToolTipAddButton>
 
                             <div className={`${styles.btnGroup} ${item.previewUrl ? styles.hasPreview : ''}`}>
                                 <ImagePreview img={item.img} cls={styles.previewBtn} />

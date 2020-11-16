@@ -1,0 +1,58 @@
+.file-item-wrapper {
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+    flex: 1;
+    overflow: auto;
+
+    .file-item {
+        padding: 6px 12px;
+        line-height: 20px;
+        color: #000;
+        text-align: left;
+        // cursor: pointer;
+        
+        &:nth-child(2n - 1) {
+            background-color: rgba(245, 245, 245, 1);
+        }
+
+        &:hover {
+            background-color: rgba(42, 107, 210, 1);
+        }
+
+        .file-item-icon {
+            margin-right: 8px;
+            position: relative;
+            top: 2px;
+        }
+
+        &.dir {
+            cursor: pointer;
+        }
+    }
+
+    .create-folder-input {
+        height: 26px;
+        line-height: 26px;
+        width: calc(100% - 24px);
+        margin: 0 12px;
+        color: #000;
+    }
+}
+
+.file-modal-tools {
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
+    width: 100%;
+    padding: 0 12px;
+
+    .anticon {
+        cursor: pointer;
+    }
+}
+
+.get-back-icon {
+    padding: 4px 8px;
+    outline: none;
+    cursor: pointer;
+}

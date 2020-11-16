@@ -25,6 +25,12 @@ interface XHROptions {
     params: any;
     headers?: any;
 }
+
+export interface Response {
+    [key: string]: any;
+    code: number;
+}
+
 const getData = (options: XHROptions) => {
     return new Promise((resolve, reject) => {
         if (!options.api) {
@@ -48,9 +54,9 @@ const getData = (options: XHROptions) => {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    let { response } = xhr;
-                    response = typeof response === 'object' ? response : JSON.parse(response);
-                    resolve(response);
+                    const { response } = xhr;
+                    const resultResponse: Response = typeof response === 'object' ? response : JSON.parse(response);
+                    resolve(resultResponse);
                 } else if (xhr.status === 0) {
                     reject(new Error('No Network'));
                 } else {
@@ -80,4 +86,5 @@ const getRequestUrl = (method: string = 'get', options: XHROptions) => {
 
 export default {
     getData,
+    Response,
 };
