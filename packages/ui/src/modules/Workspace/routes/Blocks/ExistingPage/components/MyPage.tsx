@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { connect, actions } from 'kredux';
 import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
-import { goto } from 'Src/utils';
 import { STATE } from '../model/index';
 import BlockItem from '../../component/BlockItem';
+import CuPageModal from './CuPageModal';
 import styles from '../../component/index.module.scss';
 
 const { Search } = Input;
@@ -62,7 +62,7 @@ class ExistingPage extends Component<ExistingPageProps> {
 
     render() {
         const { listLoading } = this.props;
-        const { pageList = [], searchPageForm } = this.props.existingPage;
+        const { pageList = [], searchPageForm, cuPageModalVisible } = this.props.existingPage;
         const contents = (
             <div
                 style={{
@@ -74,7 +74,7 @@ class ExistingPage extends Component<ExistingPageProps> {
             >
                 <Row gutter={[20, 20]}>
                     {pageList.map((item, index) => {
-                        return <BlockItem key={index} item={item} />;
+                        return <BlockItem key={index} item={item} type="page" />;
                     })}
                 </Row>
             </div>
@@ -95,7 +95,9 @@ class ExistingPage extends Component<ExistingPageProps> {
                                 className="mar-l-4"
                                 type="primary"
                                 onClick={() => {
-                                    goto.push('/editor/-1');
+                                    actions.existingPage.setReducers({
+                                        cuPageModalVisible: true,
+                                    });
                                 }}
                             >
                                 新增
@@ -113,6 +115,7 @@ class ExistingPage extends Component<ExistingPageProps> {
                         />
                     </Row>
                     {pageList.length === 0 && !listLoading ? <Empty description={<span>未搜索到任何数据</span>} /> : ''}
+                    {cuPageModalVisible && <CuPageModal />}
                 </Spin>
             </div>
         );

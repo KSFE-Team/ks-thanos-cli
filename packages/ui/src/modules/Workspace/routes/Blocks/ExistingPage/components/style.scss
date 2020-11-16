@@ -17,7 +17,7 @@ $file-mask: rgba(0, 0, 0, .5);
     font-size: 20px;
 
     .temp-item-container {
-        width: 19%;
+        width: 24%;
         margin-right: 10px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
@@ -91,6 +91,7 @@ $file-mask: rgba(0, 0, 0, .5);
 
 .active {
     background: #037cee !important;
+    color: #fff !important;
 }
 
 .liborder {

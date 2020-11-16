@@ -2,6 +2,7 @@
 .thanos-editor-container {
     .thanos-editor-header {
         height: 50px;
+        line-height: 50px;
         background: $bg-1;
         border-bottom: 1px solid #000;
         box-sizing: border-box;
@@ -27,6 +28,8 @@
         .thanos-editor-back {
             float: left;
             padding: 0 10px;
+            font-size: 20px;
+            line-height: 50px;
         }
     }
     .thanos-editor-content {

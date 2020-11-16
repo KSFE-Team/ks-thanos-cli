@@ -1,6 +1,6 @@
 import { actions } from 'kredux';
-import { ALL_TOOLS } from './materials';
 import html2canvas from 'html2canvas';
+import { ALL_TOOLS } from './materials';
 
 export { default as request } from 'Src/utils/request';
 
@@ -27,14 +27,8 @@ const RADIO_CHECKBOX_FIELD = ['text', 'value'];
 const BIZ_FIELD = ['key', 'label', 'type'];
 // Table
 const TABLE_FIELD = {
-    config: [
-        'dependencies',
-        'stateName',
-    ],
-    dataSource: [
-        'dataKey',
-        'tableName'
-    ]
+    config: ['dependencies', 'stateName'],
+    dataSource: ['dataKey', 'tableName'],,
 };
 
 export function checkFieldData(type: string, data: any, source?: string): checkFieldDataResult {
@@ -46,7 +40,7 @@ export function checkFieldData(type: string, data: any, source?: string): checkF
                     error: checkCommonFn(data, FORM_FIELD),
                     message: 'Form'
                 };
-            } else if (data.type === 'search') {
+            } if (data.type === 'search') {
                 return {
                     error: !data.stateName,
                     message: 'Form'
@@ -143,7 +137,7 @@ function checkCommonFn(data: any, field: any) {
     //     });
     // });
     // return flag;
-};
+}
 
 function checkArrayCommonFn(data: any, field: any) {
     let flag = false;
@@ -179,12 +173,9 @@ export const getUniqueID = () => {
  * @type {attrParams}
  * @return {Array}  返回树形数组
  */
-export function toTreeData(data: any, {
-    id,
-    parentId,
-    rootId
-}: any) {
-    const resData: any[] = [...data]; const tree: any[] = [];
+export function toTreeData(data: any, { id, parentId, rootId }: any) {
+    const resData: any[] = [...data];
+    const tree: any[] = [];
     function run(chiArr: any[]) {
         if (resData.length !== 0) {
             for (let i = 0; i < chiArr.length; i++) {
@@ -216,7 +207,7 @@ export function toTreeData(data: any, {
     }
     run(tree);
     return tree;
-};
+}
 
 /**
  * 修改配置显隐藏
@@ -225,7 +216,7 @@ export const changeConfig = (id: string, components: any[], visible: boolean) =>
     return components.map((item) => {
         item = {
             ...item,
-            configVisible: id === item.id ? visible : false
+            configVisible: id === item.id ? visible : false,
         };
         if (item.components) {
             item.components = changeConfig(id, item.components, visible);
@@ -269,7 +260,7 @@ export const saveComponent = (targetId: string, components: any[], config: any) 
         if (currentId === targetId) {
             item = {
                 ...item,
-                ...config
+                ...config,
             };
         } else if (children && children.length) {
             item.components = saveComponent(targetId, children, config);
@@ -301,19 +292,19 @@ export const insertComponents = (payload: any, components: any[] = []) => {
     if (!payload.targetId || !components.length) {
         return;
     }
-    let item,
-        hadInsert: boolean = false;
+    let item;
+        let hadInsert: boolean = false;
     for (item of components) {
         if (hadInsert) {
             break;
         }
         if (payload.targetId === item.id) {
             item.components = [
-                ...item.components || [],
+                ...(item.components || []),
                 {
                     id: getUniqueID(),
-                    ...payload.insertComponent
-                }
+                    ...payload.insertComponent,
+                },
             ];
             hadInsert = true;
         } else {
@@ -329,8 +320,8 @@ export const getFragments = (targetId: string, components: any[] = []) => {
     if (!targetId || !components.length) {
         return [];
     }
-    let fragments: any[] = [],
-        item;
+    let fragments: any[] = [];
+        let item;
     for (item of components) {
         if (fragments && fragments.length) {
             return fragments;
@@ -403,14 +394,14 @@ export const modifyCorrelationFragment = (components: any[] = [], stateName: str
 /* 灭霸水印 */
 const WATERMARK = '灭霸预览图';
 /* 截图+水印 */
-export const getScreenShotByCanvas = async() => {
+export const getScreenShotByCanvas = async () => {
     /* 获取截屏 */
     const container: HTMLElement = document.querySelector('.thanos-generate-page-container') || document.body;
     const canvas = await html2canvas(container);
     const ctx: any = canvas.getContext('2d');
     ctx.save();
     ctx.translate(canvas.width / 4, canvas.height / 4);
-    ctx.rotate(-(30 * Math.PI / 180));
+    ctx.rotate(-((30 * Math.PI) / 180));
     ctx.globalAlpha = 0.05;
     ctx.font = '100px Arial';
     ctx.fillStyle = '#000';
@@ -425,7 +416,7 @@ export const getScreenShotByCanvas = async() => {
  * 获取层级数组的索引
  */
 export const getComponents = (components: any, id: any = '') => {
-    let nodeArray:Array<any> = [];
+    let nodeArray: Array<any> = [];
     if (id) {
         nodeArray = components.map((item: any) => {
             if (item.id === id) {
@@ -439,11 +430,9 @@ export const getComponents = (components: any, id: any = '') => {
                         item[key] = pageJSON[key];
                     }
                 }
-            } else {
-                if (item.components && item.components.length) {
+            } else if (item.components && item.components.length) {
                     getComponents(item.components, id);
                 }
-            }
             return item;
         });
     } else {
@@ -473,18 +462,18 @@ export const getComponents = (components: any, id: any = '') => {
  * @param route
  */
 export const clearData = (that: any, initState: any, type: any = '') => {
-    const id = that.state.current.id; // 当前操作的组件id
-    const components = that.props.pageJSON.components; // 页面里的所有组件：数组
+    const {id} = that.state.current; // 当前操作的组件id
+    const {components} = that.props.pageJSON; // 页面里的所有组件：数组
     const newComponents = getComponents(components, id);
     actions.generatePage.setReducers({
         pageJSON: {
-            components: newComponents
-        }
+            components: newComponents,
+        },
     });
     if (type === 'InputNumber' || type === 'Select' || type === 'RangePicker') {
         that.props.form.resetFields();
     }
-    that.setState({...initState, isClear: true});
+    that.setState({ ...initState, isClear: true });
 };
 
 /**
@@ -494,7 +483,7 @@ export const clearAllData = (components: any) => {
     const newComponents = getComponents(components);
     actions.generatePage.setReducers({
         pageJSON: {
-            components: newComponents
-        }
+            components: newComponents,
+        },
     });
 };
