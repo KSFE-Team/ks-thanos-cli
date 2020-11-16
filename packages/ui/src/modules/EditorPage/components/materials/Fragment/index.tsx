@@ -3,7 +3,6 @@ import ComponentRender from '../../ComponentRender';
 import * as tools from './utils';
 import FragmentConfig from './config';
 import Sortable from '../../Sortable';
-import './index.scss';
 
 interface MaterialFragmentProps {
     components: any;
