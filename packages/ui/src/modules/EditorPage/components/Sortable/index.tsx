@@ -19,7 +19,7 @@ export default (props: any) => {
         <ReactSortable
             className={className}
             list={list}
-            setList={(result) => { }}
+            setList={(result) => {}}
             animation={150}
             id={id}
             // chosenClass="chosen"
@@ -31,7 +31,7 @@ export default (props: any) => {
                 const { clone, to } = eva;
                 const checkResult = checkAddComponent(page.pageJson, clone.dataset, to.id);
                 const warningdom = document.getElementsByClassName('warning');
-                const adddom=document.getElementsByClassName('add');
+                const adddom = document.getElementsByClassName('add');
                 if (warningdom && warningdom.length > 0) {
                     warningdom[0].className = className;
                 }
