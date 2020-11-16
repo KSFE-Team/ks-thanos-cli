@@ -15,7 +15,7 @@ const DEFAULT_LABEL = '输入框';
 const MaterialDatePicker = (props: MaterialDatePickerProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             <Input

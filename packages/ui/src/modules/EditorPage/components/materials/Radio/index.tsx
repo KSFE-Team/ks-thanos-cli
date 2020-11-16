@@ -26,7 +26,8 @@ const DEFAULT_LABEL = '单选框';
 const MaterialRadio = (props: MaterialRadioProps) => {
     const { id } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, options = DEFAULT_VALUE } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
+    const options = formConfig.options && formConfig.options.length > 0 ? formConfig.options : DEFAULT_VALUE;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             {options.map((option: Option, index: number) => {

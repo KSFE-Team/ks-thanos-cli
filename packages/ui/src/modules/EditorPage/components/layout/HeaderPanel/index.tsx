@@ -107,7 +107,7 @@ export default () => {
             </Button>
             <Logo className="thanos-editor-logo" />
             <div className="thanos-editor-actions">
-                <Button title="undo" disabled>
+                {/* <Button title="undo" disabled>
                     <RollbackOutlined />
                 </Button>
                 <Button title="redo">
@@ -116,7 +116,7 @@ export default () => {
                             transform: 'scaleX(-1)',
                         }}
                     />
-                </Button>
+                </Button> */}
                 <Button
                     className="thanos-editor-primary mar-l-4"
                     onClick={() => {
