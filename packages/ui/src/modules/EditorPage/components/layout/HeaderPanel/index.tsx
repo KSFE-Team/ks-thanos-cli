@@ -56,12 +56,11 @@ export default () => {
                         ? getPageData(components)
                         : getComponent(JSON.parse(JSON.stringify(components)));
                 let id: number;
-                if (queryString.pageOrTemp === 'page' || pageOrTemp === 'template') {
+                if (queryString.pageOrTemp === 'page' && pageOrTemp === 'template') {
                     id = 0;
                 } else {
                     id = Number(queryString.id || 0);
                 }
-                console.log('components', components);
                 actions.page.save({
                     postDate: {
                         [`${pageOrTemp}Data`]: JSON.stringify({
