@@ -35,7 +35,9 @@ export default (props: FragmentConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <span>多用于与Radio 或者 Checkbox 中的某个值做关联控制表单配置项</span>
+                <div style={{ marginBottom: '15px', color: '#ee6d30d9' }}>
+                    使用场景：多用于与Radio 或者 Checkbox 中的某个值做关联控制表单配置项
+                </div>
                 <FormItem label="区域块名称" name={NAME} {...formItemLayout}>
                     <Input placeholder="例如： fragmentName" />
                 </FormItem>

@@ -21,7 +21,7 @@ const { confirm } = Modal;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson } = page;
-
+    console.log(pageJson, 'pageJson');
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName } = pageJson;
         if (!pageName) {

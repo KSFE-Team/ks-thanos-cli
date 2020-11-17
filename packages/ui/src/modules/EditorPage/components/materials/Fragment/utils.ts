@@ -25,14 +25,17 @@ export const getTools = () => ({
     name: 'Fragment',
     icon: 'form',
     componentName: 'Fragment',
+    groupType: 'container',
 });
 
 export const validator = (item: any): void => {};
 
 /* 组件转换JSON */
 export const toCode = (config: FragmentConfig, formConfig: FragmentConfig): FragmentConfig => {
+    console.log(config, formConfig, '----');
     return {
         ...config,
         ...formConfig,
+        source: 'React',
     };
 };
