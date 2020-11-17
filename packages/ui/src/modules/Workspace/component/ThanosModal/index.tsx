@@ -5,6 +5,7 @@ import { Modal, Form, Input } from 'antd';
 import FormItemRender, { Config } from 'Src/components/FormItemRender';
 import { requiredMessage } from 'Src/utils';
 import SelectPathInput from 'Src/components/SelectPathInput';
+import SelectTemplateInput from 'Src/components/SelectTemplateInput';
 
 /**
  * 表单配置
@@ -13,7 +14,7 @@ const FORM_ITEM_CONFIGS: Config[] = [
     {
         title: '页面模版名称',
         key: 'templateName',
-        component: <Input placeholder="页面模版名称" />,
+        component: <SelectTemplateInput />,
         config: {
             rules: [{ required: true, message: requiredMessage('页面模版名称') }],
         },

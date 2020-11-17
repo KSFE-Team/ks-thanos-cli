@@ -9,18 +9,24 @@ import ImageLoad from './ImageLoad';
 import ImagePreview from './ImagePreview';
 import styles from './index.module.scss';
 
+export interface BlockItemData {
+    id: string;
+    url: string;
+    previewUrl?: string;
+    img: string;
+    pageName?: string;
+    templateName?: string;
+    updateTime?: string;
+}
 export interface BlockItemProps {
     loading?: boolean;
-    item: {
-        id: string;
-        url: string;
-        previewUrl?: string;
-        img: string;
-        pageName?: string;
-        templateName?: string;
-        updateTime?: string;
-    };
+    item: BlockItemData;
     type: string;
+    style?: any;
+    editorAble: boolean;
+    deleteAble: boolean;
+    addProjectAble: boolean;
+    onClick?(data: BlockItemData): void;
 }
 
 interface ToolTipAddButtonProps extends ButtonProps {
@@ -35,7 +41,15 @@ const ToolTipAddButton: React.FC<ToolTipAddButtonProps> = ({ disabledTitle, disa
     );
 };
 
-const BlockItem = ({ item, type }: BlockItemProps) => {
+const BlockItem = ({
+    item,
+    type,
+    onClick,
+    style = {},
+    editorAble = true,
+    deleteAble = true,
+    addProjectAble = true,
+}: BlockItemProps) => {
     const handleDelete = (record: any) => {
         const name = type === 'page' ? `页面${record.pageName}` : `模版${record.templateName}`;
         Modal.confirm({
@@ -55,22 +69,33 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
         });
     };
     return (
-        <Col key={item.url} className={styles.col}>
+        <Col
+            onClick={() => {
+                if (onClick) {
+                    onClick(item);
+                }
+            }}
+            key={item.url}
+            className={styles.col}
+            style={{ ...style }}
+        >
             <div id={item.url} className={styles.templateCard}>
                 <Spin tip="添加中..." spinning={false}>
                     <div className={styles.demo}>
                         <div className={styles.addProject}>
-                            <ToolTipAddButton
-                                type="primary"
-                                onClick={() => {
-                                    actions.workspace.setReducers({
-                                        thanosModalVisible: true,
-                                        initPageName: item.pageName,
-                                    });
-                                }}
-                            >
-                                添加到项目
-                            </ToolTipAddButton>
+                            {addProjectAble && (
+                                <ToolTipAddButton
+                                    type="primary"
+                                    onClick={() => {
+                                        actions.workspace.setReducers({
+                                            thanosModalVisible: true,
+                                            initPageName: item.pageName,
+                                        });
+                                    }}
+                                >
+                                    添加到项目
+                                </ToolTipAddButton>
+                            )}
 
                             <div className={`${styles.btnGroup} ${item.previewUrl ? styles.hasPreview : ''}`}>
                                 <ImagePreview img={item.img} cls={styles.previewBtn} />
@@ -94,24 +119,28 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                         )}
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                        <Button
-                            type="primary"
-                            className="ant-btn ant-btn-primary addBtn--hFmha"
-                            style={{ marginRight: '5px' }}
-                            onClick={() => {
-                                const name = type === 'page' ? item.pageName : item.templateName;
-                                goto.push(`/editor/${name}?pageOrTemp=${type}&id=${item.id}`);
-                            }}
-                        >
-                            编辑
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                handleDelete(item);
-                            }}
-                        >
-                            删除
-                        </Button>
+                        {editorAble && (
+                            <Button
+                                type="primary"
+                                className="ant-btn ant-btn-primary addBtn--hFmha"
+                                style={{ marginRight: '5px' }}
+                                onClick={() => {
+                                    const name = type === 'page' ? item.pageName : item.templateName;
+                                    goto.push(`/editor/${name}?pageOrTemp=${type}&id=${item.id}`);
+                                }}
+                            >
+                                编辑
+                            </Button>
+                        )}
+                        {deleteAble && (
+                            <Button
+                                onClick={() => {
+                                    handleDelete(item);
+                                }}
+                            >
+                                删除
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>
