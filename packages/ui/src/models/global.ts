@@ -1,7 +1,9 @@
 import { actions } from 'kredux';
 import { message } from 'antd';
-import Api from 'Utils/request';
-import terminal from 'Src/components/Terminal';
+import Api from 'Src/utils/request';
+import request from 'Src/utils/requestExtend';
+import { API } from 'Src/api';
+// import terminal from 'Src/components/Terminal';
 
 /**
  * 首页页面的业务模块
@@ -15,13 +17,22 @@ const projectModel = {
         currentPath: '/Users',
         cwd: '',
         projects: [],
-        currentIndex: 0,
         projectProcess: {},
         thanosModalVisible: false, // 灭霸弹框 显|隐
         initModalVisible: false, // 项目初始化弹框 显|隐
         thanosGeneratorLoading: false, // 灭霸生成代码loading
-
-        projectConfig: {}
+        projectConfig: {},
+        selectTemplateModalVisible: false,
+        templateList: [],
+        searchTemplateForm: {
+            page: 1,
+            limit: 12,
+            totalPage: 0,
+            total: 0,
+            pageName: {
+                value: '',
+            }, // 模版名
+        },
     },
 
     effects: {
@@ -31,14 +42,14 @@ const projectModel = {
         init() {
             const projectsStr = localStorage.getItem('projects');
             if (projectsStr) {
-                let projects = JSON.parse(projectsStr);
+                const projects = JSON.parse(projectsStr);
 
                 if (projects && projects.length > 0) {
                     const [INIT_PROJECT = {}] = projects;
                     actions.global.setReducers({
                         projects,
                         currentPath: INIT_PROJECT.path,
-                        cwd: INIT_PROJECT.path
+                        cwd: INIT_PROJECT.path,
                     });
                 }
             }
@@ -75,7 +86,7 @@ const projectModel = {
         /**
          * 选择文件
          */
-        selectFolder(payload = {}, getState) {
+        selectFolder(payload: any = {}, getState) {
             const { currentPath } = getState().global;
             const { path = currentPath } = payload;
 
@@ -83,14 +94,14 @@ const projectModel = {
                 api: 'file',
                 method: 'GET',
                 params: {
-                    path
-                }
+                    path,
+                },
             }).then((response) => {
                 if (response.code === 0) {
                     actions.global.setReducers({
                         isShowFolder: true,
                         fileList: response.result,
-                        currentPath: path
+                        currentPath: path,
                     });
                 }
             });
@@ -98,14 +109,14 @@ const projectModel = {
         /**
          * 确认文件
          */
-        confirmFilePath(payload, getState) {
-            let { projects, currentPath } = getState().global;
+        confirmFilePath(payload: any, getState) {
+            const { projects, currentPath } = getState().global;
             const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
             /* 没有重复路径 */
             if (projects.every(({ path }) => path !== currentPath)) {
                 projects.push({
                     path: currentPath,
-                    name
+                    name,
                 });
             }
             actions.global.setReducers({
@@ -113,7 +124,7 @@ const projectModel = {
                 // fileList: [],
                 currentPath,
                 cwd: currentPath,
-                projects
+                projects,
             });
 
             localStorage.setItem('projects', JSON.stringify(projects));
@@ -123,34 +134,17 @@ const projectModel = {
          */
         cancelSelect() {
             actions.global.setReducers({
-                isShowFolder: false
+                isShowFolder: false,
             });
-        },
-        /**
-         * 切换当前项目
-         */
-        changeCurrentIndex(payload, getState) {
-            const { projects } = getState().global;
-
-            if (projects[payload]) {
-                actions.global.setReducers({
-                    currentIndex: payload,
-                    currentPath: projects[payload].path,
-                    cwd: projects[payload].path
-                });
-
-                terminal.clear();
-                terminal.write(projects[payload].log || '');
-            }
         },
         /**
          * 执行灭霸命令
          */
-        thanosSync: async(payload) => {
+        thanosSync: async (payload: any) => {
             const response = await Api.getData({
                 api: 'thanosSync',
                 method: 'GET',
-                params: payload
+                params: payload,
             });
             if (response.code === 0) {
                 message.success('灭霸打响指了');
@@ -160,7 +154,32 @@ const projectModel = {
                 });
             }
         },
-    }
+        /**
+         * 加载模版列表
+         */
+        loadTemplateList: async (payload: any, getState: any) => {
+            const searchForm = getState().global.searchTemplateForm;
+            const postData = {
+                page: searchForm.page,
+                limit: searchForm.limit,
+                pageName: searchForm.pageName && searchForm.pageName.value,
+            };
+            const response = await request(API.page.query, {
+                method: 'GET',
+                body: postData,
+            });
+            if (response && !response.errcode) {
+                const { result } = response;
+                actions.global.setReducers({
+                    templateList: result.list,
+                    searchTemplateForm: {
+                        ...searchForm,
+                        total: result.total,
+                    },
+                });
+            }
+        },
+    },
 };
 
 export default projectModel;

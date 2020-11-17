@@ -9,19 +9,19 @@ interface RouteConfig {
 
 export const ROUTE_LIST: RouteConfig[] = [
     {
-        path: '/workspace/config',
-        name: '配置',
-        // extra: true,
-        component: dynamic({
-            component: () => import('./Config'),
-        }),
-    },
-    {
         path: '/workspace/running',
         name: '运行',
         // extra: true,
         component: dynamic({
             component: () => import('./Running'),
+        }),
+    },
+    {
+        path: '/workspace/config',
+        name: '配置',
+        // extra: true,
+        component: dynamic({
+            component: () => import('./Config'),
         }),
     },
     {

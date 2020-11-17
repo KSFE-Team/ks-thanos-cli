@@ -183,7 +183,7 @@ class CuTempLateModal extends Component<CuTemplateProps> {
                             <Button
                                 key={item.index}
                                 // type="primary"
-                                className={tab === idx ? 'active mar-l-4' : 'mar-l-4'}
+                                className={tab === idx ? 'tab-active mar-l-4' : 'mar-l-4'}
                                 onClick={() => {
                                     this.changeTabe(idx);
                                 }}
