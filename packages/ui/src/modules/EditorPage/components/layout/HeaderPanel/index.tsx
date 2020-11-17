@@ -24,7 +24,7 @@ export default () => {
     const { pageJson } = page;
 
     const handleSubmit = async (pageOrTemp: string) => {
-        const { components, pageName } = pageJson;
+        const { components, pageName, paramKey } = pageJson;
         if (!pageName) {
             message.error('请填写页面名称');
             return;
@@ -34,18 +34,24 @@ export default () => {
         if (pageOrTemp === 'page') {
             getValidator(components)
                 .then(() => {
-                    handleConfirm(pageOrTemp, components, pageName, screenshotSrc);
+                    handleConfirm(pageOrTemp, components, pageName, paramKey, screenshotSrc);
                 })
                 .catch((err) => {
                     console.log('err', err);
                     message.error(err.message);
                 });
         } else {
-            handleConfirm(pageOrTemp, components, pageName, screenshotSrc);
+            handleConfirm(pageOrTemp, components, pageName, paramKey, screenshotSrc);
         }
     };
 
-    const handleConfirm = (pageOrTemp: string, components: any[], pageName: string, screenshotSrc: any) => {
+    const handleConfirm = (
+        pageOrTemp: string,
+        components: any[],
+        pageName: string,
+        paramKey: string,
+        screenshotSrc: any,
+    ) => {
         const pageOrTempText = pageOrTemp === 'page' ? '页面' : '模版';
         const queryString = parse(window.location.search.replace(/\?/g, ''));
         confirm({
@@ -68,6 +74,7 @@ export default () => {
                             paramKey: findParamKey(components),
                         }),
                         [`${pageOrTemp}Name`]: pageName,
+                        paramKey,
                         id,
                         img: screenshotSrc,
                     },
