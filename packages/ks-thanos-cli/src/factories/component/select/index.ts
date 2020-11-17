@@ -29,7 +29,7 @@ export class Select extends FormItem {
     toCode() {
         let code = this.config.options.map((item: OptionData) => {
             return (
-                `<Select.Option ${this.getProps(item.props)}>
+                `<Select.Option value={${item.value}}>
                     ${item.label}
                 </Select.Option>`
             );

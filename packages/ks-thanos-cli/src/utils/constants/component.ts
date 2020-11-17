@@ -13,6 +13,7 @@ import { Form } from 'Src/factories/component/form/index';
 import { Fragment } from 'Src/factories/component/fragment';
 import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
+import { Row } from 'Src/factories/component/row';
 import {
     BizSelectModal,
     BizSelectTags,
@@ -39,6 +40,7 @@ export const COMPONENT_TYPES_MAP: {
     Fragment: Fragment,
     RelationTable: RelationTable,
     ExtendContainer: ExtendContainer,
+    Row: Row,
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
