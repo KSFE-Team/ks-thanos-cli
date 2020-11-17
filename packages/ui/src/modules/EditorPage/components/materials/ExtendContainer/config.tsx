@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
+import Card from 'Src/components/Card';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -37,18 +38,20 @@ export default (props: ExtendContainerConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <FormItem label="label" name={LABEL} {...formItemLayout} required>
-                    <Input placeholder="例如： 故事列表" />
-                </FormItem>
-                <FormItem label="key" name={KEY} {...formItemLayout} required>
-                    <Input placeholder="例如： storyList" />
-                </FormItem>
-                <FormItem label="排序key" name={SORT_KEY} {...formItemLayout} required>
-                    <Input placeholder="例如： __keys" />
-                </FormItem>
-                <FormItem label="按钮文案" name={ADD_BUTTON_TEXT} {...formItemLayout} required>
-                    <Input placeholder="例如： 添加" />
-                </FormItem>
+                <Card title="基础配置">
+                    <FormItem label="label" name={LABEL} {...formItemLayout} required>
+                        <Input placeholder="例如： 故事列表" />
+                    </FormItem>
+                    <FormItem label="key" name={KEY} {...formItemLayout} required>
+                        <Input placeholder="例如： storyList" />
+                    </FormItem>
+                    <FormItem label="排序key" name={SORT_KEY} {...formItemLayout} required>
+                        <Input placeholder="例如： __keys" />
+                    </FormItem>
+                    <FormItem label="按钮文案" name={ADD_BUTTON_TEXT} {...formItemLayout} required>
+                        <Input placeholder="例如： 添加" />
+                    </FormItem>
+                </Card>
             </Form>
         </div>
     );

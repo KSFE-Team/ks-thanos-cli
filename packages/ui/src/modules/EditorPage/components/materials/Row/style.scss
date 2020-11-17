@@ -1,0 +1,17 @@
+.row-container {
+    min-height: 250px;
+    padding: 3px;
+    box-sizing: border-box;
+
+    .row-title {
+        padding: 10px;
+        line-height: 14px;
+        font-weight: bold;
+    }
+    
+    .row-container-background {
+        min-height: 250px;
+        background: linear-gradient(rgba(255, 255, 255, 0.1) 5%, transparent 0);
+        background-size: 15px 15px;
+    }
+}

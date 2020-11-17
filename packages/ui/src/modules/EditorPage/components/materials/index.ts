@@ -12,6 +12,7 @@ import * as BizTimingSetting from './BizTimingSetting/index';
 import * as BizSelectTags from './BizSelectTags/index';
 import * as ExtendContainer from './ExtendContainer/index';
 import * as BizSelectTypeContent from './BizSelectTypeContent/index';
+import * as Row from './Row/index';
 
 export default {
     Form,
@@ -28,4 +29,5 @@ export default {
     BizSelectTags,
     ExtendContainer,
     BizSelectTypeContent,
+    Row,
 };
