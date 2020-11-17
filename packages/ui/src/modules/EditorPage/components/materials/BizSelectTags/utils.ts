@@ -58,6 +58,8 @@ export const toCode = (config: BizSelectTagsConfig, formConfig: BizSelectTagsCon
         source: 'Src/components/@ks/kms-bizselecttags',
         props: {
             type: formConfig.type,
+            showTagKey: formConfig.showTagKey,
+            buttonText: formConfig.buttonText,
         },
     };
     return { ...formObject };
