@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Form, Input, Radio } from 'antd';
 import { actions } from 'kredux';
+import Card from 'Src/components/Card';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORM_TYPES } from './constants';
 
@@ -35,7 +36,7 @@ export default (props: FormConfigProps) => {
         switch (config[TYPE]) {
             case NORMAL:
                 return (
-                    <>
+                    <Card title="接口及路由参数配置">
                         <FormItem label="新增API" {...formItemLayout} name={SAVE_API} required>
                             <Input placeholder="新增API" />
                         </FormItem>
@@ -48,7 +49,7 @@ export default (props: FormConfigProps) => {
                         <FormItem label="路由参数" {...formItemLayout} name={PARAM_KEY} required>
                             <Input placeholder="路由参数" />
                         </FormItem>
-                    </>
+                    </Card>
                 );
             case SEARCH:
             default:
@@ -68,20 +69,22 @@ export default (props: FormConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <FormItem label="表单存储key" name={STATE_NAME} {...formItemLayout} required>
-                    <Input placeholder="例如： searchForm | userInfo" />
-                </FormItem>
-                <FormItem label="表单类型" name={TYPE} {...formItemLayout} required>
-                    <RadioGroup>
-                        {FORM_TYPES.map(({ key, name }) => {
-                            return (
-                                <Radio key={key} value={key}>
-                                    {name}
-                                </Radio>
-                            );
-                        })}
-                    </RadioGroup>
-                </FormItem>
+                <Card title="基础配置">
+                    <FormItem label="表单存储key" name={STATE_NAME} {...formItemLayout} required>
+                        <Input placeholder="例如： searchForm | userInfo" />
+                    </FormItem>
+                    <FormItem label="表单类型" name={TYPE} {...formItemLayout} required>
+                        <RadioGroup>
+                            {FORM_TYPES.map(({ key, name }) => {
+                                return (
+                                    <Radio key={key} value={key}>
+                                        {name}
+                                    </Radio>
+                                );
+                            })}
+                        </RadioGroup>
+                    </FormItem>
+                </Card>
                 {getFormByType()}
             </Form>
         </div>

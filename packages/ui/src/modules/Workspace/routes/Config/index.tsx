@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import { actions } from 'kredux';
 import { Form, Input, Button, Spin, Modal } from 'antd';
 import FormItemRender from 'Src/components/FormItemRender';
 import { requiredMessage } from 'Src/utils';
-// import Guide from './Guide';
 import { useSelector } from 'react-redux';
+import Guide from './Guide';
 import ConfigCard from './ConfigCard';
 import './style.scss';
 
@@ -65,11 +64,11 @@ const FORM_ITEM_CONFIGS = [
 export default () => {
     const [form] = Form.useForm();
     const {
-        project: { projectConfig },
+        workspace: { projectConfig },
         effectsLoading,
-    } = useSelector(({ project, loading }: any) => ({ project, effectsLoading: loading.effects }));
+    } = useSelector(({ workspace, loading }: any) => ({ workspace, effectsLoading: loading.effects }));
     useEffect(() => {
-        actions.project.getProjectConfig();
+        actions.workspace.getProjectConfig();
     }, []);
 
     const finishHandle = (values: any) => {
@@ -77,8 +76,7 @@ export default () => {
             title: '确认保存配置?',
             content: '保存配置后会立即更新配置文件，也会重启正在运行的项目，请慎重。',
             onOk: () => {
-                // console.log('values', values);
-                actions.project.updateProjectConfig({
+                actions.workspace.updateProjectConfig({
                     ...values,
                     form,
                 });
@@ -86,23 +84,15 @@ export default () => {
         });
     };
 
-    const content = effectsLoading['project/getProjectConfig'] ? (
+    const content = effectsLoading['workspace/getProjectConfig'] ? (
         <div className="thanos-config-form-loading">
             <Spin />
             <div>文件读取中</div>
         </div>
     ) : (
-        <Form
-            requiredMark={false}
-            // labelCol={{ span: 12 }}
-            // wrapperCol={{ span: 10 }}
-            layout="vertical"
-            form={form}
-            initialValues={projectConfig}
-            onFinish={finishHandle}
-        >
+        <Form requiredMark={false} layout="vertical" form={form} initialValues={projectConfig} onFinish={finishHandle}>
             <Form.Item style={{ textAlign: 'right' }}>
-                <Button type="primary" htmlType="submit" loading={effectsLoading['project/updateProjectConfig']}>
+                <Button type="primary" htmlType="submit" loading={effectsLoading['workspace/updateProjectConfig']}>
                     保存
                 </Button>
                 <Button
@@ -121,9 +111,9 @@ export default () => {
     );
     return (
         <div className="thanos-config">
-            {/* <div className={'thanos-config-nav'}>
+            <div className="thanos-config-nav">
                 <Guide />
-            </div> */}
+            </div>
             <div className="thanos-config-form">{content}</div>
         </div>
     );

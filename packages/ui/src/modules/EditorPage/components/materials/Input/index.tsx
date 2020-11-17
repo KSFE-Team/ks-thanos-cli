@@ -11,11 +11,13 @@ interface MaterialDatePickerProps extends ComponentConfig {
 }
 
 const DEFAULT_LABEL = '输入框';
+const DEFAULT_ISREQUIRED = true;
 
 const MaterialDatePicker = (props: MaterialDatePickerProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, isRequired } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
+    const isRequired = formConfig.isRequired ? formConfig.isRequired : DEFAULT_ISREQUIRED;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>
             <Input

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Radio } from 'antd';
+import { Form, Input, Radio, Button } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT } from '../../../utils/constants';
@@ -8,7 +8,6 @@ import { CONFIG_TYPE, ALAS_FiELDS } from './utils';
 interface BizTimingSettingConfigProps extends ComponentConfig {}
 
 export default (props: BizTimingSettingConfigProps) => {
-    console.log(props, 'props');
     const { id } = props;
     const config = props[id] || {};
     const url = 'https://kaishu.yuque.com/nbdzm5/kms/ggklfp';
@@ -47,14 +46,15 @@ export default (props: BizTimingSettingConfigProps) => {
             <div style={{ marginBottom: '10px', color: '', marginLeft: '10px' }}>
                 <p>以上字段均有默认值，支持单独修改字段。</p>
                 <span>具体字段参数请参考:</span>
-                <a
-                    target="_blank"
+                <Button
+                    type="link"
                     onClick={(e) => {
                         e.stopPropagation();
                         window.open(url);
                     }}
-                />
-                {url}
+                >
+                    点击查看
+                </Button>
             </div>
         </div>
     );

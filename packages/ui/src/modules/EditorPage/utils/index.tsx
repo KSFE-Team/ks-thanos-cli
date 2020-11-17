@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
+import html2canvas from 'html2canvas';
 import { getApp } from 'Src/app';
 import { v4 as uuid } from 'uuid';
 import { actions } from 'kredux';
@@ -70,19 +71,6 @@ export const deleteComponent = (id: any, pageJson: any) => {
     return pageJson;
 };
 
-// /**
-//  * 重新排序
-//  * @param {Array} list 需要重新排序的数组
-//  * @param {number} startIndex 旧的位置index
-//  * @param {number} endIndex 新的位置index
-//  */
-// const reorder = (list: any, startIndex: any, endIndex: any) => {
-//     const result = Array.from(list);
-//     const [removed] = result.splice(startIndex, 1);
-//     result.splice(endIndex, 0, removed);
-//     return result;
-// };
-
 // 拖拽排序
 export const dragComponent = (components: any, dataSource: any, id: any) => {
     components.map((item: any) => {
@@ -114,9 +102,8 @@ const findComponent = (id: any, pageJson: any): any => {
     return undefined;
 };
 
-// 一级添加组件
+// 添加组件
 export const addComponent = (pageJson: any, newIndex: number, parentId: string, initJson: any) => {
-    // list.splice(endIndex, 0, { ...item, id: uuid() });
     /* root节点不用遍历 */
     if (parentId === 'draw') {
         pageJson.components.splice(newIndex, 0, initJson);
@@ -308,4 +295,99 @@ export const getPageData = (dataSource: any[]): any[] => {
         }
         return result;
     });
+};
+
+/**
+ * 获取层级数组的索引
+ */
+export const getComponent = (components: any[], id = '') => {
+    let nodeArray: Array<any> = [];
+    if (id) {
+        nodeArray = components.map((item) => {
+            if (item.id === id) {
+                const pageJSON = getComponents()[item.componentName].tools.getInitJson();
+                // eslint-disable-next-line no-restricted-syntax
+                for (const key in pageJSON) {
+                    if (item.componentName === 'Table' && key === 'tableType') {
+                        if (item.tableType === 2 || item.tableType === 3) {
+                            item.tableType = item[key];
+                        }
+                    } else {
+                        item[key] = pageJSON[key];
+                    }
+                }
+            } else if (item.components && item.components.length) {
+                getComponent(item.components, id);
+            }
+            return item;
+        });
+    } else {
+        nodeArray = components.map((item) => {
+            const pageJSON = getComponents()[item.componentName].tools.getInitJson();
+            // eslint-disable-next-line no-restricted-syntax
+            for (const key in pageJSON) {
+                if (item.componentName === 'Table' && key === 'tableType') {
+                    if (item.tableType === 2 || item.tableType === 3) {
+                        item.tableType = item[key];
+                    }
+                } else {
+                    item[key] = pageJSON[key];
+                }
+            }
+            if (item.components && item.components.length) {
+                getComponent(item.components);
+            }
+            return item;
+        });
+    }
+
+    return nodeArray;
+};
+
+/**
+ * 清空所有配置
+ */
+export const clearAllData = (components: any) => {
+    components.forEach((item: any) => {
+        const { id, components: children, componentName } = item;
+        const initJson = getComponents()[componentName].tools.getInitJson();
+        actions[id].setReducers(initJson);
+        if (children && children.length > 0) {
+            clearAllData(children);
+        }
+    });
+};
+
+/* 灭霸水印 */
+const WATERMARK = '灭霸预览图';
+/* 截图+水印 */
+export const getScreenShotByCanvas = async () => {
+    /* 获取截屏 */
+    const container: HTMLElement = document.querySelector('.thanos-editor-draw') || document.body;
+    const canvas = await html2canvas(container);
+    const ctx: any = canvas.getContext('2d');
+    ctx.save();
+    ctx.translate(canvas.width / 4, canvas.height / 4);
+    ctx.rotate(-((30 * Math.PI) / 180));
+    ctx.globalAlpha = 0.05;
+    ctx.font = '100px Arial';
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.fillText(WATERMARK, 0, 50);
+    ctx.restore();
+    return canvas.toDataURL('image/jpeg', 0.5);
+};
+
+/**
+ * 查找Form中的paramKey
+ * @param components any[]
+ */
+export const findParamKey = (components: any[]): string => {
+    let key = '';
+    components.forEach(({ componentName, paramKey }) => {
+        if (componentName === 'Form') {
+            key = paramKey;
+        }
+    });
+    return key;
 };

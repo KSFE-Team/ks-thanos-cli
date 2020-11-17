@@ -72,7 +72,7 @@ class MyTemplate extends Component<MyTemplateProps> {
             >
                 <Row gutter={[20, 20]}>
                     {templateList.map((item, index) => {
-                        return <BlockItem key={index} item={item} />;
+                        return <BlockItem key={index} item={item} type="template" />;
                     })}
                 </Row>
             </div>

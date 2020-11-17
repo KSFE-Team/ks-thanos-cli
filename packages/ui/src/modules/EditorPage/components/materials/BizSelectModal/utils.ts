@@ -51,7 +51,6 @@ export const validator = (config: any) =>
 export const toCode = (config: BizSelectModalConfig, formConfig: BizSelectModalConfig): BizSelectModalConfig => {
     const formObject = {
         ...config,
-        ...formConfig,
         componentType: 'cloud',
         source: 'Src/components/@ks/kms-bizselectmodal',
         props: {
@@ -59,8 +58,6 @@ export const toCode = (config: BizSelectModalConfig, formConfig: BizSelectModalC
             type: formConfig.type,
         },
     };
-    delete formObject.type;
-    delete formObject.placeholder;
     return { ...formObject };
 };
 // 类型

@@ -38,7 +38,6 @@ export default (props: BizSelectModalProps) => {
                         placeholder="请选择"
                         style={{ width: '100%' }}
                         showSearch
-                        label={ALIAS.TYPE}
                         filterOption={(input, option) =>
                             String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }

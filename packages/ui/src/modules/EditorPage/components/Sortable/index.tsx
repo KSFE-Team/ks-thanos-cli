@@ -22,9 +22,30 @@ export default (props: any) => {
             setList={(result) => {}}
             animation={150}
             id={id}
+            // chosenClass="chosen"
             group={{
                 name: 'materials',
                 pull: 'clone',
+            }}
+            onChange={(eva) => {
+                const { clone, to } = eva;
+                const checkResult = checkAddComponent(page.pageJson, clone.dataset, to.id);
+                const warningdom = document.getElementsByClassName('warning');
+                const adddom = document.getElementsByClassName('add');
+                if (warningdom && warningdom.length > 0) {
+                    warningdom[0].className = className;
+                }
+                if (adddom && adddom.length > 0) {
+                    adddom[0].className = className;
+                }
+                if (checkResult !== true) {
+                    to.className = `${className} warning`;
+                } else {
+                    to.className = `${className} add`;
+                }
+                setTimeout(() => {
+                    to.className = className;
+                }, 2000);
             }}
             onAdd={(eva) => {
                 const { clone, newIndex, oldIndex, from, path } = eva;

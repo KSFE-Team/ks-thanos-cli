@@ -16,7 +16,7 @@ router.get('/runNpmCommand', runNpmCommand);
 router.get('/runCommand', runCommand);
 router.get('/file', file);
 router.get('/thanos', thanos);
-router.get('/thanosSync', thanosSync);
+router.post('/thanosSync', thanosSync);
 router.get('/getProjectProcess', getProjectProcess);
 
 router.get('/projectConfig/get', getProjectConfig);

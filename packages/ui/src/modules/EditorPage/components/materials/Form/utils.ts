@@ -9,6 +9,7 @@ interface FormConfig extends ComponentJSON {
     saveApi?: string;
     updateApi?: string;
     getApi?: string;
+    paramKey?: string;
 }
 /**
  * 获取初始化JSON
@@ -22,6 +23,7 @@ export const getInitJson = (): FormConfig => ({
     saveApi: '',
     updateApi: '',
     getApi: '',
+    paramKey: '',
 });
 
 /**

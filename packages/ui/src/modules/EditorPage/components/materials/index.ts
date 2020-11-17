@@ -11,6 +11,7 @@ import * as BizSelectModal from './BizSelectModal/index';
 import * as BizTimingSetting from './BizTimingSetting/index';
 import * as BizSelectTags from './BizSelectTags/index';
 import * as ExtendContainer from './ExtendContainer/index';
+import * as BizSelectTypeContent from './BizSelectTypeContent/index';
 
 export default {
     Form,
@@ -26,4 +27,5 @@ export default {
     BizTimingSetting,
     BizSelectTags,
     ExtendContainer,
+    BizSelectTypeContent,
 };
