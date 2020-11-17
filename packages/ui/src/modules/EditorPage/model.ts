@@ -108,7 +108,7 @@ export default {
                 const { components } = JSON.parse(result[`${pageOrTemp}Data`]);
                 actions.page.setReducers({
                     pageJson: {
-                        pageName: result[`${pageOrTemp}Name`],
+                        pageName: pageOrTemp === 'page' ? result[`${pageOrTemp}Name`] : '',
                         components:
                             components[0].componentName === 'RelationTable' ? components[0].components : components,
                     },

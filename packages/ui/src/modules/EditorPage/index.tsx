@@ -19,9 +19,9 @@ export default (props: RouteProps) => {
     });
 
     useEffect(() => {
-        const pageName = window.location.pathname.split('/')[2];
+        const pageName = props.match.params.id;
         if (pageName !== '-1') {
-            const str = window.location.search.split('?')[1];
+            const str = props.match.query;
             const obj = qs.parse(str);
             actions.page.getTemplateItem({
                 pageName,
