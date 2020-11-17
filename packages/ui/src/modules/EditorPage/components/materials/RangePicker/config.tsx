@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Radio, message } from 'antd';
+import { Form, Input, Radio } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT } from '../../../utils/constants';

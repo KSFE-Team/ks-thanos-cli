@@ -5,7 +5,7 @@ const Routes = [
         exact: true,
         component: () => import('Modules/HomePage'),
         modelList: [
-            () => import('Models/project')
+            () => import('Modules/HomePage/model')
         ]
     },
     {
@@ -14,19 +14,11 @@ const Routes = [
         component: () => import('Modules/Auth')
     },
     {
-        path: '/project',
-        exact: true,
-        component: () => import('Modules/project'),
-        modelList: [
-            () => import('Models/project')
-        ]
-    },
-    {
         path: '/workspace',
         // exact: false,
         component: () => import('Modules/Workspace'),
         modelList: [
-            () => import('Models/project')
+            () => import('Modules/Workspace/model')
         ]
     },
     {
@@ -39,22 +31,6 @@ const Routes = [
             () => import('Src/modules/EditorPage/model')
         ]
     },
-    // {
-    //     path: '/workspace/a',
-    //     exact: false,
-    //     component: () => import('Modules/Workspace/routes/A'),
-    //     // modelList: [
-    //     //     () => import('Models/project')
-    //     // ]
-    // },
-    // {
-    //     path: '/workspace/b',
-    //     exact: false,
-    //     component: () => import('Modules/Workspace/routes/B'),
-    //     // modelList: [
-    //     //     () => import('Models/project')
-    //     // ]
-    // },
 ];
 
 export default Routes;

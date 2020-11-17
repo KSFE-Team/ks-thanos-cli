@@ -60,7 +60,17 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                 <Spin tip="添加中..." spinning={false}>
                     <div className={styles.demo}>
                         <div className={styles.addProject}>
-                            <ToolTipAddButton type="primary">添加到项目</ToolTipAddButton>
+                            <ToolTipAddButton
+                                type="primary"
+                                onClick={() => {
+                                    actions.workspace.setReducers({
+                                        thanosModalVisible: true,
+                                        initPageName: item.pageName,
+                                    });
+                                }}
+                            >
+                                添加到项目
+                            </ToolTipAddButton>
 
                             <div className={`${styles.btnGroup} ${item.previewUrl ? styles.hasPreview : ''}`}>
                                 <ImagePreview img={item.img} cls={styles.previewBtn} />

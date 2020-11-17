@@ -1,5 +1,4 @@
 import { ComponentJSON } from 'Src/types/ComponentJSON';
-import { message } from 'antd';
 import { baseValidator } from '../../../utils';
 import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
