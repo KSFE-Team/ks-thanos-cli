@@ -7,7 +7,8 @@ import NoMatch from '../../component/NoMatch';
 import router from 'kredux/output/router';
 
 const { Sider, Content } = Layout;
-const { Route, Switch } = router;
+const { Route, Switch, Redirect } = router;
+const [{path: DEFAULT_PATH}] = ROUTE_LIST;
 
 export default class Property extends Component {
     static propTypes = {
@@ -51,6 +52,7 @@ export default class Property extends Component {
                             return <Route key={config.path} {...config}/>;
                         })
                     }
+                    <Redirect to={DEFAULT_PATH} />
                     <Route component={NoMatch}/>
                 </Switch>
             </Content>

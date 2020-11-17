@@ -11,7 +11,8 @@ import { ROUTE_LIST } from './routes';
 import NoMatch from './component/NoMatch';
 import './style.scss';
 
-const { Route, Switch } = router;
+const { Route, Switch, Redirect } = router;
+const [{ path: DEFAULT_PATH }] = ROUTE_LIST;
 
 interface WorkSpaceProps {
     match: any;
@@ -50,6 +51,7 @@ export default ({ match }: WorkSpaceProps) => {
                 {ROUTE_LIST.map((config) => {
                     return <Route key={config.path} {...config} />;
                 })}
+                <Redirect to={DEFAULT_PATH} />
                 <Route component={NoMatch} />
             </Switch>
         </div>
