@@ -2,8 +2,8 @@ import React from 'react';
 import { Form, Input, Radio } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
-import ExtendOptions from 'Src/components/ExtendOptions';
 import Card from 'Src/components/Card';
+import ExtendOptions from 'Src/components/ExtendOptions';
 import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT } from '../../../utils/constants';
 
 const FormItem = Form.Item;

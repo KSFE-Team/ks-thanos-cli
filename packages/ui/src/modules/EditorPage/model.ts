@@ -12,7 +12,7 @@ export const STATE = {
         components: [
             // {
             //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //     componentName: 'BizSelectModal',
+            //     componentName: 'ExtendContainer',
             //     source: 'antd',
             //     default: false,
             //     props: {},
