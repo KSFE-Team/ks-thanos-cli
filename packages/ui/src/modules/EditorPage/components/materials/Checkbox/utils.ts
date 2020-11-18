@@ -7,6 +7,7 @@ const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 export interface Option {
     label: string;
     value: any;
+    text: any;
     // props: {
     //     value: string;
     // };

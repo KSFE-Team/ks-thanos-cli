@@ -31,10 +31,10 @@ const MaterialRadio = (props: MaterialRadioProps) => {
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             {options.map((option: Option, index: number) => {
-                const { label: optionLabel, value } = option;
+                const { label: optionLabel, value, text } = option;
                 return (
                     <Radio key={index} value={value}>
-                        {optionLabel}
+                        {optionLabel || text}
                     </Radio>
                 );
             })}
