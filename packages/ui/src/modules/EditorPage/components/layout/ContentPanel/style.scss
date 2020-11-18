@@ -6,6 +6,7 @@
     height: 100%;
     background: $bg-1;
     z-index: 5;
+    overflow: auto;
 }
 
 .ant-collapse > .ant-collapse-item:last-child, .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header{

@@ -1,7 +1,7 @@
 import { ComponentJSON } from 'Src/types/ComponentJSON';
 import { FORM_TYPES } from './constants';
 
-const [{ key: NORMAL_FORM }] = FORM_TYPES;
+const [, { key: SEARCH_FORM }] = FORM_TYPES;
 
 interface FormConfig extends ComponentJSON {
     stateName: string;
@@ -19,7 +19,7 @@ export const getInitJson = (): FormConfig => ({
     source: 'antd',
     default: false,
     stateName: '',
-    type: NORMAL_FORM,
+    type: SEARCH_FORM,
     saveApi: '',
     updateApi: '',
     getApi: '',

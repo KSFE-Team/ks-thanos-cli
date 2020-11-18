@@ -7,19 +7,21 @@ interface HOCProps {
 }
 
 /* 注册model */
-const regsisterModelById = (id: string) => {
+const regsisterModelById = (id: string, originComponentConfig: any) => {
     if (!(id in actions)) {
         const app = getApp();
+        const { tools } = originComponentConfig;
+        const { getInitJson } = tools;
         app.model({
             namespace: id,
-            initialState: {},
+            initialState: getInitJson(),
         });
     }
 };
 
 /* 根据ID获取connect后的组件 */
-const getConnectComponent = (id: string, OriginComponent: any, Boolean: any) => {
-    regsisterModelById(id);
+const getConnectComponent = (id: string, OriginComponent: any, Boolean: any, originComponentConfig: any) => {
+    regsisterModelById(id, originComponentConfig);
     return {
         [id]: connect((store: any) => {
             let params = { [id]: store[id] };
@@ -31,16 +33,16 @@ const getConnectComponent = (id: string, OriginComponent: any, Boolean: any) => 
     };
 };
 
-export default (OriginComponent: any, Boolean: any) => {
+export default (OriginComponent: any, originComponentConfig: any, Boolean: boolean) => {
     return (props: HOCProps) => {
         const { id } = props;
         const [state, setState] = useState(() => {
-            return getConnectComponent(id, OriginComponent, Boolean);
+            return getConnectComponent(id, OriginComponent, Boolean, originComponentConfig);
         });
         useEffect((): void => {
             setState((prevState) => ({
                 ...prevState,
-                ...getConnectComponent(id, OriginComponent, Boolean),
+                ...getConnectComponent(id, OriginComponent, Boolean, originComponentConfig),
             }));
         }, [id]);
         if (id) {

@@ -19,7 +19,7 @@ export const STATE = {
             },
             // {
             //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //     componentName: 'ExtendContainer',
+            //     componentName: 'Table',
             //     source: 'antd',
             //     default: false,
             //     props: {},
@@ -112,10 +112,11 @@ export default {
             });
             if (response && !response.errcode) {
                 const { result } = response;
-                const { components } = JSON.parse(result[`${pageOrTemp}Data`]);
+                const { components, paramKey } = JSON.parse(result[`${pageOrTemp}Data`]);
                 actions.page.setReducers({
                     pageJson: {
                         pageName: pageOrTemp === 'page' ? result[`${pageOrTemp}Name`] : '',
+                        paramKey: result.paramKey || paramKey,
                         components:
                             components[0].componentName === 'RelationTable' ? components[0].components : components,
                     },

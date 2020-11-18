@@ -14,6 +14,7 @@ export interface SelectConfig extends FormItemConfig {
 }
 
 export interface OptionData {
+    value: any;
     props: {
         disabled?: boolean;
         key?: string;

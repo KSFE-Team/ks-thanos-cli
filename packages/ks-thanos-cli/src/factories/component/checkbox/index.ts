@@ -32,8 +32,8 @@ export class Checkbox extends FormItem {
     toCode() {
         let code = this.config.options.map((item: any) => {
             return (
-                `<Checkbox ${this.getProps(item.props)}>
-                    ${item.text}
+                `<Checkbox value={${item.value}}>
+                    ${item.label}
                 </Checkbox>`
             );
         });

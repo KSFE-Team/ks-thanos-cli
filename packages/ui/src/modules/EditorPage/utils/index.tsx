@@ -130,6 +130,7 @@ export const addComponent = (pageJson: any, newIndex: number, parentId: string, 
  * 1、基础组件,云组件必须放在容器组件中
  * 2、其余组件可以一级添加，也可以放在容器组件中
  * 3、table，relationTable，form全局唯一
+ * 4、Row组件中只能放Col
  */
 export const checkAddComponent = (pageJson: any, component: any, parentId: string) => {
     let isOnly = true;
@@ -141,12 +142,20 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
         componentName = childrenComponent.componentName;
     }
     isOnly = checkOnly(pageJson, componentName);
+    const rowOnlyCol = checkRowOnlyCol(pageJson, componentName, parentId);
+    const colOnlyRow = checkColOnlyRow(pageJson, componentName, parentId);
     const isInContainer = checkContainer(pageJson, componentName, parentId);
     if (!isOnly) {
         return `${component.name}只能添加一次`;
     }
     if (!isInContainer) {
         return `${componentName}组件需放在容器组件中`;
+    }
+    if (!rowOnlyCol) {
+        return 'Row组件中只能配置Col组件';
+    }
+    if (!colOnlyRow) {
+        return 'Col组件只能配置在Row组件中';
     }
     return true;
 };
@@ -199,17 +208,53 @@ const checkOnly = (pageJson: any, componentName: string) => {
     return true;
 };
 
+/**
+ * 校验Row组件中只能配置Col
+ * @param pageJson 数据
+ * @param componentName 当前组件名称
+ */
+const checkRowOnlyCol = (pageJson: any, componentName: string, parentId: string) => {
+    if (parentId === 'draw') {
+        return true;
+    }
+    const parentComponent = findComponentById(pageJson, parentId);
+    const { componentName: parentComponentName } = parentComponent;
+    if (parentComponentName === 'Row' && componentName !== 'Col') {
+        return false;
+    }
+    return true;
+};
+
+/**
+ * 校验Col组件中只能配置在Row组件内
+ * @param pageJson 数据
+ * @param componentName 当前组件名称
+ */
+const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string) => {
+    if (parentId === 'draw') {
+        if (componentName === 'Col') {
+            return false;
+        }
+        return true;
+    }
+    const parentComponent = findComponentById(pageJson, parentId);
+    const { componentName: parentComponentName } = parentComponent;
+    if (componentName === 'Col' && parentComponentName !== 'Row') {
+        return false;
+    }
+    return true;
+};
 interface CheckTypes {
     key: string;
     name: string;
-    componentName: string;
+    componentName?: string;
 }
 /* 检查属性 */
-export const checkFields = (config: any, keys: CheckTypes[]) =>
+export const checkFields = (config: any, keys: CheckTypes[]): Promise<string | undefined> =>
     new Promise((resolve, reject) => {
         keys.forEach(({ key, name, componentName }) => {
             if (!config[key] && config[key] !== 0 && config[key] !== false) {
-                resolve(`${componentName}请填写${name}`);
+                resolve(`${componentName || config.componentName}请填写${name}`);
             }
         });
         resolve();
@@ -239,7 +284,7 @@ export const baseValidator = (config: any) =>
     );
 
 /* 校验页面数据 */
-export const getValidator = (dataSource: any[]) =>
+export const getValidator = (dataSource: any[]): Promise<Error | undefined> =>
     new Promise((resolve, reject) => {
         let err: any;
         let times = dataSource.length;
@@ -282,16 +327,16 @@ export const getValidator = (dataSource: any[]) =>
     });
 
 /* 整合数据 */
-export const getPageData = (dataSource: any[]): any[] => {
+export const getPageData = (dataSource: any[], pageJson: any): any[] => {
     const componentMap = getComponents();
     return dataSource.map((item) => {
         const { componentName, id, components } = item;
         // eslint-disable-next-line no-underscore-dangle
         const formConfig = getApp()._store.getState()[id];
         const { toCode } = componentMap[componentName].tools;
-        const result = toCode(item, formConfig);
+        const result = toCode(item, formConfig, pageJson);
         if (components && components.length) {
-            result.components = getPageData(components);
+            result.components = getPageData(components, pageJson);
         }
         return result;
     });
@@ -382,11 +427,12 @@ export const getScreenShotByCanvas = async () => {
  * 查找Form中的paramKey
  * @param components any[]
  */
-export const findParamKey = (components: any[]): string => {
+export const findParamKey = (components: any[], findKey = 'paramKey'): string => {
     let key = '';
-    components.forEach(({ componentName, paramKey }) => {
+    components.forEach((component) => {
+        const { componentName } = component;
         if (componentName === 'Form') {
-            key = paramKey;
+            key = component[findKey];
         }
     });
     return key;
