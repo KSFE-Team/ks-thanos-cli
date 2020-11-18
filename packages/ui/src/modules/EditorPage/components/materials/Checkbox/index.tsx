@@ -25,10 +25,10 @@ const MaterialCheckbox = (props: MaterialCheckboxProps) => {
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>
             {options.map((option: Option, index: number) => {
-                const { label: optionLabel, value } = option;
+                const { label: optionLabel, value, text } = option;
                 return (
                     <Checkbox key={index} value={value}>
-                        {optionLabel}
+                        {optionLabel || text}
                     </Checkbox>
                 );
             })}

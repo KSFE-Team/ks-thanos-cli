@@ -14,6 +14,11 @@ interface ExtendOptions {
 
 export default (props: ExtendOptions) => {
     const { labelText, valueText, config, id } = props;
+    let isLabel: boolean = true;
+    if (config.options && config.options.length > 0) {
+        const { options } = config;
+        isLabel = Object.keys(options[0]).includes('label');
+    }
     return (
         <div className="config-table">
             <Row justify="space-around" style={{ marginBottom: '4px' }}>
@@ -29,7 +34,7 @@ export default (props: ExtendOptions) => {
                                     <Col span={10}>
                                         <FormItem
                                             {...field}
-                                            name={[field.name, 'label']}
+                                            name={[field.name, isLabel ? 'label' : 'text']}
                                             fieldKey={[field.fieldKey, 'label']}
                                         >
                                             <Input placeholder="label" />
