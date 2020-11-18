@@ -1,6 +1,7 @@
 import React from 'react';
 import { actions } from 'kredux';
 import { Col, Typography, Spin, Button, Modal } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ButtonProps } from 'antd/es/button';
 import moment from 'moment';
 import { goto } from 'Src/utils';
@@ -60,7 +61,17 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                 <Spin tip="添加中..." spinning={false}>
                     <div className={styles.demo}>
                         <div className={styles.addProject}>
-                            <ToolTipAddButton type="primary">添加到项目</ToolTipAddButton>
+                            <ToolTipAddButton
+                                type="primary"
+                                onClick={() => {
+                                    actions.workspace.setReducers({
+                                        thanosModalVisible: true,
+                                        initPageName: item.pageName,
+                                    });
+                                }}
+                            >
+                                添加到项目
+                            </ToolTipAddButton>
 
                             <div className={`${styles.btnGroup} ${item.previewUrl ? styles.hasPreview : ''}`}>
                                 <ImagePreview img={item.img} cls={styles.previewBtn} />
@@ -83,25 +94,23 @@ const BlockItem = ({ item, type }: BlockItemProps) => {
                             </Typography.Paragraph>
                         )}
                     </div>
-                    <div style={{ textAlign: 'right' }}>
+                    <div style={{ textAlign: 'right', flex: '1', lineHeight: '50px' }}>
                         <Button
-                            type="primary"
-                            className="ant-btn ant-btn-primary addBtn--hFmha"
-                            style={{ marginRight: '5px' }}
+                            icon={<EditOutlined />}
+                            // className="ant-btn ant-btn-primary addBtn--hFmha"
+                            style={{ marginRight: '5px', borderColor: '#30303d', width: '40px' }}
                             onClick={() => {
                                 const name = type === 'page' ? item.pageName : item.templateName;
                                 goto.push(`/editor/${name}?pageOrTemp=${type}&id=${item.id}`);
                             }}
-                        >
-                            编辑
-                        </Button>
+                        />
                         <Button
+                            style={{ borderColor: '#30303d', width: '40px' }}
+                            icon={<DeleteOutlined />}
                             onClick={() => {
                                 handleDelete(item);
                             }}
-                        >
-                            删除
-                        </Button>
+                        />
                     </div>
                 </div>
             </div>

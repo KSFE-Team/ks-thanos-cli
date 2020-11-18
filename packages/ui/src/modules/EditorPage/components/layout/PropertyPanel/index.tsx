@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { actions } from 'kredux';
 import { Form, Input } from 'antd';
+import Card from 'Src/components/Card';
 import { getComponents } from '../../../utils/constants';
 
 const { Item: FormItem } = Form;
@@ -38,12 +39,14 @@ export default () => {
                         },
                     ]}
                 >
-                    <FormItem label="页面名称(英文)" name="pageName" required>
-                        <Input />
-                    </FormItem>
-                    <FormItem label="页面路由参数" name="paramKey">
-                        <Input />
-                    </FormItem>
+                    <Card title="基础配置">
+                        <FormItem label="页面名称(英文)" name="pageName" required>
+                            <Input />
+                        </FormItem>
+                        <FormItem label="页面路由参数" name="paramKey">
+                            <Input />
+                        </FormItem>
+                    </Card>
                 </Form>
             </div>
         );

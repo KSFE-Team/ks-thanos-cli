@@ -18,6 +18,13 @@ export const STATE = {
                 props: {},
             },
             // {
+            //     id: 'kqzwrhho4nq7bxgk91nrp',
+            //     componentName: 'ExtendContainer',
+            //     source: 'antd',
+            //     default: false,
+            //     props: {},
+            // },
+            // {
             //     id: 'kqzwrhho4nq7bxgk91n22rp',
             //     componentName: 'Checkbox',
             //     source: 'antd',
@@ -108,7 +115,7 @@ export default {
                 const { components } = JSON.parse(result[`${pageOrTemp}Data`]);
                 actions.page.setReducers({
                     pageJson: {
-                        pageName: result[`${pageOrTemp}Name`],
+                        pageName: pageOrTemp === 'page' ? result[`${pageOrTemp}Name`] : '',
                         components:
                             components[0].componentName === 'RelationTable' ? components[0].components : components,
                     },

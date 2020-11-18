@@ -2,8 +2,7 @@ import React from 'react';
 import { Form, Input, Select, Radio } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
-import { ALIAS, FIELD_DICT, ISREQUIRED_TYPE } from '../../../utils/constants';
-import { DEFAULT_OPTIONS } from './utils';
+import { ALIAS, FIELD_DICT, ISREQUIRED_TYPE, DEFAULT_OPTIONS } from '../../../utils/constants';
 
 const FormItem = Form.Item;
 const { Option } = Select;

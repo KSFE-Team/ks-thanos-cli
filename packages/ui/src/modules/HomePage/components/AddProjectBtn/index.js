@@ -1,66 +1,80 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect, actions } from 'kredux';
+import { actions } from 'kredux';
 import { Button } from 'antd';
+import { useSelector } from 'react-redux';
 import { PlusOutlined, ImportOutlined } from '@ant-design/icons';
-import SelectPathModal from '../../../project/SelectPathModal';
-import InitModal from '../../../project/InitModal';
+import SelectPathModal from 'Src/components/SelectPathModal';
+import InitModal from '../InitModal';
 
-@connect(({project}) => ({
-    project
-}))
-export default class AddProjectBtn extends React.Component {
+export default (props) => {
+    const { homepage, global } = useSelector((store) => ({
+        homepage: store.homepage,
+        global: store.global,
+    }));
+    const { initModalVisible, projects } = homepage;
+    const { isShowFolder, currentPath } = global;
 
-    static propTypes = {
-        project: PropTypes.object,
-    }
-
-    handleSelectProject = (add = '') => {
-        const { currentPath } = this.props.project;
-
-        actions.project.selectFolder({
+    const handleSelectProject = (add = '') => {
+        actions.global.selectFolder({
             path: currentPath + add
         });
-    }
+    };
 
-    render() {
-        const { isShowFolder, initModalVisible } = this.props.project;
-        return (
-            <Fragment>
-                <Button
-                    onClick={() => {
-                        this.handleSelectProject('');
+    return (
+        <Fragment>
+            <Button
+                onClick={() => {
+                    handleSelectProject('');
+                }}
+            >
+                <ImportOutlined />导入项目
+            </Button>
+            <Button
+                className='mar-l-16'
+                type='primary'
+                onClick={() => {
+                    actions.homepage.setReducers({
+                        initModalVisible: true
+                    });
+                }}
+            >
+                <PlusOutlined />创建项目
+            </Button>
+            {/* 项目初始化弹框 */}
+            {
+                isShowFolder && <SelectPathModal
+                    preCheckFunc={() => {
+                        const { fileList } = global;
+                        const pass = fileList.some(({name}) => name === 'package.json');
+                        return {
+                            pass,
+                            msg: pass ? '' : '请选择正确的项目根目录'
+                        };
                     }}
-                ><ImportOutlined />导入项目</Button>
-                <Button
-                    className='mar-l-16'
-                    type='primary'
-                    onClick={() => {
-                        actions.project.setReducers({
-                            initModalVisible: true
+                    onSubmit={() => {
+                        // let { projects, currentPath } = getState().global;
+                        const name = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+                        /* 没有重复路径 */
+                        if (projects.every(({ path }) => path !== currentPath)) {
+                            projects.push({
+                                path: currentPath,
+                                name
+                            });
+                        }
+                        actions.homepage.setReducers({
+                            currentPath,
+                            cwd: currentPath,
+                        });
+                        actions.homepage.updateProjectList({
+                            replace: projects
                         });
                     }}
-                ><PlusOutlined />创建项目</Button>
-                {
-                    isShowFolder && <SelectPathModal
-                        preCheckFunc={() => {
-                            const { fileList } = this.props.project;
-                            const pass = fileList.some(({name}) => name === 'package.json');
-                            return {
-                                pass,
-                                msg: pass ? '' : '请选择正确的项目根目录'
-                            };
-                        }}
-                        onSubmit={() => {
-                            actions.project.confirmFilePath();
-                        }}
-                    />
-                }
-                {/* 项目初始化弹框 */}
-                {
-                    initModalVisible && <InitModal/>
-                }
-            </Fragment>
-        );
-    }
-}
+                />
+            }
+            {/* 项目初始化弹框 */}
+            {
+                initModalVisible && <InitModal/>
+            }
+        </Fragment>
+    );
+};

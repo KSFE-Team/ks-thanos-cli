@@ -9,8 +9,11 @@ import * as TextArea from './TextArea/index';
 import * as InputNumber from './InputNumber/index';
 import * as BizSelectModal from './BizSelectModal/index';
 import * as BizTimingSetting from './BizTimingSetting/index';
+import * as BizSelectTags from './BizSelectTags/index';
+import * as ExtendContainer from './ExtendContainer/index';
 import * as BizSelectTypeContent from './BizSelectTypeContent/index';
 import * as Fragment from './Fragment/index';
+import * as Row from './Row/index';
 
 export default {
     Form,
@@ -24,6 +27,9 @@ export default {
     InputNumber,
     BizSelectModal,
     BizTimingSetting,
+    BizSelectTags,
+    ExtendContainer,
     BizSelectTypeContent,
     Fragment,
+    Row,
 };

@@ -68,21 +68,23 @@ export default (props: CheckboxConfigProps) => {
                 value: config[key],
             }))}
         >
-            <FormItem name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
-                <Input placeholder="例如： 姓名" />
-            </FormItem>
-            <FormItem name={FIELD_DICT.KEY} label={ALIAS.KEY} required>
-                <Input placeholder="例如： name" />
-            </FormItem>
-            <Form.Item name={FIELD_DICT.ISREQUIRED} label={ALIAS.ISREQUIRED} required>
-                <Radio.Group>
-                    {ISREQUIRED_TYPE.map(({ VALUE, LABEL: label }, index) => (
-                        <Radio key={index} value={VALUE}>
-                            {label}
-                        </Radio>
-                    ))}
-                </Radio.Group>
-            </Form.Item>
+            <Card title="基础配置">
+                <FormItem name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
+                    <Input placeholder="例如： 姓名" />
+                </FormItem>
+                <FormItem name={FIELD_DICT.KEY} label={ALIAS.KEY} required>
+                    <Input placeholder="例如： name" />
+                </FormItem>
+                <Form.Item name={FIELD_DICT.ISREQUIRED} label={ALIAS.ISREQUIRED} required>
+                    <Radio.Group>
+                        {ISREQUIRED_TYPE.map(({ VALUE, LABEL: label }, index) => (
+                            <Radio key={index} value={VALUE}>
+                                {label}
+                            </Radio>
+                        ))}
+                    </Radio.Group>
+                </Form.Item>
+            </Card>
             <Card title="Option 配置">
                 <ExtendOptions labelText="选项名称" valueText="选项值" config={config} id={id} />
             </Card>

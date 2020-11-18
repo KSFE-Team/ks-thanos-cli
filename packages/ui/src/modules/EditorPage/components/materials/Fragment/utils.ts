@@ -32,10 +32,11 @@ export const validator = (item: any): void => {};
 
 /* 组件转换JSON */
 export const toCode = (config: FragmentConfig, formConfig: FragmentConfig): FragmentConfig => {
-    console.log(config, formConfig, '----');
-    return {
+    const formObject = {
         ...config,
         ...formConfig,
         source: 'React',
     };
+    delete formObject.props;
+    return { ...formObject };
 };

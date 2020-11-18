@@ -1,5 +1,6 @@
 import React from 'react';
-import { RollbackOutlined, SaveOutlined, EnterOutlined } from '@ant-design/icons';
+import { EnterOutlined } from '@ant-design/icons';
+// import { actions } from 'kredux';
 import { actions } from 'kredux';
 import { message, Modal } from 'antd';
 import { useSelector } from 'react-redux';
@@ -21,8 +22,8 @@ const { confirm } = Modal;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson } = page;
-    console.log(pageJson, 'pageJson');
     const handleSubmit = async (pageOrTemp: string) => {
+        console.log(pageJson, 'pageJson----------');
         const { components, pageName } = pageJson;
         if (!pageName) {
             message.error('请填写页面名称');
@@ -60,18 +61,19 @@ export default () => {
                 } else {
                     id = Number(queryString.id || 0);
                 }
-                actions.page.save({
-                    postDate: {
-                        [`${pageOrTemp}Data`]: JSON.stringify({
-                            components: componentsData,
-                            paramKey: findParamKey(components),
-                        }),
-                        [`${pageOrTemp}Name`]: pageName,
-                        id,
-                        img: screenshotSrc,
-                    },
-                    pageOrTemp,
-                });
+                console.log(componentsData, 'componentsData_____________', id, 'id');
+                // actions.page.save({
+                //     postDate: {
+                //         [`${pageOrTemp}Data`]: JSON.stringify({
+                //             components: componentsData,
+                //             paramKey: findParamKey(components),
+                //         }),
+                //         [`${pageOrTemp}Name`]: pageName,
+                //         id,
+                //         img: screenshotSrc,
+                //     },
+                //     pageOrTemp,
+                // });
             },
         });
     };

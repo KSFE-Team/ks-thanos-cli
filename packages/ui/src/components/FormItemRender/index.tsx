@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 
-interface Config {
+export interface Config {
     title: string | React.ReactNode;
     key: string;
     component: React.ReactNode;
