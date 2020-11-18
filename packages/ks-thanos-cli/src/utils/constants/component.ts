@@ -14,6 +14,7 @@ import { Fragment } from 'Src/factories/component/fragment';
 import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import { Row } from 'Src/factories/component/row';
+import { Col } from 'Src/factories/component/col';
 import {
     BizSelectModal,
     BizSelectTags,
@@ -41,6 +42,7 @@ export const COMPONENT_TYPES_MAP: {
     RelationTable: RelationTable,
     ExtendContainer: ExtendContainer,
     Row: Row,
+    Col: Col,
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
