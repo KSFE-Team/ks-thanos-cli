@@ -59,7 +59,7 @@ export default () => {
             onOk: async () => {
                 const componentsData =
                     pageOrTemp === 'page'
-                        ? getPageData(components)
+                        ? getPageData(components, pageJson)
                         : getComponent(JSON.parse(JSON.stringify(components)));
                 let id: number;
                 if (queryString.pageOrTemp === 'page' && pageOrTemp === 'template') {

@@ -12,7 +12,7 @@ export const STATE = {
         components: [
             // {
             //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //     componentName: 'ExtendContainer',
+            //     componentName: 'Table',
             //     source: 'antd',
             //     default: false,
             //     props: {},

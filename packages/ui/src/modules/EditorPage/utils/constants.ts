@@ -9,8 +9,8 @@ export const componentsMap: {
 export const setComponents = (key: string, value: any) => {
     const result = {
         ...value,
-        component: Dynamicnect(value.component, true),
-        config: Dynamicnect(value.config, false),
+        component: Dynamicnect(value.component, value, true),
+        config: Dynamicnect(value.config, value, false),
     };
     componentsMap[key] = result;
 };

@@ -202,14 +202,14 @@ const checkOnly = (pageJson: any, componentName: string) => {
 interface CheckTypes {
     key: string;
     name: string;
-    componentName: string;
+    componentName?: string;
 }
 /* 检查属性 */
-export const checkFields = (config: any, keys: CheckTypes[]) =>
+export const checkFields = (config: any, keys: CheckTypes[]): Promise<string | undefined> =>
     new Promise((resolve, reject) => {
         keys.forEach(({ key, name, componentName }) => {
             if (!config[key] && config[key] !== 0 && config[key] !== false) {
-                resolve(`${componentName}请填写${name}`);
+                resolve(`${componentName || config.componentName}请填写${name}`);
             }
         });
         resolve();
@@ -239,7 +239,7 @@ export const baseValidator = (config: any) =>
     );
 
 /* 校验页面数据 */
-export const getValidator = (dataSource: any[]) =>
+export const getValidator = (dataSource: any[]): Promise<Error | undefined> =>
     new Promise((resolve, reject) => {
         let err: any;
         let times = dataSource.length;
@@ -282,16 +282,16 @@ export const getValidator = (dataSource: any[]) =>
     });
 
 /* 整合数据 */
-export const getPageData = (dataSource: any[]): any[] => {
+export const getPageData = (dataSource: any[], pageJson: any): any[] => {
     const componentMap = getComponents();
     return dataSource.map((item) => {
         const { componentName, id, components } = item;
         // eslint-disable-next-line no-underscore-dangle
         const formConfig = getApp()._store.getState()[id];
         const { toCode } = componentMap[componentName].tools;
-        const result = toCode(item, formConfig);
+        const result = toCode(item, formConfig, pageJson);
         if (components && components.length) {
-            result.components = getPageData(components);
+            result.components = getPageData(components, pageJson);
         }
         return result;
     });
@@ -382,11 +382,12 @@ export const getScreenShotByCanvas = async () => {
  * 查找Form中的paramKey
  * @param components any[]
  */
-export const findParamKey = (components: any[]): string => {
+export const findParamKey = (components: any[], findKey = 'paramKey'): string => {
     let key = '';
-    components.forEach(({ componentName, paramKey }) => {
+    components.forEach((component) => {
+        const { componentName } = component;
         if (componentName === 'Form') {
-            key = paramKey;
+            key = component[findKey];
         }
     });
     return key;
