@@ -67,19 +67,19 @@ export default () => {
                     id = Number(queryString.id || 0);
                 }
                 console.log(componentsData, 'componentsData_____________', id, 'id');
-                // actions.page.save({
-                //     postDate: {
-                //         [`${pageOrTemp}Data`]: JSON.stringify({
-                //             components: componentsData,
-                //             paramKey: findParamKey(components),
-                //         }),
-                //         [`${pageOrTemp}Name`]: pageName,
-                //         paramKey,
-                //         id,
-                //         img: screenshotSrc,
-                //     },
-                //     pageOrTemp,
-                // });
+                actions.page.save({
+                    postDate: {
+                        [`${pageOrTemp}Data`]: JSON.stringify({
+                            components: componentsData,
+                            paramKey: findParamKey(components),
+                        }),
+                        [`${pageOrTemp}Name`]: pageName,
+                        paramKey,
+                        id,
+                        img: screenshotSrc,
+                    },
+                    pageOrTemp,
+                });
             },
         });
     };
