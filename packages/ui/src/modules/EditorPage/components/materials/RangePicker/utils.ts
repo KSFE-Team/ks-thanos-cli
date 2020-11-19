@@ -59,3 +59,9 @@ export const toCode = (config: RangePickerConfig, formConfig: RangePickerConfig)
     delete formObject.placeholder;
     return { ...formObject };
 };
+export const reCode = (config: RangePickerConfig): RangePickerConfig => {
+    return {
+        ...config,
+        placeholder: config.props.placeholder,
+    };
+};

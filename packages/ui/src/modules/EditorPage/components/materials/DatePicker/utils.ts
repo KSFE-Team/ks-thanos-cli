@@ -47,3 +47,10 @@ export const toCode = (config: DatePickerConfig, formConfig: DatePickerConfig): 
     delete formObject.placeholder;
     return { ...formObject };
 };
+
+export const reCode = (config: DatePickerConfig): DatePickerConfig => {
+    return {
+        ...config,
+        placeholder: config.props.placeholder,
+    };
+};

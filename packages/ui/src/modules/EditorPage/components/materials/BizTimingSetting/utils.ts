@@ -102,7 +102,7 @@ export const toCode = (config: BizTimingSettingConfig, formConfig: BizTimingSett
     });
     const formObject = {
         ...config,
-        source: 'Src/components/@ks/kms-biztimingsetting',
+        formItem: 'false',
         props: {
             type,
             required: isRequired,
@@ -110,4 +110,17 @@ export const toCode = (config: BizTimingSettingConfig, formConfig: BizTimingSett
         },
     };
     return { ...formObject };
+};
+export const reCode = (config: BizTimingSettingConfig): BizTimingSettingConfig => {
+    const { props = {} } = config;
+    const formFields = JSON.parse(props.formFields);
+    const obj = {
+        ...config,
+        ...props,
+        ...formFields,
+        isRequired: props.required,
+    };
+    return {
+        ...obj,
+    };
 };

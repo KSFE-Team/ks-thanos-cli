@@ -56,7 +56,6 @@ export const toCode = (
     }
     const formObject = {
         ...config,
-        source: 'Src/components/@ks/kms-BizSelectTypeContent',
         props: {
             params: JSON.stringify({
                 ...formConfigObj,
@@ -64,4 +63,15 @@ export const toCode = (
         },
     };
     return { ...formObject };
+};
+export const reCode = (config: BizSelectTypeContentConfig): BizSelectTypeContentConfig => {
+    const { props = {} } = config;
+    const params = JSON.parse(props.params);
+    const obj = {
+        ...params,
+        aliasArry: !!params.aliasArry,
+    };
+    return {
+        ...obj,
+    };
 };
