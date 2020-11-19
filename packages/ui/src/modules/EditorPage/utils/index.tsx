@@ -145,6 +145,8 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     const rowOnlyCol = checkRowOnlyCol(pageJson, componentName, parentId);
     const colOnlyRow = checkColOnlyRow(pageJson, componentName, parentId);
     const isInContainer = checkContainer(pageJson, componentName, parentId);
+    const formOnFragment = checkFormOnlyFragment(pageJson, componentName, parentId);
+    const formOnExtendContainer = checkFormOnlyExtendContainer(pageJson, componentName, parentId);
     if (!isOnly) {
         return `${component.name}只能添加一次`;
     }
@@ -156,6 +158,12 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     }
     if (!colOnlyRow) {
         return 'Col组件只能配置在Row组件中';
+    }
+    if (!formOnFragment) {
+        return 'Fragment组件中只能配置一个Form组件';
+    }
+    if (!formOnExtendContainer) {
+        return 'ExtendContainer组件中不能配置Form组件';
     }
     return true;
 };
@@ -240,6 +248,47 @@ const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string)
     const parentComponent = findComponentById(pageJson, parentId);
     const { componentName: parentComponentName } = parentComponent;
     if (componentName === 'Col' && parentComponentName !== 'Row') {
+        return false;
+    }
+    return true;
+};
+/**
+ * 校验Form组件中只能在Fragment组件内配置一次，不可嵌套配置
+ * @param pageJson 数据
+ * @param componentName 当前组件名称
+ */
+const checkFormOnlyFragment = (pageJson: any, componentName: string, parentId: string) => {
+    let flag = true;
+    if (parentId === 'draw') {
+        return true;
+    }
+    const { components } = pageJson;
+    components.find((item: any) => {
+        if (item.componentName === 'Fragment') {
+            if (
+                item.components.filter((comp: { componentName: string }) => comp.componentName === componentName)
+                    .length > 0
+            ) {
+                flag = false;
+                return true;
+            }
+            return true;
+        }
+    });
+    return flag;
+};
+/**
+ * ExtendContainer组件不可嵌套Form
+ * @param pageJson 数据
+ * @param componentName 当前组件名称
+ */
+const checkFormOnlyExtendContainer = (pageJson: any, componentName: string, parentId: string) => {
+    if (parentId === 'draw') {
+        return true;
+    }
+    const parentComponent = findComponentById(pageJson, parentId);
+    const { componentName: parentComponentName } = parentComponent;
+    if (parentComponentName === 'ExtendContainer' && componentName === 'Form') {
         return false;
     }
     return true;
