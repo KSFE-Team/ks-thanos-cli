@@ -3,7 +3,6 @@ import { Form, Input, Radio, Select } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import Card from 'Src/components/Card';
-// import { ISREQUIRED_TYPE, ALIAS, FIELD_DICT } from '../../../utils/constants';
 import { FETCH_METHOD, IS_PAGINATION, IS_ROW_SELECTION, ROW_SELECTION_TYPE } from './constants';
 import TableColumnsConfig from './TableColumnsConfig';
 
