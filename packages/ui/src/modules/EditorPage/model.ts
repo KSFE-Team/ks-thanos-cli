@@ -11,6 +11,13 @@ export const STATE = {
         pageName: '',
         paramKey: '',
         components: [
+            {
+                id: 'kqzwrhho4nq7bxgk91nrp',
+                componentName: 'Fragment',
+                source: 'antd',
+                default: false,
+                props: {},
+            },
             // {
             //     id: 'kqzwrhho4nq7bxgk91nrp',
             //     componentName: 'Table',

@@ -16,7 +16,8 @@ const DEFAULT_LABEL = '下拉框';
 const MaterialSelect = (props: MaterialSelectProps) => {
     const { id } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, options = [], isRequired, ...otherConfig } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
+    const { options = [], isRequired, ...otherConfig } = formConfig;
 
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>

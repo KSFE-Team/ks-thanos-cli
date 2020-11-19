@@ -1,10 +1,12 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { actions } from 'kredux';
+import { useSelector } from 'react-redux';
+import { getFragments } from './utils';
 
 const FormItem = Form.Item;
-
+const { Option } = Select;
 interface ExtendOptions {
     labelText: string;
     valueText: string;
@@ -13,7 +15,16 @@ interface ExtendOptions {
 }
 
 export default (props: ExtendOptions) => {
+    const { page, sotres } = useSelector((store: any) => ({ page: store.page, sotres: store }));
     const { labelText, valueText, config, id } = props;
+    const fragment = getFragments(page.pageJson.components, sotres) || [];
+    const childrens = fragment.map(({ name, id }, index) => {
+        return (
+            <Option value={id} key={index}>
+                {name}
+            </Option>
+        );
+    });
     let isLabel: boolean = true;
     if (config.options && config.options.length > 0) {
         const { options } = config;
@@ -22,8 +33,9 @@ export default (props: ExtendOptions) => {
     return (
         <div className="config-table">
             <Row justify="space-around" style={{ marginBottom: '4px' }}>
-                <Col span={10}>{labelText}</Col>
-                <Col span={10}>{valueText}</Col>
+                <Col span={6}>{labelText}</Col>
+                <Col span={6}>{valueText}</Col>
+                <Col span={6}>区域块</Col>
             </Row>
             <Form.List name="options">
                 {(fields, { add, remove, move }) => {
@@ -31,7 +43,7 @@ export default (props: ExtendOptions) => {
                         <div>
                             {fields.map((field, index) => (
                                 <Row key={field.key} justify="space-around">
-                                    <Col span={10}>
+                                    <Col span={6}>
                                         <FormItem
                                             {...field}
                                             name={[field.name, isLabel ? 'label' : 'text']}
@@ -40,13 +52,22 @@ export default (props: ExtendOptions) => {
                                             <Input placeholder="label" />
                                         </FormItem>
                                     </Col>
-                                    <Col span={10}>
+                                    <Col span={6}>
                                         <FormItem
                                             {...field}
                                             name={[field.name, 'value']}
                                             fieldKey={[field.fieldKey, 'value']}
                                         >
                                             <Input placeholder="value" />
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={6}>
+                                        <FormItem
+                                            {...field}
+                                            name={[field.name, 'fragmentId']}
+                                            fieldKey={[field.fieldKey, 'fragmentId']}
+                                        >
+                                            <Select>{childrens}</Select>
                                         </FormItem>
                                     </Col>
                                     {fields.length > 1 && (

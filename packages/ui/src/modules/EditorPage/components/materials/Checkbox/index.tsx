@@ -21,7 +21,9 @@ const DEFAULT_LABEL = '复选框';
 const MaterialCheckbox = (props: MaterialCheckboxProps) => {
     const { id } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, options = [DEFAULT_VALUE], isRequired } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
+    const options = formConfig.options ? formConfig.options : [DEFAULT_VALUE];
+    const { isRequired } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>
             {options.map((option: Option, index: number) => {

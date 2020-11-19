@@ -52,13 +52,20 @@ export const toCode = (config: BizSelectModalConfig, formConfig: BizSelectModalC
     const formObject = {
         ...config,
         componentType: 'cloud',
-        source: 'Src/components/@ks/kms-bizselectmodal',
+        key: formConfig.key,
+        label: formConfig.label,
         props: {
             placeholder: formConfig.label,
             type: formConfig.type,
         },
     };
     return { ...formObject };
+};
+export const reCode = (config: BizSelectModalConfig): BizSelectModalConfig => {
+    return {
+        ...config,
+        ...config.props,
+    };
 };
 // 类型
 export const DEFAULT_OPTIONS = [

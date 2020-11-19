@@ -1,4 +1,5 @@
 import { ComponentJSON } from 'Src/types/ComponentJSON';
+// import { message } from 'antd';
 import { baseValidator } from '../../../utils';
 import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
@@ -57,4 +58,10 @@ export const toCode = (config: RangePickerConfig, formConfig: RangePickerConfig)
     };
     delete formObject.placeholder;
     return { ...formObject };
+};
+export const reCode = (config: RangePickerConfig): RangePickerConfig => {
+    return {
+        ...config,
+        placeholder: config.props.placeholder,
+    };
 };

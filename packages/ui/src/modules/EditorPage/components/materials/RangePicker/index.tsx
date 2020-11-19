@@ -16,7 +16,7 @@ const DEFAULT_LABEL = ['开始时间', '截止时间'];
 const MaterialRangePicker = (props: RangePickerConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL.join('') } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL.join('');
     const placeholder = (formConfig.placeholder && formConfig.placeholder.split('/')) || DEFAULT_LABEL;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
