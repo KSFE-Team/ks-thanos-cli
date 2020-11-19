@@ -3,6 +3,7 @@ import { API } from 'Src/api';
 import { actions } from 'kredux';
 import { message, Modal } from 'antd';
 import { goto } from 'Src/utils';
+import { getComponents } from './utils/constants';
 
 export const STATE = {
     selectedId: '',
@@ -130,9 +131,15 @@ export default {
          */
         setItemProperty: (payload: any) => {
             const { components } = payload;
+            const allComponents = getComponents();
             components.forEach((item: any) => {
-                const { id, components: children } = item;
-                actions[id].setReducers(item);
+                const { id, components: children, componentName } = item;
+                const { reCode } = allComponents[componentName].tools;
+                let result = item;
+                if (reCode) {
+                    result = reCode(item);
+                }
+                actions[id].setReducers(result);
                 if (children && children.length > 0) {
                     actions.page.setItemProperty(item);
                 }

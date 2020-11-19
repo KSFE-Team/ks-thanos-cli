@@ -9,7 +9,18 @@ interface ColumnsConfig {
     dataType?: string;
 }
 
-interface TableConfig extends ComponentJSON {
+export interface Dependencies {
+    type: string;
+    responseType: string;
+    api: {
+        key: string;
+        value: string;
+    };
+    method: string;
+    actionType: string;
+}
+
+export interface TableConfig extends ComponentJSON {
     componentName: string;
     source: string;
     default: boolean;
@@ -23,9 +34,8 @@ interface TableConfig extends ComponentJSON {
     props: {
         [key: string]: any;
     };
-    dependencies: {
-        [key: string]: any;
-    };
+    dependencies: Dependencies;
+    id: string;
 }
 
 /**
@@ -42,7 +52,17 @@ export const getInitJson = (): TableConfig => ({
     showSelectedRows: false,
     columns: [{ title: '序号', dataIndex: 'sortNum', width: 80, dataType: 'text' }],
     props: {},
-    dependencies: {},
+    dependencies: {
+        type: '',
+        responseType: '',
+        api: {
+            key: '',
+            value: '',
+        },
+        method: '',
+        actionType: '',
+    },
+    id: '',
 });
 
 /**
@@ -120,6 +140,7 @@ export const toCode = (config: TableConfig, formConfig: TableConfig, pageJson: a
         showPagination: formConfig.showPagination,
         showSelectedRows: formConfig.showSelectedRows,
         showSelectedRowsType: formConfig.showSelectedRowsType,
+        id: config.id,
         props: {
             columns: formConfig.columns,
         },
@@ -128,10 +149,18 @@ export const toCode = (config: TableConfig, formConfig: TableConfig, pageJson: a
             responseType: 'list',
             api: {
                 key: 'query',
-                value: formConfig.api,
+                value: formConfig.api || '',
             },
-            method: formConfig.method,
+            method: formConfig.method || '',
             actionType: 'get',
         },
+    };
+};
+
+export const reCode = (config: TableConfig): TableConfig => {
+    return {
+        ...config,
+        columns: config.props.columns,
+        api: config.dependencies.api.value,
     };
 };

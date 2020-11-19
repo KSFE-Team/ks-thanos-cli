@@ -24,9 +24,9 @@ export interface BlockItemProps {
     item: BlockItemData;
     type: string;
     style?: any;
-    editorAble: boolean;
-    deleteAble: boolean;
-    addProjectAble: boolean;
+    editorAble?: boolean;
+    deleteAble?: boolean;
+    addProjectAble?: boolean;
     onClick?(data: BlockItemData): void;
 }
 
