@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Select, Radio } from 'antd';
+import { Form, Select } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
-import { ALIAS, FIELD_DICT, ISREQUIRED_TYPE } from '../../../utils/constants';
+import { ALIAS, FIELD_DICT } from '../../../utils/constants';
 import { DEFAULT_OPTIONS } from './utils';
 
 const FormItem = Form.Item;
