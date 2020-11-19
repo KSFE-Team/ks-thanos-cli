@@ -181,6 +181,9 @@ export class NormalFormDelegate extends FormDelegate {
             const { config, page } = this.form;
             const paramKey = config.paramKey || 'id';
             this.form.page.addDidMountStep(`if (this.state.${paramKey} > 0) {
+                actions.${page.pageName}.setReducers({
+                    ${config.stateName}: {}
+                });
                 actions.${page.pageName}.${this.getEffect.name}({
                     ${paramKey}: this.state.${paramKey}
                 });
@@ -196,20 +199,28 @@ export class NormalFormDelegate extends FormDelegate {
     }
 
     initRenderVariableDeclaration() {
-        const { page } = this.form;
+        const { page, config } = this.form;
         const { pageName } = page;
         this.form.page.addRenderVariableDeclaration({
             name: 'getFieldDecorator',
             source: 'this.props.form'
         });
         this.form.page.addRenderVariableDeclaration({
-            name: 'info',
+            name: config.stateName,
             source: `this.props.${pageName}`
+        });
+    }
+
+    render() {
+        this.form.page.addRenderVariableDeclaration({
+            name: 'form',
+            source: `this.props`
         });
     }
 
     toFormItemCode(item: FormItem) {
         debug(`normalForm: toFormItemCode ---- ${item.componentName}`);
+        const { config } = this.form;
         const labelValue = item.config.label;
 
         const rules: Record<string, any>[] = [];
@@ -224,13 +235,18 @@ export class NormalFormDelegate extends FormDelegate {
             });
         }
         let fieldConfigCode = item.getDecoratorConfigCode()
-            .replace(/}$/, `\ninitialValue: info.${item.config.key},\n}`);
+            .replace(/}$/, `\ninitialValue: ${config.stateName}.${item.config.key},\n}`);
 
         const rulesCodes = FormItem.getRulesCode(rules);
         if (rulesCodes) {
             fieldConfigCode = fieldConfigCode.replace(/}$/, `rules: [
                 ${rulesCodes}
             ],\n}`);
+        }
+
+        /* 不需要formItem 则直接返回组件代码 */
+        if (item.config.formItem === 'false') {
+            return item.toCode();
         }
 
         return `<Form.Item
@@ -248,7 +264,9 @@ export class NormalFormDelegate extends FormDelegate {
     toCode() {
         const form = this.form;
         const componentsCode = form.components.map((item: FormItem) => {
-            return this.toFormItemCode(item);
+            const tempItem: FormItem = item;
+            tempItem.config.stateName = this.form.config.stateName;
+            return this.toFormItemCode(tempItem);
         });
         return `<Form>
         ${componentsCode.join('\n')}
