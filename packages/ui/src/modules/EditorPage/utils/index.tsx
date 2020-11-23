@@ -289,6 +289,22 @@ const checkOnly = (pageJson: any, componentName: string) => {
 //     return true;
 // };
 
+// /**
+//  * ExtendContainer组件不可嵌套Form
+//  * @param pageJson 数据
+//  * @param componentName 当前组件名称
+//  */
+// const checkFormOnlyExtendContainer = (pageJson: any, componentName: string, parentId: string) => {
+//     if (parentId === 'draw') {
+//         return true;
+//     }
+//     const parentComponent = findComponentById(pageJson, parentId);
+//     const { componentName: parentComponentName } = parentComponent;
+//     if (parentComponentName === 'ExtendContainer' && componentName === 'Form') {
+//         return false;
+//     }
+//     return true;
+// };
 interface CheckTypes {
     key: string;
     name: string;
