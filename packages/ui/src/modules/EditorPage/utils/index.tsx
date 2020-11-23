@@ -124,7 +124,6 @@ export const addComponent = (pageJson: any, newIndex: number, parentId: string, 
     });
     return pageJson;
 };
-
 /**
  * 添加组件校验
  * 1、基础组件,云组件必须放在容器组件中
@@ -133,6 +132,7 @@ export const addComponent = (pageJson: any, newIndex: number, parentId: string, 
  * 4、Row组件中只能放Col
  */
 export const checkAddComponent = (pageJson: any, component: any, parentId: string) => {
+    // 全局唯一校验
     let isOnly = true;
     let componentName;
     if (component.name) {
@@ -142,43 +142,107 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
         componentName = childrenComponent.componentName;
     }
     isOnly = checkOnly(pageJson, componentName);
-    const rowOnlyCol = checkRowOnlyCol(pageJson, componentName, parentId);
-    const colOnlyRow = checkColOnlyRow(pageJson, componentName, parentId);
-    const isInContainer = checkContainer(pageJson, componentName, parentId);
     if (!isOnly) {
         return `${component.name}只能添加一次`;
     }
-    if (!isInContainer) {
-        return `${componentName}组件需放在容器组件中`;
+    const { tools } = getComponents()[component.name];
+    const taegetCompoent = findComponent(parentId, pageJson) || 'draw';
+    const getTools = tools.getTools();
+    let result;
+    if (tools && tools.componentVerify) {
+        // 根据组件自身校验方法校验添加组件
+        const { verifyComponent } = tools;
+        const sourceComponent = component;
+        result = verifyComponent(sourceComponent, taegetCompoent, pageJson);
+    } else if (getTools && getTools.accept) {
+        const { accept } = getTools;
+        result = verifyComponentByAccept(accept, taegetCompoent);
+    } else if (getTools && getTools.groupType) {
+        const { groupType } = getTools;
+        result = verifyComponentByGroupType(groupType, taegetCompoent, parentId);
     }
-    if (!rowOnlyCol) {
-        return 'Row组件中只能配置Col组件';
-    }
-    if (!colOnlyRow) {
-        return 'Col组件只能配置在Row组件中';
+    if (!result) {
+        return `${
+            parentId === 'draw'
+                ? `${componentName}需放在容器组件中`
+                : `${componentName}不能放在${taegetCompoent.componentName}组件中`
+        }`;
     }
     return true;
 };
 
-// 基础组件,云组件必须放在容器组件中
-const checkContainer = (pageJson: any, componentName: string, parentId: string) => {
-    const childrenTools = getComponents()[componentName].tools.getTools();
-    const childrenGroupType = childrenTools.groupType;
+// 根据accept校验组件
+const verifyComponentByAccept = (accept: any, taegetCompoent: any) => {
+    if (!accept.includes(taegetCompoent.componentName)) {
+        return false;
+    }
+    return true;
+};
+
+// 根据groupType校验组件
+const verifyComponentByGroupType = (groupType: any, taegetCompoent: any, parentId: any) => {
     if (parentId === 'draw') {
-        if (childrenGroupType === 'basic' || childrenGroupType === 'biz') {
+        if (groupType === 'basic' || groupType === 'biz') {
             return false;
         }
     } else {
-        const parentComponent = findComponent(parentId, pageJson);
-        const { componentName: parentComponentName } = parentComponent;
-        const parentTools = getComponents()[parentComponentName].tools.getTools();
-        const parentGroupType = parentTools.groupType;
-        if ((childrenGroupType === 'basic' || childrenGroupType === 'biz') && parentGroupType !== 'container') {
+        const { componentName: targetComponentName } = taegetCompoent;
+        const targetTools = getComponents()[targetComponentName].tools.getTools();
+        const targetGroupType = targetTools.groupType;
+        if ((groupType === 'basic' || groupType === 'biz') && targetGroupType !== 'container') {
             return false;
         }
     }
     return true;
 };
+
+// export const checkAddComponentOld = (pageJson: any, component: any, parentId: string) => {
+//     let isOnly = true;
+//     let componentName;
+//     if (component.name) {
+//         componentName = component.name;
+//     } else if (component.id) {
+//         const childrenComponent: any = findComponent(component.id, pageJson);
+//         componentName = childrenComponent.componentName;
+//     }
+//     isOnly = checkOnly(pageJson, componentName);
+//     const rowOnlyCol = checkRowOnlyCol(pageJson, componentName, parentId);
+//     const colOnlyRow = checkColOnlyRow(pageJson, componentName, parentId);
+//     const isInContainer = checkContainer(pageJson, componentName, parentId);
+//     if (!isOnly) {
+//         return `${component.name}只能添加一次`;
+//     }
+//     if (!isInContainer) {
+//         return `${componentName}组件需放在容器组件中`;
+//     }
+//     if (!rowOnlyCol) {
+//         return 'Row组件中只能配置Col组件';
+//     }
+//     if (!colOnlyRow) {
+//         return 'Col组件只能配置在Row组件中';
+//     }
+//     return true;
+// };
+
+// // 基础组件,云组件必须放在容器组件中
+// const checkContainer = (pageJson: any, componentName: string, parentId: string) => {
+//     const childrenTools = getComponents()[componentName].tools.getTools();
+//     const childrenGroupType = childrenTools.groupType;
+//     if (parentId === 'draw') {
+//         if (childrenGroupType === 'basic' || childrenGroupType === 'biz') {
+//             return false;
+//         }
+//     } else {
+//         const parentComponent = findComponent(parentId, pageJson);
+//         const { componentName: parentComponentName } = parentComponent;
+//         const parentTools = getComponents()[parentComponentName].tools.getTools();
+//         const parentGroupType = parentTools.groupType;
+//         if ((childrenGroupType === 'basic' || childrenGroupType === 'biz') && parentGroupType !== 'container') {
+//             return false;
+//         }
+//     }
+//     return true;
+// };
 
 // 全局唯一
 const checkOnly = (pageJson: any, componentName: string) => {
@@ -188,42 +252,43 @@ const checkOnly = (pageJson: any, componentName: string) => {
     return true;
 };
 
-/**
- * 校验Row组件中只能配置Col
- * @param pageJson 数据
- * @param componentName 当前组件名称
- */
-const checkRowOnlyCol = (pageJson: any, componentName: string, parentId: string) => {
-    if (parentId === 'draw') {
-        return true;
-    }
-    const parentComponent = findComponent(parentId, pageJson);
-    const { componentName: parentComponentName } = parentComponent;
-    if (parentComponentName === 'Row' && componentName !== 'Col') {
-        return false;
-    }
-    return true;
-};
+// /**
+//  * 校验Row组件中只能配置Col
+//  * @param pageJson 数据
+//  * @param componentName 当前组件名称
+//  */
+// const checkRowOnlyCol = (pageJson: any, componentName: string, parentId: string) => {
+//     if (parentId === 'draw') {
+//         return true;
+//     }
+//     const parentComponent = findComponent(parentId, pageJson);
+//     const { componentName: parentComponentName } = parentComponent;
+//     if (parentComponentName === 'Row' && componentName !== 'Col') {
+//         return false;
+//     }
+//     return true;
+// };
 
-/**
- * 校验Col组件中只能配置在Row组件内
- * @param pageJson 数据
- * @param componentName 当前组件名称
- */
-const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string) => {
-    if (parentId === 'draw') {
-        if (componentName === 'Col') {
-            return false;
-        }
-        return true;
-    }
-    const parentComponent = findComponent(parentId, pageJson);
-    const { componentName: parentComponentName } = parentComponent;
-    if (componentName === 'Col' && parentComponentName !== 'Row') {
-        return false;
-    }
-    return true;
-};
+// /**
+//  * 校验Col组件中只能配置在Row组件内
+//  * @param pageJson 数据
+//  * @param componentName 当前组件名称
+//  */
+// const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string) => {
+//     if (parentId === 'draw') {
+//         if (componentName === 'Col') {
+//             return false;
+//         }
+//         return true;
+//     }
+//     const parentComponent = findComponent(parentId, pageJson);
+//     const { componentName: parentComponentName } = parentComponent;
+//     if (componentName === 'Col' && parentComponentName !== 'Row') {
+//         return false;
+//     }
+//     return true;
+// };
+
 interface CheckTypes {
     key: string;
     name: string;
