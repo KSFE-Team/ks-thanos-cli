@@ -22,9 +22,9 @@ const { confirm } = Modal;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson } = page;
-
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
+        console.log(components[0], 'components');
         if (!pageName) {
             message.error('请填写页面名称');
             return;
@@ -59,7 +59,7 @@ export default () => {
             onOk: async () => {
                 const componentsData =
                     pageOrTemp === 'page'
-                        ? getPageData(components)
+                        ? getPageData(components, pageJson)
                         : getComponent(JSON.parse(JSON.stringify(components)));
                 let id: number;
                 if (queryString.pageOrTemp === 'page' && pageOrTemp === 'template') {
@@ -67,6 +67,7 @@ export default () => {
                 } else {
                     id = Number(queryString.id || 0);
                 }
+                // console.log(componentsData, 'componentsData_____________', id, 'id');
                 actions.page.save({
                     postDate: {
                         [`${pageOrTemp}Data`]: JSON.stringify({

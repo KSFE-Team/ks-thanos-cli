@@ -15,7 +15,8 @@ const DEFAULT_LABEL = '内容';
 const MaterialBizSelectModal = (props: BizSelectModalConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL, placeholder = DEFAULT_LABEL } = formConfig;
+    const label = formConfig.label ? formConfig.label : DEFAULT_LABEL;
+    const placeholder = formConfig.placeholder ? formConfig.placeholder : DEFAULT_LABEL;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             <Input

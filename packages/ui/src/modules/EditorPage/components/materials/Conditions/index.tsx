@@ -10,7 +10,7 @@ interface ConditionsConfigProps extends ComponentConfig {
     id: string;
 }
 
-const DEFAULT_LABEL = '';
+const DEFAULT_LABEL = '版本号';
 
 const MaterialConditions = (props: ConditionsConfigProps) => {
     const { id, props: configProps } = props;

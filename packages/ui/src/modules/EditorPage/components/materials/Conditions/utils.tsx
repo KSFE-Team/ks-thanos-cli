@@ -10,6 +10,7 @@ interface ConditionsConfig extends ComponentJSON {
     componentType: string;
     source: string;
     formfields: Array<object>;
+    optionType: Array<string>;
 }
 
 /**
@@ -29,6 +30,7 @@ export const getInitJson = (): ConditionsConfig => ({
             type: 1, // 1kaishu、2huiben 默认1
         },
     ],
+    optionType: ['tagCode'],
 });
 
 /**
@@ -51,18 +53,20 @@ export const validator = (config: any) =>
     });
 
 export const toCode = (config: ConditionsConfig, formConfig: ConditionsConfig): ConditionsConfig => {
+    console.log(formConfig, '表单');
     const formObject = {
         ...config,
         componentType: 'cloud',
         source: 'Src/components/@ks/kms-conditions',
         props: {
-            formfields: [
-                {
-                    key: 'tagCode', // PropTypes.string.isRequired
-                    isRequired: true, // PropTypes.bool 默认true
-                    type: 1, // 1kaishu、2huiben 默认1
-                },
-            ],
+            optionType: ['tagCode'],
+            // formfields: [
+            //     {
+            //         key: 'tagCode', // PropTypes.string.isRequired
+            //         isRequired: true, // PropTypes.bool 默认true
+            //         type: 1, // 1kaishu、2huiben 默认1
+            //     },
+            // ],
         },
     };
     return { ...formObject };
@@ -95,15 +99,15 @@ export const DEFAULT_OPTIONS = [
         name: '终端类型',
     },
     {
-        value: optionValue.filterCondition,
+        value: optionValue.filterCondition, // loadAppVersionList
         name: '条件',
     },
     {
-        value: optionValue.includeChannelId,
+        value: optionValue.includeChannelId, // loadAppChannelList
         name: '渠道',
     },
     {
-        value: optionValue.excludeChannelId,
+        value: optionValue.excludeChannelId, // loadAppChannelList
         name: '指定渠道不投放',
     },
     {

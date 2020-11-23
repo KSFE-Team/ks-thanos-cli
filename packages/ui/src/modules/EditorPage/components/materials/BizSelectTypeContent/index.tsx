@@ -25,10 +25,10 @@ interface BizSelectTypeContentConfigProps extends ComponentConfig {
 const MaterialBizSelectTypeContent = (props: BizSelectTypeContentConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
-    const { label = DEFAULT_LABEL } = formConfig;
+    const typeLabel = formConfig.typeLabel ? formConfig.typeLabel : DEFAULT_LABEL;
     return (
         <div>
-            <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
+            <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={typeLabel}>
                 <RadioGroup value="album">
                     {CONTENT_ARR.map(({ label: name, value }) => {
                         return (
@@ -39,10 +39,10 @@ const MaterialBizSelectTypeContent = (props: BizSelectTypeContentConfigProps) =>
                     })}
                 </RadioGroup>
             </Form.Item>
-            <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
+            <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={typeLabel}>
                 <Input.Search
                     {...configProps}
-                    placeholder={label}
+                    placeholder={typeLabel}
                     style={{
                         width: '300px',
                     }}
