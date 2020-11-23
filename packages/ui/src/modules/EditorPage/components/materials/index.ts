@@ -16,6 +16,7 @@ import * as Fragment from './Fragment/index';
 import * as Row from './Row/index';
 import * as Table from './Table';
 import * as Col from './Col/index';
+import * as KSWhiteCard from './KSWhiteCard/index';
 
 export default {
     Form,
@@ -36,4 +37,5 @@ export default {
     Row,
     Table,
     Col,
+    KSWhiteCard,
 };
