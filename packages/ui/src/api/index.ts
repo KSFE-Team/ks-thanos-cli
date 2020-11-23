@@ -6,6 +6,7 @@ import { formatServerPort } from 'Src/utils';
 const SERVER_BASE = 'http://kaishufe.kaishustory.com';
 /* thanos 资产后端 */
 const THANOS_SERVER = `${SERVER_BASE}/api/ks-thanos/v1`;
+// const THANOS_SERVER = 'http://localhost:3012/api/ks-thanos/v1';
 /* cloudComponent 云组件后端 */
 const CLOUD_COMPONENT_SERVER = `${SERVER_BASE}/api/ks-component-cloud/v1`;
 /* 本地服务port解析 */

@@ -161,6 +161,6 @@ export const reCode = (config: TableConfig): TableConfig => {
     return {
         ...config,
         columns: config.props.columns,
-        api: config.dependencies.api.value,
+        api: config.dependencies.api && config.dependencies.api.value,
     };
 };

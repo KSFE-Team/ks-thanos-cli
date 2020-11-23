@@ -7,5 +7,8 @@ export const COLUMN_TYPE = [
     },
     {
         key: 'time'
+    },
+    {
+        key: 'money'
     }
 ];

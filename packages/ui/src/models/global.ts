@@ -5,35 +5,37 @@ import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
 // import terminal from 'Src/components/Terminal';
 
+export const STATE = {
+    isShowFolder: false,
+    fileList: [],
+    currentPath: '/Users',
+    cwd: '',
+    projects: [],
+    projectProcess: {},
+    thanosModalVisible: false, // 灭霸弹框 显|隐
+    initModalVisible: false, // 项目初始化弹框 显|隐
+    thanosGeneratorLoading: false, // 灭霸生成代码loading
+    projectConfig: {},
+    selectTemplateModalVisible: false,
+    templateList: [],
+    searchTemplateForm: {
+        page: 1,
+        limit: 12,
+        totalPage: 0,
+        total: 0,
+        pageName: {
+            value: '',
+        }, // 模版名
+    },
+};
+
 /**
  * 首页页面的业务模块
  */
 const projectModel = {
     namespace: 'global', // 项目命名空间,
 
-    initialState: {
-        isShowFolder: false,
-        fileList: [],
-        currentPath: '/Users',
-        cwd: '',
-        projects: [],
-        projectProcess: {},
-        thanosModalVisible: false, // 灭霸弹框 显|隐
-        initModalVisible: false, // 项目初始化弹框 显|隐
-        thanosGeneratorLoading: false, // 灭霸生成代码loading
-        projectConfig: {},
-        selectTemplateModalVisible: false,
-        templateList: [],
-        searchTemplateForm: {
-            page: 1,
-            limit: 12,
-            totalPage: 0,
-            total: 0,
-            pageName: {
-                value: '',
-            }, // 模版名
-        },
-    },
+    initialState: { ...STATE },
 
     effects: {
         /**
