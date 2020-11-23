@@ -108,7 +108,6 @@ export class SearchFormDelegate extends FormDelegate {
                         type="primary"
                         className="mar-l-4"
                         onClick={() => {
-                            // TODO: 跳转新增页面
                             goto.push('');
                         }}
                     >新增</Button>

@@ -45,7 +45,7 @@ export default (props: any) => {
                 }
                 setTimeout(() => {
                     to.className = className;
-                }, 2000);
+                }, 1000);
             }}
             onAdd={(eva) => {
                 const { clone, newIndex, oldIndex, from, path } = eva;

@@ -28,6 +28,7 @@ export interface BlockItemProps {
     deleteAble?: boolean;
     addProjectAble?: boolean;
     onClick?(data: BlockItemData): void;
+    onAddProject?(): void;
 }
 
 interface ToolTipAddButtonProps extends ButtonProps {
@@ -50,6 +51,7 @@ const BlockItem = ({
     editorAble = true,
     deleteAble = true,
     addProjectAble = true,
+    onAddProject,
 }: BlockItemProps) => {
     const handleDelete = (record: any) => {
         const name = type === 'page' ? `页面${record.pageName}` : `模版${record.templateName}`;
@@ -88,6 +90,9 @@ const BlockItem = ({
                                 <ToolTipAddButton
                                     type="primary"
                                     onClick={() => {
+                                        if (onAddProject) {
+                                            onAddProject();
+                                        }
                                         actions.workspace.setReducers({
                                             thanosModalVisible: true,
                                             initPageName: item.pageName,

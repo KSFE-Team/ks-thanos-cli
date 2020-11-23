@@ -10,59 +10,7 @@ export const STATE = {
     pageJson: {
         pageName: '',
         paramKey: '',
-        components: [
-            {
-                id: 'kqzwrhho4nq7bxgk91nrp',
-                componentName: 'Form',
-                source: 'antd',
-                default: false,
-                props: {},
-            },
-            // {
-            //     id: 'kqzwrhho4nq7bxgk91nrp',
-            //     componentName: 'Table',
-            //     source: 'antd',
-            //     default: false,
-            //     props: {},
-            // },
-            // {
-            //     id: 'kqzwrhho4nq7bxgk91n22rp',
-            //     componentName: 'Checkbox',
-            //     source: 'antd',
-            //     default: false,
-            //     props: {},
-            // },
-            // {
-            //     componentName: 'Form',
-            //     source: 'antd',
-            //     default: false,
-            //     props: {},
-            //     id: 'wl1cuuzftp',
-            //     components: [
-            //         {
-            //             id: 'kqzwrhm1nrp',
-            //             componentName: 'Input',
-            //             source: 'antd',
-            //             default: false,
-            //             props: {},
-            //         },
-            //         {
-            //             id: 'kqzwrhm1nr323p',
-            //             componentName: 'Checkbox',
-            //             source: 'antd',
-            //             default: false,
-            //             props: {},
-            //         },s
-            //         {
-            //             id: 'kqzwrhho4nq7bxgk91nrp',
-            //             componentName: 'Input',
-            //             source: 'antd',
-            //             default: false,
-            //             props: {},
-            //         },
-            //     ],
-            // },
-        ],
+        components: [],
     },
 };
 
