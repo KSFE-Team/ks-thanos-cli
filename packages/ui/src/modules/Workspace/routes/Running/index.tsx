@@ -38,7 +38,7 @@ export default () => {
 
     const handleThanos = () => {
         actions.global.setReducers({
-            currentPath: currentProject.path,
+            currentPath: `${currentProject.path}/src/pages`,
         });
         actions.workspace.setReducers({
             thanosModalVisible: true,

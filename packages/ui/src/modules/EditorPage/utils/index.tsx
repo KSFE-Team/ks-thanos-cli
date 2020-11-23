@@ -85,14 +85,14 @@ export const dragComponent = (components: any, dataSource: any, id: any) => {
 };
 
 // 查找源组件
-const findComponent = (id: any, pageJson: any): any => {
-    if (pageJson.id === id) {
+const findComponent = (id: any, pageJson: any, key: string = 'id'): any => {
+    if (pageJson[key] === id) {
         return pageJson;
     }
     if (pageJson.components) {
         let component;
         pageJson.components.forEach((item: any) => {
-            const result = findComponent(id, item);
+            const result = findComponent(id, item, key);
             if (result) {
                 component = result;
             }
@@ -138,7 +138,7 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     if (component.name) {
         componentName = component.name;
     } else if (component.id) {
-        const childrenComponent = findComponentById(pageJson, component.id);
+        const childrenComponent: any = findComponent(component.id, pageJson);
         componentName = childrenComponent.componentName;
     }
     isOnly = checkOnly(pageJson, componentName);
@@ -177,7 +177,7 @@ const checkContainer = (pageJson: any, componentName: string, parentId: string) 
             return false;
         }
     } else {
-        const parentComponent = findComponentById(pageJson, parentId);
+        const parentComponent = findComponent(parentId, pageJson);
         const { componentName: parentComponentName } = parentComponent;
         const parentTools = getComponents()[parentComponentName].tools.getTools();
         const parentGroupType = parentTools.groupType;
@@ -188,29 +188,9 @@ const checkContainer = (pageJson: any, componentName: string, parentId: string) 
     return true;
 };
 
-// 根据组件id查找组件
-const findComponentById = (pageJson: any, parentId: string) => {
-    let result;
-    const { components } = pageJson;
-    // eslint-disable-next-line array-callback-return
-    components.map((item: any) => {
-        if (parentId === item.id) {
-            result = item;
-        } else if (item.components) {
-            result = findComponentById(item, parentId);
-        }
-    });
-
-    return result;
-};
-
 // 全局唯一
 const checkOnly = (pageJson: any, componentName: string) => {
-    const { components } = pageJson;
-    if (
-        ONLYCOMPONENT.includes(componentName) &&
-        components.filter((item: { componentName: string }) => item.componentName === componentName).length > 0
-    ) {
+    if (ONLYCOMPONENT.includes(componentName) && findComponent(componentName, pageJson, 'componentName')) {
         return false;
     }
     return true;
@@ -225,7 +205,7 @@ const checkRowOnlyCol = (pageJson: any, componentName: string, parentId: string)
     if (parentId === 'draw') {
         return true;
     }
-    const parentComponent = findComponentById(pageJson, parentId);
+    const parentComponent = findComponent(parentId, pageJson);
     const { componentName: parentComponentName } = parentComponent;
     if (parentComponentName === 'Row' && componentName !== 'Col') {
         return false;
@@ -245,7 +225,7 @@ const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string)
         }
         return true;
     }
-    const parentComponent = findComponentById(pageJson, parentId);
+    const parentComponent = findComponent(parentId, pageJson);
     const { componentName: parentComponentName } = parentComponent;
     if (componentName === 'Col' && parentComponentName !== 'Row') {
         return false;

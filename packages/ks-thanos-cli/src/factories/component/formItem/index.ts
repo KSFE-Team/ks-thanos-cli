@@ -13,6 +13,7 @@ export interface FormItemConfig extends ComponentConfig {
     props: { // 组件属性
         [name: string]: any;
     };
+    formItem: 'false' | undefined; // 是否需要实现 formitem
 }
 
 /**

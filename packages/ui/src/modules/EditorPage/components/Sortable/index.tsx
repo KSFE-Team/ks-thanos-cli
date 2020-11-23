@@ -28,6 +28,7 @@ export default (props: any) => {
                 pull: 'clone',
             }}
             onChange={(eva) => {
+                console.log('onchange', eva);
                 const { clone, to } = eva;
                 const checkResult = checkAddComponent(page.pageJson, clone.dataset, to.id);
                 const warningdom = document.getElementsByClassName('warning');
@@ -45,7 +46,7 @@ export default (props: any) => {
                 }
                 setTimeout(() => {
                     to.className = className;
-                }, 2000);
+                }, 1000);
             }}
             onAdd={(eva) => {
                 const { clone, newIndex, oldIndex, from, path } = eva;
