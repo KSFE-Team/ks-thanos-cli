@@ -34,7 +34,8 @@ export class Form extends Component {
     constructor(page: Page | File, config: FormComponentConfig) {
         super(page, config);
         this.config = config;
-
+        this.page.form.type = this.config.type;
+        this.page.form.stateName = this.config.stateName;
         if (this.config.type === 'search') {
             this.delegate = new SearchFormDelegate(this);
         } else {
@@ -78,7 +79,7 @@ export class Form extends Component {
             type: this.config.type,
             pageName: this.page.pageName,
             stateName: this.stateName,
-            formItems: this.components.map((item) => (item as FormItem).config.key)
+            formItems: this.components.map((item: FormItem) => item.config.key)
         };
         const decorator = new FormDecorator(decoratorConfig);
         this.page.addDecorator(decorator);
