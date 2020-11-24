@@ -32,6 +32,13 @@ export const validator = (item: any): undefined | Error => {
     return undefined;
 };
 
+/* 校验Rol中只能放Col */
+export const verifyParentComponent = (sourceComponent: any, taegetCompoent: any, pageJson?: any) => {
+    if (sourceComponent?.name === 'Col') {
+        return true;
+    }
+    return false;
+};
 /* 组件转换JSON */
 export const toCode = (config: RowConfig, formConfig: RowConfig): RowConfig => {
     return {
