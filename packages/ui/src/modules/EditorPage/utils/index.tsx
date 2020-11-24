@@ -85,14 +85,14 @@ export const dragComponent = (components: any, dataSource: any, id: any) => {
 };
 
 // 查找源组件
-const findComponent = (id: any, pageJson: any): any => {
-    if (pageJson.id === id) {
+const findComponent = (id: any, pageJson: any, key: string = 'id'): any => {
+    if (pageJson[key] === id) {
         return pageJson;
     }
     if (pageJson.components) {
         let component;
         pageJson.components.forEach((item: any) => {
-            const result = findComponent(id, item);
+            const result = findComponent(id, item, key);
             if (result) {
                 component = result;
             }
@@ -138,14 +138,13 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     if (component.name) {
         componentName = component.name;
     } else if (component.id) {
-        const childrenComponent = findComponentById(pageJson, component.id);
+        const childrenComponent: any = findComponent(component.id, pageJson);
         componentName = childrenComponent.componentName;
     }
     isOnly = checkOnly(pageJson, componentName);
     const rowOnlyCol = checkRowOnlyCol(pageJson, componentName, parentId);
     const colOnlyRow = checkColOnlyRow(pageJson, componentName, parentId);
     const isInContainer = checkContainer(pageJson, componentName, parentId);
-    const formOnFragment = checkFormOnlyFragment(pageJson, componentName, parentId);
     const extendContainerCheck = checkExtendContainer(pageJson, componentName, parentId);
     if (!isOnly) {
         return `${component.name}只能添加一次`;
@@ -158,9 +157,6 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     }
     if (!colOnlyRow) {
         return 'Col组件只能配置在Row组件中';
-    }
-    if (!formOnFragment) {
-        return 'Fragment组件中只能配置一个Form组件';
     }
     if (!extendContainerCheck) {
         return 'ExtendContainer组件中不支持嵌套Form组件和ExtendContainer组件';
@@ -177,7 +173,7 @@ const checkContainer = (pageJson: any, componentName: string, parentId: string) 
             return false;
         }
     } else {
-        const parentComponent = findComponentById(pageJson, parentId);
+        const parentComponent = findComponent(parentId, pageJson);
         const { componentName: parentComponentName } = parentComponent;
         const parentTools = getComponents()[parentComponentName].tools.getTools();
         const parentGroupType = parentTools.groupType;
@@ -188,29 +184,9 @@ const checkContainer = (pageJson: any, componentName: string, parentId: string) 
     return true;
 };
 
-// 根据组件id查找组件
-const findComponentById = (pageJson: any, parentId: string) => {
-    let result;
-    const { components } = pageJson;
-    // eslint-disable-next-line array-callback-return
-    components.map((item: any) => {
-        if (parentId === item.id) {
-            result = item;
-        } else if (item.components) {
-            result = findComponentById(item, parentId);
-        }
-    });
-
-    return result;
-};
-
 // 全局唯一
 const checkOnly = (pageJson: any, componentName: string) => {
-    const { components } = pageJson;
-    if (
-        ONLYCOMPONENT.includes(componentName) &&
-        components.filter((item: { componentName: string }) => item.componentName === componentName).length > 0
-    ) {
+    if (ONLYCOMPONENT.includes(componentName) && findComponent(componentName, pageJson, 'componentName')) {
         return false;
     }
     return true;
@@ -225,7 +201,7 @@ const checkRowOnlyCol = (pageJson: any, componentName: string, parentId: string)
     if (parentId === 'draw') {
         return true;
     }
-    const parentComponent = findComponentById(pageJson, parentId);
+    const parentComponent = findComponent(parentId, pageJson);
     const { componentName: parentComponentName } = parentComponent;
     if (parentComponentName === 'Row' && componentName !== 'Col') {
         return false;
@@ -245,37 +221,12 @@ const checkColOnlyRow = (pageJson: any, componentName: string, parentId: string)
         }
         return true;
     }
-    const parentComponent = findComponentById(pageJson, parentId);
+    const parentComponent = findComponent(parentId, pageJson);
     const { componentName: parentComponentName } = parentComponent;
     if (componentName === 'Col' && parentComponentName !== 'Row') {
         return false;
     }
     return true;
-};
-/**
- * 校验Form组件中只能在Fragment组件内配置一次，不可嵌套配置
- * @param pageJson 数据
- * @param componentName 当前组件名称
- */
-const checkFormOnlyFragment = (pageJson: any, componentName: string, parentId: string) => {
-    let flag = true;
-    if (parentId === 'draw') {
-        return true;
-    }
-    const { components } = pageJson;
-    components.find((item: any) => {
-        if (item.componentName === 'Fragment') {
-            if (
-                item.components.filter((comp: { componentName: string }) => comp.componentName === componentName)
-                    .length > 0
-            ) {
-                flag = false;
-                return true;
-            }
-            return true;
-        }
-    });
-    return flag;
 };
 /**
  * ExtendContainer组件不可嵌套Form，不可嵌套ExtendContainer
@@ -286,8 +237,9 @@ const checkExtendContainer = (pageJson: any, componentName: string, parentId: st
     if (parentId === 'draw') {
         return true;
     }
-    const parentComponent = findComponentById(pageJson, parentId);
+    const parentComponent = findComponent(parentId, pageJson);
     const { componentName: parentComponentName } = parentComponent;
+    console.log(parentComponent, '-----');
     if (
         parentComponentName === 'ExtendContainer' &&
         (componentName === 'Form' || componentName === 'ExtendContainer')

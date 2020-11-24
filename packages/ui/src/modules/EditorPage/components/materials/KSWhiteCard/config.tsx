@@ -35,7 +35,7 @@ export default (props: KSWhiteCardConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <FormItem label="title" name={NAME} {...formItemLayout}>
+                <FormItem label="卡片title" name={NAME} {...formItemLayout} required>
                     <Input placeholder="例如： 分类表单" />
                 </FormItem>
             </Form>

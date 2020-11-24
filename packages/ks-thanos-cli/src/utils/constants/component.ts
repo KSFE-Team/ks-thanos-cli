@@ -15,6 +15,7 @@ import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import { Row } from 'Src/factories/component/row';
 import { Col } from 'Src/factories/component/col';
+import { KSWhiteCard } from 'Src/factories/component/ksWhiteCard';
 import {
     BizSelectModal,
     BizSelectTags,
@@ -46,6 +47,6 @@ export const COMPONENT_TYPES_MAP: {
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
-    BizSelectTypeContent: BizSelectTypeContent
-
+    BizSelectTypeContent: BizSelectTypeContent,
+    KSWhiteCard: KSWhiteCard
 };

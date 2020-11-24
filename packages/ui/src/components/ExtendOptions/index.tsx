@@ -18,9 +18,9 @@ export default (props: ExtendOptions) => {
     const { page, sotres } = useSelector((store: any) => ({ page: store.page, sotres: store }));
     const { labelText, valueText, config, id } = props;
     const fragment = getFragments(page.pageJson.components, sotres) || [];
-    const childrens = fragment.map(({ name, id }, index) => {
+    const childrens = fragment.map(({ name, id: fragmentId }, index) => {
         return (
-            <Option value={id} key={index}>
+            <Option value={fragmentId} key={index}>
                 {name}
             </Option>
         );

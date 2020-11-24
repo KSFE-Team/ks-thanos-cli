@@ -12,7 +12,7 @@ interface KSWhiteCardConfig extends ComponentJSON {
 export const getInitJson = (): KSWhiteCardConfig => ({
     stateName: '',
     componentName: 'KSWhiteCard',
-    source: 'React',
+    source: 'ks-cms-ui',
     default: false,
     components: [], // 区域块内的组件
     title: '', // 卡片title名称
@@ -39,6 +39,6 @@ export const toCode = (config: KSWhiteCardConfig, formConfig: KSWhiteCardConfig)
             title: formConfig.title,
         },
     };
-    delete formObject.props;
+    console.log(formObject, 'formObject');
     return { ...formObject };
 };
