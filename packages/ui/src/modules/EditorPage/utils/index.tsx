@@ -145,21 +145,28 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     if (!isOnly) {
         return `${component.name}只能添加一次`;
     }
-    const { tools } = getComponents()[component.name];
+    const { tools: childrenTools } = getComponents()[component.name];
     const taegetCompoent = findComponent(parentId, pageJson) || 'draw';
-    const getTools = tools.getTools();
+    const sourceComponent = component;
+    const getTools = childrenTools.getTools();
+    let parentTools;
+    if (taegetCompoent !== 'draw') {
+        parentTools = getComponents()[taegetCompoent.componentName].tools;
+    }
     let result;
-    if (tools && tools.componentVerify) {
-        // 根据组件自身校验方法校验添加组件
-        const { verifyComponent } = tools;
-        const sourceComponent = component;
-        result = verifyComponent(sourceComponent, taegetCompoent, pageJson);
+    if (parentTools && parentTools.verifyParentComponent) {
+        result = parentTools.verifyParentComponent(sourceComponent, taegetCompoent, pageJson);
+    } else if (childrenTools && childrenTools.verifyComponent) {
+        result = childrenTools.verifyComponent(sourceComponent, taegetCompoent, pageJson);
     } else if (getTools && getTools.accept) {
         const { accept } = getTools;
         result = verifyComponentByAccept(accept, taegetCompoent);
     } else if (getTools && getTools.groupType) {
         const { groupType } = getTools;
         result = verifyComponentByGroupType(groupType, taegetCompoent, parentId);
+    }
+    if (result && typeof result !== 'boolean') {
+        return result;
     }
     if (!result) {
         return `${
