@@ -8,7 +8,6 @@ import { DEFAULT_OPTIONS } from './utils';
 
 const FIELD = {
     FORMFIELDS: 'formfields',
-    OPTIONTYPE: 'optionType',
     TYPE: 'type',
     KEY: 'key',
     ISREQUIRED: 'isRequired',
@@ -27,48 +26,67 @@ export default (props: ConditionsProps) => {
             {option.name}({option.value})
         </Option>
     ));
-    const aliasArray = config[FIELD.OPTIONTYPE] || [];
     const formfields = config[FIELD.FORMFIELDS] || [];
-    const newFormfields = aliasArray.map((key: string) => {
-        const obj = formfields.find((item: any) => item.key === key) || { isRequired: true, type: 1 };
-        return {
-            key,
-            isRequired: obj.isRequired,
-            type: obj.type,
-        };
-    });
 
     return (
         <div>
             <Form
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
-                    actions[id].setReducers(allFields);
+                    const formfieldsArray =
+                        allFields.type &&
+                        allFields.type.length &&
+                        allFields.type.map((item: string) => {
+                            return {
+                                key: item,
+                                isRequired: allFields[`isRequired_${item}`],
+                                type: allFields[`type_${item}`],
+                            };
+                        });
+                    actions[id].setReducers({
+                        formfields: formfieldsArray,
+                        ...allFields,
+                        type: allFields.type,
+                        isChange: true,
+                    });
                 }}
-                fields={Object.keys(config).map((key) => ({
-                    name: [key],
-                    value: config[key],
-                }))}
+                fields={Object.keys(config).map((key: string) => {
+                    return {
+                        name: [key],
+                        value: config[key],
+                    };
+                })}
             >
-                <FormItem name={FIELD.OPTIONTYPE} label="版本号" required>
+                <FormItem name={FIELD.TYPE} label="版本号" required>
                     <Select placeholder="请选择" style={{ width: '100%', color: '#000' }} showSearch mode="tags">
                         {children}
                     </Select>
                 </FormItem>
-                {newFormfields.map((item: any, index: number) => {
+                {formfields.map((item: any, index: number) => {
                     const optionObj = DEFAULT_OPTIONS.find(({ value }) => value === item[FIELD.KEY]) || { name: '' };
                     return (
                         <div key={item[FIELD.KEY]} style={{ display: 'flex' }}>
-                            <FormItem label="类型" style={{ marginRight: '15px' }} name={item[FIELD.KEY]}>
+                            <FormItem label="类型" style={{ marginRight: '15px' }} required>
                                 <p>{optionObj.name}</p>
                             </FormItem>
-                            <FormItem label="是否必填" style={{ marginRight: '15px' }} name={item[FIELD.ISREQUIRED]}>
+                            <FormItem
+                                label="是否必填"
+                                style={{ marginRight: '15px' }}
+                                name={`${FIELD.ISREQUIRED}_${item[FIELD.KEY]}`}
+                                required
+                                initialValue={item[FIELD.ISREQUIRED] !== false}
+                            >
                                 <Radio.Group>
                                     <Radio value>是</Radio>
                                     <Radio value={false}>否</Radio>
                                 </Radio.Group>
                             </FormItem>
-                            <FormItem label="应用" name={item[FIELD.TYPE]}>
+                            <FormItem
+                                label="应用"
+                                name={`${FIELD.TYPE}_${item[FIELD.KEY]}`}
+                                required
+                                initialValue={item[FIELD.TYPE] || 1}
+                            >
                                 <Radio.Group>
                                     <Radio value={1}>凯叔</Radio>
                                     <Radio value={2}>绘本</Radio>

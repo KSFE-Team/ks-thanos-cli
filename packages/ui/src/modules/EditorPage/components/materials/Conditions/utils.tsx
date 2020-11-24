@@ -10,7 +10,7 @@ interface ConditionsConfig extends ComponentJSON {
     componentType: string;
     source: string;
     formfields: Array<object>;
-    optionType: Array<string>;
+    type: Array<string>;
 }
 
 /**
@@ -30,7 +30,7 @@ export const getInitJson = (): ConditionsConfig => ({
             type: 1, // 1kaishu、2huiben 默认1
         },
     ],
-    optionType: ['tagCode'],
+    type: ['tagCode'],
 });
 
 /**
@@ -53,21 +53,12 @@ export const validator = (config: any) =>
     });
 
 export const toCode = (config: ConditionsConfig, formConfig: ConditionsConfig): ConditionsConfig => {
-    console.log(formConfig, '表单');
     const formObject = {
         ...config,
         componentType: 'cloud',
         source: 'Src/components/@ks/kms-conditions',
-        props: {
-            optionType: ['tagCode'],
-            // formfields: [
-            //     {
-            //         key: 'tagCode', // PropTypes.string.isRequired
-            //         isRequired: true, // PropTypes.bool 默认true
-            //         type: 1, // 1kaishu、2huiben 默认1
-            //     },
-            // ],
-        },
+        type: formConfig.type,
+        formfields: formConfig.formfields,
     };
     return { ...formObject };
 };
