@@ -21,6 +21,7 @@ export const getTools = () => ({
     icon: 'square',
     componentName: 'Col',
     groupType: 'container',
+    accept: ['Row'],
 });
 
 /* form组件配置校验 */

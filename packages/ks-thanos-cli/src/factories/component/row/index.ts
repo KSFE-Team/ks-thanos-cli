@@ -7,6 +7,20 @@ import { getPropStr } from 'Src/utils/getPropValue';
 const debug = Debug(__filename);
 
 /**
+ * 去掉对象中无值的key
+ * @param obj
+ * @returns {*}
+ */
+const deleteObjectEmptyKey = (obj: any) => {
+    Object.keys(obj).forEach((key) => {
+        if (obj[key] === '' || obj[key] === undefined) {
+            delete obj[key];
+        }
+    });
+    return obj;
+};
+
+/**
  * 表单组件配置
  */
 export interface RowComponentConfig extends ComponentConfig {
@@ -79,8 +93,9 @@ export class Row extends Component {
             justify: this.config.justify,
             align: this.config.align,
         }
+
         return `<Row
-                    ${this.getProps(props)}
+                    ${this.getProps(deleteObjectEmptyKey(props))}
                 >
                     ${componentsCode.join('\n')}
                 </Row>
