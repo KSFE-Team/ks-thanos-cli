@@ -37,9 +37,11 @@ export abstract class FormItem extends Component {
     }
 
     initPageState() {
-        if (this.config.formType === 'search') {
+        const formType: string = this.config.formType || this.page.form.type;
+        const stateName: string = this.stateName || this.page.form.stateName;
+        if (formType === 'search') {
             const stateValue = getPropValue(this.config.initialValue);
-            this.page.model.addInitialState(this.stateName, this.config.key, stateValue);
+            this.page.model.addInitialState(stateName, this.config.key, stateValue);
             this.page.model.listEffectRequestParams.push({
                 name: this.config.key
             });

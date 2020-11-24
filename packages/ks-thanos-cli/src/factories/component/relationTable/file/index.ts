@@ -37,6 +37,13 @@ export default class File extends BasicContainer {
 
     renderVariableDeclaration: VariableDeclaration[] = []; // render前定义的变量
     stateVariableDeclaration: VariableFromState[] = []; // state中的定义变量
+    form: {
+        type: 'search' | 'normal';
+        stateName: string;
+    } = {
+        type: 'search',
+        stateName: ''
+    } // formItem使用的form 公共参数
     /**
      * 构造函数
      * @param name 页面名

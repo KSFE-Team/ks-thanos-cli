@@ -35,7 +35,19 @@ export default function({
 };
 
 /* 检查版本 */
-const checkVersion = (newVersion, preVersion) => versionToNumber(newVersion) > versionToNumber(preVersion);
+const checkVersion = (newVersion, preVersion) => transferVersion(newVersion) > transferVersion(preVersion);
+/* 匹配类似beta版本号 */
+const DIST_TAGS_REG = /-[a-z].*\./g;
+
+/* 转换版本号 */
+const transferVersion = (version) => {
+    const reg = new RegExp(DIST_TAGS_REG);
+    if (reg.test(version)) {
+        const [MAIN_VERSION, TEST_COUNT] = version.split(reg);
+        return versionToNumber(MAIN_VERSION) + (TEST_COUNT - 0);
+    }
+    return versionToNumber(version);
+};
 
 /* 转化版本为数值 */
 const versionToNumber = (version) => version.split('.').map((number) => number > 10 ? number : `0${number}`).join('') - 0;
