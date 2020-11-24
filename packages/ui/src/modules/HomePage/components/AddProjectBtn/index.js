@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { PlusOutlined, ImportOutlined } from '@ant-design/icons';
 import SelectPathModal from 'Src/components/SelectPathModal';
 import InitModal from '../InitModal';
+import { STATE } from 'Src/models/global';
 
 export default (props) => {
     const { homepage, global } = useSelector((store) => ({
@@ -14,17 +15,13 @@ export default (props) => {
     const { initModalVisible, projects } = homepage;
     const { isShowFolder, currentPath } = global;
 
-    const handleSelectProject = (add = '') => {
-        actions.global.selectFolder({
-            path: currentPath + add
-        });
-    };
-
     return (
         <Fragment>
             <Button
                 onClick={() => {
-                    handleSelectProject('');
+                    actions.global.selectFolder({
+                        path: STATE.currentPath
+                    });
                 }}
             >
                 <ImportOutlined />导入项目
@@ -33,6 +30,9 @@ export default (props) => {
                 className='mar-l-16'
                 type='primary'
                 onClick={() => {
+                    actions.global.setReducers({
+                        currentPath: STATE.currentPath
+                    });
                     actions.homepage.setReducers({
                         initModalVisible: true
                     });

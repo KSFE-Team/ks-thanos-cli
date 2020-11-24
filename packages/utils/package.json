@@ -5,7 +5,8 @@
   "author": "caic <caichenyu@ksjgs.com>",
   "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/utils#readme",
   "license": "ISC",
-  "main": "output/index.js",
+  "main": "output/cjs/index.js",
+  "module": "output/es/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -33,8 +34,8 @@
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
   "devDependencies": {
-    "@ks-web-cli/plugin-module": "^4.7.0",
-    "@ks-web-cli/plugin-test": "^4.7.0"
+    "@ks-web-cli/plugin-module": "^4.15.1",
+    "@ks-web-cli/plugin-test": "^4.12.0"
   },
   "dependencies": {
     "chalk": "^3.0.0"

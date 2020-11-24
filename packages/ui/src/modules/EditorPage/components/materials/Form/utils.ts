@@ -171,9 +171,9 @@ export const reCode = (config: FormConfig): FormConfig => {
         const { activeEvents } = config;
         const [SAVE_REQUEST, UPDATE_REQUEST, GET_REQUEST] = activeEvents;
         apiConfig = {
-            saveApi: SAVE_REQUEST.dependencies.api.value,
-            updateApi: UPDATE_REQUEST.dependencies.api.value,
-            getApi: GET_REQUEST.dependencies.api.value,
+            saveApi: SAVE_REQUEST.dependencies.api && SAVE_REQUEST.dependencies.api.value,
+            updateApi: UPDATE_REQUEST.dependencies.api && UPDATE_REQUEST.dependencies.api.value,
+            getApi: GET_REQUEST.dependencies.api && GET_REQUEST.dependencies.api.value,
         };
     }
     return {

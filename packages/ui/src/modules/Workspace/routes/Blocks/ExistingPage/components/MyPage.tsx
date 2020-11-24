@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Row, Button, Col, Input, Pagination, Spin, Empty } from 'antd';
 import ThanosModal from 'Src/modules/Workspace/component/ThanosModal';
 import { STATE } from '../model/index';
-import BlockItem from '../../component/BlockItem';
+import BlockItem, { BlockItemData } from '../../component/BlockItem';
 import CuPageModal from './CuPageModal';
 import styles from '../../component/index.module.scss';
 
@@ -36,7 +36,7 @@ export default () => {
         listLoading: store.loading.effects['existingPage/getPageList'],
     }));
     const { pageList = [], searchPageForm, cuPageModalVisible } = existingPage;
-    const { thanosModalVisible } = workspace;
+    const { thanosModalVisible, currentProject } = workspace;
 
     const handlePageChange = (page: any) => {
         actions.existingPage.setReducers({
@@ -86,8 +86,19 @@ export default () => {
             }}
         >
             <Row gutter={[20, 20]}>
-                {pageList.map((item, index) => {
-                    return <BlockItem key={index} item={item} type="page" />;
+                {pageList.map((item: BlockItemData, index: number) => {
+                    return (
+                        <BlockItem
+                            onAddProject={() => {
+                                actions.global.setReducers({
+                                    currentPath: `${currentProject.path}/src/pages`,
+                                });
+                            }}
+                            key={index}
+                            item={item}
+                            type="page"
+                        />
+                    );
                 })}
             </Row>
         </div>

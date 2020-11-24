@@ -4,7 +4,7 @@ import { Component, ComponentConfig } from 'Src/factories/component/basic';
 import { ComponentManager } from '../manager';
 import { COLUMN_TYPE } from './constants';
 
-const [{key: NORMAL}, {key: TIME}] = COLUMN_TYPE;
+const [{key: NORMAL}, {key: TIME}, {key: MONEY}] = COLUMN_TYPE;
 
 export interface TableColumnConfig {
     title: string; // 标题
@@ -51,6 +51,16 @@ export class TableColumn extends BasicContainer implements TableColumnConfig {
                     }
                 ];
                 break;
+            case MONEY:
+                imports = [
+                    ...imports,
+                    {
+                        source: 'ks-cms-utils',
+                        name: 'formatMoney',
+                        defaultImport: false
+                    }
+                ];
+                break;
             case NORMAL:
             default:
                 if (this.component) {
@@ -82,6 +92,10 @@ export class TableColumn extends BasicContainer implements TableColumnConfig {
         switch (this.dataType) {
             case TIME:
                 codes.push(`render: (time) => time && formatDateTime(time)`);
+                break;
+            case MONEY:
+                codes.push(`render: (text) => text && formatMoney(text)`);
+                break;
             case NORMAL:
                 break;
         }

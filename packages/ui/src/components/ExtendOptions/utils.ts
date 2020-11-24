@@ -18,6 +18,7 @@ export const getFragments = (components: any[] = [], stores: any = {}) => {
             });
             return true;
         }
+        return false;
     });
     return fragments;
 };
