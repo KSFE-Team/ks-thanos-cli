@@ -28,7 +28,6 @@ export default (props: any) => {
                 pull: 'clone',
             }}
             onChange={(eva) => {
-                console.log('onchange', eva);
                 const { clone, to } = eva;
                 const checkResult = checkAddComponent(page.pageJson, clone.dataset, to.id);
                 const warningdom = document.getElementsByClassName('warning');

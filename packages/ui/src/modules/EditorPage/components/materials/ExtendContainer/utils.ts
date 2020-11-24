@@ -54,3 +54,8 @@ export const toCode = (config: ExtendContainerConfig, formConfig: ExtendContaine
         ...formConfig,
     };
 };
+
+/** 组件校验 */
+export const verifyComponent = (config: ExtendContainerConfig): ExtendContainerConfig => {
+    console.log(config);
+};
