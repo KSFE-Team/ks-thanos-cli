@@ -149,11 +149,10 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     const taegetCompoent = findComponent(parentId, pageJson) || 'draw';
     const getTools = tools.getTools();
     let result;
-    if (tools && tools.componentVerify) {
+    if (tools && tools.verifyComponent) {
         // 根据组件自身校验方法校验添加组件
-        const { verifyComponent } = tools;
         const sourceComponent = component;
-        result = verifyComponent(sourceComponent, taegetCompoent, pageJson);
+        result = tools.verifyComponent(sourceComponent, taegetCompoent, pageJson);
     } else if (getTools && getTools.accept) {
         const { accept } = getTools;
         result = verifyComponentByAccept(accept, taegetCompoent);
