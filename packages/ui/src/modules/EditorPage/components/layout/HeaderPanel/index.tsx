@@ -66,7 +66,6 @@ export default () => {
                 } else {
                     id = Number(queryString.id || 0);
                 }
-                // console.log(componentsData, 'componentsData_____________', id, 'id');
                 actions.page.save({
                     postDate: {
                         [`${pageOrTemp}Data`]: JSON.stringify({

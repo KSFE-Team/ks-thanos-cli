@@ -27,6 +27,7 @@ export const getTools = () => ({
     icon: 'square',
     componentName: 'ExtendContainer',
     groupType: 'container',
+    accept: ['Form', 'KSWhiteCard'],
 });
 
 // eslint-disable-next-line consistent-return
@@ -55,7 +56,12 @@ export const toCode = (config: ExtendContainerConfig, formConfig: ExtendContaine
     };
 };
 
-/** 组件校验 */
-export const verifyComponent = (config: ExtendContainerConfig): ExtendContainerConfig => {
-    console.log(config);
+/** 组件拖拽配置校验 */
+export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
+    const doNotPlace = ['ExtendContainer', 'draw', 'KSWhiteCard', 'Fragment'];
+    const targetName = typeof taegetCompoent === 'string' ? taegetCompoent : taegetCompoent.componentName;
+    if (doNotPlace.includes(targetName)) {
+        return 'ExtendContainer组件可嵌套在Form，KSWhiteCard组件中，其他组件中不支持配置！';
+    }
+    return true;
 };

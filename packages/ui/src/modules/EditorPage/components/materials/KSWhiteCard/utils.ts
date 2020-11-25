@@ -42,3 +42,11 @@ export const toCode = (config: KSWhiteCardConfig, formConfig: KSWhiteCardConfig)
     console.log(formObject, 'formObject');
     return { ...formObject };
 };
+/** 组件拖拽配置校验 */
+export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
+    const doNotPlace = ['ExtendContainer'];
+    if (doNotPlace.includes(taegetCompoent.componentName)) {
+        return 'KSWhiteCard容器组件不能配置在ExtendContainer组件中！';
+    }
+    return true;
+};

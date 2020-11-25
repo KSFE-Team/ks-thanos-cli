@@ -40,3 +40,11 @@ export const toCode = (config: FragmentConfig, formConfig: FragmentConfig): Frag
     delete formObject.props;
     return { ...formObject };
 };
+/** 组件拖拽配置校验 */
+export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
+    const doNotPlace = ['ExtendContainer'];
+    if (doNotPlace.includes(taegetCompoent.componentName)) {
+        return 'ExtendContainer组件不能配置在Fragment中！';
+    }
+    return true;
+};

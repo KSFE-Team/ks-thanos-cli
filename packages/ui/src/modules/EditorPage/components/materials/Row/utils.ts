@@ -46,3 +46,11 @@ export const toCode = (config: RowConfig, formConfig: RowConfig): RowConfig => {
         ...formConfig,
     };
 };
+/** 组件拖拽配置校验 */
+export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
+    const doNotPlace = ['ExtendContainer'];
+    if (doNotPlace.includes(taegetCompoent.componentName)) {
+        return 'Row组件不能配置在ExtendContainer组件中！';
+    }
+    return true;
+};
