@@ -11,7 +11,6 @@ const debug = Debug(__filename);
  */
 export function getImportsCode(imports: Import[]) {
     const pageImports: FileImport = {};
-
     imports.forEach((importItem) => {
         const { source } = importItem;
         const existedImport = pageImports[source];
