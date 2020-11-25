@@ -12,7 +12,7 @@ export class RangePicker extends FormItem {
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
         this.componentName = 'RangePicker';
-        this.parentComponentName = 'DatePicker';
+        this.parentComponentName = 'KSDatePicker';
         this.config = config;
     }
 
@@ -20,8 +20,8 @@ export class RangePicker extends FormItem {
         let imports = super.getImports();
         imports = imports.concat([
             {
-                source: 'antd',
-                name: 'DatePicker',
+                source: 'ks-cms-ui',
+                name: 'KSDatePicker',
                 defaultImport: false
             }
         ]);
@@ -33,20 +33,10 @@ export class RangePicker extends FormItem {
     }
 
     toCode() {
-        const propsKeyArr: string[] = this.config.props && Object.keys(this.config.props);
-        const propsCode = propsKeyArr.map((item) => {
-            let value: any[] | string = this.config.props[item];
-            switch (item) {
-                case 'placeholder':
-                    return `${item}={[${Array.isArray(value) && value.map((e: any)=> `'${e}'`).join(',')}]}`;
-                case 'showTime':
-                    return `${item}={${JSON.stringify(value)}}`;
-                case 'format':
-                    return `${item}="${value}"`;
-            }
-        });
-        return `<DatePicker.RangePicker
-        ${propsCode.join('\n').replace(/\"/g, '\'')}
+        const { props = {} } = this.config;
+        const place = props.placeholder.split('/');
+        return `<KSDatePicker.RangePicker
+        placeholder={[${place.map((item:string) => `'${item}'`).join(', ')}]}
     />`;
     }
 }

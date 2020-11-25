@@ -38,7 +38,7 @@ export const COMPONENT_TYPES_MAP: {
     Textarea: Textarea, // 文本框组件
     InputNumber: InputNumber,
     Radio,
-    DatePicker: DatePicker,
+    KSDatePicker: DatePicker,
     Fragment: Fragment,
     RelationTable: RelationTable,
     ExtendContainer: ExtendContainer,
