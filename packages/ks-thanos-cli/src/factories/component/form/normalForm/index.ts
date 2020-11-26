@@ -253,7 +253,6 @@ export class NormalFormDelegate extends FormDelegate {
                 ${rulesCodes}
             ],\n}`);
         }
-
         /* 不需要formItem 则直接返回组件代码 */
         if (item.config.formItem === 'false') {
             return item.toCode();

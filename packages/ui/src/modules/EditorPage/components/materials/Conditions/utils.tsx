@@ -7,7 +7,6 @@ interface ConditionsConfig extends ComponentJSON {
     source: string;
     formfields: Array<object>;
     type: Array<string>;
-    formItem: string;
 }
 
 /**
@@ -27,7 +26,6 @@ export const getInitJson = (): ConditionsConfig => ({
         },
     ],
     type: ['tagCode'],
-    formItem: 'false',
 });
 
 /**
