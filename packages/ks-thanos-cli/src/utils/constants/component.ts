@@ -14,6 +14,7 @@ import { Fragment } from 'Src/factories/component/fragment';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import { Row } from 'Src/factories/component/row';
 import { Col } from 'Src/factories/component/col';
+import { KSWhiteCard } from 'Src/factories/component/ksWhiteCard';
 import {
     BizSelectModal,
     BizSelectTags,
@@ -36,7 +37,7 @@ export const COMPONENT_TYPES_MAP: {
     Textarea: Textarea, // 文本框组件
     InputNumber: InputNumber,
     Radio,
-    DatePicker: DatePicker,
+    KSDatePicker: DatePicker,
     Fragment: Fragment,
     ExtendContainer: ExtendContainer,
     Row: Row,
@@ -44,5 +45,6 @@ export const COMPONENT_TYPES_MAP: {
     BizSelectModal: BizSelectModal,
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
-    BizSelectTypeContent: BizSelectTypeContent
+    BizSelectTypeContent: BizSelectTypeContent,
+    KSWhiteCard: KSWhiteCard
 };

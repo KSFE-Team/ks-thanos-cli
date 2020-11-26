@@ -4,19 +4,20 @@ import { ISREQUIRED_TYPE } from '../../../utils/constants';
 
 const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
-interface DatePickerConfig extends ComponentJSON {
+interface KSDatePickerConfig extends ComponentJSON {
     key: string;
     label: string;
     isRequired: boolean;
     placeholder: string;
+    source: string;
 }
 
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): DatePickerConfig => ({
-    componentName: 'DatePicker',
-    source: 'antd',
+export const getInitJson = (): KSDatePickerConfig => ({
+    componentName: 'KSDatePicker',
+    source: 'ks-cms-ui',
     default: false,
     placeholder: '请选择时间',
     key: '',
@@ -28,15 +29,15 @@ export const getInitJson = (): DatePickerConfig => ({
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'DatePicker',
+    name: 'KSDatePicker',
     icon: 'calendar',
-    componentName: 'DatePicker',
+    componentName: 'KSDatePicker',
     groupType: 'basic',
 });
 
 export const validator = (config: any) => baseValidator(config);
 
-export const toCode = (config: DatePickerConfig, formConfig: DatePickerConfig): DatePickerConfig => {
+export const toCode = (config: KSDatePickerConfig, formConfig: KSDatePickerConfig): KSDatePickerConfig => {
     const formObject = {
         ...config,
         ...formConfig,
@@ -48,9 +49,10 @@ export const toCode = (config: DatePickerConfig, formConfig: DatePickerConfig): 
     return { ...formObject };
 };
 
-export const reCode = (config: DatePickerConfig): DatePickerConfig => {
+export const reCode = (config: KSDatePickerConfig): KSDatePickerConfig => {
+    const { props = {} } = config;
     return {
         ...config,
-        placeholder: config.props.placeholder,
+        placeholder: props.placeholder,
     };
 };
