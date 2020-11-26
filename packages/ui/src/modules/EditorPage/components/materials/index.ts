@@ -2,7 +2,7 @@ import * as Form from './Form/index';
 import * as Input from './Input/index';
 import * as Select from './Select/index';
 import * as Checkbox from './Checkbox/index';
-import * as DatePicker from './DatePicker/index';
+import * as KSDatePicker from './DatePicker/index';
 import * as RangePicker from './RangePicker/index';
 import * as Radio from './Radio/index';
 import * as TextArea from './TextArea/index';
@@ -17,12 +17,13 @@ import * as Row from './Row/index';
 import * as Conditions from './Conditions/index';
 import * as Table from './Table';
 import * as Col from './Col/index';
+import * as KSWhiteCard from './KSWhiteCard/index';
 
 export default {
     Form,
     Input,
     Checkbox,
-    DatePicker,
+    KSDatePicker,
     RangePicker,
     Radio,
     Select,
@@ -38,4 +39,5 @@ export default {
     Conditions,
     Table,
     Col,
+    KSWhiteCard,
 };

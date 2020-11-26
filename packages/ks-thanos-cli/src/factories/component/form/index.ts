@@ -5,16 +5,16 @@ import { FormDecorator } from 'Src/factories/decorator/form';
 import Page from 'Src/factories/page';
 import { EffectConfig } from 'Src/factories/model/effect';
 import { SearchFormDelegate } from './searchForm/index';
-import { NormalFormDelegate } from 'Src/factories/component/form/normalForm';
+import { NormalFormDelegate } from './normalForm';
+import { ModalFormDelegate } from './modalForm';
 import { FormDelegate } from './formDelegate/index';
-import File from '../relationTable/file';
 
 /**
  * 表单组件配置
  */
 export interface FormComponentConfig extends ComponentConfig {
     components: FormItemConfig[]; // 子组件
-    type: 'search' | 'normal';
+    type: 'search' | 'normal' | 'modal';
     paramKey: string;
     activeEvents: { // 触发事件
         eventType: 'request' | 'link' | 'modal'; // 事件类型
@@ -31,14 +31,22 @@ export class Form extends Component {
     components: FormItem[] = [];
     delegate: FormDelegate;
 
-    constructor(page: Page | File, config: FormComponentConfig) {
+    constructor(page: Page, config: FormComponentConfig) {
         super(page, config);
         this.config = config;
-
-        if (this.config.type === 'search') {
-            this.delegate = new SearchFormDelegate(this);
-        } else {
-            this.delegate = new NormalFormDelegate(this);
+        this.page.form.type = this.config.type;
+        this.page.form.stateName = this.config.stateName;
+        switch (this.config.type) {
+            case 'search':
+                this.delegate = new SearchFormDelegate(this);
+                break;
+            case 'modal':
+                this.delegate = new ModalFormDelegate(this);
+                break;
+            case 'normal':
+            default:
+                this.delegate = new NormalFormDelegate(this);
+                break;
         }
     }
 
@@ -48,11 +56,6 @@ export class Form extends Component {
             {
                 source: 'kredux',
                 name: 'actions',
-                defaultImport: false
-            },
-            {
-                source: 'antd',
-                name: 'Button',
                 defaultImport: false
             },
             ...this.delegate.getImports()
@@ -78,7 +81,7 @@ export class Form extends Component {
             type: this.config.type,
             pageName: this.page.pageName,
             stateName: this.stateName,
-            formItems: this.components.map((item) => (item as FormItem).config.key)
+            formItems: this.components.map((item: FormItem) => item.config.key)
         };
         const decorator = new FormDecorator(decoratorConfig);
         this.page.addDecorator(decorator);
@@ -100,6 +103,10 @@ export class Form extends Component {
 
     initRenderVariableDeclaration() {
         this.delegate.initRenderVariableDeclaration && this.delegate.initRenderVariableDeclaration();
+    }
+
+    initPropTypesCodes() {
+        this.delegate.initPropTypesCodes && this.delegate.initPropTypesCodes();
     }
 
     toCode() {

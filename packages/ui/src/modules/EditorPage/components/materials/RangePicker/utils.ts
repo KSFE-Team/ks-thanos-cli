@@ -18,10 +18,10 @@ interface RangePickerConfig extends ComponentJSON {
  */
 export const getInitJson = (): RangePickerConfig => ({
     componentName: 'RangePicker',
-    source: 'antd',
+    source: 'ks-cms-ui',
     default: false,
     parentComponentName: 'KSDatePicker',
-    placeholder: '请选择时间',
+    placeholder: '',
     key: '',
     label: '',
     isRequired: REQUIRED,
@@ -60,8 +60,9 @@ export const toCode = (config: RangePickerConfig, formConfig: RangePickerConfig)
     return { ...formObject };
 };
 export const reCode = (config: RangePickerConfig): RangePickerConfig => {
+    const { props = {} } = config;
     return {
         ...config,
-        placeholder: config.props.placeholder,
+        placeholder: props.placeholder,
     };
 };

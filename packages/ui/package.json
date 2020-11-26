@@ -32,7 +32,6 @@
         "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
     },
     "dependencies": {
-        "ali-oss": "^6.11.2",
         "antd": "^4.6.3",
         "core-js": "^2.6.5",
         "html2canvas": "^1.0.0-rc.7",
@@ -54,12 +53,11 @@
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-pcweb": "^4.15.1",
-        "@ks-web-cli/ts-tools": "^4.12.0",
+        "@ks-web-cli/plugin-pcweb": "^4.16.4",
+        "@ks-web-cli/ts-tools": "^4.16.0",
         "@types/react": "^16.9.49",
         "@types/react-beautiful-dnd": "^13.0.0",
-        "@types/uuid": "^8.3.0",
-        "@types/ali-oss": "^6.0.5"
+        "@types/uuid": "^8.3.0"
     },
     "gitHead": "97f78bd2e3e67f9a7a51d4c4cc2662a4f3517d3e"
 }

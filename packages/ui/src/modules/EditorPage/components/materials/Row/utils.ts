@@ -32,10 +32,25 @@ export const validator = (item: any): undefined | Error => {
     return undefined;
 };
 
+/* 校验Rol中只能放Col */
+export const verifyParentComponent = (sourceComponent: any, taegetCompoent: any, pageJson?: any) => {
+    if (sourceComponent?.name === 'Col') {
+        return true;
+    }
+    return false;
+};
 /* 组件转换JSON */
 export const toCode = (config: RowConfig, formConfig: RowConfig): RowConfig => {
     return {
         ...config,
         ...formConfig,
     };
+};
+/** 组件拖拽配置校验 */
+export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
+    const doNotPlace = ['ExtendContainer'];
+    if (doNotPlace.includes(taegetCompoent.componentName)) {
+        return 'Row组件不能配置在ExtendContainer组件中！';
+    }
+    return true;
 };

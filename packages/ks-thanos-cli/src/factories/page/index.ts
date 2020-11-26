@@ -29,7 +29,15 @@ export default class Page extends BasicContainer {
     pageTitleCode: string = '';
     renderVariableDeclaration: VariableDeclaration[] = []; // render前定义的变量
     stateVariableDeclaration: VariableFromState[] = []; // state中的定义变量
+    propTypesCodes: Value[] = []; // 类型声明
     isUseCard: boolean = true; // 是否使用KSWhiteCard
+    form: {
+        type: 'search' | 'normal' | 'modal';
+        stateName: string;
+    } = {
+        type: 'search',
+        stateName: ''
+    } // formItem使用的form 公共参数
 
     /**
      * 构造函数
@@ -130,6 +138,14 @@ export default class Page extends BasicContainer {
     }
 
     /**
+     * 增加类型声明
+     * @param config Value
+     */
+    addPropTypesCodes(config: Value) {
+        this.propTypesCodes.push(config);
+    }
+
+    /**
      * 增加初始state的变量声明
      * @param config VariableDeclaration
      */
@@ -155,10 +171,12 @@ export default class Page extends BasicContainer {
         const decoratorPropTypesCode = this.decorators
             .map((item) => item.getOutputPropTypesCode())
             .filter((code) => code);
-
+        const propTypesCodes = this.propTypesCodes.map((item) => {
+            return `${item.key}: PropTypes.${item.type}`
+        }).filter((code) => code);
         return [
             ...decoratorPropTypesCode,
-            'match: PropTypes.object'
+            ...propTypesCodes
         ].join(',\n');
     }
 

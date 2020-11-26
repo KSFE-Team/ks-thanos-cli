@@ -30,7 +30,7 @@ export class Radio extends FormItem {
             propsCode.push(getPropStr('key', item.value));
 
             return (
-                `<Radio ${propsCode.join(',').replace(/,/g, '\n')}>${item.text}</Radio>`
+                `<Radio ${propsCode.join(',').replace(/,/g, '\n')}>${item.label}</Radio>`
             );
         });
         return `<Radio.Group>

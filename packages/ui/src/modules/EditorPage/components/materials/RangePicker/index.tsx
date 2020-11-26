@@ -17,7 +17,7 @@ const MaterialRangePicker = (props: RangePickerConfigProps) => {
     const { id, props: configProps } = props;
     const formConfig = props[id];
     const label = formConfig.label ? formConfig.label : DEFAULT_LABEL.join('');
-    const placeholder = (formConfig.placeholder && formConfig.placeholder.split('/')) || DEFAULT_LABEL;
+    const placeholder = formConfig.placeholder ? formConfig.placeholder.split('/') : DEFAULT_LABEL;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             <RangePicker

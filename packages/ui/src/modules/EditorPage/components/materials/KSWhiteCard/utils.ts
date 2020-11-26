@@ -1,50 +1,52 @@
 import { ComponentJSON } from 'Src/types/ComponentJSON';
 
-interface FragmentConfig extends ComponentJSON {
+interface KSWhiteCardConfig extends ComponentJSON {
     stateName: string;
     componentName: string;
     components?: Array<{}>; // 区域块内的组件
-    fragmentName: string; // 区域块名称
+    title: string; // 区域块名称
 }
 /**
  * 获取初始化JSON
  */
-export const getInitJson = (): FragmentConfig => ({
+export const getInitJson = (): KSWhiteCardConfig => ({
     stateName: '',
-    componentName: 'Fragment',
-    source: 'React',
+    componentName: 'KSWhiteCard',
+    source: 'ks-cms-ui',
     default: false,
     components: [], // 区域块内的组件
-    fragmentName: '', // 区域块名称
+    title: '', // 卡片title名称
 });
 
 /**
  * 获取组件Tools配置
  */
 export const getTools = () => ({
-    name: 'Fragment',
+    name: 'KSWhiteCard',
     icon: 'form',
-    componentName: 'Fragment',
+    componentName: 'KSWhiteCard',
     groupType: 'container',
 });
 
 export const validator = (item: any): void => {};
 
 /* 组件转换JSON */
-export const toCode = (config: FragmentConfig, formConfig: FragmentConfig): FragmentConfig => {
+export const toCode = (config: KSWhiteCardConfig, formConfig: KSWhiteCardConfig): KSWhiteCardConfig => {
     const formObject = {
         ...config,
         ...formConfig,
-        source: 'React',
+        props: {
+            title: formConfig.title,
+        },
     };
-    delete formObject.props;
+    console.log(formObject, 'formObject');
     return { ...formObject };
 };
 /** 组件拖拽配置校验 */
 export const verifyComponent = (sourceComponent: any, taegetCompoent: any, pageJson: any) => {
     const doNotPlace = ['ExtendContainer'];
     if (doNotPlace.includes(taegetCompoent.componentName)) {
-        return 'ExtendContainer组件不能配置在Fragment中！';
+        return 'KSWhiteCard容器组件不能配置在ExtendContainer组件中！';
     }
     return true;
 };

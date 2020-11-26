@@ -11,7 +11,7 @@ export class DatePicker extends FormItem {
 
     constructor(page: Page, config: FormItemConfig) {
         super(page, config);
-        this.componentName = 'DatePicker';
+        this.componentName = 'KSDatePicker';
         this.config = config;
     }
 
@@ -19,8 +19,8 @@ export class DatePicker extends FormItem {
         let imports = super.getImports();
         imports = imports.concat([
             {
-                source: 'antd',
-                name: 'DatePicker',
+                source: 'ks-cms-ui',
+                name: 'KSDatePicker',
                 defaultImport: false
             }
         ]);
@@ -44,7 +44,7 @@ export class DatePicker extends FormItem {
                     return `${item}="${value}"`;
             }
         });
-        return `<DatePicker
+        return `<KSDatePicker
         ${propsCode.join('\n').replace(/\"/g, '\'')}
       />`;
     }

@@ -8,7 +8,7 @@ export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
     isRequired: boolean; // 是否必填
-    formType: 'search' | 'normal'; // 表单类型
+    formType: 'search' | 'normal' | 'modal'; // 表单类型
     initialValue: any; // 默认值
     props: { // 组件属性
         [name: string]: any;
@@ -37,9 +37,11 @@ export abstract class FormItem extends Component {
     }
 
     initPageState() {
-        if (this.config.formType === 'search') {
+        const formType: string = this.config.formType || this.page.form.type;
+        const stateName: string = this.stateName || this.page.form.stateName;
+        if (formType === 'search') {
             const stateValue = getPropValue(this.config.initialValue);
-            this.page.model.addInitialState(this.stateName, this.config.key, stateValue);
+            this.page.model.addInitialState(stateName, this.config.key, stateValue);
             this.page.model.listEffectRequestParams.push({
                 name: this.config.key
             });
