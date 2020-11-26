@@ -1,16 +1,13 @@
 import { ComponentJSON } from 'Src/types/ComponentJSON';
 import { baseValidator } from '../../../utils';
-import { ISREQUIRED_TYPE } from '../../../utils/constants';
-
-const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 
 interface ConditionsConfig extends ComponentJSON {
-    isRequired: boolean;
     placeholder: string;
     componentType: string;
     source: string;
     formfields: Array<object>;
     type: Array<string>;
+    formItem: string;
 }
 
 /**
@@ -22,15 +19,15 @@ export const getInitJson = (): ConditionsConfig => ({
     default: false,
     placeholder: '请选择配置项',
     componentType: 'cloud',
-    isRequired: REQUIRED,
     formfields: [
         {
-            key: 'tagCode', // PropTypes.string.isRequired
-            isRequired: true, // PropTypes.bool 默认true
+            key: 'tagCode', // PropTypes.string.required
+            required: true, // PropTypes.bool 默认true
             type: 1, // 1kaishu、2huiben 默认1
         },
     ],
     type: ['tagCode'],
+    formItem: 'false',
 });
 
 /**
@@ -59,6 +56,7 @@ export const toCode = (config: ConditionsConfig, formConfig: ConditionsConfig): 
         source: 'Src/components/@ks/kms-conditions',
         type: formConfig.type,
         formfields: formConfig.formfields,
+        formItem: 'false',
     };
     return { ...formObject };
 };

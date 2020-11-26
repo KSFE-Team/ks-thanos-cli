@@ -2,15 +2,13 @@ import React from 'react';
 import { Form, Select, Radio } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
-// import { useSelector } from 'react-redux';
-// import { ALIAS, ISREQUIRED_TYPE } from '../../../utils/constants'; // FIELD_DICT
 import { DEFAULT_OPTIONS } from './utils';
 
 const FIELD = {
     FORMFIELDS: 'formfields',
     TYPE: 'type',
     KEY: 'key',
-    ISREQUIRED: 'isRequired',
+    REQUIRED: 'required',
 };
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -39,7 +37,7 @@ export default (props: ConditionsProps) => {
                         allFields.type.map((item: string) => {
                             return {
                                 key: item,
-                                isRequired: allFields[`isRequired_${item}`],
+                                required: allFields[`required_${item}`],
                                 type: allFields[`type_${item}`],
                             };
                         });
@@ -72,9 +70,9 @@ export default (props: ConditionsProps) => {
                             <FormItem
                                 label="是否必填"
                                 style={{ marginRight: '15px' }}
-                                name={`${FIELD.ISREQUIRED}_${item[FIELD.KEY]}`}
+                                name={`${FIELD.REQUIRED}_${item[FIELD.KEY]}`}
                                 required
-                                initialValue={item[FIELD.ISREQUIRED] !== false}
+                                initialValue={item[FIELD.REQUIRED] !== false}
                             >
                                 <Radio.Group>
                                     <Radio value>是</Radio>
