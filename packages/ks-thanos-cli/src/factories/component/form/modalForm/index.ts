@@ -8,7 +8,7 @@ import Debug from 'Src/utils/debugger';
 
 const debug = Debug(__filename);
 
-export class NormalFormDelegate extends FormDelegate {
+export class ModalFormDelegate extends FormDelegate {
 
     getEffect: Effect | undefined
     createEffect: Effect | undefined
@@ -18,11 +18,11 @@ export class NormalFormDelegate extends FormDelegate {
         super(form);
 
         const activeEvents = form.config.activeEvents || [];
-
+        this.form.page.isUseCard = false;
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
             const actionType = activeEvent.dependencies.actionType;
-            debug(`NormalForm activeEvent: ${JSON.stringify(activeEvent)}`);
+            debug(`ModalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
                 const effect = EffectManager.create(
                     form.page.pageName,
@@ -47,7 +47,7 @@ export class NormalFormDelegate extends FormDelegate {
             }
         });
         if (!this.createEffect || !this.updateEffect) {
-            debug('NormalForm 缺少 createEffect 或 updateEffect');
+            debug('ModalForm 缺少 createEffect 或 updateEffect');
         }
     }
 
@@ -55,34 +55,14 @@ export class NormalFormDelegate extends FormDelegate {
         let imports = [
             {
                 source: 'Src/utils/constants',
-                name: 'FORM_LAYOUT',
+                name: 'MODAL_FORM_LAYOUT',
                 defaultImport: false
             },
             {
                 source: 'antd',
-                name: 'Button',
+                name: 'Modal',
                 defaultImport: false
             },
-            {
-                source: 'antd',
-                name: 'Row',
-                defaultImport: false
-            },
-            {
-                source: 'antd',
-                name: 'Col',
-                defaultImport: false
-            },
-            {
-                source: 'antd',
-                name: 'Icon',
-                defaultImport: false
-            },
-            {
-                source: 'ks-cms-utils',
-                name: 'goto',
-                defaultImport: false
-            }
         ];
         return imports;
     }
@@ -128,6 +108,7 @@ export class NormalFormDelegate extends FormDelegate {
         if (!this.createEffect || !this.updateEffect) {
             return;
         }
+        const { page } = this.form;
         const paramKey = this.form.config.paramKey || 'id';
         form.page.addMethod(`
             handleSubmit = () => {
@@ -148,38 +129,45 @@ export class NormalFormDelegate extends FormDelegate {
                 });
             }
         `);
+        form.page.addMethod(`
+            handleCancel = () => {
+                actions.${page.pageName}.setReducers({
+                    modalVisible: false
+                });
+            }
+        `);
     }
 
-    initPageTitle() {
-        const form = this.form;
-        form.page.initPageTitleCode(`pageTitle={
-            <div>
-                <Row>
-                    <Col span={8} style={{ lineHeight: '32px' }}>
-                        ${form.page.pageChineseName}
-                    </Col>
-                    <Col span={16} style={{ textAlign: 'right' }}>
-                        <Button
-                            type='primary'
-                            className='mar-l-4'
-                            loading={ this.props.requestLoading }
-                            onClick={ this.handleSubmit }
-                        >
-                            <Icon type="form" />保存
-                        </Button>
-                        <Button
-                            className='mar-l-4'
-                            onClick={() => {
-                                goto.go(-1);
-                            }}
-                        >
-                            <Icon type="rollback" />返回
-                        </Button>
-                    </Col>
-                </Row>
-            </div>
-        }`);
-    }
+    // initPageTitle() {
+    //     const form = this.form;
+    //     form.page.initPageTitleCode(`pageTitle={
+    //         <div>
+    //             <Row>
+    //                 <Col span={8} style={{ lineHeight: '32px' }}>
+    //                     ${form.page.pageChineseName}
+    //                 </Col>
+    //                 <Col span={16} style={{ textAlign: 'right' }}>
+    //                     <Button
+    //                         type='primary'
+    //                         className='mar-l-4'
+    //                         loading={ this.props.requestLoading }
+    //                         onClick={ this.handleSubmit }
+    //                     >
+    //                         <Icon type="form" />保存
+    //                     </Button>
+    //                     <Button
+    //                         className='mar-l-4'
+    //                         onClick={() => {
+    //                             goto.go(-1);
+    //                         }}
+    //                     >
+    //                         <Icon type="rollback" />返回
+    //                     </Button>
+    //                 </Col>
+    //             </Row>
+    //         </div>
+    //     }`);
+    // }
 
     initPageLifeCycle() {
         if (this.getEffect) {
@@ -199,7 +187,7 @@ export class NormalFormDelegate extends FormDelegate {
     initStateVariableDeclaration() {
         this.form.page.addStateVariableDeclaration({
             key: 'id',
-            value: 'this.props.match.params.id'
+            value: 'this.props.id'
         });
     }
 
@@ -218,18 +206,22 @@ export class NormalFormDelegate extends FormDelegate {
             name: config.stateName,
             source: `this.props.${pageName}`
         });
+        this.form.page.addRenderVariableDeclaration({
+            name: 'modalVisible',
+            source: `this.props.${pageName}`
+        });
     }
 
     initPropTypesCodes() {
         this.form.page.addPropTypesCodes(new Value({
-            key: 'match',
-            value: 'match',
-            type: 'object'
+            key: 'id',
+            value: 'id',
+            type: 'string'
         }));
     }
 
     toFormItemCode(item: FormItem) {
-        debug(`normalForm: toFormItemCode ---- ${item.componentName}`);
+        debug(`modalForm: toFormItemCode ---- ${item.componentName}`);
         const { config } = this.form;
         const labelValue = item.config.label;
 
@@ -261,7 +253,7 @@ export class NormalFormDelegate extends FormDelegate {
 
         return `<Form.Item
             label="${labelValue}"
-            { ...FORM_LAYOUT }
+            { ...MODAL_FORM_LAYOUT }
         >
             {
                 getFieldDecorator('${item.config.key}',${fieldConfigCode})(
@@ -278,8 +270,15 @@ export class NormalFormDelegate extends FormDelegate {
             tempItem.config.stateName = this.form.config.stateName;
             return this.toFormItemCode(tempItem);
         });
-        return `<Form>
-        ${componentsCode.join('\n')}
-    </Form>`;
+        return `<Modal
+            title={'${form.page.pageChineseName}'}
+            visible={modalVisible}
+            onCancel={this.handleCancel}
+            onOk={this.handleSubmit}
+        >
+            <Form>
+                ${componentsCode.join('\n')}
+            </Form>
+        </Modal>`;
     }
 }

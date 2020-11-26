@@ -11,7 +11,6 @@ import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
 import { Form } from 'Src/factories/component/form/index';
 import { Fragment } from 'Src/factories/component/fragment';
-import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import { Row } from 'Src/factories/component/row';
 import { Col } from 'Src/factories/component/col';
@@ -39,7 +38,6 @@ export const COMPONENT_TYPES_MAP: {
     Radio,
     DatePicker: DatePicker,
     Fragment: Fragment,
-    RelationTable: RelationTable,
     ExtendContainer: ExtendContainer,
     Row: Row,
     Col: Col,
@@ -47,5 +45,4 @@ export const COMPONENT_TYPES_MAP: {
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
     BizSelectTypeContent: BizSelectTypeContent
-
 };

@@ -3,7 +3,7 @@ import { getApp } from 'Src/app';
 import { FORM_TYPES } from './constants';
 import { Dependencies, TableConfig } from '../Table/utils';
 
-const [{ key: NORMAL_FORM }, { key: SEARCH_FORM }] = FORM_TYPES;
+const [{ key: NORMAL_FORM }, { key: SEARCH_FORM }, { key: MODAL_FORM }] = FORM_TYPES;
 
 interface ActiveEvent {
     eventType: string;
@@ -106,6 +106,7 @@ const getActiveEventsByFormConfig = (formConfig: FormConfig, pageJson: any): Act
             ];
         default:
         case NORMAL_FORM:
+        case MODAL_FORM:
             return [
                 {
                     eventType: 'request',
@@ -167,14 +168,20 @@ export const reCode = (config: FormConfig): FormConfig => {
         [key: string]: any;
     } = {};
     const { type } = config;
-    if (type === NORMAL_FORM) {
-        const { activeEvents } = config;
-        const [SAVE_REQUEST, UPDATE_REQUEST, GET_REQUEST] = activeEvents;
-        apiConfig = {
-            saveApi: SAVE_REQUEST.dependencies.api && SAVE_REQUEST.dependencies.api.value,
-            updateApi: UPDATE_REQUEST.dependencies.api && UPDATE_REQUEST.dependencies.api.value,
-            getApi: GET_REQUEST.dependencies.api && GET_REQUEST.dependencies.api.value,
-        };
+    switch (type) {
+        case NORMAL_FORM:
+        case MODAL_FORM:
+            const { activeEvents } = config;
+            const [SAVE_REQUEST, UPDATE_REQUEST, GET_REQUEST] = activeEvents;
+            apiConfig = {
+                saveApi: SAVE_REQUEST.dependencies.api && SAVE_REQUEST.dependencies.api.value,
+                updateApi: UPDATE_REQUEST.dependencies.api && UPDATE_REQUEST.dependencies.api.value,
+                getApi: GET_REQUEST.dependencies.api && GET_REQUEST.dependencies.api.value,
+            };
+            break;
+        case SEARCH_FORM:
+        default:
+            break;
     }
     return {
         ...config,

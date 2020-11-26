@@ -44,6 +44,11 @@ export abstract class FormDelegate {
     initRenderVariableDeclaration?(): void;
 
     /**
+     * 初始化类型声明配置
+     */
+    initPropTypesCodes?(): void;
+
+    /**
      * 初始effect
      */
     abstract initEffects(): void;
