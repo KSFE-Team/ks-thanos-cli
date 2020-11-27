@@ -1,6 +1,5 @@
 import React from 'react';
-import { EnterOutlined } from '@ant-design/icons';
-// import { actions } from 'kredux';
+import { EnterOutlined, RollbackOutlined } from '@ant-design/icons';
 import { actions } from 'kredux';
 import { message, Modal } from 'antd';
 import { useSelector } from 'react-redux';
@@ -21,7 +20,8 @@ const { confirm } = Modal;
 
 export default () => {
     const page = useSelector((store: any) => store.page);
-    const { pageJson } = page;
+    const { pageJson, undoStack, redoStack } = page;
+
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
         if (!pageName) {
@@ -66,7 +66,6 @@ export default () => {
                 } else {
                     id = Number(queryString.id || 0);
                 }
-                // console.log(componentsData, 'componentsData----发布后的数据');
                 actions.page.save({
                     postDate: {
                         [`${pageOrTemp}Data`]: JSON.stringify({
@@ -103,9 +102,41 @@ export default () => {
         });
     };
 
+    const undo = () => {
+        const copyUndoStack = JSON.parse(JSON.stringify(undoStack));
+        undoStack.pop();
+        const undoItem = copyUndoStack.pop();
+        const newComponents = undoStack.length > 0 ? undoStack[undoStack.length - 1].components : undoStack;
+        if ((undoStack.length > 0 && undoStack[undoStack.length - 1].type === 'tree') || undoStack.length === 0) {
+            const redoItem = undoItem;
+            redoStack.push(redoItem);
+            actions.page.setReducers({
+                pageJson: { ...pageJson, components: newComponents },
+                redoStack,
+            });
+        }
+    };
+
+    const redo = () => {
+        const copyRedoStack = JSON.parse(JSON.stringify(redoStack));
+        const redoItem = copyRedoStack.pop();
+        const newComponents = redoStack.length > 0 ? redoStack[redoStack.length - 1].components : redoStack;
+        if ((redoStack.length > 0 && redoStack[redoStack.length - 1].type === 'tree') || redoStack.length === 0) {
+            const undoItem = redoItem;
+            undoStack.push(undoItem);
+            actions.page.setReducers({
+                pageJson: { ...pageJson, components: newComponents },
+                undoStack,
+            });
+            redoStack.pop();
+        }
+    };
+
+    // eslint-disable-next-line no-return-assign
     return (
         <div className="thanos-editor-header">
             <Button
+                title="返回"
                 className="thanos-editor-back"
                 onClick={() => {
                     goto.push('/workspace/blocks/existingPage');
@@ -115,16 +146,26 @@ export default () => {
             </Button>
             <Logo className="thanos-editor-logo" />
             <div className="thanos-editor-actions">
-                {/* <Button title="undo" disabled>
+                <Button
+                    title="undo"
+                    onClick={() => undo()}
+                    className="thanos-editor-undo"
+                    disabled={undoStack.length < 1}
+                >
                     <RollbackOutlined />
                 </Button>
-                <Button title="redo">
+                <Button
+                    title="redo"
+                    onClick={() => redo()}
+                    className="thanos-editor-redo"
+                    disabled={redoStack.length < 1}
+                >
                     <RollbackOutlined
                         style={{
                             transform: 'scaleX(-1)',
                         }}
                     />
-                </Button> */}
+                </Button>
                 <Button
                     className="thanos-editor-primary mar-l-4"
                     onClick={() => {
