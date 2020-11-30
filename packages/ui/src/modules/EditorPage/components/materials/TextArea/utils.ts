@@ -19,7 +19,7 @@ export const getInitJson = (): TextAreaConfig => ({
     componentName: 'TextArea',
     source: 'antd',
     default: false,
-    placeholder: '请选择时间',
+    placeholder: '请输入备注信息',
     parentComponentName: 'Input',
     key: '',
     label: '',
@@ -39,14 +39,14 @@ export const getTools = () => ({
 export const validator = (config: any) => baseValidator(config);
 
 export const toCode = (config: TextAreaConfig, formConfig: TextAreaConfig): TextAreaConfig => {
+    const { placeholder, ...otherFormConfig } = formConfig;
     const formObject = {
         ...config,
-        ...formConfig,
+        ...otherFormConfig,
         parentComponentName: 'Input',
         props: {
-            placeholder: formConfig.placeholder,
+            placeholder,
         },
     };
-    delete formObject.placeholder;
     return { ...formObject };
 };

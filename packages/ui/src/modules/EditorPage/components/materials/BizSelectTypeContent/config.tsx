@@ -35,7 +35,7 @@ export default (props: BizSelectTypeContentProps) => {
                     <Select
                         mode="multiple"
                         placeholder="请选择"
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', color: '#000' }}
                         showSearch
                         filterOption={(input, option) =>
                             String(option.props.children).toLowerCase().indexOf(input.toLowerCase()) >= 0

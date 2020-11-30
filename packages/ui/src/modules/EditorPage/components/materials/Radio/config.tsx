@@ -13,11 +13,13 @@ interface InputConfigProps extends ComponentConfig {}
 export default (props: InputConfigProps) => {
     const { id } = props;
     const config = props[id] || {};
+    console.log('config', config);
     return (
         <div>
             <Form
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
+                    console.log('allFields11', allFields);
                     actions[id].setReducers(allFields);
                 }}
                 fields={Object.keys(config).map((key) => ({

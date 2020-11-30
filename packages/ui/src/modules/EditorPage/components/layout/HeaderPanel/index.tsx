@@ -24,7 +24,7 @@ export default () => {
     const { pageJson } = page;
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
-        console.log(components[0], 'components');
+        console.log('components11', components);
         if (!pageName) {
             message.error('请填写页面名称');
             return;
