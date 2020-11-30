@@ -15,6 +15,7 @@ import {
     findParamKey,
     getPageData,
 } from '../../../utils';
+import { getComponents } from '../../../utils/constants';
 
 const { confirm } = Modal;
 
@@ -106,30 +107,56 @@ export default () => {
         const copyUndoStack = JSON.parse(JSON.stringify(undoStack));
         undoStack.pop();
         const undoItem = copyUndoStack.pop();
-        const newComponents = undoStack.length > 0 ? undoStack[undoStack.length - 1].components : undoStack;
-        if ((undoStack.length > 0 && undoStack[undoStack.length - 1].type === 'tree') || undoStack.length === 0) {
-            const redoItem = undoItem;
-            redoStack.push(redoItem);
-            actions.page.setReducers({
-                pageJson: { ...pageJson, components: newComponents },
-                redoStack,
-            });
+        const currentItem = undoStack[undoStack.length - 1];
+        const redoItem = undoItem;
+        redoStack.push(redoItem);
+        if ((undoStack.length > 0 && currentItem.type === 'tree') || undoStack.length === 0) {
+            if (undoItem.type === 'property') {
+                const { id, componentName } = undoItem;
+                const initJson = getComponents()[componentName].tools.getInitJson();
+                actions[id].setReducers(initJson);
+            } else {
+                actions.page.setReducers({
+                    pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : [] },
+                });
+            }
+        } else if (currentItem.type === 'property') {
+            if (undoItem.type === 'tree') {
+                const result = undoStack.filter((item: any) => item.type === 'tree');
+                actions.page.setReducers({
+                    pageJson: {
+                        ...pageJson,
+                        components: result.length > 0 ? result[result.length - 1].components : [],
+                    },
+                });
+            } else {
+                const { id, formConfig } = currentItem;
+                actions[id].setReducers(formConfig);
+            }
         }
+        actions.page.setReducers({
+            redoStack,
+        });
     };
 
     const redo = () => {
         const copyRedoStack = JSON.parse(JSON.stringify(redoStack));
         const redoItem = copyRedoStack.pop();
-        const newComponents = redoStack.length > 0 ? redoStack[redoStack.length - 1].components : redoStack;
-        if ((redoStack.length > 0 && redoStack[redoStack.length - 1].type === 'tree') || redoStack.length === 0) {
-            const undoItem = redoItem;
-            undoStack.push(undoItem);
+        const currentItem = redoStack[redoStack.length - 1];
+        const undoItem = redoItem;
+        undoStack.push(undoItem);
+        if ((redoStack.length > 0 && currentItem.type === 'tree') || redoStack.length === 0) {
             actions.page.setReducers({
-                pageJson: { ...pageJson, components: newComponents },
-                undoStack,
+                pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components : [] },
             });
-            redoStack.pop();
+        } else if (currentItem.type === 'property') {
+            const { id, formConfig } = currentItem;
+            actions[id].setReducers(formConfig);
         }
+        redoStack.pop();
+        actions.page.setReducers({
+            undoStack,
+        });
     };
 
     // eslint-disable-next-line no-return-assign

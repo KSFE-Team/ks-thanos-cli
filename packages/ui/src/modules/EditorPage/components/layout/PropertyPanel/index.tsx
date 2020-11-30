@@ -9,12 +9,12 @@ const { Item: FormItem } = Form;
 
 export default () => {
     const page = useSelector((store: any) => store.page);
-    const { pageJson } = page;
+    const { pageJson, undoStack } = page;
     const [id, componentName] = page.selectedId.split('_');
     let configContent;
     if (id) {
         const ConfigForm = getComponents()[componentName].config;
-        configContent = <ConfigForm id={id} />;
+        configContent = <ConfigForm id={id} undoStack={undoStack} />;
     } else {
         configContent = (
             <div>
