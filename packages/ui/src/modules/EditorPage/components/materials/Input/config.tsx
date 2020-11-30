@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 interface InputConfigProps extends ComponentConfig {}
 
 export default (props: InputConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     return (
         <div>
@@ -18,6 +18,19 @@ export default (props: InputConfigProps) => {
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'Input',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
                 }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],

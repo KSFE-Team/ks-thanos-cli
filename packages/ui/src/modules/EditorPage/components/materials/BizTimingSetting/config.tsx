@@ -8,7 +8,7 @@ import { CONFIG_TYPE, ALAS_FiELDS } from './utils';
 interface BizTimingSettingConfigProps extends ComponentConfig {}
 
 export default (props: BizTimingSettingConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     const url = 'https://kaishu.yuque.com/nbdzm5/kms/ggklfp';
     return (
@@ -17,6 +17,19 @@ export default (props: BizTimingSettingConfigProps) => {
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'BizTimingSetting',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
                 }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],

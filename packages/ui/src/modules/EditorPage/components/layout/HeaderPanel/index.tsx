@@ -115,6 +115,14 @@ export default () => {
                 const { id, componentName } = undoItem;
                 const initJson = getComponents()[componentName].tools.getInitJson();
                 actions[id].setReducers(initJson);
+            } else if (undoItem.type === 'page') {
+                actions.page.setReducers({
+                    pageJson: {
+                        ...pageJson,
+                        pageName: '',
+                        selectedId: '',
+                    },
+                });
             } else {
                 actions.page.setReducers({
                     pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : [] },
@@ -130,9 +138,20 @@ export default () => {
                     },
                 });
             } else {
-                const { id, formConfig } = currentItem;
+                const { id, componentName, formConfig } = currentItem;
                 actions[id].setReducers(formConfig);
+                actions.page.setReducers({
+                    selectedId: `${id}_${componentName}`,
+                });
             }
+        } else if (currentItem.type === 'page') {
+            actions.page.setReducers({
+                pageJson: {
+                    ...pageJson,
+                    ...currentItem.pageJson,
+                    selectedId: '',
+                },
+            });
         }
         actions.page.setReducers({
             redoStack,
@@ -152,6 +171,13 @@ export default () => {
         } else if (currentItem.type === 'property') {
             const { id, formConfig } = currentItem;
             actions[id].setReducers(formConfig);
+        } else if (currentItem.type === 'page') {
+            actions.page.setReducers({
+                pageJson: {
+                    ...pageJson,
+                    ...currentItem.pageJson,
+                },
+            });
         }
         redoStack.pop();
         actions.page.setReducers({
