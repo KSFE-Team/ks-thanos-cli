@@ -88,7 +88,6 @@ export async function runSync(options: {
             pageConfig,
             pagePath: pageFolderPath
         });
-
         console.log(infoText(`生成页面成功，正在生成 Model`));
         await createModel({
             page,

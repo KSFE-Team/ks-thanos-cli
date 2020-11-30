@@ -44,6 +44,10 @@ export class SearchFormDelegate extends FormDelegate {
                 source: 'ks-cms-utils',
                 name: 'goto',
                 defaultImport: false
+            }, {
+                source: 'antd',
+                name: 'Button',
+                defaultImport: false
             }
         ];
         return imports;
