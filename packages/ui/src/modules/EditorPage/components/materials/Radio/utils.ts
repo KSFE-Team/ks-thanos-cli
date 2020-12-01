@@ -45,8 +45,6 @@ export const getTools = () => ({
 export const validator = (config: any) => baseValidator(config);
 
 export const toCode = (config: RadioConfig, formConfig: RadioConfig): RadioConfig => {
-    console.log('config', config);
-    console.log('formConfig', formConfig);
     return {
         ...config,
         ...formConfig,
