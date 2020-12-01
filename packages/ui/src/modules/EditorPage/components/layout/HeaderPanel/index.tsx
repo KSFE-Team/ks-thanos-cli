@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { EnterOutlined, RollbackOutlined } from '@ant-design/icons';
 import { actions } from 'kredux';
-import { message, Modal } from 'antd';
+import { message, Modal, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
@@ -22,12 +22,14 @@ const { confirm } = Modal;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson, undoStack, redoStack } = page;
+    const [spinning, setSpinning] = useState(false);
 
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
-        console.log(components[0], 'components');
+        setSpinning(true);
         if (!pageName) {
             message.error('请填写页面名称');
+            setSpinning(false);
             return;
         }
         /* 获取截屏 */
@@ -39,6 +41,7 @@ export default () => {
                 })
                 .catch((err) => {
                     console.log('err', err);
+                    setSpinning(false);
                     message.error(err.message);
                 });
         } else {
@@ -53,6 +56,7 @@ export default () => {
         paramKey: string,
         screenshotSrc: any,
     ) => {
+        setSpinning(false);
         const pageOrTempText = pageOrTemp === 'page' ? '页面' : '模版';
         const queryString = parse(window.location.search.replace(/\?/g, ''));
         confirm({
@@ -191,60 +195,62 @@ export default () => {
 
     // eslint-disable-next-line no-return-assign
     return (
-        <div className="thanos-editor-header">
-            <Button
-                title="返回"
-                className="thanos-editor-back"
-                onClick={() => {
-                    goto.push('/workspace/blocks/existingPage');
-                }}
-            >
-                <EnterOutlined />
-            </Button>
-            <Logo className="thanos-editor-logo" />
-            <div className="thanos-editor-actions">
+        <Spin spinning={spinning}>
+            <div className="thanos-editor-header">
                 <Button
-                    title="undo"
-                    onClick={() => undo()}
-                    className="thanos-editor-undo"
-                    disabled={undoStack.length < 1}
+                    title="返回"
+                    className="thanos-editor-back"
+                    onClick={() => {
+                        goto.push('/workspace/blocks/existingPage');
+                    }}
                 >
-                    <RollbackOutlined />
+                    <EnterOutlined />
                 </Button>
-                <Button
-                    title="redo"
-                    onClick={() => redo()}
-                    className="thanos-editor-redo"
-                    disabled={redoStack.length < 1}
-                >
-                    <RollbackOutlined
-                        style={{
-                            transform: 'scaleX(-1)',
+                <Logo className="thanos-editor-logo" />
+                <div className="thanos-editor-actions">
+                    <Button
+                        title="undo"
+                        onClick={() => undo()}
+                        className="thanos-editor-undo"
+                        disabled={undoStack.length < 1}
+                    >
+                        <RollbackOutlined />
+                    </Button>
+                    <Button
+                        title="redo"
+                        onClick={() => redo()}
+                        className="thanos-editor-redo"
+                        disabled={redoStack.length < 1}
+                    >
+                        <RollbackOutlined
+                            style={{
+                                transform: 'scaleX(-1)',
+                            }}
+                        />
+                    </Button>
+                    <Button
+                        className="thanos-editor-primary mar-l-4"
+                        onClick={() => {
+                            clearData();
                         }}
-                    />
-                </Button>
-                <Button
-                    className="thanos-editor-primary mar-l-4"
-                    onClick={() => {
-                        clearData();
-                    }}
-                >
-                    清空全部配置
-                </Button>
-                <Button className="thanos-editor-primary mar-l-4" onClick={() => handleSubmit('template')}>
-                    生成模板
-                </Button>
-                <Button
-                    title="发布"
-                    className="thanos-editor-primary mar-l-4"
-                    onClick={() => {
-                        handleSubmit('page');
-                    }}
-                >
-                    发布
-                    {/* <SaveOutlined /> */}
-                </Button>
+                    >
+                        清空全部配置
+                    </Button>
+                    <Button className="thanos-editor-primary mar-l-4" onClick={() => handleSubmit('template')}>
+                        生成模板
+                    </Button>
+                    <Button
+                        title="发布"
+                        className="thanos-editor-primary mar-l-4"
+                        onClick={() => {
+                            handleSubmit('page');
+                        }}
+                    >
+                        发布
+                        {/* <SaveOutlined /> */}
+                    </Button>
+                </div>
             </div>
-        </div>
+        </Spin>
     );
 };
