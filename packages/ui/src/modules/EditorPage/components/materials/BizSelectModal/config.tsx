@@ -10,7 +10,7 @@ const { Option } = Select;
 interface BizSelectModalProps extends ComponentConfig {}
 
 export default (props: BizSelectModalProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     const children = DEFAULT_OPTIONS.map(({ value, name }, index) => {
         return <Option key={index} value={value}>{`${name}(${value})`}</Option>;
@@ -21,6 +21,19 @@ export default (props: BizSelectModalProps) => {
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'BizSelectModal',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
                 }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],

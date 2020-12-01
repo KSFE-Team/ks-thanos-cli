@@ -38,6 +38,7 @@ export default (props: any) => {
                                 type: ACTION.DELETE,
                                 id: props.id,
                                 pageJson: page.pageJson,
+                                undoStack: page.undoStack,
                             });
                         },
                     });

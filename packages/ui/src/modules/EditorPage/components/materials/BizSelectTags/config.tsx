@@ -11,7 +11,7 @@ const { Option } = Select;
 interface BizSelectTagsProps extends ComponentConfig {}
 
 export default (props: BizSelectTagsProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     const children = DEFAULT_OPTIONS.map(({ value, name }: any, index: string | number | undefined) => {
         return <Option key={index} value={value}>{`${name}(${value})`}</Option>;
@@ -22,6 +22,19 @@ export default (props: BizSelectTagsProps) => {
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'BizSelectTags',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
                 }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],

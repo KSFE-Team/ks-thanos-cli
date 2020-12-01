@@ -28,7 +28,7 @@ const PARAM_KEY = 'paramKey';
 interface FormConfigProps extends ComponentConfig {}
 
 export default (props: FormConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
 
     /* 根据表单类型渲染节点 */
@@ -64,6 +64,19 @@ export default (props: FormConfigProps) => {
                 layout="vertical"
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'Form',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
                 }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],

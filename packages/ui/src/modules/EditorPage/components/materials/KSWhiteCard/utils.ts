@@ -39,6 +39,7 @@ export const toCode = (config: KSWhiteCardConfig, formConfig: KSWhiteCardConfig)
             title: formConfig.title,
         },
     };
+    console.log(formObject, 'formObject');
     return { ...formObject };
 };
 /** 组件拖拽配置校验 */

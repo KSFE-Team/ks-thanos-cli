@@ -13,55 +13,27 @@ const FormItem = Form.Item;
 interface CheckboxConfigProps extends ComponentConfig {}
 
 export default (props: CheckboxConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
-    // const { options = [] } = config;
-    // const [columns] = useState([
-    //     {
-    //         title: '选项名称',
-    //         dataIndex: 'label',
-    //         col: 11,
-    //         render: (item: any, record: any, index: any) => (
-    //             <Input
-    //                 value={record.props.value}
-    //                 placeholder="例如： 选项"
-    //                 // onChange={this.handleChange.bind(this, VALUE, index)}
-    //             />
-    //         ),
-    //     },
-    //     {
-    //         title: '选项值',
-    //         dataIndex: 'value',
-    //         col: 11,
-    //         render: (item: any, record: any, index: any) => (
-    //             <Input
-    //                 value={record.label}
-    //                 placeholder="例如： 姓名"
-    //                 // onChange={this.handleChange.bind(this, TEXT, index)}
-    //             />
-    //         ),
-    //     },
-    //     {
-    //         title: '',
-    //         col: 2,
-    //         render: (text: any, record: any, index: any) => {
-    //             return (
-    //                 <div style={{ lineHeight: '32px' }}>
-    //                     <CloseCircleOutlined
-    //                         onClick={() => {
-    //                             // this.handleDeleteCheckItem(index);
-    //                         }}
-    //                     />
-    //                 </div>
-    //             );
-    //         },
-    //     },
-    // ]);
+
     return (
         <Form
             layout="vertical"
             onValuesChange={(_, allFields) => {
                 actions[id].setReducers(allFields);
+            }}
+            onBlur={() => {
+                const copyConfig = JSON.parse(JSON.stringify(config));
+                const undoItem = {
+                    type: 'property',
+                    formConfig: copyConfig,
+                    id,
+                    componentName: 'Checkbox',
+                };
+                undoStack.push(undoItem);
+                actions.page.setReducers({
+                    undoStack,
+                });
             }}
             fields={Object.keys(config).map((key) => ({
                 name: [key],

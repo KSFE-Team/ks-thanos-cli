@@ -44,9 +44,9 @@ export default class KMSCloudComponent extends FormItem {
         let handleData = changeConfig(defaultConfig, insertData);
         fs.writeFile(registerPath, handleData, () => {
             console.log(successText(`default.js 更新成功！`));
+            // eslint格式化文件
+            formatFile(registerPath); // TODO: 没生效？
         });
-        // eslint格式化文件
-        formatFile(registerPath); // TODO: 没生效？
     }
 
     getDecoratorConfigCode() {
