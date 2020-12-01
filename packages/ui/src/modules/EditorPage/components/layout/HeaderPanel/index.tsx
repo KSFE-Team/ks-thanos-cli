@@ -149,8 +149,8 @@ export default () => {
                 pageJson: {
                     ...pageJson,
                     ...currentItem.pageJson,
-                    selectedId: '',
                 },
+                selectedId: '',
             });
         }
         actions.page.setReducers({
@@ -169,8 +169,11 @@ export default () => {
                 pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components : [] },
             });
         } else if (currentItem.type === 'property') {
-            const { id, formConfig } = currentItem;
+            const { id, componentName, formConfig } = currentItem;
             actions[id].setReducers(formConfig);
+            actions.page.setReducers({
+                selectedId: `${id}_${componentName}`,
+            });
         } else if (currentItem.type === 'page') {
             actions.page.setReducers({
                 pageJson: {
