@@ -95,28 +95,26 @@ export class SearchFormDelegate extends FormDelegate {
 
     toCode() {
         const form = this.form;
-        return `<Form>
-            <KSSearchForm
-                form={this.props.form}
-                components={[
-                    ${form.components.map(this.toFormItemCode).join(',\n')}
-                ]}
-                actions={<React.Fragment>
-                    <Button
-                        className="mar-l-4"
-                        onClick={() => {
-                            this.${form.stateName}Reset();
-                        }}
-                    >查询</Button>
-                    <Button
-                        type="primary"
-                        className="mar-l-4"
-                        onClick={() => {
-                            goto.push('');
-                        }}
-                    >新增</Button>
-                </React.Fragment>}
-            />
-        </Form>`;
+        return `<KSSearchForm
+        form={this.props.form}
+        components={[
+            ${form.components.map(this.toFormItemCode).join(',\n')}
+        ]}
+        actions={<React.Fragment>
+            <Button
+                className="mar-l-4"
+                onClick={() => {
+                    this.${form.stateName}Reset();
+                }}
+            >查询</Button>
+            <Button
+                type="primary"
+                className="mar-l-4"
+                onClick={() => {
+                    goto.push('');
+                }}
+            >新增</Button>
+        </React.Fragment>}
+    />`;
     }
 }
