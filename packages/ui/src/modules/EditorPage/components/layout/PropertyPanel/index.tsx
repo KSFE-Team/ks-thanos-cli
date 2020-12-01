@@ -10,7 +10,6 @@ const { Item: FormItem } = Form;
 export default () => {
     const page = useSelector((store: any) => store.page);
     const { pageJson, undoStack } = page;
-    console.log('pageJson====>',pageJson)
     const [id, componentName] = page.selectedId.split('_');
     let configContent;
     if (id) {
