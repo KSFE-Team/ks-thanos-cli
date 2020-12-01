@@ -16,7 +16,7 @@ const { Option } = Select;
 interface ConditionsProps extends ComponentConfig {}
 
 export default (props: ConditionsProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     // const { page, sotres } = useSelector((store: any) => ({ page: store.page, sotres: store }));
     const config = props[id] || {};
     const children = DEFAULT_OPTIONS.map((option, index) => (
@@ -46,6 +46,19 @@ export default (props: ConditionsProps) => {
                         ...allFields,
                         type: allFields.type,
                         isChange: true,
+                    });
+                }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'Conditions',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
                     });
                 }}
                 fields={Object.keys(config).map((key: string) => {
