@@ -5,7 +5,7 @@ import Card from 'Src/components/Card';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORM_TYPES } from './constants';
 
-const [{ key: NORMAL }, { key: SEARCH }] = FORM_TYPES;
+const [{ key: NORMAL }, { key: SEARCH }, { key: MODAL }] = FORM_TYPES;
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const formItemLayout = {
@@ -34,6 +34,7 @@ export default (props: FormConfigProps) => {
     /* 根据表单类型渲染节点 */
     const getFormByType = (): ReactNode => {
         switch (config[TYPE]) {
+            case MODAL:
             case NORMAL:
                 return (
                     <Card title="接口及路由参数配置">

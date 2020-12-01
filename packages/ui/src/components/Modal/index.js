@@ -62,17 +62,19 @@ export default class Modal extends Component {
     render() {
         const { visible, children, title } = this.props;
         return (
-            <div className="modal-container" style={{display: visible ? 'block' : 'none'}}>
-                <div className="modal-mask" onClick={this.handleCancel}></div>
-                <div className="modal-wrapper">
-                    <div className="modal-title">
-                        {title}
-                    </div>
-                    <div className='modal-content'>
-                        {children}
-                    </div>
-                    <div className="modal-bottom-toolbar">
-                        {this.getFooter()}
+            <div className='thanos-modal'>
+                <div className="modal-container" style={{display: visible ? 'block' : 'none'}}>
+                    <div className="modal-mask" onClick={this.handleCancel}></div>
+                    <div className="modal-wrapper">
+                        <div className="modal-title">
+                            {title}
+                        </div>
+                        <div className='modal-content'>
+                            {children}
+                        </div>
+                        <div className="modal-bottom-toolbar">
+                            {this.getFooter()}
+                        </div>
                     </div>
                 </div>
             </div>

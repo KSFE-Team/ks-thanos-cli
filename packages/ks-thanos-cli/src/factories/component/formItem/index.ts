@@ -8,7 +8,7 @@ export interface FormItemConfig extends ComponentConfig {
     label: string; // 搜索表单标题
     key: string; // 表单绑定Key
     isRequired: boolean; // 是否必填
-    formType: 'search' | 'normal'; // 表单类型
+    formType: 'search' | 'normal' | 'modal'; // 表单类型
     initialValue: any; // 默认值
     props: { // 组件属性
         [name: string]: any;

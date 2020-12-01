@@ -2,7 +2,6 @@ import { Component, ComponentConfig } from 'Src/factories/component/basic';
 import Page from 'Src/factories/page';
 import { TableColumn } from './table/tableColumn';
 import { COMPONENT_TYPES_MAP } from 'Src/utils/constants/component';
-import File from './relationTable/file';
 
 export class ComponentManager {
     /**
@@ -16,7 +15,7 @@ export class ComponentManager {
     ) {
         let page: Page,
             componentInstance: Component | undefined;
-        if (target instanceof Page || target instanceof File) {
+        if (target instanceof Page) {
             page = target;
         } else {
             page = target.page;

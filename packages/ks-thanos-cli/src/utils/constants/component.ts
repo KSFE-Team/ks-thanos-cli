@@ -11,7 +11,6 @@ import { Checkbox } from 'Src/factories/component/checkbox';
 import { DatePicker } from 'Src/factories/component/datePicker';
 import { Form } from 'Src/factories/component/form/index';
 import { Fragment } from 'Src/factories/component/fragment';
-import { RelationTable } from 'Src/factories/component/relationTable';
 import { ExtendContainer } from 'Src/factories/component/extendContainer';
 import { Row } from 'Src/factories/component/row';
 import { Col } from 'Src/factories/component/col';
@@ -20,7 +19,8 @@ import {
     BizSelectModal,
     BizSelectTags,
     BizTimingSetting,
-    BizSelectTypeContent
+    BizSelectTypeContent,
+    Conditions
 } from 'Src/factories/component/cloudComponent'; // 云组件
 
 export const COMPONENT_TYPES_MAP: {
@@ -40,7 +40,6 @@ export const COMPONENT_TYPES_MAP: {
     Radio,
     KSDatePicker: DatePicker,
     Fragment: Fragment,
-    RelationTable: RelationTable,
     ExtendContainer: ExtendContainer,
     Row: Row,
     Col: Col,
@@ -48,5 +47,6 @@ export const COMPONENT_TYPES_MAP: {
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
     BizSelectTypeContent: BizSelectTypeContent,
-    KSWhiteCard: KSWhiteCard
+    KSWhiteCard: KSWhiteCard,
+    Conditions: Conditions
 };
