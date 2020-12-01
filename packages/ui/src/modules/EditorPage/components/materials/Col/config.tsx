@@ -48,7 +48,7 @@ export default (props: ColConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem label="span值" name={SPAN} {...formItemLayout} required>
                         <InputNumber style={{ width: '100%' }} placeholder="span值" min={1} max={24} />
                     </FormItem>

@@ -83,7 +83,7 @@ export default (props: FormConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem label="表单存储key" name={STATE_NAME} {...formItemLayout} required>
                         <Input placeholder="例如： searchForm | userInfo" />
                     </FormItem>

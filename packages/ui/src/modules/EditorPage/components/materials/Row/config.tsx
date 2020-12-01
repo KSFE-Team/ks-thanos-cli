@@ -63,7 +63,7 @@ export default (props: RowConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem label="type" name={TYPE} {...formItemLayout}>
                         <Select placeholder="type" allowClear>
                             <Option value="flex">flex</Option>

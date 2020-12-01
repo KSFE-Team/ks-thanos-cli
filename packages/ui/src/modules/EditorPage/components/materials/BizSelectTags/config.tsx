@@ -41,7 +41,7 @@ export default (props: BizSelectTagsProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <Form.Item name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
                         <Input placeholder="例如：故事" />
                     </Form.Item>

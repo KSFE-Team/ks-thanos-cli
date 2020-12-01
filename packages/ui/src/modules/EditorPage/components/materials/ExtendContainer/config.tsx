@@ -52,7 +52,7 @@ export default (props: ExtendContainerConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem label="label" name={LABEL} {...formItemLayout} required>
                         <Input placeholder="例如： 故事列表" />
                     </FormItem>

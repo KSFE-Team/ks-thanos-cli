@@ -50,7 +50,7 @@ export default () => {
                         },
                     ]}
                 >
-                    <Card title="基础配置">
+                    <Card title="页面配置">
                         <FormItem label="页面名称(英文)" name="pageName" required>
                             <Input />
                         </FormItem>

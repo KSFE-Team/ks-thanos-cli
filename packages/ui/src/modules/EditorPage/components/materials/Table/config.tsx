@@ -61,7 +61,7 @@ export default (props: TableConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem name="api" label="请求地址" required>
                         <Input placeholder="例如： /user/list" />
                     </FormItem>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input } from 'antd';
 import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
+import Card from 'Src/components/Card';
 
 const FormItem = Form.Item;
 
@@ -48,9 +49,11 @@ export default (props: KSWhiteCardConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <FormItem label="卡片title" name={NAME} {...formItemLayout} required>
-                    <Input placeholder="例如： 分类表单" />
-                </FormItem>
+                <Card title={config.componentName}>
+                    <FormItem label="卡片title" name={NAME} {...formItemLayout} required>
+                        <Input placeholder="例如： 分类表单" />
+                    </FormItem>
+                </Card>
             </Form>
         </div>
     );

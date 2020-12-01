@@ -37,7 +37,7 @@ export default (props: InputConfigProps) => {
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
                         <Input placeholder="例如： 姓名" />
                     </FormItem>
