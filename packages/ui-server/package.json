@@ -46,11 +46,7 @@
         "winston": "^3.2.1"
     },
     "devDependencies": {
-<<<<<<< HEAD
         "@ks-web-cli/plugin-server": "^4.16.7"
-=======
-        "@ks-web-cli/plugin-server": "^4.16.4"
->>>>>>> beebdd1fd55a5dc2640d71e7ebc92a3b5debf4e1
     },
     "gitHead": "97f78bd2e3e67f9a7a51d4c4cc2662a4f3517d3e"
 }
