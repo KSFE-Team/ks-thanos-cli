@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { actions } from 'kredux';
 import { useSelector } from 'react-redux';
 import { Card, Row, Col, Select } from 'antd';
-import { Chart, Interval, Line, Tooltip, Axis } from 'bizcharts';
+import { Chart, Interval, Line, Tooltip, Axis, Point } from 'bizcharts';
 import { getComponentsCount } from 'Src/modules/EditorPage/components/materials';
 import { TIMES } from './constants';
 import './style.scss';
@@ -91,6 +91,7 @@ export default () => {
             >
                 <Chart height={250} autoFit data={pageList} interactions={['element-active']}>
                     <Line position="time*count" />
+                    <Point position="time*count" shape='circle' />
                     <Tooltip
                         shared
                         itemTpl={`<li style="margin-bottom: 15px" data-index={index}>
@@ -98,6 +99,7 @@ export default () => {
                             创建数量: {value}
                         </li>`}
                         triggerOn="hover"
+                        showCrosshairs
                     />
                     <Axis
                         name="time"
