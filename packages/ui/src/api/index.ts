@@ -44,4 +44,8 @@ export const API = {
         getProjectConfig: `${LOCAL_SERVER}/projectConfig/get`,
         updateProjectConfig: `${LOCAL_SERVER}/projectConfig/update`,
     },
+    dashboard: {
+        get: `${THANOS_SERVER}/dashboard/sumAnalysis`, // 汇总信息
+        query: `${THANOS_SERVER}/dashboard/query`, // 汇总信息
+    },
 };

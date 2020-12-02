@@ -18,7 +18,7 @@ import * as Table from './Table';
 import * as Col from './Col/index';
 import * as KSWhiteCard from './KSWhiteCard/index';
 
-export default {
+const COMPONENTS_DICT = {
     Form,
     Input,
     Checkbox,
@@ -39,3 +39,7 @@ export default {
     Col,
     KSWhiteCard,
 };
+
+export default COMPONENTS_DICT;
+
+export const getComponentsCount = () => Object.keys(COMPONENTS_DICT).length;

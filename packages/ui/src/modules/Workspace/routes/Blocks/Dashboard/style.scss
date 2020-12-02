@@ -1,0 +1,18 @@
+.thanos-blocks-dashboard {
+    padding: 12px;
+
+    .thanos-dashboard-card {
+        margin: 0 0 12px;
+        text-align: center;
+
+        .ant-card-body {
+            font-weight: bold;
+            font-size: 20px;
+            color: rgb(255, 183, 0);
+        }
+    }
+    
+    .thanos-dashboard-bizcharts {
+        margin-bottom: 12px;
+    }
+}
