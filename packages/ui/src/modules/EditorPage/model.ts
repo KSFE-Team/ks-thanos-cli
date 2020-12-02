@@ -12,6 +12,8 @@ export const STATE = {
         paramKey: '',
         components: [],
     },
+    undoStack: [],
+    redoStack: [],
 };
 
 export default {

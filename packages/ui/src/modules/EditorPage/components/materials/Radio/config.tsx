@@ -11,7 +11,7 @@ const FormItem = Form.Item;
 interface InputConfigProps extends ComponentConfig {}
 
 export default (props: InputConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     return (
         <div>
@@ -20,12 +20,25 @@ export default (props: InputConfigProps) => {
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
                 }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'Radio',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
+                }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
                         <Input placeholder="例如： 状态" />
                     </FormItem>

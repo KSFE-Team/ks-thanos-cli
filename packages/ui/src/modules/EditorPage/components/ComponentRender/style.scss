@@ -6,6 +6,15 @@
     border: 1px solid rgba(255,255,255,.6);
     margin: 10px 0;
 
+    &-active {
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 10px 5px 5px 5px;
+        position: relative;
+        border: 1px solid #1890ff;
+        margin: 10px 0;
+    }
+
     &:hover {
         border: dashed 1px lightgray;
     }

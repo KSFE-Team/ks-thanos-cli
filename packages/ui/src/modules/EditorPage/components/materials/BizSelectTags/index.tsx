@@ -14,14 +14,12 @@ const DEFAULT_LABEL = '故事';
 const DEFAULT_BUTTON_TEXT = '添加';
 
 const MaterialBizSelectTags = (props: BizSelectTagsConfigProps) => {
-    const { id, props: configProps } = props;
+    const { id } = props;
     const formConfig = props[id];
     const { label = DEFAULT_LABEL, isRequired, buttonText = DEFAULT_BUTTON_TEXT } = formConfig;
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label} required={isRequired}>
-            <Button {...configProps} type="primary">
-                {buttonText}
-            </Button>
+            <Button type="primary">{buttonText}</Button>
         </Form.Item>
     );
 };

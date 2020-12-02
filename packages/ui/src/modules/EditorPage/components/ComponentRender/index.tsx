@@ -13,9 +13,10 @@ export default (props: any) => {
     const componentMap = getComponents();
     const ComponentByName = componentMap[props.componentName].component;
     const page = useSelector((store: any) => store.page);
+    const id = page.selectedId.split('_')[0];
     return (
         <div
-            className="component-container"
+            className={`${props.id === id ? 'component-container-active' : 'component-container'}`}
             onClick={(e) => {
                 e.stopPropagation();
                 if (page.selectedId !== `${props.id}_${props.componentName}`) {
@@ -38,6 +39,7 @@ export default (props: any) => {
                                 type: ACTION.DELETE,
                                 id: props.id,
                                 pageJson: page.pageJson,
+                                undoStack: page.undoStack,
                             });
                         },
                     });

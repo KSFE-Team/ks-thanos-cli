@@ -19,7 +19,8 @@ import {
     BizSelectModal,
     BizSelectTags,
     BizTimingSetting,
-    BizSelectTypeContent
+    BizSelectTypeContent,
+    Conditions
 } from 'Src/factories/component/cloudComponent'; // 云组件
 
 export const COMPONENT_TYPES_MAP: {
@@ -46,5 +47,6 @@ export const COMPONENT_TYPES_MAP: {
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
     BizSelectTypeContent: BizSelectTypeContent,
-    KSWhiteCard: KSWhiteCard
+    KSWhiteCard: KSWhiteCard,
+    Conditions: Conditions
 };

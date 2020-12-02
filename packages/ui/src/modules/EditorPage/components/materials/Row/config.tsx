@@ -35,7 +35,7 @@ const ALIGN_TYPE = [
 interface RowConfigProps extends ComponentConfig {}
 
 export default (props: RowConfigProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
 
     return (
@@ -45,12 +45,25 @@ export default (props: RowConfigProps) => {
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
                 }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'Row',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
+                }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <FormItem label="type" name={TYPE} {...formItemLayout}>
                         <Select placeholder="type" allowClear>
                             <Option value="flex">flex</Option>
