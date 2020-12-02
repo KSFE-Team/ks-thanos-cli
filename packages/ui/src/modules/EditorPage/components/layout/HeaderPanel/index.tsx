@@ -15,6 +15,7 @@ import {
     findParamKey,
     getPageData,
 } from '../../../utils';
+import { getComponents } from '../../../utils/constants';
 
 const { confirm } = Modal;
 
@@ -71,7 +72,6 @@ export default () => {
                 } else {
                     id = Number(queryString.id || 0);
                 }
-                // console.log(componentsData, 'componentsData----发布后的数据');
                 actions.page.save({
                     postDate: {
                         [`${pageOrTemp}Data`]: JSON.stringify({
@@ -108,6 +108,92 @@ export default () => {
         });
     };
 
+    const undo = () => {
+        const copyUndoStack = JSON.parse(JSON.stringify(undoStack));
+        undoStack.pop();
+        const undoItem = copyUndoStack.pop();
+        const currentItem = undoStack[undoStack.length - 1];
+        const redoItem = undoItem;
+        redoStack.push(redoItem);
+        if ((undoStack.length > 0 && currentItem.type === 'tree') || undoStack.length === 0) {
+            if (undoItem.type === 'property') {
+                const { id, componentName } = undoItem;
+                const initJson = getComponents()[componentName].tools.getInitJson();
+                actions[id].setReducers(initJson);
+            } else if (undoItem.type === 'page') {
+                actions.page.setReducers({
+                    pageJson: {
+                        ...pageJson,
+                        pageName: '',
+                        selectedId: '',
+                    },
+                });
+            } else {
+                actions.page.setReducers({
+                    pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : [] },
+                });
+            }
+        } else if (currentItem.type === 'property') {
+            if (undoItem.type === 'tree') {
+                const result = undoStack.filter((item: any) => item.type === 'tree');
+                actions.page.setReducers({
+                    pageJson: {
+                        ...pageJson,
+                        components: result.length > 0 ? result[result.length - 1].components : [],
+                    },
+                });
+            } else {
+                const { id, componentName, formConfig } = currentItem;
+                actions[id].setReducers(formConfig);
+                actions.page.setReducers({
+                    selectedId: `${id}_${componentName}`,
+                });
+            }
+        } else if (currentItem.type === 'page') {
+            actions.page.setReducers({
+                pageJson: {
+                    ...pageJson,
+                    ...currentItem.pageJson,
+                },
+                selectedId: '',
+            });
+        }
+        actions.page.setReducers({
+            redoStack,
+        });
+    };
+
+    const redo = () => {
+        const copyRedoStack = JSON.parse(JSON.stringify(redoStack));
+        const redoItem = copyRedoStack.pop();
+        const currentItem = redoStack[redoStack.length - 1];
+        const undoItem = redoItem;
+        undoStack.push(undoItem);
+        if ((redoStack.length > 0 && currentItem.type === 'tree') || redoStack.length === 0) {
+            actions.page.setReducers({
+                pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components : [] },
+            });
+        } else if (currentItem.type === 'property') {
+            const { id, componentName, formConfig } = currentItem;
+            actions[id].setReducers(formConfig);
+            actions.page.setReducers({
+                selectedId: `${id}_${componentName}`,
+            });
+        } else if (currentItem.type === 'page') {
+            actions.page.setReducers({
+                pageJson: {
+                    ...pageJson,
+                    ...currentItem.pageJson,
+                },
+            });
+        }
+        redoStack.pop();
+        actions.page.setReducers({
+            undoStack,
+        });
+    };
+
+    // eslint-disable-next-line no-return-assign
     return (
         <Spin spinning={spinning}>
             <div className="thanos-editor-header">
