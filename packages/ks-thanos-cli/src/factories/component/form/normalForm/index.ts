@@ -18,7 +18,7 @@ export class NormalFormDelegate extends FormDelegate {
         super(form);
 
         const activeEvents = form.config.activeEvents || [];
-
+        console.log('activeEventsNormal', activeEvents);
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
             const actionType = activeEvent.dependencies.actionType;
@@ -90,7 +90,7 @@ export class NormalFormDelegate extends FormDelegate {
     initPageState() {
         const form = this.form;
         const pageModel = form.page.model;
-        pageModel.addInitialState(`info`, '{}');
+        pageModel.addInitialState(`${form.stateName}`, '{}');
     }
 
     initEffects() {
