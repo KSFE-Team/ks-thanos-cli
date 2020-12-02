@@ -1,0 +1,21 @@
+.customer-radio-container {
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+
+    .customer-radio-icon {
+        position: absolute;
+        top: -1px;
+        left: -2px;
+        margin: 5px;
+        display: inline-block;
+        border: 1px solid #434343;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+    }
+
+    .customer-radio-text {
+        padding-left: 25px;
+    }
+}
