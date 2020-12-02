@@ -162,7 +162,7 @@ export const checkAddComponent = (pageJson: any, component: any, parentId: strin
     if (!isOnly) {
         return `${component.name}只能添加一次`;
     }
-    const { tools: childrenTools } = getComponents()[component.name];
+    const { tools: childrenTools } = getComponents()[componentName];
     const taegetCompoent = findComponent(parentId, pageJson) || 'draw';
     const sourceComponent = component;
     const getTools = childrenTools.getTools();
