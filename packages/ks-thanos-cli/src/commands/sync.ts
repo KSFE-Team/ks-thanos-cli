@@ -57,7 +57,7 @@ export async function runSync(options: {
             type: 'input',
             name: 'pagePath',
             message: '页面路径（相对于 src/pages 的路径）'
-        }
+        },
     ];
 
     const { projectPath, config: mutipleConfig } = options;
@@ -88,7 +88,6 @@ export async function runSync(options: {
             pageConfig,
             pagePath: pageFolderPath
         });
-
         console.log(infoText(`生成页面成功，正在生成 Model`));
         await createModel({
             page,

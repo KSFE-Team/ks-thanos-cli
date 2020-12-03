@@ -60,6 +60,7 @@ export default (props: any) => {
                             index: newIndex,
                             parentId: parent.id,
                             pageJson: page.pageJson,
+                            undoStack: page.undoStack,
                         });
                     } else {
                         message.warning(checkResult);
@@ -74,6 +75,7 @@ export default (props: any) => {
                             oldParentId: from.id,
                             pageJson: page.pageJson,
                             id: clone.dataset.id,
+                            undoStack: page.undoStack,
                         });
                     }, 100);
                 } else {
@@ -93,6 +95,7 @@ export default (props: any) => {
                         oldParentId: from.id,
                         pageJson: page.pageJson,
                         id: clone.dataset.id,
+                        undoStack: page.undoStack,
                     },
                 });
             }}

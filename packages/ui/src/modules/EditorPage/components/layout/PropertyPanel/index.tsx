@@ -9,12 +9,12 @@ const { Item: FormItem } = Form;
 
 export default () => {
     const page = useSelector((store: any) => store.page);
-    const { pageJson } = page;
+    const { pageJson, undoStack } = page;
     const [id, componentName] = page.selectedId.split('_');
     let configContent;
     if (id) {
         const ConfigForm = getComponents()[componentName].config;
-        configContent = <ConfigForm id={id} />;
+        configContent = <ConfigForm id={id} undoStack={undoStack} />;
     } else {
         configContent = (
             <div>
@@ -28,6 +28,17 @@ export default () => {
                             },
                         });
                     }}
+                    onBlur={() => {
+                        const copyPageJson = JSON.parse(JSON.stringify(pageJson));
+                        const undoItem = {
+                            type: 'page',
+                            pageJson: copyPageJson,
+                        };
+                        undoStack.push(undoItem);
+                        actions.page.setReducers({
+                            undoStack,
+                        });
+                    }}
                     fields={[
                         {
                             name: ['pageName'],
@@ -39,7 +50,7 @@ export default () => {
                         },
                     ]}
                 >
-                    <Card title="基础配置">
+                    <Card title="页面配置">
                         <FormItem label="页面名称(英文)" name="pageName" required>
                             <Input />
                         </FormItem>

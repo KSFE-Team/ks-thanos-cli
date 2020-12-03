@@ -18,7 +18,6 @@ export class NormalFormDelegate extends FormDelegate {
         super(form);
 
         const activeEvents = form.config.activeEvents || [];
-
         activeEvents.forEach((activeEvent) => {
             const activeEventType = activeEvent.eventType;
             const actionType = activeEvent.dependencies.actionType;
@@ -60,6 +59,11 @@ export class NormalFormDelegate extends FormDelegate {
             },
             {
                 source: 'antd',
+                name: 'Button',
+                defaultImport: false
+            },
+            {
+                source: 'antd',
                 name: 'Row',
                 defaultImport: false
             },
@@ -85,7 +89,7 @@ export class NormalFormDelegate extends FormDelegate {
     initPageState() {
         const form = this.form;
         const pageModel = form.page.model;
-        pageModel.addInitialState(`info`, '{}');
+        pageModel.addInitialState(`${form.stateName}`, '{}');
     }
 
     initEffects() {
@@ -202,6 +206,10 @@ export class NormalFormDelegate extends FormDelegate {
         const { page, config } = this.form;
         const { pageName } = page;
         this.form.page.addRenderVariableDeclaration({
+            name: 'form',
+            source: `this.props`
+        });
+        this.form.page.addRenderVariableDeclaration({
             name: 'getFieldDecorator',
             source: 'this.props.form'
         });
@@ -211,11 +219,12 @@ export class NormalFormDelegate extends FormDelegate {
         });
     }
 
-    render() {
-        this.form.page.addRenderVariableDeclaration({
-            name: 'form',
-            source: `this.props`
-        });
+    initPropTypesCodes() {
+        this.form.page.addPropTypesCodes(new Value({
+            key: 'match',
+            value: 'match',
+            type: 'object'
+        }));
     }
 
     toFormItemCode(item: FormItem) {
@@ -243,7 +252,6 @@ export class NormalFormDelegate extends FormDelegate {
                 ${rulesCodes}
             ],\n}`);
         }
-
         /* 不需要formItem 则直接返回组件代码 */
         if (item.config.formItem === 'false') {
             return item.toCode();

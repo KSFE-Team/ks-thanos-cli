@@ -14,11 +14,12 @@ import * as ExtendContainer from './ExtendContainer/index';
 import * as BizSelectTypeContent from './BizSelectTypeContent/index';
 import * as Fragment from './Fragment/index';
 import * as Row from './Row/index';
+import * as Conditions from './Conditions/index';
 import * as Table from './Table';
 import * as Col from './Col/index';
 import * as KSWhiteCard from './KSWhiteCard/index';
 
-export default {
+const COMPONENTS_DICT = {
     Form,
     Input,
     Checkbox,
@@ -35,7 +36,12 @@ export default {
     BizSelectTypeContent,
     Fragment,
     Row,
+    Conditions,
     Table,
     Col,
     KSWhiteCard,
 };
+
+export default COMPONENTS_DICT;
+
+export const getComponentsCount = () => Object.keys(COMPONENTS_DICT).length;

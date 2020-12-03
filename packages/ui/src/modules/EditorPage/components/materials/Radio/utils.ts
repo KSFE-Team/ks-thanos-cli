@@ -7,7 +7,7 @@ const [{ VALUE: REQUIRED }] = ISREQUIRED_TYPE;
 export interface Option {
     label: string;
     value: any;
-    text: any;
+    text?: any;
 }
 
 export interface RadioConfig extends ComponentJSON {
@@ -26,7 +26,10 @@ export const getInitJson = (): RadioConfig => ({
     key: '',
     label: '',
     isRequired: REQUIRED,
-    options: [],
+    options: [
+        { value: 1, label: '开启' },
+        { value: 0, label: '禁用' },
+    ],
 });
 
 /**

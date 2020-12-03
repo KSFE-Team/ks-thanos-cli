@@ -75,3 +75,12 @@ export const formatServerPort = () => {
 export const getUniqueID = () => {
     return Math.random().toString(36).substring(2);
 };
+
+/* 展示组件默认获取默认值 */
+export const getDefaultValue = (data: any, key: string, defaultValue: any) => {
+    const value = data[key];
+    if (value || value === 0) {
+        return value;
+    }
+    return defaultValue;
+};

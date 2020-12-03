@@ -9,5 +9,9 @@ export const FORM_TYPES = [
     {
         key: 'search',
         name: '搜索表单'
+    },
+    {
+        key: 'modal',
+        name: '弹窗表单'
     }
 ];

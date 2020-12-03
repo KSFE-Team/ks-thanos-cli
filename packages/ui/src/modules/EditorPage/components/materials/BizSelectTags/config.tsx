@@ -11,7 +11,7 @@ const { Option } = Select;
 interface BizSelectTagsProps extends ComponentConfig {}
 
 export default (props: BizSelectTagsProps) => {
-    const { id } = props;
+    const { id, undoStack } = props;
     const config = props[id] || {};
     const children = DEFAULT_OPTIONS.map(({ value, name }: any, index: string | number | undefined) => {
         return <Option key={index} value={value}>{`${name}(${value})`}</Option>;
@@ -23,12 +23,25 @@ export default (props: BizSelectTagsProps) => {
                 onValuesChange={(_, allFields) => {
                     actions[id].setReducers(allFields);
                 }}
+                onBlur={() => {
+                    const copyConfig = JSON.parse(JSON.stringify(config));
+                    const undoItem = {
+                        type: 'property',
+                        formConfig: copyConfig,
+                        id,
+                        componentName: 'BizSelectTags',
+                    };
+                    undoStack.push(undoItem);
+                    actions.page.setReducers({
+                        undoStack,
+                    });
+                }}
                 fields={Object.keys(config).map((key) => ({
                     name: [key],
                     value: config[key],
                 }))}
             >
-                <Card title="基础配置">
+                <Card title={config.componentName}>
                     <Form.Item name={FIELD_DICT.LABEL} label={ALIAS.LABEL} required>
                         <Input placeholder="例如：故事" />
                     </Form.Item>

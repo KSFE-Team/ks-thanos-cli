@@ -1,18 +1,38 @@
 import React from 'react';
+import { Button } from 'antd';
 import ComponentRender from '../../ComponentRender';
 import * as tools from './utils';
 import FormConfig from './config';
 import Sortable from '../../Sortable';
+import { FORM_TYPES } from './constants';
 import './index.scss';
 
+const [, , { key: MODAL_FORM }] = FORM_TYPES;
 interface MaterialFormProps {
     components: any;
     id: string;
     page: any;
 }
 
+const getModalFormActions = (type: string) => {
+    switch (type) {
+        case MODAL_FORM:
+            return (
+                <div className="modal-actions">
+                    <Button>cancel</Button>
+                    <Button className="mar-l-4" type="primary">
+                        ok
+                    </Button>
+                </div>
+            );
+        default:
+            return null;
+    }
+};
+
 const MaterialForm = (props: MaterialFormProps) => {
     const { components = [], id, page } = props;
+    const config = props[id];
     return (
         <div className="form-container">
             <div className="form-title">表单容器</div>
@@ -27,6 +47,7 @@ const MaterialForm = (props: MaterialFormProps) => {
                     })}
                 </Sortable>
             </div>
+            {getModalFormActions(config.type)}
         </div>
     );
 };

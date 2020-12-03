@@ -1,7 +1,6 @@
 import {Import} from 'Src/factories/page/types';
 import Debug from 'Src/utils/debugger';
 import Page from 'Src/factories/page';
-import File from 'Src/factories/component/relationTable/file';
 import {Effect} from 'Src/factories/model/effect';
 import {BasicContainer} from 'Src/factories/basicElement';
 import { upperFirst } from 'Src/utils/string';
@@ -35,10 +34,11 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     } = {};
     config: ComponentConfig;// 组件配置
 
-    page: Page | File; // 组件所属页面
+    page: Page; // 组件所属页面
     effect: Effect | undefined; // 组件所用的effect
 
-    constructor(page: Page | File, // 页面
+    constructor(
+        page: Page, // 页面
         config: ComponentConfig, // 组件配置
     ) {
         super();
@@ -104,6 +104,11 @@ export abstract class Component extends BasicContainer implements ComponentConfi
     initRenderVariableDeclaration?(): void;
 
     /**
+     * 初始化类型声明配置
+     */
+    initPropTypesCodes?(): void;
+
+    /**
      * 组件初始化
      */
     init() {
@@ -120,6 +125,7 @@ export abstract class Component extends BasicContainer implements ComponentConfi
         this.initPageTitle && this.initPageTitle();
         this.initStateVariableDeclaration && this.initStateVariableDeclaration();
         this.initRenderVariableDeclaration && this.initRenderVariableDeclaration();
+        this.initPropTypesCodes && this.initPropTypesCodes();
     }
 
     /**

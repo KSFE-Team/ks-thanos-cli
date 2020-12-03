@@ -11,7 +11,7 @@ const debug = Debug(__filename);
  */
 export interface ExtendContainerComponentConfig extends ComponentConfig {
     label: string
-    formKey: string
+    key: string
     sortKey: string
     addButtonText: string
     components: FormItemConfig[]; // 子组件
@@ -79,7 +79,7 @@ export class ExtendContainer extends Component {
                 >
                     <KSExtendContainer
                         form={this.props.form}
-                        formKey='${this.config.formKey}'
+                        formKey='${this.config.key}'
                         sortKey='${this.config.sortKey}'
                         initialValue={[]}
                         addButtonText='${this.config.addButtonText}'

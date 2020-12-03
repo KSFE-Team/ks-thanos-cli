@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Radio, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
 import BizSelectTypeContentConfig from './config';
+import CustomerRadio from '../../CustomerRadio';
 
-const RadioGroup = Radio.Group;
 const DEFAULT_LABEL = '内容类型';
 export const CONTENT_ARR = [
     {
@@ -29,15 +29,9 @@ const MaterialBizSelectTypeContent = (props: BizSelectTypeContentConfigProps) =>
     return (
         <div>
             <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={typeLabel}>
-                <RadioGroup value="album">
-                    {CONTENT_ARR.map(({ label: name, value }) => {
-                        return (
-                            <Radio value={value} key={value}>
-                                {name}
-                            </Radio>
-                        );
-                    })}
-                </RadioGroup>
+                {CONTENT_ARR.map(({ label: name, value }) => {
+                    return <CustomerRadio key={value}>{name}</CustomerRadio>;
+                })}
             </Form.Item>
             <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={typeLabel}>
                 <Input.Search

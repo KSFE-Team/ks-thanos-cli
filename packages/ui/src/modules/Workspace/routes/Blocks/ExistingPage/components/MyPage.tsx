@@ -37,31 +37,31 @@ export default () => {
     }));
     const { pageList = [], searchPageForm, cuPageModalVisible } = existingPage;
     const { thanosModalVisible, currentProject } = workspace;
-
-    const handlePageChange = (page: any) => {
+    const handlePageChange = async (page: any) => {
         actions.existingPage.setReducers({
             searchPageForm: {
                 ...searchPageForm,
                 page,
             },
         });
-        loadList();
+        await loadList();
     };
 
     const loadList = () => {
-        actions.existingPage.getPageList();
+        return actions.existingPage.getPageList();
     };
 
-    const resetPage = (val: any) => {
-        actions.existingPage.setReducers({
+    const resetPage = async (val: any) => {
+        await actions.existingPage.setReducers({
             searchPageForm: {
                 ...searchPageForm,
+                page: 1,
                 pageName: {
                     value: val,
                 },
             },
         });
-        handlePageChange(1);
+        await loadList();
     };
 
     const reload = () => {

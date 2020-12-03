@@ -62,7 +62,7 @@ export async function runMergeNginx() {
     execSync(`cp -r ${commonFilePath}/* ${nginxConfDirPath}`);
     console.log(infoText('更新配置成功'));
 
-    console.log(infoText('正在重启nginx，请您输入密码'));
+    console.log(infoText('正在重启nginx'));
     /* 重启nginx */
     execSync(`sudo nginx -s reload`);
     console.log(successText('nginx重启成功'));
