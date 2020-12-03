@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, Radio } from 'antd';
+import { Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
 import BizTimingSettingConfig from './config';
+import CustomerRadio from '../../CustomerRadio';
 
 const CONFIG_TYPE = [
     {
@@ -24,13 +25,9 @@ interface BizTimingSettingConfigProps extends ComponentConfig {
 const MaterialBizTimingSetting = (props: BizTimingSettingConfigProps) => {
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label="定时配置">
-            <Radio.Group>
-                {CONFIG_TYPE.map(({ label, value }, index) => (
-                    <Radio key={index} value={value}>
-                        {label}
-                    </Radio>
-                ))}
-            </Radio.Group>
+            {CONFIG_TYPE.map(({ label }, index) => (
+                <CustomerRadio key={index}>{label}</CustomerRadio>
+            ))}
         </Form.Item>
     );
 };

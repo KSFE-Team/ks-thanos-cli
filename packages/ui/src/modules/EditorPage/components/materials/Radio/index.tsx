@@ -1,10 +1,11 @@
 import React from 'react';
-import { Radio, Form } from 'antd';
+import { Form } from 'antd';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import { FORMITEM_LAYOUT } from '../../../utils/constants';
 import * as tools from './utils';
 import RadioConfig from './config';
 import { Option } from './utils';
+import CustomerRadio from '../../CustomerRadio';
 
 interface MaterialRadioProps extends ComponentConfig {
     props: any;
@@ -31,12 +32,8 @@ const MaterialRadio = (props: MaterialRadioProps) => {
     return (
         <Form.Item {...FORMITEM_LAYOUT} style={{ marginBottom: '8px' }} label={label}>
             {options.map((option: Option, index: number) => {
-                const { label: optionLabel, value, text } = option;
-                return (
-                    <Radio key={index} value={value}>
-                        {optionLabel || text}
-                    </Radio>
-                );
+                const { label: optionLabel, text } = option;
+                return <CustomerRadio key={index}>{optionLabel || text}</CustomerRadio>;
             })}
         </Form.Item>
     );
