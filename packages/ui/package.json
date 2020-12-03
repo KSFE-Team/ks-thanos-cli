@@ -33,7 +33,7 @@
     },
     "dependencies": {
         "antd": "^4.6.3",
-        "bizcharts": "^4.0.15",
+        "bizcharts": "^4.0.16",
         "core-js": "^2.6.5",
         "html2canvas": "^1.0.0-rc.7",
         "kredux": "^1.5.0",

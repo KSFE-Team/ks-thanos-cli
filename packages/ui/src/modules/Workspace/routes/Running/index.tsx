@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
-import { Button, Badge, message } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Button, Badge, message, Modal, Spin } from 'antd';
+import { LoadingOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
@@ -9,16 +9,13 @@ import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
 
+const { confirm: Confirm } = Modal;
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
 export default () => {
-    // const { workspace } = useSelector((store: any) => ({ workspace: store.workspace }));
-    const {
-        workspace,
-        // loading
-    } = useSelector((store: any) => ({
+    const { workspace, loading } = useSelector((store: any) => ({
         workspace: store.workspace,
-        // loading: store.loading.effects['workspace/thanosSync'],
+        loading: store.loading.effects['workspace/thanosSync'] || false,
     }));
     // thanosLoading
     const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd } = workspace;
@@ -53,12 +50,21 @@ export default () => {
         });
     };
     const handleSyncNginx = () => {
-        actions.workspace.thanosSync({
-            cwd,
-            cmd: 'mn',
-            args: '',
-            callback: () => {
-                message.success('同步nginx配置并重启成功');
+        Confirm({
+            title: '同步nginx配置',
+            icon: <ExclamationCircleOutlined />,
+            content: '同步线上配置到本地，并帮您自动重启，确认？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk: () => {
+                actions.workspace.thanosSync({
+                    cwd,
+                    cmd: 'mn',
+                    args: '',
+                    callback: () => {
+                        message.success('同步nginx配置并重启成功');
+                    },
+                });
             },
         });
     };
@@ -181,7 +187,7 @@ export default () => {
             },
         ];
         return (
-            <>
+            <Spin spinning={loading}>
                 {actionBtns.map(({ type, onClick, text, props = {} }, idx) => {
                     return (
                         <Button className="mar-l-4" type={type} key={`${idx}_${type}`} onClick={onClick} {...props}>
@@ -192,7 +198,7 @@ export default () => {
                 <span className="workspace-running-badge">
                     <Badge status={badge.status} /> {badge.text}
                 </span>
-            </>
+            </Spin>
         );
     };
 
