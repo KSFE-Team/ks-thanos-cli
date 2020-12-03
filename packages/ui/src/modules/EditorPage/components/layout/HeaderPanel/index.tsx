@@ -21,9 +21,8 @@ const { confirm } = Modal;
 
 export default () => {
     const page = useSelector((store: any) => store.page);
-    const { pageJson, undoStack, redoStack } = page;
+    const { pageJson, undoStack, redoStack, editorInitComponents } = page;
     const [spinning, setSpinning] = useState(false);
-
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
         setSpinning(true);
@@ -130,7 +129,7 @@ export default () => {
                 });
             } else {
                 actions.page.setReducers({
-                    pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : [] },
+                    pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : (window.location.search?editorInitComponents:[]) },
                 });
             }
         } else if (currentItem.type === 'property') {
@@ -171,7 +170,7 @@ export default () => {
         undoStack.push(undoItem);
         if ((redoStack.length > 0 && currentItem.type === 'tree') || redoStack.length === 0) {
             actions.page.setReducers({
-                pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components : [] },
+                pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components :(window.location.search?editorInitComponents:[])},
             });
         } else if (currentItem.type === 'property') {
             const { id, componentName, formConfig } = currentItem;

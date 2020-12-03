@@ -12,6 +12,7 @@ export const STATE = {
         paramKey: '',
         components: [],
     },
+    editorInitComponents:[],
     undoStack: [],
     redoStack: [],
 };
@@ -71,6 +72,7 @@ export default {
                         components:
                             components[0].componentName === 'RelationTable' ? components[0].components : components,
                     },
+                    editorInitComponents:JSON.parse(JSON.stringify(components))
                 });
                 actions.page.setItemProperty(JSON.parse(result[`${pageOrTemp}Data`]));
             }
