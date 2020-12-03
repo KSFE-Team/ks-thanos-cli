@@ -30,7 +30,10 @@ export default async function(context) {
             message: '项目目录不正确'
         };
     }
-    const ARGS = JSON.parse(originArgs || []);
+    let ARGS = [];
+    if (originArgs) {
+        ARGS = JSON.parse(originArgs || []);
+    }
     const formatArgs = ARGS.map(({key, value}) => `${key} ${JSON.stringify(value)}`).join(' ');
     const cmd = `thanos ${CMD} ${formatArgs}`;
     const [tools, ...args] = cmd.split(' ');

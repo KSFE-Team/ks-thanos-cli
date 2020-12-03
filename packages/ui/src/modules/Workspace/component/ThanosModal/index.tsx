@@ -1,7 +1,7 @@
 import React from 'react';
 import { actions } from 'kredux';
 import { useSelector } from 'react-redux';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, message } from 'antd';
 import FormItemRender, { Config } from 'Src/components/FormItemRender';
 import { requiredMessage } from 'Src/utils';
 import SelectPathInput from 'Src/components/SelectPathInput';
@@ -75,6 +75,13 @@ export default () => {
                         value: { ...fieldsValue },
                     },
                 ]),
+                callback: () => {
+                    message.success('灭霸打响指了');
+                    actions.workspace.setReducers({
+                        thanosModalVisible: false,
+                        // thanosGeneratorLoading: true
+                    });
+                },
             });
         });
     };

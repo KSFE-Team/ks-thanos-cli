@@ -137,17 +137,14 @@ export default {
          * 执行灭霸命令
          */
         thanosSync: async (payload: any) => {
+            const { callback, ...rest } = payload;
             const response: any = await Api.getData({
                 api: 'thanosSync',
                 method: 'post',
-                params: payload,
+                params: rest,
             });
             if (response && response.code === 0) {
-                message.success('灭霸打响指了');
-                actions.workspace.setReducers({
-                    thanosModalVisible: false,
-                    // thanosGeneratorLoading: true
-                });
+                callback();
             }
         },
     },

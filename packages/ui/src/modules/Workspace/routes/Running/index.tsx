@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect } from 'react';
-import { Button, Badge } from 'antd';
+import { Button, Badge, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
@@ -12,8 +12,16 @@ import './style.scss';
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
 export default () => {
-    const { workspace } = useSelector((store: any) => ({ workspace: store.workspace }));
-    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig } = workspace;
+    // const { workspace } = useSelector((store: any) => ({ workspace: store.workspace }));
+    const {
+        workspace,
+        // loading
+    } = useSelector((store: any) => ({
+        workspace: store.workspace,
+        // loading: store.loading.effects['workspace/thanosSync'],
+    }));
+    // thanosLoading
+    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd } = workspace;
     const { openUrl } = projectConfig;
     useEffect(() => {
         const fitAddon = new FitAddon();
@@ -42,6 +50,16 @@ export default () => {
         });
         actions.workspace.setReducers({
             thanosModalVisible: true,
+        });
+    };
+    const handleSyncNginx = () => {
+        actions.workspace.thanosSync({
+            cwd,
+            cmd: 'mn',
+            args: '',
+            callback: () => {
+                message.success('同步nginx配置并重启成功');
+            },
         });
     };
 
@@ -156,6 +174,10 @@ export default () => {
             {
                 onClick: handleThanos,
                 text: '灭霸',
+            },
+            {
+                onClick: handleSyncNginx,
+                text: '同步nginx',
             },
         ];
         return (
