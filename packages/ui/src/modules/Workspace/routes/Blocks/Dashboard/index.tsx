@@ -91,7 +91,7 @@ export default () => {
             >
                 <Chart height={250} autoFit data={pageList} interactions={['element-active']}>
                     <Line position="time*count" />
-                    <Point position="time*count" shape='circle' />
+                    <Point position="time*count" shape="circle" />
                     <Tooltip
                         shared
                         itemTpl={`<li style="margin-bottom: 15px" data-index={index}>
