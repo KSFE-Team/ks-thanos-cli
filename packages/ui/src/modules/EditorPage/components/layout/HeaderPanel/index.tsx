@@ -21,7 +21,7 @@ const { confirm } = Modal;
 
 export default () => {
     const page = useSelector((store: any) => store.page);
-    const { pageJson, undoStack, redoStack, editorInitComponents } = page;
+    const { pageJson, undoStack, redoStack, editorInitComponents, editorInitFormConfig, editorInitPage } = page;
     const [spinning, setSpinning] = useState(false);
     const handleSubmit = async (pageOrTemp: string) => {
         const { components, pageName, paramKey } = pageJson;
@@ -108,6 +108,7 @@ export default () => {
     };
 
     const undo = () => {
+        const isEditor = window.location.search;
         const copyUndoStack = JSON.parse(JSON.stringify(undoStack));
         undoStack.pop();
         const undoItem = copyUndoStack.pop();
@@ -117,19 +118,30 @@ export default () => {
         if ((undoStack.length > 0 && currentItem.type === 'tree') || undoStack.length === 0) {
             if (undoItem.type === 'property') {
                 const { id, componentName } = undoItem;
-                const initJson = getComponents()[componentName].tools.getInitJson();
+                const initJson = isEditor
+                    ? editorInitFormConfig[id]
+                    : getComponents()[componentName].tools.getInitJson();
                 actions[id].setReducers(initJson);
+                actions.page.setReducers({
+                    selectedId: `${id}_${componentName}`,
+                });
             } else if (undoItem.type === 'page') {
                 actions.page.setReducers({
                     pageJson: {
                         ...pageJson,
-                        pageName: '',
-                        selectedId: '',
+                        pageName: isEditor ? editorInitPage.pageName : '',
+                        paramKey: isEditor ? editorInitPage.paramKey : '',
                     },
+                    selectedId: '',
                 });
             } else {
                 actions.page.setReducers({
-                    pageJson: { ...pageJson, components: undoStack.length > 0 ? currentItem.components : (window.location.search?editorInitComponents:[]) },
+                    pageJson: {
+                        ...pageJson,
+                        components:
+                            // eslint-disable-next-line no-nested-ternary
+                            undoStack.length > 0 ? currentItem.components : isEditor ? editorInitComponents : [],
+                    },
                 });
             }
         } else if (currentItem.type === 'property') {
@@ -143,10 +155,24 @@ export default () => {
                 });
             } else {
                 const { id, componentName, formConfig } = currentItem;
-                actions[id].setReducers(formConfig);
-                actions.page.setReducers({
-                    selectedId: `${id}_${componentName}`,
-                });
+                const { id: undoId } = undoItem;
+                if (id !== undoId) {
+                    if (undoItem.type === 'property') {
+                        actions[undoId].setReducers(editorInitFormConfig[undoId]);
+                    } else if (undoItem.type === 'page') {
+                        actions.page.setReducers({
+                            pageJson: {
+                                ...pageJson,
+                                pageName: isEditor ? editorInitPage.pageName : '',
+                            },
+                        });
+                    }
+                } else {
+                    actions[id].setReducers(formConfig);
+                    actions.page.setReducers({
+                        selectedId: `${id}_${componentName}`,
+                    });
+                }
             }
         } else if (currentItem.type === 'page') {
             actions.page.setReducers({
@@ -163,6 +189,7 @@ export default () => {
     };
 
     const redo = () => {
+        const isEditor = window.location.search;
         const copyRedoStack = JSON.parse(JSON.stringify(redoStack));
         const redoItem = copyRedoStack.pop();
         const currentItem = redoStack[redoStack.length - 1];
@@ -170,7 +197,11 @@ export default () => {
         undoStack.push(undoItem);
         if ((redoStack.length > 0 && currentItem.type === 'tree') || redoStack.length === 0) {
             actions.page.setReducers({
-                pageJson: { ...pageJson, components: redoStack.length > 0 ? currentItem.components :(window.location.search?editorInitComponents:[])},
+                pageJson: {
+                    ...pageJson,
+                    // eslint-disable-next-line no-nested-ternary
+                    components: redoStack.length > 0 ? currentItem.components : isEditor ? editorInitComponents : [],
+                },
             });
         } else if (currentItem.type === 'property') {
             const { id, componentName, formConfig } = currentItem;
@@ -184,6 +215,7 @@ export default () => {
                     ...pageJson,
                     ...currentItem.pageJson,
                 },
+                selectedId: '',
             });
         }
         redoStack.pop();
