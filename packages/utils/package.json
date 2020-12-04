@@ -34,8 +34,8 @@
     "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
   },
   "devDependencies": {
-    "@ks-web-cli/plugin-module": "^4.15.1",
-    "@ks-web-cli/plugin-test": "^4.12.0"
+    "@ks-web-cli/plugin-module": "^4.16.7",
+    "@ks-web-cli/plugin-test": "^4.16.0"
   },
   "dependencies": {
     "chalk": "^3.0.0"
