@@ -25,15 +25,16 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@ks-thanos/ui-server@^1.3.3-beta.3":
-  version "1.3.3-beta.3"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-1.3.3-beta.3.tgz#9d3fda783150e5c865837ef2586e713e87d337a8"
-  integrity sha512-tgbkLfj/CFUfO3IqzFYxIJu7E88CnbVxgu51KcJm002e5uFKpaNfCzsNt7U4hW+3c83iFfaX1unAmsHdOWGcbA==
+"@ks-thanos/ui-server@^2.0.0":
+  version "2.0.0"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-2.0.0.tgz#d2fcb2d6dd8c0b7dc5726c83804e651c18a843c7"
+  integrity sha512-dQ/1I7QfO1kXkHV2NwrjnXf/7HQKQxLLTKK0oKBlzbDfJu2FWFyaxTRvjRrLJO0zOVGNASmMTaHmY4HLl5VQkQ==
   dependencies:
-    "@ks-thanos/utils" "^1.3.2"
+    "@ks-thanos/utils" "^2.0.0"
     axios "^0.19.2"
     chalk "^3.0.0"
     figlet "^1.2.4"
+    fs-extra "^9.0.1"
     koa "^2.6.2"
     koa-bodyparser "^4.2.1"
     koa-router "^7.4.0"
@@ -47,10 +48,10 @@
     user-home "^2.0.0"
     winston "^3.2.1"
 
-"@ks-thanos/utils@^1.3.2":
-  version "1.3.2"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2futils/-/utils-1.3.2.tgz#806f74b55dd9d9cf1d20218e608a3cc8bde5a52f"
-  integrity sha512-wf+bmcVSbdJHBtuNfVC4USLGFL9V45s+8J1TJ+e30VZbbY7XzaydcYWMkh1c6c1nBv7Zmq5Y9NHrQ/rqJD7ohA==
+"@ks-thanos/utils@^2.0.0":
+  version "2.0.0"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2futils/-/utils-2.0.0.tgz#962f8b85a9e871ffadb1a03bce17a5e0823a99d6"
+  integrity sha512-I68uJ9mrt+81SzRnq9+ujHrNPcbUht5/XO2LvcCuNAccDGfSz07XlR/Tbip9+I4NcUS4cHK1x/ciFw/IG4V5Zw==
   dependencies:
     chalk "^3.0.0"
 
@@ -330,6 +331,11 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "http://172.16.1.179:4873/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
+
+at-least-node@^1.0.0:
+  version "1.0.0"
+  resolved "http://172.16.1.179:4873/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
+  integrity sha1-YCzUtG6EStTv/JKoARo8RuAjjcI=
 
 axios@*, axios@^0.19.0, axios@^0.19.2:
   version "0.19.2"
@@ -1228,6 +1234,16 @@ fs-extra@^8.0.1:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-extra@^9.0.1:
+  version "9.0.1"
+  resolved "http://172.16.1.179:4873/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
+  integrity sha1-kQ2gBiQ3ukw5/t2GPxZ1zP78ufw=
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^1.0.0"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "http://172.16.1.179:4873/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -1540,6 +1556,15 @@ jsonfile@^4.0.0:
   version "4.0.0"
   resolved "http://172.16.1.179:4873/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
   integrity sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
+jsonfile@^6.0.1:
+  version "6.1.0"
+  resolved "http://172.16.1.179:4873/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+  integrity sha1-vFWyY0eTxnnsZAMJTrE2mKbsCq4=
+  dependencies:
+    universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
@@ -2610,6 +2635,16 @@ universalify@^0.1.0:
   version "0.1.2"
   resolved "http://172.16.1.179:4873/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha1-tkb2m+OULavOzJ1mOcgNwQXvqmY=
+
+universalify@^1.0.0:
+  version "1.0.0"
+  resolved "http://172.16.1.179:4873/universalify/-/universalify-1.0.0.tgz#b61a1da173e8435b2fe3c67d29b9adf8594bd16d"
+  integrity sha1-thodoXPoQ1sv48Z9Kbmt+FlL0W0=
+
+universalify@^2.0.0:
+  version "2.0.0"
+  resolved "http://172.16.1.179:4873/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
+  integrity sha1-daSYTv7cSwiXXFrrc/Uw0C3yVxc=
 
 unpipe@1.0.0:
   version "1.0.0"

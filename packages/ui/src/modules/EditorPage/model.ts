@@ -99,6 +99,7 @@ export default {
                     result = reCode(item);
                 }
                 actions[id].setReducers(result);
+                // eslint-disable-next-line no-underscore-dangle
                 const init = getApp()._store.getState().page.editorInitFormConfig;
                 actions.page.setReducers({
                     editorInitFormConfig: Object.assign(init, { [id]: result }),
