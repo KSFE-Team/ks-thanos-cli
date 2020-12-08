@@ -11,6 +11,7 @@ const commonFilePath = path.join(nginxConfigPath, 'ks-pcweb-cms-common-file');
 const nginxPath = `/usr/local/etc/nginx`;
 const nginxConfDirPath = path.join(nginxPath, 'conf');
 const gitUrl = 'http://gitlab.devops.kaishustory.com/ks_h5_kms/ks-pcweb-cms-common-file.git';
+
 /**
  * 运行拉取nginx配置命令
  */
