@@ -5,10 +5,66 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
+import { AstTransfer } from 'Src/modules/astTransfer';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
 
+const replacement = {
+    type: 'StringLiteral',
+    value: 'ceshixixi',
+};
+const code = `
+import request from 'Src/utils/request';
+import { actions } from 'kredux';
+import { API } from 'Src/api';
+export const STATE = { // 曾阿牛测试
+    test: {
+        name: '',
+        page: 1,
+        limit: 10,
+        total: 0
+    },
+    list: []
+};
+
+export default {
+    namespace: 'searchFormTest',
+
+    initialState: { ...STATE },
+
+    effects: {
+        async loadSearchFormTestList(payload, getState) {
+            try {
+                const state = getState().searchFormTest.test;
+
+                let postData = {
+                    pageSize: state.limit,
+                    pageNo: state.page,
+                    name: state.name && state.name.value
+                };
+
+                const response = await request(API.searchFormTest.query, {
+                    method: 'get',
+                    body: postData
+                });
+
+                if (response && response.code === 0) {
+                    actions.searchFormTest.setReducers({
+                        test: {
+                            ...state,
+                            total: response.data.totalCount
+                        },
+                        list: response.data.list
+                    });
+                }
+            } catch (error) {
+                actions.login.commonError(error);
+            }
+        }
+    }
+};
+`;
 const { confirm: Confirm } = Modal;
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
@@ -28,6 +84,15 @@ export default () => {
         actions.workspace.getProjectProcess();
         actions.workspace.getProjectConfig();
     }, []);
+
+    const ast = new AstTransfer(code);
+    const { originData } = ast;
+    const { astData } = ast;
+    console.log('originData', originData);
+    console.log('astData', astData);
+    console.log('getNode', ast.getNode(astData));
+    console.log('replaceNode', ast.replaceNode(astData, replacement));
+    console.log('toJS', ast.toJS(ast.astData));
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');

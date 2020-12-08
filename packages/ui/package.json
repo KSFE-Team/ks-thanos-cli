@@ -32,7 +32,10 @@
         "url": "https://github.com/KSFE-Team/ks-thanos-cli/issues"
     },
     "dependencies": {
+        "@babel/traverse": "^7.12.9",
         "antd": "^4.6.3",
+        "babel-generator": "^6.26.1",
+        "babylon": "^6.18.0",
         "bizcharts": "^4.0.16",
         "core-js": "^2.6.5",
         "html2canvas": "^1.0.0-rc.7",
