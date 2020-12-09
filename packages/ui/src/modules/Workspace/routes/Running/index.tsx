@@ -146,15 +146,15 @@ export default () => {
     const sorceAst = new StateTransfer(code);
     const { originData } = sorceAst;
     const { astData } = sorceAst;
-    const sourceAstStateNode = sorceAst.getStateNode();
-    const sourceAstEffectsNode = sorceAst.getEffectsNode();
+    const sourceAstStateNode = sorceAst.getNode('STATE');
+    const sourceAstEffectsNode = sorceAst.getNode('EFFECTS');
     console.log('sourceAstEffectsNode', sourceAstEffectsNode);
     const mergeAst = new StateTransfer(mergeCode);
-    const targetAstStateNode = mergeAst.getStateNode();
-    const targetAstEffectsNode = mergeAst.getEffectsNode();
+    const targetAstStateNode = mergeAst.getNode('STATE');
+    const targetAstEffectsNode = mergeAst.getNode('EFFECTS');
     console.log('targetAstEffectsNode', targetAstEffectsNode);
-
-    const mergeStateNode = { ...sourceAstStateNode };
+    const mergeStateNode = sorceAst.copyNode(sourceAstStateNode);
+    console.log('mergeStateNodeaaa', mergeStateNode);
     mergeStateNode.init.properties = [...sourceAstStateNode.init.properties, ...targetAstStateNode.init.properties];
 
     const mergeEffectNode = { ...sourceAstEffectsNode };
@@ -164,9 +164,9 @@ export default () => {
     ];
     console.log('originData', originData);
     console.log('astData', astData);
-    console.log('getStateNode', sorceAst.getStateNode());
-    console.log('replaceStateNode', sorceAst.replaceStateNode(mergeStateNode));
-    console.log('replaceEffectsNode', sorceAst.replaceEffectsNode(mergeEffectNode));
+    console.log('getStateNode', sorceAst.getNode('STATE'));
+    // console.log('replaceStateNode', sorceAst.replaceStateNode(mergeStateNode));
+    // console.log('replaceEffectsNode', sorceAst.replaceEffectsNode(mergeEffectNode));
     console.log('toJS', sorceAst.toJS());
 
     const handleStart = () => {

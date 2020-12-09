@@ -1,5 +1,6 @@
 import * as generate from 'babel-generator';
 import * as babylon from 'babylon';
+import * as babelTypes from '@babel/types';
 
 export abstract class AstTransfer {
     originData: any;
@@ -42,5 +43,12 @@ export abstract class AstTransfer {
             compact: false,
         });
         return resultCode.code;
+    };
+
+    /**
+     * 克隆节点
+     */
+    copyNode = (node: any) => {
+        return babelTypes.cloneNode(node);
     };
 }

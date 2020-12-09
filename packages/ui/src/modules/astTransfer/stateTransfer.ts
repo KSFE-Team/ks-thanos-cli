@@ -1,6 +1,12 @@
+/**
+ * 合并 replaceWith方法，数据需要手动合并。例如STATE、effects合并
+ * 插入 insertAfter方法，需要使用@babel/types
+ * 删除 remove()
+ */
 import { AstTransfer } from './index';
 
-const babelTraverse = require('@babel/traverse');
+const babelTraverse = require('@babel/traverse').default;
+// const t = require('@babel/types');
 
 export class StateTransfer extends AstTransfer {
     constructor(originData: any) {
@@ -10,14 +16,24 @@ export class StateTransfer extends AstTransfer {
     }
 
     /**
-     * 获取State节点
+     * 获取节点
      */
-    getStateNode = () => {
+    getNode = (nodeType: string) => {
         let node;
-        babelTraverse.default(this.astData, {
+        babelTraverse(this.astData, {
             enter(path: any) {
-                if (path.node.type === 'VariableDeclarator' && path.node.id && path.node.id.name === 'STATE') {
-                    node = path.node;
+                switch (nodeType) {
+                    case 'STATE':
+                        if (path.node.type === 'VariableDeclarator' && path.node.id && path.node.id.name === 'STATE') {
+                            node = path.node;
+                        }
+                        break;
+                    case 'EFFECTS':
+                        if (path.node.type === 'ObjectProperty' && path.node.key && path.node.key.name === 'effects') {
+                            node = path.node;
+                        }
+                        break;
+                    default:
                 }
             },
         });
@@ -25,16 +41,13 @@ export class StateTransfer extends AstTransfer {
     };
 
     /**
-     * 替换State节点
+     * 插入节点
      */
-    replaceStateNode = (node: any) => {
-        babelTraverse.default(this.astData, {
-            enter(path: any) {
-                // console.log('path.node.type', path.node.type);
-                if (path.node.type === 'VariableDeclarator' && path.node.id && path.node.id.name === 'STATE') {
-                    path.replaceWith(node);
-                }
-            },
+    insertNode = (node: any) => {
+        babelTraverse(this.astData, {
+            enter(path: any) {},
+            ObjectExpression(path: any) {},
+            VariableDeclarator(path: any) {},
             ImportDeclaration(path: any) {
                 // console.log('ImportDeclarationPath', path);
                 // switch (path.node.source.value) {
@@ -52,29 +65,23 @@ export class StateTransfer extends AstTransfer {
     };
 
     /**
-     * 获取State节点
+     * 替换节点
      */
-    getEffectsNode = () => {
-        let node;
-        babelTraverse.default(this.astData, {
+    replaceNode = (nodeType: string, node: any) => {
+        babelTraverse(this.astData, {
             enter(path: any) {
-                if (path.node.type === 'ObjectProperty' && path.node.key && path.node.key.name === 'effects') {
-                    node = path.node;
-                }
-            },
-        });
-        return node;
-    };
-
-    /**
-     * 替换State节点
-     */
-    replaceEffectsNode = (node: any) => {
-        babelTraverse.default(this.astData, {
-            enter(path: any) {
-                // console.log('path.node.type', path.node.type);
-                if (path.node.type === 'ObjectProperty' && path.node.key && path.node.key.name === 'effects') {
-                    path.replaceWith(node);
+                switch (nodeType) {
+                    case 'STATE':
+                        if (path.node.type === 'VariableDeclarator' && path.node.id && path.node.id.name === 'STATE') {
+                            path.replaceWith(node);
+                        }
+                        break;
+                    case 'EFFECTS':
+                        if (path.node.type === 'ObjectProperty' && path.node.key && path.node.key.name === 'effects') {
+                            path.replaceWith(node);
+                        }
+                        break;
+                    default:
                 }
             },
         });
