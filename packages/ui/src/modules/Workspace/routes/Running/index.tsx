@@ -5,15 +5,11 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { AstTransfer } from 'Src/modules/astTransfer';
+import { StateTransfer } from 'Src/modules/astTransfer/stateTransfer';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
 
-const replacement = {
-    type: 'StringLiteral',
-    value: 'ceshixixi',
-};
 const code = `
 import request from 'Src/utils/request';
 import { actions } from 'kredux';
@@ -65,6 +61,68 @@ export default {
     }
 };
 `;
+const mergeCode = `
+import request from 'Src/utils/request';
+import { message } from 'antd';
+import { actions } from 'kredux';
+import { API } from 'Src/api';
+export const STATE = {
+    info: {}
+};
+
+export default {
+    namespace: 'normalFormTest',
+
+    initialState: { ...STATE },
+
+    effects: {
+        async loadNormalFormTestItem(payload) {
+            try {
+                const response = await request(API.normalFormTest.get, {
+                    method: 'get',
+                    body: payload
+                });
+
+                if (response && response.code === 0) {
+                    actions.normalFormTest.setReducers({
+                        info: response.data
+                    });
+                }
+            } catch (error) {
+                actions.login.commonError(error);
+            }
+        },
+
+        async createNormalFormTestItem(payload) {
+            try {
+                const response = await request(API.normalFormTest.save, {
+                    method: 'post',
+                    body: payload
+                });
+                if (response && response.code === 0) {
+                    message.success('新增成功！');
+                }
+            } catch (error) {
+                actions.login.commonError(error);
+            }
+        },
+        async updateNormalFormTestItem(payload) {
+            try {
+                const response = await request(API.normalFormTest.update, {
+                    method: 'post',
+                    body: payload
+                });
+                if (response && response.code === 0) {
+                    message.success('修改成功！');
+                }
+            } catch (error) {
+                actions.login.commonError(error);
+            }
+        }
+    }
+};
+`;
+
 const { confirm: Confirm } = Modal;
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
@@ -85,14 +143,31 @@ export default () => {
         actions.workspace.getProjectConfig();
     }, []);
 
-    const ast = new AstTransfer(code);
-    const { originData } = ast;
-    const { astData } = ast;
+    const sorceAst = new StateTransfer(code);
+    const { originData } = sorceAst;
+    const { astData } = sorceAst;
+    const sourceAstStateNode = sorceAst.getStateNode();
+    const sourceAstEffectsNode = sorceAst.getEffectsNode();
+    console.log('sourceAstEffectsNode', sourceAstEffectsNode);
+    const mergeAst = new StateTransfer(mergeCode);
+    const targetAstStateNode = mergeAst.getStateNode();
+    const targetAstEffectsNode = mergeAst.getEffectsNode();
+    console.log('targetAstEffectsNode', targetAstEffectsNode);
+
+    const mergeStateNode = { ...sourceAstStateNode };
+    mergeStateNode.init.properties = [...sourceAstStateNode.init.properties, ...targetAstStateNode.init.properties];
+
+    const mergeEffectNode = { ...sourceAstEffectsNode };
+    mergeEffectNode.value.properties = [
+        ...sourceAstEffectsNode.value.properties,
+        ...targetAstEffectsNode.value.properties,
+    ];
     console.log('originData', originData);
     console.log('astData', astData);
-    console.log('getNode', ast.getNode(astData));
-    console.log('replaceNode', ast.replaceNode(astData, replacement));
-    console.log('toJS', ast.toJS(ast.astData));
+    console.log('getStateNode', sorceAst.getStateNode());
+    console.log('replaceStateNode', sorceAst.replaceStateNode(mergeStateNode));
+    console.log('replaceEffectsNode', sorceAst.replaceEffectsNode(mergeEffectNode));
+    console.log('toJS', sorceAst.toJS());
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');
