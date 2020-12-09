@@ -6,58 +6,6 @@ import { spawnSync } from 'child_process';
 import { changeConfig } from './changeConfig';
 import { successText } from 'Src/utils/log';
 import { formatFile } from 'Src/utils/format';
-import { AstTransfer } from './../../astTransfer';
-const code = `
-import request from 'Src/utils/request';
-import { actions } from 'kredux';
-import { API } from 'Src/api';
-export const STATE = { // 曾阿牛测试
-    test: {
-        name: '',
-        page: 1,
-        limit: 10,
-        total: 0
-    },
-    list: []
-};
-
-export default {
-    namespace: 'searchFormTest',
-
-    initialState: { ...STATE },
-
-    effects: {
-        async loadSearchFormTestList(payload, getState) {
-            try {
-                const state = getState().searchFormTest.test;
-
-                let postData = {
-                    pageSize: state.limit,
-                    pageNo: state.page,
-                    name: state.name && state.name.value
-                };
-
-                const response = await request(API.searchFormTest.query, {
-                    method: 'get',
-                    body: postData
-                });
-
-                if (response && response.code === 0) {
-                    actions.searchFormTest.setReducers({
-                        test: {
-                            ...state,
-                            total: response.data.totalCount
-                        },
-                        list: response.data.list
-                    });
-                }
-            } catch (error) {
-                actions.login.commonError(error);
-            }
-        }
-    }
-};
-`
 
 /**
  * Input组件
@@ -92,9 +40,6 @@ export default class KMSCloudComponent extends FormItem {
     registerComponent = async () => {
         const registerPath = path.join(process.cwd(), 'src/default.js');
         const defaultConfig = fs.readFileSync(registerPath, { encoding: 'utf-8' });
-        const astConfig = new AstTransfer(code);
-        console.log('originData11', astConfig.originData);
-        console.log('astData11', astConfig.astData);
         const insertData = `Src/components/@ks/kms-${this.componentName.toLowerCase()}/src/model`;
         let handleData = changeConfig(defaultConfig, insertData);
         fs.writeFile(registerPath, handleData, () => {
