@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { StateTransfer } from 'Src/modules/astTransfer/stateTransfer';
+import { ModelTransfer } from 'Src/modules/thanos-ast/modelTransfer/index';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
@@ -67,7 +67,9 @@ import { message } from 'antd';
 import { actions } from 'kredux';
 import { API } from 'Src/api';
 export const STATE = {
-    info: {}
+    info: {
+        name: '曾猫测试'
+    }
 };
 
 export default {
@@ -143,31 +145,26 @@ export default () => {
         actions.workspace.getProjectConfig();
     }, []);
 
-    const sorceAst = new StateTransfer(code);
-    const { originData } = sorceAst;
-    const { astData } = sorceAst;
-    const sourceAstStateNode = sorceAst.getNode('STATE');
-    const sourceAstEffectsNode = sorceAst.getNode('EFFECTS');
-    console.log('sourceAstEffectsNode', sourceAstEffectsNode);
-    const mergeAst = new StateTransfer(mergeCode);
-    const targetAstStateNode = mergeAst.getNode('STATE');
-    const targetAstEffectsNode = mergeAst.getNode('EFFECTS');
-    console.log('targetAstEffectsNode', targetAstEffectsNode);
-    const mergeStateNode = sorceAst.copyNode(sourceAstStateNode);
-    console.log('mergeStateNodeaaa', mergeStateNode);
-    mergeStateNode.init.properties = [...sourceAstStateNode.init.properties, ...targetAstStateNode.init.properties];
+    /**
+     * 测试AST
+     */
+    const astTest = () => {
+        const sourceAst = new ModelTransfer(code);
 
-    const mergeEffectNode = { ...sourceAstEffectsNode };
-    mergeEffectNode.value.properties = [
-        ...sourceAstEffectsNode.value.properties,
-        ...targetAstEffectsNode.value.properties,
-    ];
-    console.log('originData', originData);
-    console.log('astData', astData);
-    console.log('getStateNode', sorceAst.getNode('STATE'));
-    // console.log('replaceStateNode', sorceAst.replaceStateNode(mergeStateNode));
-    // console.log('replaceEffectsNode', sorceAst.replaceEffectsNode(mergeEffectNode));
-    console.log('toJS', sorceAst.toJS());
+        const targetAst = new ModelTransfer(mergeCode);
+
+        // 合并STATE
+        sourceAst.combineStateNodes(sourceAst, targetAst);
+
+        // 合并effects
+        sourceAst.combineEffectsNodes(sourceAst, targetAst);
+
+        // 处理import
+        sourceAst.combineImportNodes(sourceAst, targetAst);
+
+        console.log('toJS', sourceAst.toJS());
+    };
+    astTest();
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');
