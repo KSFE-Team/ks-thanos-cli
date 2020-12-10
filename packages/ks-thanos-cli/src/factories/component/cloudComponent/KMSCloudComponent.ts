@@ -16,7 +16,7 @@ export default class KMSCloudComponent extends FormItem {
 
     packageName: string
 
-    constructor(page: Page, config: FormItemConfig) {
+    constructor(page: Page, config: FormItemConfig) { 
         super(page, config);
         this.componentName = config.componentName;
         this.packageName = `@ks/kms-${this.componentName.toLowerCase()}`;

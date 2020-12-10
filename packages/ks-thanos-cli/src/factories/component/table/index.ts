@@ -31,7 +31,7 @@ export class Table extends Component {
 
     constructor(page: Page, config: TableComponentConfig) {
         super(page, config);
-        this.effect = EffectManager.create(this.page.pageName, config.stateName, page.model, config.dependencies);
+        this.effect = EffectManager.create(this.page.namespaceValue, config.stateName, page.model, config.dependencies);
         this.config = config;
     }
 
@@ -73,20 +73,20 @@ export class Table extends Component {
 
     initPageMethods() {
         const dataDependenciesEffect = this.effect;
-        const { pageName } = this.page;
+        const { namespaceValue } = this.page;
         const { showSelectedRows, showPagination } = this.config;
 
         this.page.addMethod(`
             ${dataDependenciesEffect.name}() {
-                actions.${pageName}.${dataDependenciesEffect.name}();
+                actions.${namespaceValue}.${dataDependenciesEffect.name}();
             }
         `);
         if (showPagination) {
             this.page.addMethod(`
             onPageChange = (page, pageSize) => {
-                actions.${pageName}.setReducers({
+                actions.${namespaceValue}.setReducers({
                     ${this.stateName}: {
-                        ...this.props.${pageName}.${this.stateName},
+                        ...this.props.${namespaceValue}.${this.stateName},
                         page,
                         limit: pageSize
                     }
@@ -97,9 +97,9 @@ export class Table extends Component {
         }
         if (showSelectedRows) {
             this.page.addMethod(`onChange = (selectedRowKeys, selectedRows) => {
-                actions.${pageName}.setReducers({
+                actions.${namespaceValue}.setReducers({
                     ${this.stateName}: {
-                        ...this.props.${pageName}.${this.stateName},
+                        ...this.props.${namespaceValue}.${this.stateName},
                         selectedRowKeys: selectedRowKeys,
                         selectedRows: selectedRows
                     }
@@ -113,13 +113,13 @@ export class Table extends Component {
     }
 
     initPageDecorators() {
-        const { pageName } = this.page;
+        const { namespaceValue } = this.page;
         this.page.updateConnectDecorator(
             ['loading'],
             [
                 new Value({
                     key: `${this.effect.name}Loading`,
-                    value: `loading.effects['${pageName}/${this.effect.name}']`,
+                    value: `loading.effects['${namespaceValue}/${this.effect.name}']`,
                     type: 'bool'
                 })
             ]
@@ -128,7 +128,7 @@ export class Table extends Component {
 
 
     initRenderVariableDeclaration() {
-        const { pageName } = this.page;
+        const { namespaceValue } = this.page;
         const { showPagination } = this.config;
         const renderVariables = [
             {
@@ -136,12 +136,12 @@ export class Table extends Component {
                 source: 'this.state'
             },
             {
-                name: pageName,
+                name: namespaceValue,
                 source: `this.props`
             },
             {
                 name: 'list',
-                source: `this.props.${pageName}`
+                source: `this.props.${namespaceValue}`
             },
             {
                 name: `${this.effect.name}Loading`,
@@ -151,7 +151,7 @@ export class Table extends Component {
         if (showPagination) {
             renderVariables.push({
                 name: this.stateName,
-                source: `this.props.${pageName}`
+                source: `this.props.${namespaceValue}`
             });
         }
         renderVariables.forEach((config) => {

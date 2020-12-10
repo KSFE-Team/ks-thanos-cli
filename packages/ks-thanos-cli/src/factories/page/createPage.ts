@@ -13,11 +13,12 @@ export function createPage(
     options: {
         pageName: string; // 页面名称
         pageChineseName: string; // 页面中文名称
+        namespaceValue: string; // namespace
         pagePath: string; // 页面路径
         pageConfig: any; // 页面配置
     }
 ) {
-    const { pageName, pageChineseName, pagePath, pageConfig } = options;
+    const { pageName, pageChineseName, namespaceValue, pagePath, pageConfig } = options;
 
     debug(`pageName: ${pageName}`);
     debug(`pageConfig: ${JSON.stringify(pageConfig)}`);
@@ -27,6 +28,7 @@ export function createPage(
     const pageInstance = new Page({
         name: pageName,
         chineseName: pageChineseName,
+        namespaceValue,
         components,
         pagePath,
         paramKey

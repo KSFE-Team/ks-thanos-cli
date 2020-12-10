@@ -35,7 +35,7 @@ export class ClickableComponent extends Component {
         this.confirm = config.confirm;
         this.config = config;
         if (config.dependencies) {
-            this.effect = EffectManager.create(page.pageName, config.stateName, page.model, config.dependencies);
+            this.effect = EffectManager.create(page.namespaceValue, config.stateName, page.model, config.dependencies);
         }
     }
 

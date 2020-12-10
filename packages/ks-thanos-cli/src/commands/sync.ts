@@ -34,7 +34,7 @@ export async function runSync(options: {
         {
             type: 'input',
             name: 'pageName',
-            message: '页面英文名',
+            message: '页面英文名称',
             validate: (value: string) => {
                 if (!isEnglish(value)) {
                     return '请输入页面英文名';
@@ -45,10 +45,21 @@ export async function runSync(options: {
         {
             type: 'input',
             name: 'pageChineseName',
-            message: '页面名称',
+            message: '页面中文名称',
             validate: (value: string) => {
                 if (!value) {
                     return '请输入页面名称';
+                }
+                return true;
+            }
+        },
+        {
+            type: 'input',
+            name: 'namespaceValue',
+            message: 'namespace',
+            validate: (value: string) => {
+                if (!value) {
+                    return '请输入namespace';
                 }
                 return true;
             }
@@ -68,7 +79,7 @@ export async function runSync(options: {
         return;
     }
 
-    const { templateName = '', pageName = '', pageChineseName = '', pagePath = '' } = config || await prompt(questions);
+    const { templateName = '', pageName = '', pageChineseName = '', namespaceValue = '', pagePath = '' } = config || await prompt(questions);
     let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath,
         // 页面名称，首字母大写
         firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
@@ -85,6 +96,7 @@ export async function runSync(options: {
         const page = await createPage({
             pageName,
             pageChineseName,
+            namespaceValue: lowerFirst(namespaceValue),
             pageConfig,
             pagePath: pageFolderPath
         });
