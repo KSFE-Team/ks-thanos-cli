@@ -69,6 +69,19 @@ export async function runSync(options: {
             name: 'pagePath',
             message: '页面路径（相对于 src/pages 的路径）'
         },
+        {
+            type: 'confirm',
+            message: '是否合并model？',
+            name: 'isCombine',
+        },
+        {
+            type: 'input',
+            message: 'model路径（相对于 src/pages 的路径）',
+            name: 'combinePath',
+            when: function(answers: any) {
+                return answers.isCombine
+            }
+        }
     ];
 
     const { projectPath, config: mutipleConfig } = options;
@@ -79,17 +92,21 @@ export async function runSync(options: {
         return;
     }
 
-    const { templateName = '', pageName = '', pageChineseName = '', namespaceValue = '', pagePath = '' } = config || await prompt(questions);
+    const { templateName = '', pageName = '', pageChineseName = '', namespaceValue = '', pagePath = '', isCombine = false, combinePath = '' } = config || await prompt(questions);
     let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath,
         // 页面名称，首字母大写
-        firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
+        firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/'),
+
+        tempModelPath = combinePath.includes('src/pages') ? combinePath.split('src/pages').pop() : combinePath,
+        // model名称，首字母大写
+        firstUpperModelPath = tempModelPath.split('/').map((path: string) => upperFirst(path)).join('/');
 
     const pageFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath, upperFirst(pageName));
+    const combineModelFolderPath = path.join(projectPath, 'src/pages', firstUpperModelPath);
 
     debug(`Sync args —— projectPath: ${projectPath}, pageName: ${firstUpperPagePath}, templateName: ${templateName}, pageChineseName: ${pageChineseName}, pagePath: ${pagePath}`);
-
     try {
-        console.log(infoText(`正在获取页面模板: ${templateName}`));
+        console.log(infoText(`正在获取页面模板11: ${templateName}`));
         const pageConfig = await getPage(templateName);
 
         console.log(infoText(`获取页面模板成功，正在生成页面: ${pageName}`));
@@ -105,6 +122,8 @@ export async function runSync(options: {
             page,
             pageChineseName,
             pagePath: pageFolderPath,
+            isCombine,
+            combinePath: combineModelFolderPath,
         });
 
         await updateConfigFile({

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { ModelTransfer } from 'Src/modules/thanos-ast/modelTransfer/index';
+import { ModelTransfer } from 'Src/modules/thanos-ast/modelTransfer';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
@@ -150,7 +150,7 @@ export default () => {
      */
     const astTest = () => {
         const sourceAst = new ModelTransfer(code);
-
+        console.log('astData', sourceAst.astData);
         const targetAst = new ModelTransfer(mergeCode);
 
         // 合并STATE
@@ -162,7 +162,10 @@ export default () => {
         // 处理import
         sourceAst.combineImportNodes(sourceAst, targetAst);
 
-        console.log('toJS', sourceAst.toJS());
+        // 校验namespace
+        const isSameNamespace = sourceAst.checkNamespace(sourceAst, targetAst);
+        console.log('isSameNamespace', isSameNamespace);
+        // console.log('toJS', sourceAst.toJS());
     };
     astTest();
 

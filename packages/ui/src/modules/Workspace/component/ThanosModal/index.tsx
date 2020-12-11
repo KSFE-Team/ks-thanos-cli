@@ -1,7 +1,7 @@
 import React from 'react';
 import { actions } from 'kredux';
 import { useSelector } from 'react-redux';
-import { Modal, Form, Input, message } from 'antd';
+import { Modal, Form, Input, message, Radio } from 'antd';
 import FormItemRender, { Config } from 'Src/components/FormItemRender';
 import { requiredMessage } from 'Src/utils';
 import SelectPathInput from 'Src/components/SelectPathInput';
@@ -36,8 +36,40 @@ const FORM_ITEM_CONFIGS: Config[] = [
         },
     },
     {
+        title: 'namespace',
+        key: 'namespaceValue',
+        component: <Input placeholder="namespace" />,
+        config: {
+            rules: [{ required: true, message: requiredMessage('namespace') }],
+        },
+    },
+    {
         title: '页面路径',
         key: 'pagePath',
+        component: <SelectPathInput />,
+        config: {
+            rules: [{ required: true, message: requiredMessage('页面路径') }],
+            initialValue: '',
+            extra: '（相对于 src/pages 的路径）',
+        },
+    },
+    {
+        title: '是否合并model',
+        key: 'isCombine',
+        component: (
+            <Radio.Group>
+                <Radio value={1}>是</Radio>
+                <Radio value={0}>否</Radio>
+            </Radio.Group>
+        ),
+        config: {
+            rules: [{ required: true, message: requiredMessage('namespace') }],
+            initialValue: 1,
+        },
+    },
+    {
+        title: 'model路径',
+        key: 'modelPath',
         component: <SelectPathInput />,
         config: {
             rules: [{ required: true, message: requiredMessage('页面路径') }],

@@ -33,15 +33,6 @@ export class ModelTransferFunc extends AstTransfer {
                             node.push(path.node);
                         }
                         break;
-                    case 'NAMESPACE':
-                        if (
-                            path.node.type === 'ObjectProperty' &&
-                            path.node.key &&
-                            path.node.key.name === 'namespace'
-                        ) {
-                            node.push(path.node);
-                        }
-                        break;
                     default:
                 }
             },
