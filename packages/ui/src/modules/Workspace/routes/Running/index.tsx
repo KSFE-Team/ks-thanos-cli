@@ -150,22 +150,24 @@ export default () => {
      */
     const astTest = () => {
         const sourceAst = new ModelTransfer(code);
-        console.log('astData', sourceAst.astData);
         const targetAst = new ModelTransfer(mergeCode);
+        const { combineStateNodes, combineEffectsNodes, combineImportNodes, checkNamespace } = sourceAst;
 
         // 合并STATE
-        sourceAst.combineStateNodes(sourceAst, targetAst);
+        combineStateNodes(sourceAst, targetAst);
 
         // 合并effects
-        sourceAst.combineEffectsNodes(sourceAst, targetAst);
+        combineEffectsNodes(sourceAst, targetAst);
 
         // 处理import
-        sourceAst.combineImportNodes(sourceAst, targetAst);
+        combineImportNodes(sourceAst, targetAst);
 
         // 校验namespace
-        const isSameNamespace = sourceAst.checkNamespace(sourceAst, targetAst);
-        console.log('isSameNamespace', isSameNamespace);
-        // console.log('toJS', sourceAst.toJS());
+        const isSameNamespace = checkNamespace(sourceAst, targetAst);
+        if (!isSameNamespace) {
+            return;
+        }
+        console.log('toJS', sourceAst.toJS());
     };
     astTest();
 

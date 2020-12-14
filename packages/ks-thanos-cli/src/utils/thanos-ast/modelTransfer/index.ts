@@ -24,6 +24,19 @@ export class ModelTransfer extends ModelTransferFunc {
     getImportNodes = () => this.getNode('IMPORT');
 
     /**
+     * 获取namespace节点
+     */
+    getNamespaceNode = () => this.getNode('NAMESPACE')[0];
+
+    /**
+     * 获取namespace名称
+     */
+    getNamespaceName = () => {
+        const node = this.getNamespaceNode();
+        return node.value.extra.rawValue;
+    }
+
+    /**
      * 合并STATE
      * @param sourceAst 源ast
      * @param targetAst 目标ast
@@ -65,5 +78,12 @@ export class ModelTransfer extends ModelTransferFunc {
             return !sourceImportNodesSourceValues.includes(targetNode.source.value);
         });
         sourceAst.insertNode(sourceImportNodes[sourceImportNodes.length - 1], differentImportNodes);
+    };
+
+    /**
+     * 校验namespace
+     */
+    checkNamespace = (sourceAst: any, targetAst: any) => {
+        return sourceAst.getNamespaceName() === targetAst.getNamespaceName();
     };
 }

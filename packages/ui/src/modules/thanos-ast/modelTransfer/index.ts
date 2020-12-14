@@ -76,6 +76,10 @@ export class ModelTransfer extends ModelTransferFunc {
      * 校验namespace
      */
     checkNamespace = (sourceAst: any, targetAst: any) => {
-        return this.getNamespaceNode();
+        const sourceNamespaceNode = sourceAst.getNamespaceNode();
+        const targetNamespaceNode = targetAst.getNamespaceNode();
+        const sourceNamespaceValue = sourceNamespaceNode.value.extra.rawValue;
+        const targetNamespaceValue = targetNamespaceNode.value.extra.rawValue;
+        return sourceNamespaceValue === targetNamespaceValue;
     };
 }

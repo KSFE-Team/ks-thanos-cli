@@ -2,6 +2,7 @@ import path from 'path';
 import { writeFile } from 'Src/utils/file';
 import Page from '../page';
 import { formatFile } from 'Src/utils/format';
+import { errorText } from 'Src/utils/log';
 import fs from 'fs';
 import { ModelTransfer } from 'Src/utils/thanos-ast/modelTransfer';
 
@@ -21,22 +22,25 @@ export async function createModel(
     const { page, pagePath, isCombine, combinePath } = options;
     const modelPath = path.join(pagePath, 'model.js');
     const modelContent = page.model.toCode();
-    if (isCombine) {
+    if (isCombine) { // 合并model
         const originModelPath = path.join(combinePath, 'model.js');
         const originodelContent = fs.readFileSync(originModelPath, { encoding: 'utf-8' });
+        // 转ast
         const sourceAst = new ModelTransfer(originodelContent);
         const targetAst = new ModelTransfer(modelContent);
+        const { combineStateNodes, combineEffectsNodes, combineImportNodes } = sourceAst;
         // 合并STATE
-        sourceAst.combineStateNodes(sourceAst, targetAst);
+        combineStateNodes(sourceAst, targetAst);
         // 合并effects
-        sourceAst.combineEffectsNodes(sourceAst, targetAst);
+        combineEffectsNodes(sourceAst, targetAst);
         // 处理import
-        sourceAst.combineImportNodes(sourceAst, targetAst);
+        combineImportNodes(sourceAst, targetAst);
+        // ast转js
         const combineContent = sourceAst.toJS();
         writeFile(originModelPath, combineContent);
 
         formatFile(originModelPath);
-    } else {
+    } else { // 不合并
         writeFile(modelPath, modelContent);
 
         formatFile(modelPath);
