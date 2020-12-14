@@ -5,126 +5,56 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { ModelTransfer } from 'Src/modules/thanos-ast/modelTransfer';
+import { ApiTransfer } from 'Src/modules/thanos-ast/apiTransfer';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
 
 const code = `
-import request from 'Src/utils/request';
-import { actions } from 'kredux';
-import { API } from 'Src/api';
-export const STATE = { // 曾阿牛测试
-    test: {
-        name: '',
-        page: 1,
-        limit: 10,
-        total: 0
-    },
-    list: []
-};
+import API_JSON from './apiData.json';
+export const Origin = window.location.origin;
+export const server = Origin + '/jinwu-server'; // ENV=dev
+export const systemServer = Origin + '/system-server';
+export const scrmServer = Origin + '/scrm-server';
+export const baiguiServer = Origin + '/baigui-server';
+export const questionServer = Origin + '/question-server';
 
-export default {
-    namespace: 'searchFormTest',
-
-    initialState: { ...STATE },
-
-    effects: {
-        async loadSearchFormTestList(payload, getState) {
-            try {
-                const state = getState().searchFormTest.test;
-
-                let postData = {
-                    pageSize: state.limit,
-                    pageNo: state.page,
-                    name: state.name && state.name.value
+/**
+ *合并API
+ */
+export const composeApi = (prevServer, API) => {
+    return Object.keys(API).reduce((prev, componentName) => {
+        const componentApi = API[componentName];
+        return {
+            ...prev,
+            [componentName]: Object.keys(componentApi).reduce((prevApi, apiKey) => {
+                return {
+                    ...prevApi,
+                    [apiKey]: ${'prevServer' || ''}${'componentApi[apiKey]' || ''}
                 };
+            }, {})
+        };
+    }, {});
+};
 
-                const response = await request(API.searchFormTest.query, {
-                    method: 'get',
-                    body: postData
-                });
-
-                if (response && response.code === 0) {
-                    actions.searchFormTest.setReducers({
-                        test: {
-                            ...state,
-                            total: response.data.totalCount
-                        },
-                        list: response.data.list
-                    });
-                }
-            } catch (error) {
-                actions.login.commonError(error);
-            }
-        }
-    }
+export const API = {
+    // login
+    login: {
+        captcha: server + '/captcha.jpg',
+        login: server + '/login',
+        changePwd: server + '/update-password',
+        logout: server + '/logout',
+    },
+    headmaster: {
+        query: server + '/teacher/page',
+        save: server + '/teacher/add',
+        delete: server + '/teacher/delete',
+        update: server + '/teacher/add',
+        get: server + '/teacher/detail',
+    },
+    ...composeApi(server, API_JSON)
 };
 `;
-const mergeCode = `
-import request from 'Src/utils/request';
-import { message } from 'antd';
-import { actions } from 'kredux';
-import { API } from 'Src/api';
-export const STATE = {
-    info: {
-        name: '曾猫测试'
-    }
-};
-
-export default {
-    namespace: 'normalFormTest',
-
-    initialState: { ...STATE },
-
-    effects: {
-        async loadNormalFormTestItem(payload) {
-            try {
-                const response = await request(API.normalFormTest.get, {
-                    method: 'get',
-                    body: payload
-                });
-
-                if (response && response.code === 0) {
-                    actions.normalFormTest.setReducers({
-                        info: response.data
-                    });
-                }
-            } catch (error) {
-                actions.login.commonError(error);
-            }
-        },
-
-        async createNormalFormTestItem(payload) {
-            try {
-                const response = await request(API.normalFormTest.save, {
-                    method: 'post',
-                    body: payload
-                });
-                if (response && response.code === 0) {
-                    message.success('新增成功！');
-                }
-            } catch (error) {
-                actions.login.commonError(error);
-            }
-        },
-        async updateNormalFormTestItem(payload) {
-            try {
-                const response = await request(API.normalFormTest.update, {
-                    method: 'post',
-                    body: payload
-                });
-                if (response && response.code === 0) {
-                    message.success('修改成功！');
-                }
-            } catch (error) {
-                actions.login.commonError(error);
-            }
-        }
-    }
-};
-`;
-
 const { confirm: Confirm } = Modal;
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
@@ -149,24 +79,12 @@ export default () => {
      * 测试AST
      */
     const astTest = () => {
-        const sourceAst = new ModelTransfer(code);
-        const targetAst = new ModelTransfer(mergeCode);
-        const { combineStateNodes, combineEffectsNodes, combineImportNodes, checkNamespace } = sourceAst;
-
-        // 合并STATE
-        combineStateNodes(sourceAst, targetAst);
-
-        // 合并effects
-        combineEffectsNodes(sourceAst, targetAst);
-
-        // 处理import
-        combineImportNodes(sourceAst, targetAst);
-
-        // 校验namespace
-        const isSameNamespace = checkNamespace(sourceAst, targetAst);
-        if (!isSameNamespace) {
-            return;
-        }
+        const sourceAst = new ApiTransfer(code);
+        const apiNode = sourceAst.getApiNode();
+        const firstChildNode = sourceAst.copyNode(sourceAst.getFirstChildNode());
+        console.log('firstChildNode', firstChildNode);
+        console.log('apiNode', apiNode);
+        console.log('sourceAst', sourceAst);
         console.log('toJS', sourceAst.toJS());
     };
     astTest();

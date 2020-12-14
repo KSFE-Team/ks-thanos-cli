@@ -36,14 +36,6 @@ const FORM_ITEM_CONFIGS: Config[] = [
         },
     },
     {
-        title: 'namespace',
-        key: 'namespaceValue',
-        component: <Input placeholder="namespace" />,
-        config: {
-            rules: [{ required: true, message: requiredMessage('namespace') }],
-        },
-    },
-    {
         title: '页面路径',
         key: 'pagePath',
         component: <SelectPathInput />,
@@ -64,17 +56,7 @@ const FORM_ITEM_CONFIGS: Config[] = [
         ),
         config: {
             rules: [{ required: true, message: requiredMessage('namespace') }],
-            initialValue: 1,
-        },
-    },
-    {
-        title: 'model路径',
-        key: 'modelPath',
-        component: <SelectPathInput />,
-        config: {
-            rules: [{ required: true, message: requiredMessage('页面路径') }],
-            initialValue: '',
-            extra: '（相对于 src/pages 的路径）',
+            initialValue: 0,
         },
     },
 ];
