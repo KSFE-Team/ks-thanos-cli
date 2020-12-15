@@ -88,7 +88,6 @@ export async function runSync(options: {
     try {
         console.log(infoText(`正在获取页面模板: ${templateName}`));
         const pageConfig = await getPage(templateName);
-
         let currNamespaceName: string = lowerFirst(pageName); // 默认取页面名称
         if (isCombine) { // 若合并，namespace取被合并model文件的namespace
             const originModelPath = path.join(combineModelFolderPath, 'model.js');
