@@ -5,56 +5,10 @@ import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
-import { ApiTransfer } from 'Src/modules/thanos-ast/apiTransfer';
 import ThanosModal from '../../component/ThanosModal';
 import { PROJECT_PROCESS_TYPE } from './constants';
 import './style.scss';
 
-const code = `
-import API_JSON from './apiData.json';
-export const Origin = window.location.origin;
-export const server = Origin + '/jinwu-server'; // ENV=dev
-export const systemServer = Origin + '/system-server';
-export const scrmServer = Origin + '/scrm-server';
-export const baiguiServer = Origin + '/baigui-server';
-export const questionServer = Origin + '/question-server';
-
-/**
- *合并API
- */
-export const composeApi = (prevServer, API) => {
-    return Object.keys(API).reduce((prev, componentName) => {
-        const componentApi = API[componentName];
-        return {
-            ...prev,
-            [componentName]: Object.keys(componentApi).reduce((prevApi, apiKey) => {
-                return {
-                    ...prevApi,
-                    [apiKey]: ${'prevServer' || ''}${'componentApi[apiKey]' || ''}
-                };
-            }, {})
-        };
-    }, {});
-};
-
-export const API = {
-    // login
-    login: {
-        captcha: server + '/captcha.jpg',
-        login: server + '/login',
-        changePwd: server + '/update-password',
-        logout: server + '/logout',
-    },
-    headmaster: {
-        query: server + '/teacher/page',
-        save: server + '/teacher/add',
-        delete: server + '/teacher/delete',
-        update: server + '/teacher/add',
-        get: server + '/teacher/detail',
-    },
-    ...composeApi(server, API_JSON)
-};
-`;
 const { confirm: Confirm } = Modal;
 const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PROJECT_PROCESS_TYPE;
 
@@ -74,20 +28,6 @@ export default () => {
         actions.workspace.getProjectProcess();
         actions.workspace.getProjectConfig();
     }, []);
-
-    /**
-     * 测试AST
-     */
-    const astTest = () => {
-        const sourceAst = new ApiTransfer(code);
-        const apiNode = sourceAst.getApiNode();
-        const firstChildNode = sourceAst.copyNode(sourceAst.getFirstChildNode());
-        console.log('firstChildNode', firstChildNode);
-        console.log('apiNode', apiNode);
-        console.log('sourceAst', sourceAst);
-        console.log('toJS', sourceAst.toJS());
-    };
-    astTest();
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');
