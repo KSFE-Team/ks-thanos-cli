@@ -4,6 +4,7 @@ import fsExtra from 'fs-extra';
 import { formatFile } from './format';
 import { lowerFirst } from './string';
 import { writeFile } from './file';
+import { ConfigTransfer } from 'Src/utils/thanos-ast/configTransfer';
 
 const debug = Debug(__filename);
 
@@ -19,8 +20,9 @@ export async function updateConfigFile(options: {
     pageName: string;
     pagePath: string;
     pageConfig: any;
+    importPath: string;
 }) {
-    const { projectPath, pagePath, pageConfig } = options;
+    const { projectPath, pagePath, pageConfig, importPath } = options;
     const configFilePath = path.join(projectPath, 'src/config.js');
 
     debug(`Update config file: ${configFilePath}`);
@@ -28,13 +30,17 @@ export async function updateConfigFile(options: {
     const content = await fsExtra.readFile(configFilePath, 'utf-8');
 
     let replaceStr = '',
-        firstLowerPagePath = pagePath.split('/').map((item) => lowerFirst(item)).join('/');
-
-    replaceStr = `case '${path.join('/', firstLowerPagePath, pageConfig.paramKey ? `/:${pageConfig.paramKey}` : '')}':
+        firstLowerPagePath = pagePath.split('/').map((item) => lowerFirst(item)).join('/'),
+        caseContent = path.join('/', firstLowerPagePath, pageConfig.paramKey ? `/:${pageConfig.paramKey}` : '');
+    replaceStr = `case '${caseContent}':
                 return [
-                    () => import('./${path.join('pages', pagePath, 'model')}')
+                    () => import('./${path.join('pages', importPath, 'model')}')
                 ];
             default:`;
+    const sourceAst = new ConfigTransfer(content);
+    const caseNodes = sourceAst.getCaseNode();
+    const isRepeat = caseNodes.some((node) => node?.test?.value === caseContent); // 是否已经存在当前config配置
+    if (isRepeat) { return; }
 
     const newContent = content.replace(/default:/, replaceStr);
 

@@ -2,7 +2,6 @@ import path from 'path';
 import { writeFile } from 'Src/utils/file';
 import Page from '../page';
 import { formatFile } from 'Src/utils/format';
-import { errorText } from 'Src/utils/log';
 import fs from 'fs';
 import { ModelTransfer } from 'Src/utils/thanos-ast/modelTransfer';
 

@@ -116,9 +116,10 @@ export async function runSync(options: {
 
         await updateConfigFile({
             projectPath,
-            pageName: lowerFirst(pageName),
+            pageName: lowerFirst(currNamespaceName),
             pagePath: path.join(firstUpperPagePath, upperFirst(pageName)),
-            pageConfig
+            importPath: isCombine ? upperFirst(firstUpperPagePath) : path.join(firstUpperPagePath, upperFirst(pageName)),
+            pageConfig,
         });
 
         console.log(successText(`${pageName} 生成成功！`));

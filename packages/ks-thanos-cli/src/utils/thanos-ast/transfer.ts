@@ -44,6 +44,7 @@ export abstract class AstTransfer {
                     'flow',
                     'objectRestSpread',
                     'classProperties',
+                    'dynamicImport',
                 ],
             });
         } catch (err) {
