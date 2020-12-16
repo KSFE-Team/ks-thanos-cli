@@ -22,7 +22,6 @@ export default {
     effects: {
         async getPageList(payload: any, getState: any) {
             const searchForm = getState().existingPage.searchPageForm;
-            console.log('searchFormModel', searchForm);
             const postData = {
                 page: searchForm.page,
                 limit: searchForm.limit,
