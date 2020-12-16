@@ -12,6 +12,7 @@ export interface ConnectDecoratorConfig extends Decorator {
 }
 
 export interface FormDecoratorConfig  extends Decorator {
+    namespaceValue: string;
     stateName: string;
     name: 'Form.create'; // 名称
     type: 'search' | 'normal' | 'modal'; // 类型

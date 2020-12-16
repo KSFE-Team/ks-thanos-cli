@@ -13,17 +13,17 @@ export class FormDecorator extends Decorator {
     getMapPropsToFieldsCode() {
         const codes = this.config.formItems.map((item) => {
             return `${item}: Form.createFormField({
-                    ...props.${this.config.pageName}.${this.config.stateName}.${item},
-                    value: props.${this.config.pageName}.${this.config.stateName}.${item}.value
+                    ...props.${this.config.namespaceValue}.${this.config.stateName}.${item},
+                    value: props.${this.config.namespaceValue}.${this.config.stateName}.${item}.value
                 }),`;
         });
         return codes.join('\n');
     }
 
     getOnFieldsChangeCode() {
-        return `actions.${this.config.pageName}.setReducers({
+        return `actions.${this.config.namespaceValue}.setReducers({
                 ${this.config.stateName}: {
-                    ...props.${this.config.pageName}.${this.config.stateName},
+                    ...props.${this.config.namespaceValue}.${this.config.stateName},
                     ...fields
                 }
             });`;

@@ -8,6 +8,8 @@ import { prompt } from 'inquirer';
 import { upperFirst, isEnglish, lowerFirst } from 'Src/utils/string';
 import path from 'path';
 import fsExtra from 'fs-extra';
+import { ModelTransfer } from 'Src/utils/thanos-ast/modelTransfer';
+import fs from 'fs';
 
 const debug = Debug(__filename);
 
@@ -34,7 +36,7 @@ export async function runSync(options: {
         {
             type: 'input',
             name: 'pageName',
-            message: '页面英文名',
+            message: '页面英文名称',
             validate: (value: string) => {
                 if (!isEnglish(value)) {
                     return '请输入页面英文名';
@@ -45,7 +47,7 @@ export async function runSync(options: {
         {
             type: 'input',
             name: 'pageChineseName',
-            message: '页面名称',
+            message: '页面中文名称',
             validate: (value: string) => {
                 if (!value) {
                     return '请输入页面名称';
@@ -58,6 +60,12 @@ export async function runSync(options: {
             name: 'pagePath',
             message: '页面路径（相对于 src/pages 的路径）'
         },
+        {
+            type: 'confirm',
+            message: '是否合并model？',
+            name: 'isCombine',
+            default: false
+        },
     ];
 
     const { projectPath, config: mutipleConfig } = options;
@@ -68,23 +76,32 @@ export async function runSync(options: {
         return;
     }
 
-    const { templateName = '', pageName = '', pageChineseName = '', pagePath = '' } = config || await prompt(questions);
+    const { templateName = '', pageName = '', pageChineseName = '', pagePath = '', isCombine = false } = config || await prompt(questions);
     let tempPagePath = pagePath.includes('src/pages') ? pagePath.split('src/pages').pop() : pagePath,
         // 页面名称，首字母大写
         firstUpperPagePath = tempPagePath.split('/').map((path: string) => upperFirst(path)).join('/');
 
     const pageFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath, upperFirst(pageName));
+    const combineModelFolderPath = path.join(projectPath, 'src/pages', firstUpperPagePath);
 
     debug(`Sync args —— projectPath: ${projectPath}, pageName: ${firstUpperPagePath}, templateName: ${templateName}, pageChineseName: ${pageChineseName}, pagePath: ${pagePath}`);
-
     try {
         console.log(infoText(`正在获取页面模板: ${templateName}`));
         const pageConfig = await getPage(templateName);
+
+        let currNamespaceName: string = lowerFirst(pageName); // 默认取页面名称
+        if (isCombine) { // 若合并，namespace取被合并model文件的namespace
+            const originModelPath = path.join(combineModelFolderPath, 'model.js');
+            const originodelContent = fs.readFileSync(originModelPath, { encoding: 'utf-8' });
+            const originModelAst = new ModelTransfer(originodelContent);
+            currNamespaceName = originModelAst.getNamespaceName();
+        }
 
         console.log(infoText(`获取页面模板成功，正在生成页面: ${pageName}`));
         const page = await createPage({
             pageName,
             pageChineseName,
+            namespaceValue: currNamespaceName, // 不合并取pageName，合并取被合并model 的namespace
             pageConfig,
             pagePath: pageFolderPath
         });
@@ -93,13 +110,16 @@ export async function runSync(options: {
             page,
             pageChineseName,
             pagePath: pageFolderPath,
+            isCombine,
+            combinePath: combineModelFolderPath,
         });
 
         await updateConfigFile({
             projectPath,
-            pageName: lowerFirst(pageName),
+            pageName: lowerFirst(currNamespaceName),
             pagePath: path.join(firstUpperPagePath, upperFirst(pageName)),
-            pageConfig
+            importPath: isCombine ? upperFirst(firstUpperPagePath) : path.join(firstUpperPagePath, upperFirst(pageName)),
+            pageConfig,
         });
 
         console.log(successText(`${pageName} 生成成功！`));

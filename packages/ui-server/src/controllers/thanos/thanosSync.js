@@ -34,7 +34,8 @@ export default async function(context) {
     if (originArgs) {
         ARGS = JSON.parse(originArgs || []);
     }
-    const formatArgs = ARGS.map(({key, value}) => `${key} ${JSON.stringify(value)}`).join(' ');
+    const formatArgs = ARGS.map(({ key, value }) => `${key} ${JSON.stringify(value)}`).join(' ');
+    console.log('formatArgs', formatArgs);
     const cmd = `thanos ${CMD} ${formatArgs}`;
     const [tools, ...args] = cmd.split(' ');
     await spawnSync(tools, args, {cwd});

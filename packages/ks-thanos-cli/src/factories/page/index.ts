@@ -16,6 +16,7 @@ export default class Page extends BasicContainer {
 
     pageName: string = ''; // 页面名称
     pageChineseName: string = ''; // 页面中文名称
+    namespaceValue: string = ''; // namespace
     className: string = ''; // 页面类名称
     paramKey: string = ''; // 页面路由参数
     pagePath: string = ''; // 页面路径
@@ -47,12 +48,14 @@ export default class Page extends BasicContainer {
     constructor({
         name,
         chineseName,
+        namespaceValue,
         components = [],
         paramKey = '',
         pagePath = ''
     }: {
         name: string;
         chineseName: string;
+        namespaceValue: string;
         components: ComponentConfig[];
         paramKey: string;
         pagePath: string;
@@ -60,6 +63,7 @@ export default class Page extends BasicContainer {
         super();
         this.pageName = lowerFirst(name);
         this.pageChineseName = chineseName;
+        this.namespaceValue = namespaceValue;
         this.pageTitleCode = `title="${this.pageChineseName}"`;
         this.className = upperFirst(name);
         this.paramKey = paramKey;
@@ -68,19 +72,19 @@ export default class Page extends BasicContainer {
             name: 'connect',
             pageName: this.pageName,
             inputProps: [
-                this.pageName,
+                this.namespaceValue,
             ],
             outputProps: [
                 new Value({
-                    key: this.pageName,
-                    value: this.pageName,
+                    key: this.namespaceValue,
+                    value: this.namespaceValue,
                     type: 'object'
                 })
             ]
         });
         this.model = new Model({
             initialState: {},
-            namespace: this.pageName
+            namespace: this.namespaceValue
         });
         this.decorators.push(this.connectDecorator);
         this.init(components);

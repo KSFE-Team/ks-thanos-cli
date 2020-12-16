@@ -1,5 +1,6 @@
 import request from 'Src/utils/requestExtend';
 import { API } from 'Src/api';
+import { getApp } from 'Src/app';
 import { actions } from 'kredux';
 import { message, Modal } from 'antd';
 import { goto } from 'Src/utils';
@@ -12,7 +13,9 @@ export const STATE = {
         paramKey: '',
         components: [],
     },
-    editorInitComponents:[],
+    editorInitComponents: [],
+    editorInitFormConfig: {},
+    editorInitPage: {},
     undoStack: [],
     redoStack: [],
 };
@@ -72,7 +75,11 @@ export default {
                         components:
                             components[0].componentName === 'RelationTable' ? components[0].components : components,
                     },
-                    editorInitComponents:JSON.parse(JSON.stringify(components))
+                    editorInitComponents: JSON.parse(JSON.stringify(components)),
+                    editorInitPage: {
+                        pageName: pageOrTemp === 'page' ? result[`${pageOrTemp}Name`] : '',
+                        paramKey: result.paramKey || paramKey,
+                    },
                 });
                 actions.page.setItemProperty(JSON.parse(result[`${pageOrTemp}Data`]));
             }
@@ -92,6 +99,11 @@ export default {
                     result = reCode(item);
                 }
                 actions[id].setReducers(result);
+                // eslint-disable-next-line no-underscore-dangle
+                const init = getApp()._store.getState().page.editorInitFormConfig;
+                actions.page.setReducers({
+                    editorInitFormConfig: Object.assign(init, { [id]: result }),
+                });
                 if (children && children.length > 0) {
                     actions.page.setItemProperty(item);
                 }

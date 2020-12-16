@@ -80,6 +80,7 @@ export class Form extends Component {
             name: 'Form.create',
             type: this.config.type,
             pageName: this.page.pageName,
+            namespaceValue: this.page.namespaceValue,
             stateName: this.stateName,
             formItems: this.components.map((item: FormItem) => item.config.key)
         };

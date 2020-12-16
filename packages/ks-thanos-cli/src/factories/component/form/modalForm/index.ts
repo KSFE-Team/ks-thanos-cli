@@ -25,7 +25,7 @@ export class ModalFormDelegate extends FormDelegate {
             debug(`ModalForm activeEvent: ${JSON.stringify(activeEvent)}`);
             if (activeEventType === 'request') {
                 const effect = EffectManager.create(
-                    form.page.pageName,
+                    form.page.namespaceValue,
                     form.stateName,
                     form.page.model,
                     activeEvent.dependencies
@@ -95,7 +95,7 @@ export class ModalFormDelegate extends FormDelegate {
                 [
                     new Value({
                         key: `requestLoading`,
-                        value: `loading.effects['${form.page.pageName}/${this.createEffect.name}'] || loading.effects['${form.page.pageName}/${this.updateEffect.name}']`,
+                        value: `loading.effects['${form.page.namespaceValue}/${this.createEffect.name}'] || loading.effects['${form.page.namespaceValue}/${this.updateEffect.name}']`,
                         type: 'bool'
                     })
                 ]
@@ -116,22 +116,22 @@ export class ModalFormDelegate extends FormDelegate {
                     if (err) {
                         return;
                     }
-                    const { ${form.stateName} } = this.props.${form.page.pageName};
+                    const { ${form.stateName} } = this.props.${form.page.namespaceValue};
                     const postData = {
                         ...${form.stateName},
                         ...fieldsValue
                     };
                     if (this.state.${paramKey} >= 0) {
-                        actions.${form.page.pageName}.${this.updateEffect.name}(postData);
+                        actions.${form.page.namespaceValue}.${this.updateEffect.name}(postData);
                     } else {
-                        actions.${form.page.pageName}.${this.createEffect.name}(postData);
+                        actions.${form.page.namespaceValue}.${this.createEffect.name}(postData);
                     }
                 });
             }
         `);
         form.page.addMethod(`
             handleCancel = () => {
-                actions.${page.pageName}.setReducers({
+                actions.${page.namespaceValue}.setReducers({
                     modalVisible: false
                 });
             }
@@ -174,10 +174,10 @@ export class ModalFormDelegate extends FormDelegate {
             const { config, page } = this.form;
             const paramKey = config.paramKey || 'id';
             this.form.page.addDidMountStep(`if (this.state.${paramKey} > 0) {
-                actions.${page.pageName}.setReducers({
+                actions.${page.namespaceValue}.setReducers({
                     ${config.stateName}: {}
                 });
-                actions.${page.pageName}.${this.getEffect.name}({
+                actions.${page.namespaceValue}.${this.getEffect.name}({
                     ${paramKey}: this.state.${paramKey}
                 });
             }`);
@@ -193,7 +193,7 @@ export class ModalFormDelegate extends FormDelegate {
 
     initRenderVariableDeclaration() {
         const { page, config } = this.form;
-        const { pageName } = page;
+        const { namespaceValue } = page;
         this.form.page.addRenderVariableDeclaration({
             name: 'form',
             source: `this.props`
@@ -204,11 +204,11 @@ export class ModalFormDelegate extends FormDelegate {
         });
         this.form.page.addRenderVariableDeclaration({
             name: config.stateName,
-            source: `this.props.${pageName}`
+            source: `this.props.${namespaceValue}`
         });
         this.form.page.addRenderVariableDeclaration({
             name: 'modalVisible',
-            source: `this.props.${pageName}`
+            source: `this.props.${namespaceValue}`
         });
     }
 
