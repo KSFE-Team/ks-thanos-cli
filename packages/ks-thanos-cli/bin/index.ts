@@ -2,7 +2,7 @@
 
 import commander from 'commander';
 import Debug from '../src/utils/debugger';
-import { runSync, runInit, runUi, runMergeNginx } from '../src';
+import { runSync, runInit, runUi, runMergeNginx, runChangeEnv } from '../src';
 import { errorText } from '../src/utils/log';
 import { message } from '@ks-thanos/utils';
 
@@ -60,6 +60,22 @@ commander
         debug(`merge nginx`);
         await runMergeNginx();
     });
+
+commander
+.command('changeEnv')
+.alias('cv')
+.description('修改ngnx代理环境')
+.option('--port <port>', `监听端口`)
+.option('--env <env>', `代理环境`)
+    .action(async (
+        options: {
+            port: number;
+            env: 'Dev' | 'Test' | 'Gamma';
+        }
+) => {
+    debug(`changeEnv`);
+    await runChangeEnv(options);
+});
 
 commander
     .command('ui')
