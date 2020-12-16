@@ -72,10 +72,8 @@ commander
         }
     ) => {
     const { config } = options;
-    const projectPath = process.cwd();
     debug(`changeEnv`);
     await runChangeEnv({
-        projectPath,
         config
     });
 });

@@ -7,17 +7,14 @@ import path from 'path';
  */
 export async function runChangeEnv(
     options: {
-        projectPath: string;
         config: string
     }
 ) {
-    const { projectPath, config: mutipleConfig } = options;
+    const { config: mutipleConfig } = options;
     const config = mutipleConfig && JSON.parse(mutipleConfig);
     const { port, env } = config;
-    console.log('config', config);
-    console.log('projectPath', projectPath)
     const scriptPath = path.join(__dirname, 'shells/change_env.sh');
     /* 重启nginx */
     execSync(`bash ${scriptPath} set ${port} ${env}`);
-    console.log(successText('nginx重启成功'));
+    console.log(successText('切换环境成功'));
 }
