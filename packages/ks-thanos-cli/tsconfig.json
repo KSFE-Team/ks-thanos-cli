@@ -27,6 +27,7 @@
     ],
     "include": [
         "./src",
-        "./bin"
+        "./bin",
+        "./types"
     ]
 }

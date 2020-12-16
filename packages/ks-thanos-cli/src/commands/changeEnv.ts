@@ -7,14 +7,17 @@ import path from 'path';
  */
 export async function runChangeEnv(
     options: {
-        port: number;
-        env: 'Dev' | 'Test' | 'Gamma';
+        projectPath: string;
+        config: string
     }
 ) {
-    const { port, env } = options;
-    const cwd = process.cwd();
-    const scriptPath = path.join(cwd, 'src/commands/shells/change_env.sh');
+    const { projectPath, config: mutipleConfig } = options;
+    const config = mutipleConfig && JSON.parse(mutipleConfig);
+    const { port, env } = config;
+    console.log('config', config);
+    console.log('projectPath', projectPath)
+    const scriptPath = path.join(__dirname, 'shells/change_env.sh');
     /* 重启nginx */
-    execSync(`bash ${scriptPath} ${port} ${env}`);
+    execSync(`bash ${scriptPath} set ${port} ${env}`);
     console.log(successText('nginx重启成功'));
 }

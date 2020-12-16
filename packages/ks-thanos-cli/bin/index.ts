@@ -65,16 +65,19 @@ commander
 .command('changeEnv')
 .alias('cv')
 .description('修改ngnx代理环境')
-.option('--port <port>', `监听端口`)
-.option('--env <env>', `代理环境`)
+.option('--config [config]', '修改参数')
     .action(async (
         options: {
-            port: number;
-            env: 'Dev' | 'Test' | 'Gamma';
+            config: string;
         }
-) => {
+    ) => {
+    const { config } = options;
+    const projectPath = process.cwd();
     debug(`changeEnv`);
-    await runChangeEnv(options);
+    await runChangeEnv({
+        projectPath,
+        config
+    });
 });
 
 commander
