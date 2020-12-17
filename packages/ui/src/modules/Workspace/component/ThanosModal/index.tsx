@@ -7,6 +7,9 @@ import { requiredMessage } from 'Src/utils';
 import SelectPathInput from 'Src/components/SelectPathInput';
 import SelectTemplateInput from 'Src/components/SelectTemplateInput';
 
+const audioUrl =
+    'https://cdn.kaishuhezi.com/kstory/activity_flow/audio/hub/compress/b01d0d15-b31d-420e-9657-02e9e93e71eb_info_t=0_s=5888.mp3';
+
 /**
  * 表单配置
  */
@@ -94,6 +97,9 @@ export default () => {
                     actions.workspace.setReducers({
                         thanosModalVisible: false,
                         // thanosGeneratorLoading: true
+                    });
+                    actions.workspace.handleAudioPlay({
+                        audioUrl,
                     });
                 },
             });

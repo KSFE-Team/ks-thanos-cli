@@ -189,5 +189,17 @@ export default {
                 callback();
             }
         },
+
+        /**
+         * 处理音频播放
+         */
+        handleAudioPlay: async (payload: { audioUrl: string }) => {
+            const audio: HTMLAudioElement | null = document.getElementById('audio') as HTMLAudioElement | null;
+            const { audioUrl } = payload;
+            if (audio) {
+                audio.src = audioUrl;
+            }
+            audio?.play();
+        },
     },
 };
