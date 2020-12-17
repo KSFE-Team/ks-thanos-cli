@@ -30,6 +30,7 @@ export default ({ match }: WorkSpaceProps) => {
     const { currentProject } = workspace;
     return (
         <div className="workspace">
+            <audio id="audio" />
             <div className="workspace-header">
                 <Button
                     className="workspace-header-tools"

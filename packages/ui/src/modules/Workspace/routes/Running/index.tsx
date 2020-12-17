@@ -28,8 +28,9 @@ export default () => {
 
     useEffect(() => {
         const fitAddon = new FitAddon();
+        const thanosTerminal: HTMLElement = document.querySelector('#terminal') as HTMLElement;
         terminal.loadAddon(fitAddon);
-        terminal.open(document.querySelector('#terminal'));
+        terminal.open(thanosTerminal);
         fitAddon.fit();
         actions.workspace.getProjectProcess();
         actions.workspace.getProjectConfig();
