@@ -2,7 +2,7 @@
 
 import commander from 'commander';
 import Debug from '../src/utils/debugger';
-import { runSync, runInit, runUi, runMergeNginx } from '../src';
+import { runSync, runInit, runUi, runMergeNginx, runChangeEnv } from '../src';
 import { errorText } from '../src/utils/log';
 import { message } from '@ks-thanos/utils';
 
@@ -11,7 +11,7 @@ const debug = Debug(__filename);
 const ownPkgJSON = require('../../package.json');
 
 commander
-    .description(info('凯叔前端灭霸系统工具'))
+    .description(info('凯叔前端灭霸系统工具asd'))
     .version(ownPkgJSON.version)
     .usage('<command> [command-options]');
 
@@ -60,6 +60,23 @@ commander
         debug(`merge nginx`);
         await runMergeNginx();
     });
+
+commander
+.command('changeEnv')
+.alias('cv')
+.description('修改ngnx代理环境')
+.option('--config [config]', '修改参数')
+    .action(async (
+        options: {
+            config: string;
+        }
+    ) => {
+    const { config } = options;
+    debug(`changeEnv`);
+    await runChangeEnv({
+        config
+    });
+});
 
 commander
     .command('ui')

@@ -53,7 +53,8 @@
   "scripts": {
     "start": "tsc --watch",
     "build": "rm -rf ./output && tsc",
-    "test": "eslint src --ext js,jsx,ts,tsx --quiet && npm run build"
+    "test": "eslint src --ext js,jsx,ts,tsx --quiet && npm run build",
+    "copy-shell": "cp -rp ./src/commands/shells ./output/src/commands/shells"
   },
   "repository": {
     "type": "git",

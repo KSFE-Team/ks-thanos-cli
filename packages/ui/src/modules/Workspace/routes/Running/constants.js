@@ -16,3 +16,9 @@ export const PROJECT_PROCESS_TYPE = [
         name: '启动失败'
     },
 ];
+
+export const NGINX_ENV = [
+    'Dev',
+    'Test',
+    'Gamma'
+];

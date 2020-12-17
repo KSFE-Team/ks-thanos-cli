@@ -1,12 +1,12 @@
-import React, { ReactNode, useEffect } from 'react';
-import { Button, Badge, message, Modal, Spin } from 'antd';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Button, Badge, message, Modal, Spin, Menu, Dropdown } from 'antd';
 import { LoadingOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { FitAddon } from 'xterm-addon-fit';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
 import ThanosModal from '../../component/ThanosModal';
-import { PROJECT_PROCESS_TYPE } from './constants';
+import { PROJECT_PROCESS_TYPE, NGINX_ENV } from './constants';
 import './style.scss';
 
 const { confirm: Confirm } = Modal;
@@ -15,11 +15,17 @@ const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PRO
 export default () => {
     const { workspace, loading } = useSelector((store: any) => ({
         workspace: store.workspace,
-        loading: store.loading.effects['workspace/thanosSync'] || false,
+        loading:
+            store.loading.effects['workspace/getProjectProcess'] ||
+            store.loading.effects['workspace/thanosSync'] ||
+            store.loading.effects['workspace/getNginxEnv'] ||
+            false,
     }));
     // thanosLoading
-    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd } = workspace;
-    const { openUrl } = projectConfig;
+    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd, localNginxEnv } = workspace;
+    const { openUrl, nginxPort } = projectConfig;
+    const [nginxEnv, setNginxEnv] = useState('Dev');
+
     useEffect(() => {
         const fitAddon = new FitAddon();
         terminal.loadAddon(fitAddon);
@@ -28,6 +34,10 @@ export default () => {
         actions.workspace.getProjectProcess();
         actions.workspace.getProjectConfig();
     }, []);
+
+    useEffect(() => {
+        setNginxEnv(localNginxEnv);
+    }, [localNginxEnv]);
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');
@@ -49,6 +59,34 @@ export default () => {
             thanosModalVisible: true,
         });
     };
+
+    const handleMenuClick = (e: any) => {
+        const env = e.key;
+        if (env === nginxEnv) {
+            return;
+        }
+        actions.workspace.setReducers({
+            localNginxEnv: env,
+        });
+        actions.workspace.thanosSync({
+            cwd,
+            cmd: 'cv',
+            args: JSON.stringify([
+                {
+                    key: '--config',
+                    value: {
+                        action: 'set',
+                        port: nginxPort,
+                        env,
+                    },
+                },
+            ]),
+            callback: () => {
+                message.success('切换nginx环境成功');
+            },
+        });
+    };
+
     const handleSyncNginx = () => {
         Confirm({
             title: '同步nginx配置',
@@ -186,6 +224,13 @@ export default () => {
                 text: '同步nginx',
             },
         ];
+        const menu = (
+            <Menu onClick={handleMenuClick}>
+                {NGINX_ENV.map((env) => (
+                    <Menu.Item key={env}>{env}</Menu.Item>
+                ))}
+            </Menu>
+        );
         return (
             <Spin spinning={loading}>
                 {actionBtns.map(({ type, onClick, text, props = {} }, idx) => {
@@ -195,6 +240,9 @@ export default () => {
                         </Button>
                     );
                 })}
+                <div className="mar-l-4" style={{ display: 'inline-block' }}>
+                    <Dropdown.Button overlay={menu}>{nginxEnv}</Dropdown.Button>
+                </div>
                 <span className="workspace-running-badge">
                     <Badge status={badge.status} /> {badge.text}
                 </span>

@@ -3,10 +3,12 @@ import { sendLog } from '../../socket';
 const spawnSync = (...ARGS) => new Promise((resolve) => {
     const childProcess = require('child_process');
     const thanos = childProcess.spawn(...ARGS);
+    let resultData;
     // tools, args, {cwd}
     thanos.stdout.on('data', (data) => {
         const webpackLog = data.toString();
         sendLog(webpackLog);
+        resultData = webpackLog;
         console.log(`${data}`);
     });
     thanos.stderr.on('data', (data) => {
@@ -16,7 +18,7 @@ const spawnSync = (...ARGS) => new Promise((resolve) => {
     });
     /* 进程结束 */
     thanos.on('close', (code) => {
-        resolve();
+        resolve({code, resultData});
     });
 });
 
@@ -35,13 +37,13 @@ export default async function(context) {
         ARGS = JSON.parse(originArgs || []);
     }
     const formatArgs = ARGS.map(({ key, value }) => `${key} ${JSON.stringify(value)}`).join(' ');
-    console.log('formatArgs', formatArgs);
     const cmd = `thanos ${CMD} ${formatArgs}`;
     const [tools, ...args] = cmd.split(' ');
-    await spawnSync(tools, args, {cwd});
+    const result = await spawnSync(tools, args, { cwd });
     context.body = {
         code: 0,
-        result: 'success'
+        result: 'success',
+        data: result.resultData
     };
 
     // const thanos = childProcess.spawnSync(tools, args, {cwd, encoding: 'utf-8', stdio: 'inherit'});

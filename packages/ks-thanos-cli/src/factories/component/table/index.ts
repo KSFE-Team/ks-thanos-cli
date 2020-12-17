@@ -129,7 +129,7 @@ export class Table extends Component {
 
     initRenderVariableDeclaration() {
         const { namespaceValue } = this.page;
-        const { showPagination } = this.config;
+        const { showPagination, showSelectedRows } = this.config;
         const renderVariables = [
             {
                 name: 'columns',
@@ -148,7 +148,7 @@ export class Table extends Component {
                 source: 'this.props'
             }
         ];
-        if (showPagination) {
+        if (showPagination || showSelectedRows) {
             renderVariables.push({
                 name: this.stateName,
                 source: `this.props.${namespaceValue}`
