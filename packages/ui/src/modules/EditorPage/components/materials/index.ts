@@ -18,6 +18,7 @@ import * as Conditions from './Conditions/index';
 import * as Table from './Table';
 import * as Col from './Col/index';
 import * as KSWhiteCard from './KSWhiteCard/index';
+import * as BizSelectUpload from './BizSelectUpload/index';
 
 const COMPONENTS_DICT = {
     Form,
@@ -40,6 +41,7 @@ const COMPONENTS_DICT = {
     Table,
     Col,
     KSWhiteCard,
+    BizSelectUpload,
 };
 
 export default COMPONENTS_DICT;

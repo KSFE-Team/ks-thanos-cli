@@ -104,12 +104,32 @@ export const DEFAULT_OPTIONS = [
         name: '素材图片',
     },
     {
+        value: 'adAudio',
+        name: '广告音频',
+    },
+    {
         value: 'album',
         name: '专辑',
     },
     {
+        value: 'applePayProduct',
+        name: '苹果支付商品',
+    },
+    {
         value: 'appleProduct',
         name: '苹果商品',
+    },
+    {
+        value: 'applets',
+        name: '小程序',
+    },
+    {
+        value: 'attribute',
+        name: '外部属性｜规格',
+    },
+    {
+        value: 'bubble',
+        name: '气泡｜头饰｜头像',
     },
     {
         value: 'adPosition',
@@ -128,6 +148,10 @@ export const DEFAULT_OPTIONS = [
         name: '训练营分期',
     },
     {
+        value: 'campLabel',
+        name: '训练营标签',
+    },
+    {
         value: 'contentPack',
         name: '内容礼包',
     },
@@ -136,28 +160,72 @@ export const DEFAULT_OPTIONS = [
         name: '优惠券',
     },
     {
+        value: 'column',
+        name: '小知识',
+    },
+    {
         value: 'discountSuit',
         name: '优惠套装',
+    },
+    {
+        value: 'doc',
+        name: '文案库',
     },
     {
         value: 'entityTuan',
         name: '实物拼团',
     },
     {
+        value: 'feedback',
+        name: '学习反馈课程',
+    },
+    {
         value: 'file',
         name: '附件',
+    },
+    {
+        value: 'fontMgt',
+        name: '字体库',
     },
     {
         value: 'giftPackage',
         name: '礼包',
     },
     {
+        value: 'guideAttention',
+        name: '引导公众号配置',
+    },
+    {
+        value: 'iosBuyProduct',
+        name: 'ios内购买商品',
+    },
+    {
+        value: 'ipRole',
+        name: 'IP人物',
+    },
+    {
         value: 'knowledge',
         name: '故事小知识',
     },
     {
+        value: 'lexicon',
+        name: '题库系统 词库',
+    },
+    {
+        value: 'live',
+        name: '直播管理',
+    },
+    {
         value: 'mallProduct',
         name: '自建商品',
+    },
+    {
+        value: 'merchant',
+        name: '商户',
+    },
+    {
+        value: 'newAlbum',
+        name: '新专辑',
     },
     {
         value: 'newLabel',
@@ -166,6 +234,10 @@ export const DEFAULT_OPTIONS = [
     {
         value: 'newUserTask',
         name: '新用户礼包',
+    },
+    {
+        value: 'newContent',
+        name: '新APP内容列表，音频、视频故事',
     },
     {
         value: 'panguProduct',
@@ -178,6 +250,18 @@ export const DEFAULT_OPTIONS = [
     {
         value: 'product',
         name: '商品',
+    },
+    {
+        value: 'payMethod',
+        name: '支付方式',
+    },
+    {
+        value: 'plot',
+        name: '剧情',
+    },
+    {
+        value: 'plotLine',
+        name: '剧情线',
     },
     {
         value: 'question',
@@ -194,6 +278,22 @@ export const DEFAULT_OPTIONS = [
     {
         value: 'storyArticle',
         name: '故事文稿',
+    },
+    {
+        value: 'standardCard',
+        name: '标准会员卡',
+    },
+    {
+        value: 'studyReport',
+        name: '学习报告',
+    },
+    {
+        value: 'sudokuOption',
+        name: '数独选项',
+    },
+    {
+        value: 'suit',
+        name: '优惠套装',
     },
     {
         value: 'subChannel',
@@ -216,12 +316,12 @@ export const DEFAULT_OPTIONS = [
         name: '用户组',
     },
     {
-        value: 'testUser',
-        name: '测试人员',
+        value: 'userHierarchy',
+        name: '用户分层',
     },
     {
-        value: 'live',
-        name: '直播管理',
+        value: 'testUser',
+        name: '测试人员',
     },
     {
         value: 'promotion',

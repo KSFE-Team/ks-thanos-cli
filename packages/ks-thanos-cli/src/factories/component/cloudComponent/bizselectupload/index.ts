@@ -2,9 +2,9 @@ import { getPropStr } from 'Src/utils/getPropValue';
 import KMSCloudComponent from '../KMSCloudComponent';
 
 /**
- * BizSelectModal组件
+ * BizSelectUpload组件
  */
-export default class BizSelectModal extends KMSCloudComponent {
+export default class BizSelectUpload extends KMSCloudComponent {
 
     getDecoratorConfigCode() {
         return '{}';
