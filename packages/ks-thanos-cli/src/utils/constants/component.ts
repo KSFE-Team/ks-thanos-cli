@@ -17,6 +17,7 @@ import { Col } from 'Src/factories/component/col';
 import { KSWhiteCard } from 'Src/factories/component/ksWhiteCard';
 import {
     BizSelectModal,
+    BizSelectUpload,
     BizSelectTags,
     BizTimingSetting,
     BizSelectTypeContent,
@@ -44,6 +45,7 @@ export const COMPONENT_TYPES_MAP: {
     Row: Row,
     Col: Col,
     BizSelectModal: BizSelectModal,
+    BizSelectUpload: BizSelectUpload,
     BizSelectTags: BizSelectTags,
     BizTimingSetting: BizTimingSetting,
     BizSelectTypeContent: BizSelectTypeContent,
