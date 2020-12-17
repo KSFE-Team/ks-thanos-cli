@@ -15,12 +15,17 @@ const [{ key: NOT_RUN }, { key: RUNNING }, { key: FINISH }, { key: FAIL }] = PRO
 export default () => {
     const { workspace, loading } = useSelector((store: any) => ({
         workspace: store.workspace,
-        loading: store.loading.effects['workspace/thanosSync'] || false,
+        loading:
+            store.loading.effects['workspace/getProjectProcess'] ||
+            store.loading.effects['workspace/thanosSync'] ||
+            store.loading.effects['workspace/getNginxEnv'] ||
+            false,
     }));
     // thanosLoading
-    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd } = workspace;
+    const { currentProject, thanosGeneratorLoading, thanosModalVisible, projectConfig, cwd, localNginxEnv } = workspace;
     const { openUrl, nginxPort } = projectConfig;
     const [nginxEnv, setNginxEnv] = useState('Dev');
+
     useEffect(() => {
         const fitAddon = new FitAddon();
         terminal.loadAddon(fitAddon);
@@ -29,6 +34,10 @@ export default () => {
         actions.workspace.getProjectProcess();
         actions.workspace.getProjectConfig();
     }, []);
+
+    useEffect(() => {
+        setNginxEnv(localNginxEnv);
+    }, [localNginxEnv]);
 
     const handleStart = () => {
         actions.workspace.runNpmCommand('start');
@@ -53,7 +62,12 @@ export default () => {
 
     const handleMenuClick = (e: any) => {
         const env = e.key;
-        setNginxEnv(env);
+        if (env === nginxEnv) {
+            return;
+        }
+        actions.workspace.setReducers({
+            localNginxEnv: env,
+        });
         actions.workspace.thanosSync({
             cwd,
             cmd: 'cv',
@@ -61,6 +75,7 @@ export default () => {
                 {
                     key: '--config',
                     value: {
+                        action: 'set',
                         port: nginxPort,
                         env,
                     },

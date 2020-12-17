@@ -2,6 +2,7 @@ import Api from 'Src/utils/request';
 import { message } from 'antd';
 import { actions } from 'kredux';
 import terminal from 'Src/components/Terminal';
+import { NGINX_ENV } from './routes/Running/constants';
 
 export const STATE = {
     // projects: getObjectStorage('projects') || [],
@@ -14,6 +15,7 @@ export const STATE = {
     thanosModalVisible: false,
     initPageName: '',
     thanosGeneratorLoading: false,
+    localNginxEnv: '',
 };
 
 export default {
@@ -109,6 +111,23 @@ export default {
                 actions.workspace.setReducers({
                     projectConfig: response.result,
                 });
+                const { nginxPort } = response.result;
+                if (nginxPort) {
+                    actions.workspace.getNginxEnv({
+                        cwd,
+                        cmd: 'cv',
+                        args: JSON.stringify([
+                            {
+                                key: '--config',
+                                value: {
+                                    action: 'get',
+                                    port: nginxPort,
+                                },
+                            },
+                        ]),
+                        callback: () => {},
+                    });
+                }
             }
         },
         /**
@@ -144,6 +163,29 @@ export default {
                 params: rest,
             });
             if (response && response.code === 0) {
+                actions.workspace.setReducers({
+                    thanosResponse: response.data,
+                });
+                callback();
+            }
+        },
+
+        /**
+         * 获取nginx环境
+         */
+        getNginxEnv: async (payload: any) => {
+            const { callback, ...rest } = payload;
+            const response: any = await Api.getData({
+                api: 'thanosSync',
+                method: 'post',
+                params: rest,
+            });
+            if (response && response.code === 0) {
+                let handleData = response.data;
+                handleData = NGINX_ENV.find((env) => handleData.includes(env));
+                actions.workspace.setReducers({
+                    localNginxEnv: handleData,
+                });
                 callback();
             }
         },
