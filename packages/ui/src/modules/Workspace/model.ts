@@ -181,12 +181,14 @@ export default {
                 params: rest,
             });
             if (response && response.code === 0) {
-                let handleData = response.data;
+                let handleData = response.data || [];
                 handleData = NGINX_ENV.find((env) => handleData.includes(env));
-                actions.workspace.setReducers({
-                    localNginxEnv: handleData,
-                });
-                callback();
+                if (handleData) {
+                    actions.workspace.setReducers({
+                        localNginxEnv: handleData,
+                    });
+                    callback();
+                }
             }
         },
 

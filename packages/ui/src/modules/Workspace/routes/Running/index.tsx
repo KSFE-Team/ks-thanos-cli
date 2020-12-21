@@ -241,9 +241,11 @@ export default () => {
                         </Button>
                     );
                 })}
-                <div className="mar-l-4" style={{ display: 'inline-block' }}>
-                    <Dropdown.Button overlay={menu}>{nginxEnv}</Dropdown.Button>
-                </div>
+                {localNginxEnv && (
+                    <div className="mar-l-4" style={{ display: 'inline-block' }}>
+                        <Dropdown.Button overlay={menu}>{nginxEnv}</Dropdown.Button>
+                    </div>
+                )}
                 <span className="workspace-running-badge">
                     <Badge status={badge.status} /> {badge.text}
                 </span>
