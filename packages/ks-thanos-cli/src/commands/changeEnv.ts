@@ -19,6 +19,7 @@ export async function runChangeEnv(
     /* 重启nginx */
     const args = [scriptPath, action, port, env];
     const result = spawn('bash', args);
+
     if (action === 'set') {
         console.log(successText('切换nginx环境成功'));
         console.log(`当前代理环境：${env}`);
