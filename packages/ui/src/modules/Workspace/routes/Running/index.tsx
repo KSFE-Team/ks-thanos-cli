@@ -102,6 +102,21 @@ export default () => {
                     args: '',
                     callback: () => {
                         message.success('同步nginx配置并重启成功');
+                        // 同步线上nginx配置后，需要重新获取本地代理环境
+                        actions.workspace.getNginxEnv({
+                            cwd,
+                            cmd: 'cv',
+                            args: JSON.stringify([
+                                {
+                                    key: '--config',
+                                    value: {
+                                        action: 'get',
+                                        port: nginxPort,
+                                    },
+                                },
+                            ]),
+                            callback: () => {},
+                        });
                     },
                 });
             },
