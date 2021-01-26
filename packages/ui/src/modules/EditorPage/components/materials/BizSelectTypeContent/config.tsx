@@ -4,7 +4,7 @@ import { actions } from 'kredux';
 import { ComponentConfig } from 'Src/types/componentConfig';
 import Card from 'Src/components/Card';
 import { flagArr, FIELD } from './constants';
-import { DEFAULT_OPTIONS } from '../BizSelectModal/utils';
+import { DEFAULT_OPTIONS } from '../../../utils/constants';
 
 const FormItem = Form.Item;
 const { Option } = Select;

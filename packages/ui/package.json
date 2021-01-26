@@ -1,6 +1,6 @@
 {
     "name": "@ks-thanos/ui",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "> TODO: description",
     "author": "caic <caichenyu@ksjgs.com>",
     "homepage": "https://github.com/KSFE-Team/ks-thanos-cli/tree/master/packages/ks-thanos-cli/tree/master/packages/ks-thanos-ui#readme",
@@ -58,7 +58,7 @@
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-pcweb": "^4.18.0",
+        "@ks-web-cli/plugin-pcweb": "^4.20.0",
         "@ks-web-cli/ts-tools": "^4.18.0",
         "@types/react": "^16.9.49",
         "@types/react-beautiful-dnd": "^13.0.0",

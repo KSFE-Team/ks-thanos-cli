@@ -109,10 +109,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@ks-thanos/ui-server@^2.0.0":
-  version "2.0.0"
-  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-2.0.0.tgz#d2fcb2d6dd8c0b7dc5726c83804e651c18a843c7"
-  integrity sha512-dQ/1I7QfO1kXkHV2NwrjnXf/7HQKQxLLTKK0oKBlzbDfJu2FWFyaxTRvjRrLJO0zOVGNASmMTaHmY4HLl5VQkQ==
+"@ks-thanos/ui-server@^2.1.0":
+  version "2.1.0"
+  resolved "http://172.16.1.179:4873/@ks-thanos%2fui-server/-/ui-server-2.1.0.tgz#40a03def2b9ccc7cb5d11b422b5d8a11ac8b055a"
+  integrity sha512-nMvMxUTAo28s4JYr8YnFwql8MvFOo9Twyrz/jCLRetaviQsT9F9FHksc7GMjNi2Yvsmg+WZ5kjGzcxZ7Dyg5dA==
   dependencies:
     "@ks-thanos/utils" "^2.0.0"
     axios "^0.19.2"

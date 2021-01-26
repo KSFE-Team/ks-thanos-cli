@@ -1,6 +1,6 @@
 {
   "name": "ks-thanos-cli",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "@babel/traverse": "^7.12.9",
-    "@ks-thanos/ui-server": "^2.0.0",
+    "@ks-thanos/ui-server": "^2.1.0",
     "@ks-thanos/utils": "^2.0.0",
     "@types/eslint": "^4.16.6",
     "acorn": "^8.0.4",
