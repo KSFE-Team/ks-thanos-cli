@@ -1,6 +1,6 @@
 {
   "name": "ks-thanos-cli",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
@@ -52,7 +52,7 @@
   },
   "scripts": {
     "start": "tsc --watch",
-    "build": "rm -rf ./output && tsc",
+    "build": "rm -rf ./output && tsc && cp -rp ./src/commands/shells ./output/src/commands/shells",
     "test": "eslint src --ext js,jsx,ts,tsx --quiet && npm run build",
     "copy-shell": "cp -rp ./src/commands/shells ./output/src/commands/shells"
   },
