@@ -2,9 +2,9 @@ import React from 'react';
 import kredux, { dynamic, actions } from 'kredux';
 import getRouteList from './routers/getRouteList';
 import { browserHistory } from './routers/utils';
-import { isDevEnv} from './utils/index';
+import { isOnlyPreview} from './utils/index';
 import Loading from './components/Loading';
-import socket from 'Models/socket';
+// import socket from '';
 import global from 'Models/global';
 import { setApp } from './app';
 import './entry';
@@ -17,9 +17,10 @@ const app = kredux({
     history: browserHistory
 });
 app.router(getRouteList());
-app.model(socket);
 app.model(global);
-if (isDevEnv()) {
+if (!isOnlyPreview()) {
+    const socket = require('Models/socket');
+    app.model(socket.default);
     actions.socket.init();
 }
 app.render(

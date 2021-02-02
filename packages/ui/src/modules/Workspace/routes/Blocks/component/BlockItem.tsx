@@ -4,7 +4,7 @@ import { Col, Typography, Spin, Button, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ButtonProps } from 'antd/es/button';
 import moment from 'moment';
-import { goto, isDevEnv } from 'Src/utils';
+import { goto, isOnlyPreview } from 'Src/utils';
 import HighlightedText from './HighlightedText';
 import ImageLoad from './ImageLoad';
 import ImagePreview from './ImagePreview';
@@ -50,7 +50,7 @@ const BlockItem = ({
     style = {},
     editorAble = true,
     deleteAble = true,
-    addProjectAble = isDevEnv(),
+    addProjectAble = !isOnlyPreview(),
     onAddProject,
 }: BlockItemProps) => {
     const handleDelete = (record: any) => {

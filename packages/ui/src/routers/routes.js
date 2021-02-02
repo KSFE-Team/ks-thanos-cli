@@ -1,4 +1,4 @@
-import { isDevEnv } from 'Src/utils';
+import { isOnlyPreview } from 'Src/utils';
 
 // 路由配置
 const routesEdit = [
@@ -37,4 +37,4 @@ const routesEdit = [
 const routesPreview = routesEdit.filter(({ path }) => {
     return path !== '/';
 });
-export default (isDevEnv() ? routesEdit : routesPreview);
+export default (!isOnlyPreview() ? routesEdit : routesPreview);

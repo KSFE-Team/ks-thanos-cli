@@ -1,3 +1,3 @@
 declare interface Window {
-    loginEnv: string;
+    METHOD: string;
 }

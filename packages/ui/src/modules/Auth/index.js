@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { goto } from 'Src/utils';
+import { goto, isOnlyPreview } from 'Src/utils';
 
 export default class Auth extends Component {
     static propTypes = {
@@ -8,11 +8,15 @@ export default class Auth extends Component {
     }
 
     componentDidMount() {
-        window.loginEnv = 'devEdit';
+        if (isOnlyPreview()) {
+            goto.push('/workspace/blocks/existingPage');
+        } else {
+            goto.push('/');
+        }
     }
     render() {
         return <div style={{color: 'red'}}>
-            <button onClick={() => {
+            {/* <button onClick={() => {
                 window.loginEnv = 'devEdit';
                 // localStorage.setItem('loginEnv', 'devEdit');
                 goto.push('/');
@@ -20,8 +24,8 @@ export default class Auth extends Component {
             <button onClick={() => {
                 window.loginEnv = 'onlyPreview';
                 // localStorage.setItem('loginEnv', 'onlyPreview');
-                goto.push('/workspace/blocks/existingPage');
-            }}>生产</button>
+                goto.push();
+            }}>生产</button> */}
         </div>;
     }
 }

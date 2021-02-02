@@ -6,7 +6,7 @@ import router from 'kredux/output/router';
 import Menu from 'Src/components/Menu';
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
-import { goto, getObjectStorage, isDevEnv } from 'Src/utils';
+import { goto, getObjectStorage, isOnlyPreview } from 'Src/utils';
 import { ROUTE_LIST } from './routes';
 import NoMatch from './component/NoMatch';
 import './style.scss';
@@ -30,7 +30,7 @@ export default ({ match }: WorkSpaceProps) => {
     return (
         <div className="workspace">
             <div className="workspace-header">
-                {isDevEnv() ? (
+                {!isOnlyPreview() && (
                     <>
                         <Button
                             className="workspace-header-tools"
@@ -42,7 +42,7 @@ export default ({ match }: WorkSpaceProps) => {
                         </Button>
                         <div className="workspace-header-project-name">{currentProject.name}</div>
                     </>
-                ) : null}
+                )}
                 <div className="workspace-header-logo">
                     <Logo />
                 </div>

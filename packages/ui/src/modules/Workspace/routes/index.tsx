@@ -1,5 +1,5 @@
 import { dynamic } from 'kredux';
-import { isDevEnv } from 'Src/utils';
+import { isOnlyPreview } from 'Src/utils';
 
 interface RouteConfig {
     path: string;
@@ -8,7 +8,7 @@ interface RouteConfig {
     component: any;
 }
 
-const ROUTE_LIST_EDIT: RouteConfig[] = [
+const ROUTE_CONFIG: RouteConfig[] = [
     {
         path: '/workspace/running',
         name: '运行',
@@ -25,6 +25,8 @@ const ROUTE_LIST_EDIT: RouteConfig[] = [
             component: () => import('./Config'),
         }),
     },
+];
+const ROUTE_WORKSPACE = [
     {
         path: '/workspace/blocks',
         name: '资产',
@@ -38,7 +40,5 @@ const ROUTE_LIST_EDIT: RouteConfig[] = [
         }),
     },
 ];
-const ROUTE_LIST_PREVIEW = ROUTE_LIST_EDIT.find(({ path }) => {
-    return path === '/workspace/blocks';
-});
-export const ROUTE_LIST = isDevEnv() ? ROUTE_LIST_EDIT : [ROUTE_LIST_PREVIEW];
+
+export const ROUTE_LIST = isOnlyPreview() ? ROUTE_WORKSPACE : [...ROUTE_CONFIG, ...ROUTE_WORKSPACE];
