@@ -84,3 +84,9 @@ export const getDefaultValue = (data: any, key: string, defaultValue: any) => {
     }
     return defaultValue;
 };
+
+/* 是否开发环境 */
+export const isDevEnv = () => {
+    // const loginEnv = localStorage.getItem('loginEnv') || 'devEdit';
+    return window.loginEnv === 'devEdit';
+};

@@ -1,5 +1,7 @@
+import { isDevEnv } from 'Src/utils';
+
 // 路由配置
-const Routes = [
+const routesEdit = [
     {
         path: '/',
         exact: true,
@@ -32,5 +34,7 @@ const Routes = [
         ]
     },
 ];
-
-export default Routes;
+const routesPreview = routesEdit.filter(({ path }) => {
+    return path !== '/';
+});
+export default (isDevEnv() ? routesEdit : routesPreview);

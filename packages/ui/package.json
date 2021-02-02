@@ -58,7 +58,7 @@
         "xterm-addon-fit": "^0.3.0"
     },
     "devDependencies": {
-        "@ks-web-cli/plugin-pcweb": "^4.20.0",
+        "@ks-web-cli/plugin-pcweb": "^4.20.3",
         "@ks-web-cli/ts-tools": "^4.18.0",
         "@types/react": "^16.9.49",
         "@types/react-beautiful-dnd": "^13.0.0",

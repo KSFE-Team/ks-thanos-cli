@@ -6,14 +6,13 @@ import router from 'kredux/output/router';
 import Menu from 'Src/components/Menu';
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
-import { goto, getObjectStorage } from 'Src/utils';
+import { goto, getObjectStorage, isDevEnv } from 'Src/utils';
 import { ROUTE_LIST } from './routes';
 import NoMatch from './component/NoMatch';
 import './style.scss';
 
 const { Route, Switch, Redirect } = router;
 const [{ path: DEFAULT_PATH }] = ROUTE_LIST;
-
 interface WorkSpaceProps {
     match: any;
 }
@@ -30,17 +29,20 @@ export default ({ match }: WorkSpaceProps) => {
     const { currentProject } = workspace;
     return (
         <div className="workspace">
-            <audio id="audio" />
             <div className="workspace-header">
-                <Button
-                    className="workspace-header-tools"
-                    onClick={() => {
-                        goto.push('/');
-                    }}
-                >
-                    <EnterOutlined />
-                </Button>
-                <div className="workspace-header-project-name">{currentProject.name}</div>
+                {isDevEnv() ? (
+                    <>
+                        <Button
+                            className="workspace-header-tools"
+                            onClick={() => {
+                                goto.push('/');
+                            }}
+                        >
+                            <EnterOutlined />
+                        </Button>
+                        <div className="workspace-header-project-name">{currentProject.name}</div>
+                    </>
+                ) : null}
                 <div className="workspace-header-logo">
                     <Logo />
                 </div>

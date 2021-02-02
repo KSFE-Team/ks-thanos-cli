@@ -1,4 +1,5 @@
 import { dynamic } from 'kredux';
+import { isDevEnv } from 'Src/utils';
 
 interface RouteConfig {
     path: string;
@@ -7,7 +8,7 @@ interface RouteConfig {
     component: any;
 }
 
-export const ROUTE_LIST: RouteConfig[] = [
+const ROUTE_LIST_EDIT: RouteConfig[] = [
     {
         path: '/workspace/running',
         name: '运行',
@@ -37,3 +38,7 @@ export const ROUTE_LIST: RouteConfig[] = [
         }),
     },
 ];
+const ROUTE_LIST_PREVIEW = ROUTE_LIST_EDIT.find(({ path }) => {
+    return path === '/workspace/blocks';
+});
+export const ROUTE_LIST = isDevEnv() ? ROUTE_LIST_EDIT : [ROUTE_LIST_PREVIEW];

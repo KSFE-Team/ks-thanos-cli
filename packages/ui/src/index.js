@@ -2,6 +2,7 @@ import React from 'react';
 import kredux, { dynamic, actions } from 'kredux';
 import getRouteList from './routers/getRouteList';
 import { browserHistory } from './routers/utils';
+import { isDevEnv} from './utils/index';
 import Loading from './components/Loading';
 import socket from 'Models/socket';
 import global from 'Models/global';
@@ -18,7 +19,9 @@ const app = kredux({
 app.router(getRouteList());
 app.model(socket);
 app.model(global);
-actions.socket.init();
+if (isDevEnv()) {
+    actions.socket.init();
+}
 app.render(
     <div />,
     '#app'

@@ -16,6 +16,7 @@ export default class ThanosUi {
             port: config.uiPort || 8001, // CLI可视化服务端口
             ...config,
             initPath: '/'
+            // initPath: '/auth'
         };
         this.init();
     }
