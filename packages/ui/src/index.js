@@ -15,6 +15,7 @@ import './styles/index.scss';
 
 dynamic.setDefaultLoadingComponent(Loading);
 
+goto.setBaseUrl(PATH_NAME);
 const app = kredux({
     history: browserHistory
 });
@@ -24,10 +25,14 @@ if (!isOnlyPreview()) {
     const socket = require('Models/socket');
     app.model(socket.default);
     actions.socket.init();
+} else {
+    const { pathname } = location;
+    if (pathname === `${PATH_NAME}/`) {
+        goto.push('/auth/');
+    }
 }
 app.render(
     <div />,
     '#app'
 );
-goto.setBaseUrl(PATH_NAME);
 setApp(app);
