@@ -7,6 +7,7 @@ import Menu from 'Src/components/Menu';
 import Logo from 'Src/components/Logo';
 import Button from 'Src/components/Button';
 import { goto, getObjectStorage, isOnlyPreview } from 'Src/utils';
+import { PATH_NAME } from 'Src/utils/constants';
 import { ROUTE_LIST } from './routes';
 import NoMatch from './component/NoMatch';
 import './style.scss';
@@ -20,10 +21,12 @@ interface WorkSpaceProps {
 export default ({ match }: WorkSpaceProps) => {
     useState(() => {
         const project = getObjectStorage('currentProject');
-        actions.workspace.setReducers({
-            currentProject: project,
-            cwd: project.path,
-        });
+        if (project) {
+            actions.workspace.setReducers({
+                currentProject: project,
+                cwd: project.path,
+            });
+        }
     });
     const { workspace } = useSelector((store: any) => ({ workspace: store.workspace }));
     const { currentProject } = workspace;
@@ -52,9 +55,9 @@ export default ({ match }: WorkSpaceProps) => {
             </div>
             <Switch>
                 {ROUTE_LIST.map((config) => {
-                    return <Route key={config.path} {...config} />;
+                    return <Route key={`${PATH_NAME}${config.path}`} {...config} path={`${PATH_NAME}${config.path}`} />;
                 })}
-                <Redirect to={DEFAULT_PATH} />
+                <Redirect to={`${PATH_NAME}${DEFAULT_PATH}`} />
                 <Route component={NoMatch} />
             </Switch>
         </div>

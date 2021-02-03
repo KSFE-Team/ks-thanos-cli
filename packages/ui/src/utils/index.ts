@@ -11,12 +11,16 @@ export const requiredMessage = (string: string) => {
 /**
  * 统一跳转方法
  */
+let baseUrl: string = '';
 export const goto = {
+    setBaseUrl: (url: string) => {
+        baseUrl = url;
+    },
     push: (url: string) => {
-        browserHistory.push(url);
+        browserHistory.push(baseUrl + url);
     },
     go: (url: string) => {
-        browserHistory.go(url);
+        browserHistory.go(baseUrl + url);
     },
 };
 

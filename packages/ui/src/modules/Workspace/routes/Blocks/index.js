@@ -5,6 +5,7 @@ import Menu from 'Src/components/Menu';
 import { ROUTE_LIST } from './routes';
 import NoMatch from '../../component/NoMatch';
 import router from 'kredux/output/router';
+import { PATH_NAME } from 'Src/utils/constants';
 
 const { Sider, Content } = Layout;
 const { Route, Switch, Redirect } = router;
@@ -49,10 +50,14 @@ export default class Property extends Component {
                 <Switch>
                     {
                         ROUTE_LIST.map((config) => {
-                            return <Route key={config.path} {...config}/>;
+                            return <Route
+                                key={`${PATH_NAME}${config.path}`}
+                                {...config}
+                                path={`${PATH_NAME}${config.path}`}
+                            />;
                         })
                     }
-                    <Redirect to={DEFAULT_PATH} />
+                    <Redirect to={`${PATH_NAME}${DEFAULT_PATH}`} />
                     <Route component={NoMatch}/>
                 </Switch>
             </Content>

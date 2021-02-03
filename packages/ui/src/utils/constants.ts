@@ -1,3 +1,5 @@
+import { isOnlyPreview } from './index';
+
 export const FILE_TYPE = [
     {
         key: 'file',
@@ -12,3 +14,5 @@ export const FILE_TYPE = [
         color: 'rgba(135, 207, 246)',
     },
 ];
+
+export const PATH_NAME = isOnlyPreview() ? '/h5/ks-thanos' : '';

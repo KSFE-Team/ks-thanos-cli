@@ -7,6 +7,8 @@ import Loading from './components/Loading';
 // import socket from '';
 import global from 'Models/global';
 import { setApp } from './app';
+import { PATH_NAME } from 'Src/utils/constants';
+import { goto } from 'Src/utils';
 import './entry';
 // 导入样式文件
 import './styles/index.scss';
@@ -27,4 +29,5 @@ app.render(
     <div />,
     '#app'
 );
+goto.setBaseUrl(PATH_NAME);
 setApp(app);

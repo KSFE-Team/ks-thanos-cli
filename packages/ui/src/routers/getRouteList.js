@@ -1,11 +1,10 @@
 import routes from './routes';
-
-let pathname = '';
+import { PATH_NAME } from 'Src/utils/constants';
 
 const getRouteList = () => {
     return routes.map((route) => ({
         ...route,
-        path: pathname + route.path,
+        path: PATH_NAME + route.path,
         component: route.component,
         modelList: route.modelList || []
     }));

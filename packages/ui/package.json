@@ -24,7 +24,7 @@
         "debug": "ks build --debug",
         "start": "ks start",
         "build": "ks build",
-        "previewBuild": "NODE_METHOD=onlyPreview ks build",
+        "pBuild": "NODE_METHOD=onlyPreview ks build",
         "docker-start": "CMD=start PORT=8787 docker-compose up",
         "docker-build": "CMD=build PORT=8787 docker-compose up",
         "docker-enter": "docker exec -it ks-pcweb-scaffold bash"
