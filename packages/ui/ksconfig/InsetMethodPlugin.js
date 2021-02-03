@@ -1,11 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 class InsetMethodPlugin {
-    constructor(options = {}) {
-        this.options = {
-            method: options.method
-        };
-    }
 
     apply(compiler) {
         compiler.hooks.compilation.tap('InsetMethodPlugin', (compilation) => {
@@ -13,12 +8,10 @@ class InsetMethodPlugin {
                 .tapAsync(
                     'InsetMethodPlugin',
                     (data, cb) => {
-                        if (this.options.method === 'onlyPreview') {
-                            data.html = data.html.replace(
-                                '<body>',
-                                `<body><script>window.METHOD = 'onlyPreview'</script>`
-                            );
-                        }
+                        data.html = data.html.replace(
+                            '<body>',
+                            `<body><script>window.METHOD = 'onlyPreview'</script>`
+                        );
                         cb(null, data);
                     }
                 );
