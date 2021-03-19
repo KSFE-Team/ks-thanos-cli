@@ -3,7 +3,7 @@ import { actions } from 'kredux';
 import { useSelector } from 'react-redux';
 import { Modal, Form, Input, message, Radio } from 'antd';
 import FormItemRender, { Config } from 'Src/components/FormItemRender';
-import { requiredMessage } from 'Src/utils';
+import { requiredMessage, getObjectStorage } from 'Src/utils';
 import SelectPathInput from 'Src/components/SelectPathInput';
 import SelectTemplateInput from 'Src/components/SelectTemplateInput';
 
@@ -83,6 +83,10 @@ export default () => {
      */
     const handleSubmit = () => {
         form.validateFields().then((fieldsValue) => {
+            const { templateName, pageChineseName, pagePath } = fieldsValue;
+            const projectName = getObjectStorage('currentProject').name;
+            const pageRealPath = `${pagePath.split(projectName)[1]}/${templateName}/index.js`;
+            console.log(pagePath, projectName, pagePath.split(projectName), pageRealPath);
             actions.workspace.thanosSync({
                 cwd,
                 cmd: 'sync',
@@ -94,6 +98,15 @@ export default () => {
                 ]),
                 callback: () => {
                     message.success('灭霸打响指了');
+                    const postData = {
+                        projectName,
+                        templateName,
+                        pageChineseName,
+                        pagePath: pageRealPath,
+                        pageName: 'index.js',
+                        status: 0,
+                    };
+                    // actions.thanoslog.createLog(postData);
                     actions.workspace.setReducers({
                         thanosModalVisible: false,
                         // thanosGeneratorLoading: true

@@ -5,6 +5,7 @@ import { Card, Row, Col, Select } from 'antd';
 import { Chart, Interval, Line, Tooltip, Axis, Point } from 'bizcharts';
 import { getComponentsCount } from 'Src/modules/EditorPage/components/materials';
 import { TIMES } from './constants';
+import ProjectRate from './components/ProjectRate';
 import './style.scss';
 
 const { Option } = Select;
@@ -19,7 +20,7 @@ export default () => {
     const { dashboard } = useSelector((store: any) => ({
         dashboard: store.dashboard,
     }));
-    const { list = [], pageList = [], info } = dashboard;
+    const { list = [], pageList = [], info, systemTotal, projectTotal } = dashboard;
     useEffect(() => {
         actions.dashboard.getInfo();
     }, []);
@@ -31,34 +32,25 @@ export default () => {
     return (
         <div className="thanos-blocks-dashboard">
             <Row>
-                <Col span={12}>
+                <Col span={8}>
                     <Card className="thanos-dashboard-card" title="页面总数">
                         {info.pageTotal}
                     </Card>
                 </Col>
-                <Col span={12}>
+                <Col span={8}>
                     <Card className="thanos-dashboard-card" title="组件总数">
                         {componentCounts}
                     </Card>
                 </Col>
-                {/* <Col span={8}>
-                    <Card className="thanos-dashboard-card" title="页面总数">
-                        {info.pageTotal}
+                <Col span={8}>
+                    <Card className="thanos-dashboard-card" title="使用过灭霸项目比例">
+                        {`${projectTotal} / ${systemTotal}`}
                     </Card>
-                </Col> */}
+                </Col>
             </Row>
-            {/* <Row>
-                <Col span={12}>
-                    
-                </Col>
-                <Col span={12}>
-                    <Card title="近期">
-                        <Chart height={250} autoFit data={list}>
-                            <Interval position="componentName*count" />
-                        </Chart>
-                    </Card>
-                </Col>
-            </Row> */}
+            <Card className="thanos-dashboard-bizcharts" title="项目级有效使用率">
+                <ProjectRate />
+            </Card>
             <Card className="thanos-dashboard-bizcharts" title="组件热度排名">
                 <Chart height={250} autoFit data={list}>
                     <Interval position="componentName*count" />

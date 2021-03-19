@@ -10,6 +10,7 @@ import path from 'path';
 import fsExtra from 'fs-extra';
 import { ModelTransfer } from 'Src/utils/thanos-ast/modelTransfer';
 import fs from 'fs';
+import {gitPush} from 'Src/utils/git';
 
 const debug = Debug(__filename);
 
@@ -122,6 +123,7 @@ export async function runSync(options: {
         });
 
         console.log(successText(`${pageName} 生成成功！`));
+        gitPush(pagePath,templateName,pageName);
         console.log(createSplash('THANOS'));
     } catch (err) {
         console.log(errorText(err.message));

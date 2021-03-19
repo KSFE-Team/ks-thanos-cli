@@ -27,4 +27,15 @@ export const ROUTE_LIST = [
             ]
         })
     },
+    {
+        path: '/workspace/blocks/thanoscount',
+        name: '数据统计',
+        // extra: true,
+        component: dynamic({
+            component: () => import('../ThanosCount'),
+            modelList: [
+                () => import('../ThanosCount/model')
+            ]
+        })
+    },
 ];

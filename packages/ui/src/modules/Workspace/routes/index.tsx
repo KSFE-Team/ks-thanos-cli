@@ -33,6 +33,7 @@ export const ROUTE_LIST: RouteConfig[] = [
             modelList: [
                 () => import('./Blocks/ExistingPage/model/index'),
                 () => import('./Blocks/TempLateMgt/model/index'),
+                () => import('./Blocks/ThanosCount/model'),
             ],
         }),
     },
