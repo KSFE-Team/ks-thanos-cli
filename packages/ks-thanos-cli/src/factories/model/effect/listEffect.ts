@@ -60,13 +60,23 @@ async ${this.name}(payload, getState) {
         });
 
         if (response && response.code === 0) {
-            actions.${namespace}.setReducers({
-                ${this.stateName}: {
-                    ...state,
-                    total: response.data.totalCount${selectionCodes}
-                },
-                list: response.data.list
-            });
+            if (response.data.list.length === 0 && state.page > 1) {
+                actions.${namespace}.setReducers({
+                    ${this.stateName}: {
+                        ...state,
+                        page: state.page - 1,
+                    }
+                });
+                actions.${namespace}.${this.name}();
+            } else {
+                actions.${namespace}.setReducers({
+                    ${this.stateName}: {
+                        ...state,
+                        total: response.data.totalCount${selectionCodes}
+                    },
+                    list: response.data.list
+                });
+            }
         }
     } catch (error) {
         actions.login.commonError(error);

@@ -1,6 +1,6 @@
 {
   "name": "ks-thanos-cli",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "灭霸系统命令行工具（nodejs）",
   "main": "output/src/index.js",
   "bin": {
