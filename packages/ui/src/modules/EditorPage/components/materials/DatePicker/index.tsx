@@ -22,9 +22,9 @@ const MaterialKSDatePicker = (props: KSDatePickerConfigProps) => {
             <DatePicker
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

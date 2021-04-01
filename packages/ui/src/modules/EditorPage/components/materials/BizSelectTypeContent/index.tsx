@@ -37,9 +37,9 @@ const MaterialBizSelectTypeContent = (props: BizSelectTypeContentConfigProps) =>
                 <Input.Search
                     {...configProps}
                     placeholder={typeLabel}
-                    style={{
-                        width: '300px',
-                    }}
+                    // style={{
+                    //     width: '300px',
+                    // }}
                 />
             </Form.Item>
         </div>

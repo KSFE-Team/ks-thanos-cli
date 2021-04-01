@@ -43,8 +43,10 @@ export const handlePageJson = (config: HandlePageJson) => {
         case ACTION.UPDATE:
             if ((!index && index !== 0) || !parentId) return;
             const tempNode = findComponent(id, pageJson);
+            console.log(pageJson, 'pageJson', id, 'pageJson', 'handlePageJson--');
             newJson = deleteComponent(id, pageJson);
             newJson = addComponent(newJson, index, parentId, tempNode);
+            console.log(newJson, 'newJson- handlePageJson');
             setTree(newJson);
             setUndoStack(newJson, undoStack);
             break;

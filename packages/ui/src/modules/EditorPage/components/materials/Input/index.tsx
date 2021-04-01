@@ -23,9 +23,9 @@ const MaterialDatePicker = (props: MaterialDatePickerProps) => {
             <Input
                 {...configProps}
                 placeholder={label}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

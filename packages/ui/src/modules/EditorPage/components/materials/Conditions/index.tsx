@@ -21,9 +21,9 @@ const MaterialConditions = (props: ConditionsConfigProps) => {
             <Input
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

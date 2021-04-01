@@ -10,7 +10,6 @@ interface DrawingProps extends RouteProps {}
 export default (props: DrawingProps) => {
     const page = useSelector((store: any) => store.page);
     const { components } = page.pageJson;
-
     return (
         <div
             className="thanos-editor-draw"

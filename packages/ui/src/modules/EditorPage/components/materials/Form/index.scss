@@ -16,6 +16,31 @@
         background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5%, transparent 0), linear-gradient(rgba(255, 255, 255, 0.1) 5%, transparent 0);
         background-size: 15px 15px;
 
+        // serachForm 调整antd 组件样式
+        .search-form-wrapper{
+            display: inline-block;
+            .component-container, .component-container-active{
+                width: 100%;
+                .ant-form-item-control-input-content .ant-select-selection-search-input{
+                    width: 100%
+                }
+                .ant-form-item-control-input-content .ant-select-selector{
+                    width: 100%
+                }
+            }
+        }
+        // 非searchForm 下，antd 组件样式
+        .nomall-form-wrapper{
+            .component-container, .component-container-active{
+                .ant-form-item-control .ant-form-item-control-input .ant-form-item-control-input-content .ant-input,
+                .ant-form-item-control-input .ant-form-item-control-input-content .ant-input-group-wrapper, .ant-input-group,
+                .ant-form-item-control .ant-form-item-control-input .ant-form-item-control-input-content .ant-select,
+                .ant-form-item-control .ant-form-item-control-input .ant-form-item-control-input-content .ant-input-number
+                {
+                    width: 300px;
+                }
+            }
+        }
         // .form-item-container {
         //     position: relative;
         //     background: rgba(255, 255, 255, .3);

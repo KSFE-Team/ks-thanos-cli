@@ -22,9 +22,9 @@ const MaterialInputNumber = (props: InputNumberConfigProps) => {
             <InputNumber
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

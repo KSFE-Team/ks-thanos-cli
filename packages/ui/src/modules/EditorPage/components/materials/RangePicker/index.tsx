@@ -23,9 +23,9 @@ const MaterialRangePicker = (props: RangePickerConfigProps) => {
             <RangePicker
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

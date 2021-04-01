@@ -24,9 +24,9 @@ const MaterialTextArea = (props: TextAreaConfigProps) => {
             <TextArea
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );

@@ -25,9 +25,9 @@ const MaterialSelect = (props: MaterialSelectProps) => {
                 {...otherConfig}
                 optionFilterProp="children"
                 placeholder={label}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
                 filterOption={(input, option: any) => {
                     return (
                         option.value.toLowerCase().indexOf(input.toLowerCase()) > -1 ||

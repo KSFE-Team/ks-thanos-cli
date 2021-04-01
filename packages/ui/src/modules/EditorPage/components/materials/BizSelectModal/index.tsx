@@ -22,9 +22,9 @@ const MaterialBizSelectModal = (props: BizSelectModalConfigProps) => {
             <Input
                 {...configProps}
                 placeholder={placeholder}
-                style={{
-                    width: '300px',
-                }}
+                // style={{
+                //     width: '300px',
+                // }}
             />
         </Form.Item>
     );
