@@ -60,27 +60,16 @@ const renderForm = (props: any, type: string): JSX.Element => {
     switch (type) {
         case SEARCH_FORM:
             return (
-                <>
-                    {fillGroup.length > 0 && (
-                        <Row style={{ width: '100%', minHeight: '145px' }}>
-                            {fillGroup.map((item: any, index: number) => {
-                                return (
-                                    <Col key={index} span={col} style={{ padding: '0 3px' }}>
-                                        <Sortable
-                                            className="react-sortable-drop-container"
-                                            list={components}
-                                            id={id}
-                                            redux={page}
-                                        >
-                                            <div className="form-item-container" key={`${item.id}`}>
-                                                <ComponentRender {...item} index={index} />
-                                            </div>
-                                        </Sortable>
-                                    </Col>
-                                );
-                            })}
-                        </Row>
-                    )}
+                <Row style={{ width: '100%', minHeight: '145px' }}>
+                    <Sortable className="react-sortable-drop-container" list={components} id={id} redux={page}>
+                        {fillGroup.map((item: any, index: number) => {
+                            return (
+                                <Col key={index} span={col} style={{ padding: '0 3px' }}>
+                                    <ComponentRender {...item} index={index} />
+                                </Col>
+                            );
+                        })}
+                    </Sortable>
                     <Row gutter={4} style={{ width: '100%' }}>
                         <Col span={lastGroup.length === 0 ? 18 : col} style={{ padding: '0 3px' }}>
                             <Sortable className="react-sortable-drop-container" list={components} id={id} redux={page}>
@@ -98,7 +87,7 @@ const renderForm = (props: any, type: string): JSX.Element => {
                             <Button style={{ background: '#1890ff' }}>新增</Button>
                         </Col>
                     </Row>
-                </>
+                </Row>
             );
         default:
             return (
