@@ -32,62 +32,37 @@ const getModalFormActions = (type: string) => {
 
 const renderForm = (props: any, type: string): JSX.Element => {
     const { id, page, components = [] } = props;
-    let splitIndex: any[] = [];
-    const col = 8; // 存放 span 数大于 24 后的第一个 formItem 的 index 索引
-    let colSpan = 0;
-    components.forEach((item: any, index: number) => {
-        // 累加 span 数
-        colSpan += col;
-        // 记录 span 数大于 24 后的第一个 item 的 index
-        if (colSpan > 24) {
-            splitIndex.push(index);
-            colSpan = col;
-        } else if (colSpan < 24) {
-            splitIndex = [components.length + 1];
-            colSpan = col;
-        }
-    });
-    const showExtend = splitIndex.length > 0; // 是否需要收起/展开
-    let fillGroup: any = [];
-    let lastGroup = [];
-    if (showExtend) {
-        fillGroup = components.slice(0, splitIndex[splitIndex.length - 1]);
-        lastGroup = components.slice(splitIndex[splitIndex.length - 1]);
-    } else {
-        fillGroup = [];
-        lastGroup = components;
-    }
+    const col = 8;
+
     switch (type) {
         case SEARCH_FORM:
             return (
-                <Row style={{ width: '100%', minHeight: '145px' }}>
-                    <Sortable className="react-sortable-drop-container" list={components} id={id} redux={page}>
-                        {fillGroup.map((item: any, index: number) => {
-                            return (
-                                <Col key={index} span={col} style={{ padding: '0 3px' }}>
-                                    <ComponentRender {...item} index={index} />
-                                </Col>
-                            );
-                        })}
-                    </Sortable>
-                    <Row gutter={4} style={{ width: '100%' }}>
-                        <Col span={lastGroup.length === 0 ? 18 : col} style={{ padding: '0 3px' }}>
-                            <Sortable className="react-sortable-drop-container" list={components} id={id} redux={page}>
-                                {lastGroup.map((item: any, index: number) => {
-                                    return (
-                                        <div className="form-item-container" key={`${item.id}`}>
-                                            <ComponentRender {...item} index={index} />
-                                        </div>
-                                    );
-                                })}
-                            </Sortable>
-                        </Col>
-                        <Col span={5} style={{ marginLeft: '10px' }}>
-                            <Button style={{ background: '#1890ff' }}>查询</Button>
-                            <Button style={{ background: '#1890ff' }}>新增</Button>
-                        </Col>
-                    </Row>
-                </Row>
+                <Sortable
+                    className="react-sortable-drop-container search-form-container"
+                    list={components}
+                    id={id}
+                    redux={page}
+                >
+                    {components.length > 0 && (
+                        <Row style={{ width: '100%' }}>
+                            {components.map((item: any, index: number) => {
+                                return (
+                                    <Col
+                                        key={index}
+                                        span={components.length < 3 ? undefined : col}
+                                        style={{ padding: '0 3px' }}
+                                    >
+                                        <ComponentRender {...item} index={index} />
+                                    </Col>
+                                );
+                            })}
+                            <Col span={4} offset={20}>
+                                <Button style={{ background: '#1890ff' }}>查询</Button>
+                                <Button style={{ background: '#1890ff' }}>新增</Button>
+                            </Col>
+                        </Row>
+                    )}
+                </Sortable>
             );
         default:
             return (
@@ -99,7 +74,7 @@ const renderForm = (props: any, type: string): JSX.Element => {
                 >
                     {components.map((itemProps: any, index: number) => {
                         return (
-                            <div className="form-item-container" key={`${itemProps.id}`}>
+                            <div key={`${itemProps.id}`}>
                                 <ComponentRender {...itemProps} index={index} />
                             </div>
                         );

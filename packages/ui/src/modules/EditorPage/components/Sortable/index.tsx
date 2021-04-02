@@ -43,7 +43,6 @@ export default (props: any) => {
                 } else {
                     to.className = `${className} add`;
                 }
-                console.log(className, 'className-ReactSortable-onChange');
                 setTimeout(() => {
                     to.className = className;
                 }, 1000);
@@ -82,7 +81,6 @@ export default (props: any) => {
                 } else {
                     message.warning(checkResult);
                 }
-                console.log(clone.dataset, 'className-ReactSortable-onAdd');
             }}
             onUpdate={(eva) => {
                 const { clone, newIndex, oldIndex, from, path } = eva;
@@ -100,10 +98,8 @@ export default (props: any) => {
                         undoStack: page.undoStack,
                     },
                 });
-                console.log(clone.dataset, 'className-ReactSortable-onUpdate');
             }}
             onEnd={() => {
-                console.log(nextStep.params, 'className-ReactSortable-onEnd');
                 if (nextStep.func && nextStep.params) {
                     nextStep.func(nextStep.params);
                     setNextStep({});
