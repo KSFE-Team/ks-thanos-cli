@@ -68,5 +68,36 @@ export default {
                 message.error(err);
             }
         },
+        /** 执行 git diff */
+        gitDiff: async (payload: any, getState: any) => {
+            const { codeInitCount, record, newCommitId, oldCommitId, pagePath, projectName } = payload;
+            const response: any = await request(API.thanosLog.gitDiff, {
+                method: 'post',
+                body: {
+                    newCommitId,
+                    oldCommitId,
+                    pagePath,
+                    projectName,
+                },
+                // mode: 'no-cors',
+            });
+            if (response && response.code === 0) {
+                const { add, codeDeleteCount } = response.data;
+                const codeOnlineCount = codeInitCount + add - codeDeleteCount;
+                const effectiveRate = `${(((codeInitCount - codeDeleteCount) / codeOnlineCount) * 100).toFixed(2)}`;
+                const params = {
+                    codeInitCount,
+                    effectiveRate,
+                    codeOnlineCount,
+                    codeDeleteCount,
+                };
+                const postData = {
+                    // eslint-disable-next-line no-underscore-dangle
+                    id: record._id,
+                    postData: params,
+                };
+                actions.thanoslog.updateLog(postData);
+            }
+        },
     },
 };

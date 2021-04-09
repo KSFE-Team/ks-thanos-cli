@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { actions } from 'kredux';
 import { useSelector } from 'react-redux';
 import { Button, Table, Tag } from 'antd';
-import { getEffectiveRate } from 'Src/utils/effectiveRate';
+import { getGitParam } from 'Src/utils/effectiveRate';
 import '../Dashboard/style.scss';
 
 export default () => {
@@ -38,19 +38,19 @@ export default () => {
         },
         {
             title: '模块名称',
-            dataIndex: 'templateName',
-            key: 'templateName',
+            dataIndex: 'pageName',
+            key: 'pageName',
             render: (val: string, record: { pageChineseName: string }) => (
                 <div>
                     <span>{val}</span>
-                    <p>{record.pageChineseName ? record.pageChineseName : ''}</p>
+                    <span>{record.pageChineseName ? record.pageChineseName : ''}</span>
                 </div>
             ),
         },
         {
-            title: '页面名称',
-            dataIndex: 'pageName',
-            key: 'pageName',
+            title: '模版名称',
+            dataIndex: 'templateName',
+            key: 'templateName',
         },
         {
             title: '初始行数',
@@ -68,7 +68,7 @@ export default () => {
             key: 'codeOnlineCount',
         },
         {
-            title: '有效使用率',
+            title: '有效使用率%',
             dataIndex: 'effectiveRate',
             key: 'effectiveRate',
         },
@@ -101,14 +101,17 @@ export default () => {
     };
 
     const handleEffectiveRate = async (record: any) => {
-        const params = await getEffectiveRate(record);
-        console.log(params);
-        const postData = {
-            // eslint-disable-next-line no-underscore-dangle
-            id: record._id,
-            postData: params,
+        const data = await getGitParam(record);
+        const { codeInitCount, initCommitId, onLineCommitId } = data;
+        const params = {
+            newCommitId: onLineCommitId,
+            oldCommitId: initCommitId,
+            pagePath: record.pagePath,
+            projectName: record.projectName,
+            codeInitCount,
+            record,
         };
-        // actions.thanoslog.updateLog(postData);
+        actions.thanoslog.gitDiff(params);
     };
 
     return (

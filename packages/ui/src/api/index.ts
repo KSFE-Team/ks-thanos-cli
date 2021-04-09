@@ -5,8 +5,8 @@ import { formatServerPort } from 'Src/utils';
 /* 服务器统一线上地址 */
 const SERVER_BASE = 'http://kaishufe.kaishustory.com';
 /* thanos 资产后端 */
-// const THANOS_SERVER = `${SERVER_BASE}/api/ks-thanos/v1`;
-const THANOS_SERVER = 'http://localhost:3012/api/ks-thanos/v1';
+const THANOS_SERVER = `${SERVER_BASE}/api/ks-thanos/v1`;
+// const THANOS_SERVER = 'http://localhost:3012/api/ks-thanos/v1';
 /* cloudComponent 云组件后端 */
 const CLOUD_COMPONENT_SERVER = `${SERVER_BASE}/api/ks-component-cloud/v1`;
 /* 本地服务port解析 */
@@ -57,5 +57,6 @@ export const API = {
         create: `${THANOS_SERVER}/log/create`, // 新增log
         get: `${THANOS_SERVER}/log/list`, // log列表
         update: `${THANOS_SERVER}/log/update`, // log更新
+        gitDiff: `${THANOS_SERVER}/log/gitDiff`,
     },
 };

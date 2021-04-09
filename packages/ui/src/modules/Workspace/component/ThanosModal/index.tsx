@@ -83,10 +83,11 @@ export default () => {
      */
     const handleSubmit = () => {
         form.validateFields().then((fieldsValue) => {
-            const { templateName, pageChineseName, pagePath } = fieldsValue;
+            const { templateName, pageChineseName, pagePath, pageName } = fieldsValue;
             const projectName = getObjectStorage('currentProject').name;
-            const pageRealPath = `${pagePath.split(projectName)[1]}/${templateName}/index.js`;
-            console.log(pagePath, projectName, pagePath.split(projectName), pageRealPath);
+            const pageRealPath = `${pagePath.split(`${projectName}/`)[1]}/${
+                pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
+            }/index.js`;
             actions.workspace.thanosSync({
                 cwd,
                 cmd: 'sync',
@@ -103,10 +104,10 @@ export default () => {
                         templateName,
                         pageChineseName,
                         pagePath: pageRealPath,
-                        pageName: 'index.js',
+                        pageName: pageName.slice(0, 1).toUpperCase() + pageName.slice(1),
                         status: 0,
                     };
-                    // actions.thanoslog.createLog(postData);
+                    actions.thanoslog.createLog(postData);
                     actions.workspace.setReducers({
                         thanosModalVisible: false,
                         // thanosGeneratorLoading: true

@@ -123,7 +123,7 @@ export async function runSync(options: {
         });
 
         console.log(successText(`${pageName} 生成成功！`));
-        gitPush(pagePath,templateName,pageName);
+        gitPush(pageFolderPath,pageName);
         console.log(createSplash('THANOS'));
     } catch (err) {
         console.log(errorText(err.message));

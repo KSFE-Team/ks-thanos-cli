@@ -10,12 +10,12 @@ const debug = Debug(__filename);
  * @param templateName 模块名称
  * @param pageName 页面名称
  */
-export function gitPush(pagePath: string,templateName:string, pageName: string) {
-    console.log(`🍎🍎🍎自动push ${templateName}/index.js`);
+export function gitPush(pageFolderPath: string, pageName: string) {
+    console.log(`🍎🍎🍎自动push ${pageFolderPath}/index.js`);
 
     debug(`Init push to git: ${pageName}`);
 
-    const cmdStr = `cd ${pagePath}/${templateName} && git add index.js && git commit -m 'thanos:${pageName}' && git push`;
+    const cmdStr = `cd ${pageFolderPath} && git add index.js && git commit -m 'thanos:${pageName}' && git push`;
 
     debug(`CMD str: ${cmdStr}`);
 

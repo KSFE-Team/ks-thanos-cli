@@ -87,6 +87,7 @@ export default function request(
     options: {
         method?: string;
         body?: string | any;
+        mode?: string;
     },
     customerError = false,
 ) {
