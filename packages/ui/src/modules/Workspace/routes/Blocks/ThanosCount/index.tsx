@@ -42,15 +42,15 @@ export default () => {
             key: 'pageName',
             render: (val: string, record: { pageChineseName: string }) => (
                 <div>
-                    <span>{val}</span>
+                    <span>{val}/</span>
                     <span>{record.pageChineseName ? record.pageChineseName : ''}</span>
                 </div>
             ),
         },
         {
-            title: '模版名称',
-            dataIndex: 'templateName',
-            key: 'templateName',
+            title: '页面路径',
+            dataIndex: 'pagePath',
+            key: 'pagePath',
         },
         {
             title: '初始行数',
