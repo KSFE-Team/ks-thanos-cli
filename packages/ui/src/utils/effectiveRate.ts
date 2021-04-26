@@ -1,17 +1,7 @@
 import axios from 'axios';
 
 const gitBaseUrl = 'http://gitlab.devops.kaishustory.com/api/v4/projects';
-const privateToken = 'A44JhWkEkax2zK_7k1at';
-
-interface CommitIdProps {
-    initCommitId: string;
-    onLineCommitId: string;
-}
-
-interface CodeOnlineProps {
-    codeDeleteCount: number;
-    codeOnlineCount: number;
-}
+const privateToken = 'pNNxEKf_RrvfTXKwaG-8';
 
 // 查询项目ID
 async function searchProjectId(projectName: string) {
