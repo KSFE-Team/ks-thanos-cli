@@ -19,6 +19,7 @@ export default () => {
             title: '状态',
             dataIndex: 'status',
             key: 'status',
+            width: 100,
             // eslint-disable-next-line consistent-return
             render: (status: any) => {
                 switch (status) {
@@ -51,26 +52,33 @@ export default () => {
             title: '页面路径',
             dataIndex: 'pagePath',
             key: 'pagePath',
+            width: 450,
+            textWrap: 'word-break',
+            ellipsis: true,
         },
         {
             title: '初始行数',
             dataIndex: 'codeInitCount',
             key: 'codeInitCount',
+            width: 100,
         },
         {
             title: '删除行数',
             dataIndex: 'codeDeleteCount',
             key: 'codeDeleteCount',
+            width: 100,
         },
         {
             title: '上线行数',
             dataIndex: 'codeOnlineCount',
             key: 'codeOnlineCount',
+            width: 100,
         },
         {
             title: '有效使用率%',
             dataIndex: 'effectiveRate',
             key: 'effectiveRate',
+            width: 150,
         },
         {
             title: '操作',

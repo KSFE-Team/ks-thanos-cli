@@ -79,7 +79,6 @@ export default {
                     pagePath,
                     projectName,
                 },
-                mode: 'no-cors',
             });
             if (response && response.code === 0) {
                 const { add, codeDeleteCount } = response.data;
